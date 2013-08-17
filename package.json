@@ -9,7 +9,7 @@
   "scripts": {
     "test": "make test"
   },
-  "repository": "",
+  "repository": "koajs/koa",
   "keywords": [
     "web",
     "app",
