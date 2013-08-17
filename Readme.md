@@ -4,13 +4,10 @@
   Expressive middleware for node.js using generators via [co](https://github.com/visionmedia/co)
   to make writing web applications and REST APIs more enjoyable to write. 
 
-  Koa provides a useful set of methods that make day to day web application and API design much
-  faster, and less error-prone than "raw" nodejs. Many of these utilities were extracted from [Express](https://github.com/visionmedia/express),
-  however moving them to this layer allows middleware developers to avoid boilerplate and refrain from re-implementing
-  many of these features, sometimes incorrectly or incomplete.
+  Only methods that are common to nearly all HTTP servers are integrated directly into Koa's small ~400 SLOC codebase. This
+  includes things like content-negotiation, normalization of node inconsistencies, redirection, and a few others.
 
-  Only methods that are common to nearly all HTTP servers are integrated directly into Koa's small ~400 SLOC codebase. No middleware
-  are bundled with koa. If you prefer to only define a single dependency for common middleware, much like Connect, you may use
+  No middleware are bundled with koa. If you prefer to only define a single dependency for common middleware, much like Connect, you may use
   [koa-common](https://github.com/koajs/common).
 
 ## Installation
