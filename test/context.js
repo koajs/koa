@@ -1,5 +1,5 @@
 
-var Context = require('../lib/context');
+var Context = require('../lib/context')();
 var assert = require('assert');
 var koa = require('..');
 var fs = require('fs');
@@ -19,7 +19,7 @@ describe('ctx.length', function(){
       ctx.header['content-length'] = '120';
       ctx.length.should.equal(120);
     })
-  })  
+  })
 })
 
 describe('ctx.responseLength', function(){
@@ -50,7 +50,7 @@ describe('ctx.responseLength', function(){
     describe('and .body is not', function(){
       it('should return undefined', function(){
         var ctx = context();
-        assert(null == ctx.responseLength);        
+        assert(null == ctx.responseLength);
       })
     })
   })
@@ -454,7 +454,7 @@ describe('ctx.query', function(){
   describe('when missing', function(){
     it('should return an empty object', function(){
       var ctx = context({ url: '/' });
-      ctx.query.should.eql({});  
+      ctx.query.should.eql({});
     })
   })
 
@@ -521,7 +521,7 @@ describe('ctx.is(type)', function(){
   it('should ignore params', function(){
     var ctx = context();
     ctx.header['content-type'] = 'text/html; charset=utf-8';
-    ctx.is('text/*').should.be.true;  
+    ctx.is('text/*').should.be.true;
   })
 
   describe('given a mime', function(){
