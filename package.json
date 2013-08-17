@@ -1,0 +1,42 @@
+{
+  "name": "koa",
+  "version": "0.0.1",
+  "description": "Koa web app framework",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": "",
+  "keywords": [
+    "web",
+    "app",
+    "http",
+    "application",
+    "framework",
+    "middleware",
+    "rack"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "co": "1.5.1",
+    "debug": "*",
+    "mime": "1.2.10",
+    "qs": "0.6.5",
+    "fresh": "0.2.0",
+    "negotiator": "0.2.7",
+    "koa-compose": "1.0.0"
+  },
+  "devDependencies": {
+    "bytes": "*",
+    "should": "1.2.2",
+    "mocha": "1.12.0",
+    "supertest": "0.7.1"
+  },
+  "engines": {
+    "node": "> 0.11.4"
+  }
+}
