@@ -253,3 +253,20 @@ describe('app.respond', function(){
     })
   })
 })
+
+describe('app.context', function(){
+  it('should be exposed', function(){
+    var app = koa();
+    app.context.should.be.ok;
+    app.ctx.should.be.ok;
+    app.context.should.equal(app.ctx);
+  })
+
+  it('should be unique per app', function(){
+    var app1 = koa();
+    var app2 = koa();
+
+    app1.context.hello = 'hi';
+    assert.equal(app2.context.hello, undefined);
+  })
+})
