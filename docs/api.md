@@ -464,7 +464,7 @@ this.accepts('html', 'json');
   or use a switch:
 
 ```js
-switch (this.accepts('json, html, text')) {
+switch (this.accepts('json', 'html', 'text')) {
   case 'json': break;
   case 'html': break;
   case 'text': break;
