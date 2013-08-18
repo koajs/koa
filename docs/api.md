@@ -62,7 +62,7 @@ http.createServer(app.callback()).listen(3001);
 ### app.context(obj)
 
   Each `Application` has its own `Context` instance, meaning you may extend the prototype of one,
-  and the other will remain untouched with the default prototype. To extend an apps context you may
+  and the other will remain untouched with the default prototype. To extend an app's context you may
   invoke `app.context()` any number of times with an object of extensions:
 
 ```js
