@@ -78,6 +78,34 @@ $ make test
 
     0.628ms
 
+  If you like stupid benchmarks, here's the requests per second:
+
+```
+1 middleware
+8083.45
+
+5 middleware
+7449.95
+
+10 middleware
+7166.66
+
+15 middleware
+6992.18
+
+20 middleware
+6650.28
+
+30 middleware
+6113.57
+
+50 middleware
+5117.46
+```
+
+  That's __18,421,200__ requests per hour, so unless you're a facebook and can't manage to spin up more
+  than one process to scale horizontally you'll be fine ;)
+
 # License
 
   MIT
