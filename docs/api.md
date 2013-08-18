@@ -59,6 +59,28 @@ http.createServer(app.callback()).listen(3001);
   Add the given middleware function to this application. See [Middleware](#middleware) for
   more information.
 
+### app.context(obj)
+
+  Each `Application` has its own `Context` instance, meaning you may extend the prototype of one,
+  and the other will remain untouched with the default prototype. To extend an apps context you may
+  invoke `app.context()` any number of times with an object of extensions:
+
+```js
+app.context({
+  get something(){
+    return 'hi';
+  },
+
+  set something(val){
+    this._something = val;
+  },
+
+  render: function(){
+    this.body = '<html></html>';
+  }
+});
+```
+
 ## Context
 
   A Koa Context encapsulates node's `request` and `response` objects
