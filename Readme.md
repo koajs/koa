@@ -69,16 +69,15 @@ $ make test
 
 ## Benchmarks
 
-  Since requests per seconds is a bad metric, here's the average response time with __400__ noop middleware
-  on my macbook pro (you would never use this many haha).
-
-    1.5ms
-
-  Here's the average latency with only a single hello world middleware:
+  Average latency with one middleware:
 
     0.628ms
 
-  If you like stupid benchmarks, here's the requests per second:
+  Average latency with __400__ noop middleware:
+
+    1.5ms
+
+  If you like silly benchmarks, here's the requests per second:
 
 ```
 1 middleware
