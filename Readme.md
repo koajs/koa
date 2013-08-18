@@ -1,4 +1,3 @@
-
 ![koa middleware framework for nodejs](https://dsz91cxz97a03.cloudfront.net/uXIzgVnPWG-150x150.png)
 
   Expressive middleware for node.js using generators via [co](https://github.com/visionmedia/co)
@@ -73,7 +72,7 @@ $ make test
 
     0.628ms
 
-  Average latency with __400__ noop middleware:
+  Average latency with __400__ noop middlewares:
 
     1.5ms
 
