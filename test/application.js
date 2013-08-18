@@ -253,3 +253,104 @@ describe('app.respond', function(){
     })
   })
 })
+
+describe('app.context', function(){
+  it('should merge regular object properties', function(done){
+    var app = koa();
+    app.context({
+      a: 1,
+      b: 2
+    });
+
+    app.use(function(next){
+      return function *(){
+        this.a.should.equal(1);
+        this.b.should.equal(2);
+        this.status = 204;
+      }
+    });
+
+    var server = http.createServer(app.callback());
+
+    request(server)
+    .get('/')
+    .expect(204)
+    .end(done);
+  })
+
+  it('should merge accessor properties', function(done){
+    var app = koa();
+    app.context({
+      get something() {
+        return this._something || 'hi';
+      },
+      set something(value) {
+        this._something = value;
+      }
+    });
+
+    app.use(function(next){
+      return function *(){
+        this.something.should.equal('hi');
+        this.something = 'hello';
+        this.something.should.equal('hello');
+        this.status = 204;
+      }
+    });
+
+    var server = http.createServer(app.callback());
+
+    request(server)
+    .get('/')
+    .expect(204)
+    .end(done);
+  })
+
+  it('should merge multiple objects', function(done){
+    var app = koa();
+    app.context({
+      a: 1
+    });
+    app.context({
+      b: 2
+    });
+
+    app.use(function(next){
+      return function *(){
+        this.a.should.equal(1);
+        this.b.should.equal(2);
+        this.status = 204;
+      }
+    });
+
+    var server = http.createServer(app.callback());
+
+    request(server)
+    .get('/')
+    .expect(204)
+    .end(done);
+  })
+
+  it('should not butcher the original prototype', function(done){
+    var app1 = koa();
+    var app2 = koa();
+
+    app1.context({
+      a: 1
+    });
+
+    app2.use(function(next){
+      return function *(){
+        assert.equal(this.a, undefined);
+        this.status = 204;
+      }
+    });
+
+    var server = http.createServer(app2.callback());
+
+    request(server)
+    .get('/')
+    .expect(204)
+    .end(done);
+  })
+})
