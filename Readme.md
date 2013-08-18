@@ -67,6 +67,17 @@ app.listen(3000);
 $ make test
 ```
 
+## Benchmarks
+
+  Since requests per seconds is a bad metric, here's the average response time with __400__ noop middleware
+  on my macbook pro (you would never use this many haha).
+
+    1.5ms
+
+  Here's the average latency with only a single hello world middleware:
+
+    0.628ms
+
 # License
 
   MIT
