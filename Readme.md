@@ -26,8 +26,8 @@ alias node='node --harmony-generators'
 ## Community
 
  - [API](docs/api.md) documentation
- - [Middleware](https://github.com/koajs/koa/wiki/Middleware) list
- - [Wiki](https://github.com/koajs/koa/wiki)
+ - [Middleware](https://github.com/koajs/koa/wiki/Koa) list
+ - [Wiki](https://github.com/koajs/koa/wiki/Koa)
  - [G+ Community](https://plus.google.com/communities/101845768320796750641)
  - [Mailing list](https://groups.google.com/forum/#!forum/koajs)
  - __#koajs__ on freenode
