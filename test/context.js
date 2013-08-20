@@ -552,6 +552,27 @@ describe('ctx.is(type)', function(){
   })
 })
 
+describe('ctx.requestedWith', function(){
+  describe('with X-Requested-With set', function(){
+    it('should return X-Requested-With value', function(){
+      var ctx = context()
+        , requestedWith = 'love';
+      ctx.header['x-requested-with'] = requestedWith;
+
+      ctx.requestedWith.should.equal(requestedWith);
+    })
+  })
+})
+
+describe('ctx.xhr', function(){
+  it('should return true when requested with xhr', function(){
+    var ctx = context();
+    ctx.header['x-requested-with'] = 'XMLHttpRequest';
+
+    ctx.xhr.should.be.true;
+  })
+})
+
 describe('ctx.attachment([filename])', function(){
   describe('when given a filename', function(){
     it('should set the filename param', function(){
