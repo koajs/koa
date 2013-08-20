@@ -71,15 +71,6 @@ describe('ctx.header', function(){
   })
 })
 
-describe('ctx.auth', function(){
-  it('should parse basic auth', function(){
-    var ctx = context();
-    ctx.header.authorization = 'basic Zm9vOmJhcg==';
-    ctx.auth.username.should.equal('foo');
-    ctx.auth.password.should.equal('bar');
-  })
-})
-
 describe('ctx.protocol', function(){
   describe('when encrypted', function(){
     it('should return "https"', function(){

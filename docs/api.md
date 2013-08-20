@@ -375,11 +375,6 @@ this.body = yield db.find('something');
   of these ips is returned, ordered from upstream -> downstream. When disabled
   an empty array is returned.
 
-### ctx.auth
-
-  Parses basic auth credentials and returns an object with `.username` and `.password`. It's recommended to use `ctx.secure` to ensure basic auth is only
-  used over HTTPS.
-
 ### ctx.subdomains
 
   Return subdomains as an array.
