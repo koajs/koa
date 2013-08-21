@@ -1,5 +1,6 @@
 
 var _context = require('../lib/context');
+var request = require('supertest');
 var assert = require('assert');
 var koa = require('..');
 var fs = require('fs');
@@ -170,6 +171,29 @@ describe('ctx.status=', function(){
 
         assert(err);
       })
+    })
+  })
+
+  describe('when 204', function(){
+    it('should strip content related header fields', function(done){
+      var app = koa();
+
+      app.use(function(next){
+        return function *(){
+          this.set('Content-Type', 'application/json');
+          this.set('Content-Length', '15');
+          this.set('Transfer-Encoding', 'chunked');
+          this.status = 204;
+          assert(null == this.responseHeader['content-type']);
+          assert(null == this.responseHeader['content-length']);
+          assert(null == this.responseHeader['transfer-encoding']);
+        }
+      });
+
+      request(app.listen())
+        .get('/')
+        .expect(204)
+        .end(done);
     })
   })
 })
