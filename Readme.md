@@ -31,6 +31,7 @@ alias node='node --harmony-generators'
  - [G+ Community](https://plus.google.com/communities/101845768320796750641)
  - [Mailing list](https://groups.google.com/forum/#!forum/koajs)
  - __#koajs__ on freenode
+ - [FAQ](docs/faq.md)
 
 ## Example
 
