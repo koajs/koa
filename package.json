@@ -28,7 +28,8 @@
     "qs": "0.6.5",
     "fresh": "0.2.0",
     "negotiator": "0.2.7",
-    "koa-compose": "1.0.0"
+    "koa-compose": "1.0.0",
+    "cookies": "~0.3.6"
   },
   "devDependencies": {
     "bytes": "*",
