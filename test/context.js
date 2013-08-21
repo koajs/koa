@@ -174,7 +174,7 @@ describe('ctx.status=', function(){
     })
   })
 
-  describe('when 204', function(){
+  function strip(status) {
     it('should strip content related header fields', function(done){
       var app = koa();
 
@@ -183,7 +183,7 @@ describe('ctx.status=', function(){
           this.set('Content-Type', 'application/json');
           this.set('Content-Length', '15');
           this.set('Transfer-Encoding', 'chunked');
-          this.status = 204;
+          this.status = status;
           assert(null == this.responseHeader['content-type']);
           assert(null == this.responseHeader['content-length']);
           assert(null == this.responseHeader['transfer-encoding']);
@@ -192,9 +192,17 @@ describe('ctx.status=', function(){
 
       request(app.listen())
         .get('/')
-        .expect(204)
+        .expect(status)
         .end(done);
     })
+  }
+
+  describe('when 204', function(){
+    strip(204);
+  })
+
+  describe('when 304', function(){
+    strip(304);
   })
 })
 
