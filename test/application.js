@@ -205,6 +205,25 @@ describe('app.respond', function(){
   })
 
   describe('when an error occurs', function(){
+    describe('with a .status property', function(){
+      it('should respond with .status', function(done){
+        var app = koa();
+
+        app.use(function(next){
+          return function *(){
+            var err = new Error('s3 explodes');
+            err.status = 403;
+            throw err;
+          }
+        });
+
+        request(app.listen())
+        .get('/')
+        .expect(403, 'Forbidden')
+        .end(done);
+      })
+    })
+
     it('should respond with 500', function(done){
       var app = koa();
 
