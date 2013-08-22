@@ -42,7 +42,7 @@ http.createServer(app.callback()).listen(3001);
   - `app.proxy` when true proxy header fields will be trusted
   - `app.subdomainOffset` offset of `.subdomains` to ignore [2]
   - `app.jsonSpaces` default JSON response spaces [2]
-  - `app.outputErrors` output err.stack to stderr [true in "development"]
+  - `app.outputErrors` output err.stack to stderr [false in "test" environment]
 
 ### app.listen(...)
 
