@@ -156,6 +156,12 @@ describe('ctx.status=', function(){
         ctx.status = 'forbidden';
         ctx.status.should.equal(403);
       })
+
+      it('should be case-insensitive', function(){
+        var ctx = context();
+        ctx.status = 'ForBidden';
+        ctx.status.should.equal(403);
+      })
     })
 
     describe('and invalid', function(){

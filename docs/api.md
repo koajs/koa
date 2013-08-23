@@ -129,7 +129,7 @@ app.context({
 
 ### ctx.status=
 
-  Set response status via numeric code or string:
+  Set response status via numeric code or case-insensitive string:
 
   - 100 "continue"
   - 101 "switching protocols"
