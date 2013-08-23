@@ -6,7 +6,7 @@ pid=$!
 
 sleep 2
 
-wrk http://localhost:3000/ \
+wrk 'http://localhost:3000/?foo[bar]=baz' \
   -r 2000 \
   -c 50 \
   -t 4 \

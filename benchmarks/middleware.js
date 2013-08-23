@@ -11,7 +11,6 @@ console.log('  %s middleware', n);
 while (n--) {
   app.use(function(next){
     return function *(){
-      var p = this.path;
       yield next;
     }
   });
