@@ -348,3 +348,65 @@ describe('app.context(obj)', function(){
     .end(done);
   })
 })
+
+describe('app.mount(path, app)', function(){
+  it('should mount an app', function(done){
+    var app = koa();
+    var app2 = koa();
+
+    app.use(function *() {
+      this.path.should.equal('/public/file');
+      yield 'next';
+      this.path.should.equal('/public/file');
+    })
+
+    app.mount('/public', app2);
+
+    app.use(function *() {
+      this.path.should.equal('/public/file');
+      yield 'next';
+      this.path.should.equal('/public/file');
+    })
+
+    app.use(function *() {
+      this.status = 204
+    })
+
+    app2.use(function *() {
+      this.path.should.equal('/file');
+      yield 'next';
+      this.path.should.equal('/file');
+    })
+
+    var server = http.createServer(app.callback());
+
+    request(server)
+    .get('/public/file')
+    .expect(204, done)
+  })
+
+  it('should skip mounted apps if path does not match', function(done){
+    var app = koa()
+    var app2 = koa()
+
+    app.mount('/something', app2)
+
+    app.use(function *(){
+      this.status = 204
+    })
+
+    app2.use(function* (){
+      throw new Error()
+    })
+
+    var server = http.createServer(app.callback());
+
+    request(server)
+    .get('/')
+    .expect(204, done)
+  })
+
+  it('should nest mounts', function() {})
+
+  it('should not continue downstream if stopped on a mount', function() {})
+})
