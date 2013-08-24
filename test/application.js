@@ -428,4 +428,53 @@ describe('app.mount(path, app)', function(){
     .get('/something/long')
     .expect(204, done)
   })
+
+  it('should switch app contexts', function(done){
+    var app = koa()
+    var app2 = koa()
+
+    app.context({
+      a: 1
+    })
+
+    app2.context({
+      b: 2
+    })
+
+    app.use(function* () {
+      this.a.should.equal(1)
+      assert.equal(this.b, undefined)
+      yield 'next'
+      this.a.should.equal(1)
+      assert.equal(this.b, undefined)
+    })
+
+    app.mount('/something', app2)
+
+    app.use(function* () {
+      this.a.should.equal(1)
+      assert.equal(this.b, undefined)
+      yield 'next'
+      this.a.should.equal(1)
+      assert.equal(this.b, undefined)
+    })
+
+    app2.use(function* () {
+      this.b.should.equal(2)
+      assert.equal(this.a, undefined)
+      yield 'next'
+      this.b.should.equal(2)
+      assert.equal(this.a, undefined)
+    })
+
+    app.use(function* () {
+      this.status = 204
+    })
+
+    var server = http.createServer(app.callback());
+
+    request(server)
+    .get('/something/long')
+    .expect(204, done)
+  })
 })
