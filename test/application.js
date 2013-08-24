@@ -408,5 +408,24 @@ describe('app.mount(path, app)', function(){
 
   it('should nest mounts', function() {})
 
-  it('should not continue downstream if stopped on a mount', function() {})
+  it('should not continue downstream if stopped on a mount', function(done) {
+    var app = koa()
+    var app2 = koa()
+
+    app.mount('/something', app2)
+
+    app.use(function *(){
+      throw new Error()
+    })
+
+    app2.use(function* (){
+      this.status = 204
+    })
+
+    var server = http.createServer(app.callback());
+
+    request(server)
+    .get('/something/long')
+    .expect(204, done)
+  })
 })
