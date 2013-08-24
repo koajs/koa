@@ -22,7 +22,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "co": "1.5.1",
+    "co-dispatch": "jonathanong/co-dispatch",
     "debug": "*",
     "mime": "1.2.10",
     "qs": "0.6.5",

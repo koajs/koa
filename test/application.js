@@ -241,6 +241,7 @@ describe('app.respond', function(){
       .end(done);
     })
 
+    /*
     it('should be catchable', function(done){
       var app = koa();
 
@@ -270,13 +271,14 @@ describe('app.respond', function(){
       .expect(200, 'Got error')
       .end(done);
     })
+    */
   })
 })
 
 describe('app.context(obj)', function(){
   it('should merge regular object properties', function(done){
     var app = koa();
-    
+
     app.context({
       a: 1,
       b: 2
@@ -300,7 +302,7 @@ describe('app.context(obj)', function(){
 
   it('should merge accessor properties', function(done){
     var app = koa();
-    
+
     app.context({
       get something() {
         return this._something || 'hi';
@@ -334,7 +336,7 @@ describe('app.context(obj)', function(){
     app.context({
       a: 1
     });
-    
+
     app.context({
       b: 2
     });
