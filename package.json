@@ -19,6 +19,7 @@
     "middleware",
     "rack"
   ],
+  "repository": "git://github.com/koajs/koa",
   "author": "",
   "license": "MIT",
   "dependencies": {
