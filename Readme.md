@@ -106,6 +106,11 @@ $ make test
   With __50__ middleware (likely much more than you'll need), that's __307,020__ requests per minute, and __18,421,200__ per hour, so unless you're a facebook and can't manage to spin up more
   than one process to scale horizontally you'll be fine ;)
 
+## Authors
+
+  - [TJ Holowaychuk](https://github.com/visionmedia)
+  - [Jonathan Ong](https://github.com/jonathanong)
+
 # License
 
   MIT
