@@ -10,28 +10,22 @@ describe('app.use(fn)', function(){
     var app = koa();
     var calls = [];
 
-    app.use(function(next){
-      return function *(){
+    app.use(function *(){
         calls.push(1);
-        yield next;
+        yield 'next';
         calls.push(6);
-      }
     });
 
-    app.use(function(next){
-      return function *(){
+    app.use(function *(){
         calls.push(2);
-        yield next;
+        yield 'next';
         calls.push(5);
-      }
     });
 
-    app.use(function(next){
-      return function *(){
+    app.use(function *(){
         calls.push(3);
-        yield next;
+        yield 'next';
         calls.push(4);
-      }
     });
 
     var server = http.createServer(app.callback());
@@ -51,10 +45,8 @@ describe('app.respond', function(){
     it('should not respond with the body', function(done){
       var app = koa();
 
-      app.use(function(next){
-        return function *(){
+      app.use(function *(){
           this.body = 'Hello';
-        }
       });
 
       var server = http.createServer(app.callback());
@@ -87,11 +79,9 @@ describe('app.respond', function(){
     it('should respond with the associated status message', function(done){
       var app = koa();
 
-      app.use(function(next){
-        return function *(){
+      app.use(function *(){
           this.status = 400;
           this.body = null;
-        }
       });
 
       var server = http.createServer(app.callback());
@@ -107,10 +97,8 @@ describe('app.respond', function(){
     it('should respond', function(done){
       var app = koa();
 
-      app.use(function(next){
-        return function *(){
+      app.use(function *(){
           this.body = 'Hello';
-        }
       });
 
       var server = http.createServer(app.callback());
@@ -125,10 +113,8 @@ describe('app.respond', function(){
     it('should respond', function(done){
       var app = koa();
 
-      app.use(function(next){
-        return function *(){
+      app.use(function *(){
           this.body = new Buffer('Hello');
-        }
       });
 
       var server = http.createServer(app.callback());
@@ -143,11 +129,9 @@ describe('app.respond', function(){
     it('should respond', function(done){
       var app = koa();
 
-      app.use(function(next){
-        return function *(){
+      app.use(function *(){
           this.body = fs.createReadStream('package.json');
           this.set('Content-Type', 'application/json');
-        }
       });
 
       var server = http.createServer(app.callback());
@@ -168,10 +152,8 @@ describe('app.respond', function(){
     it('should respond with json', function(done){
       var app = koa();
 
-      app.use(function(next){
-        return function *(){
+      app.use(function *(){
           this.body = { hello: 'world' };
-        }
       });
 
       var server = http.createServer(app.callback());
@@ -188,10 +170,8 @@ describe('app.respond', function(){
 
         app.jsonSpaces = 0;
 
-        app.use(function(next){
-          return function *(){
+        app.use(function *(){
             this.body = { hello: 'world' };
-          }
         });
 
         var server = http.createServer(app.callback());
@@ -209,12 +189,10 @@ describe('app.respond', function(){
       it('should respond with .status', function(done){
         var app = koa();
 
-        app.use(function(next){
-          return function *(){
+        app.use(function *(){
             var err = new Error('s3 explodes');
             err.status = 403;
             throw err;
-          }
         });
 
         request(app.listen())
@@ -227,10 +205,8 @@ describe('app.respond', function(){
     it('should respond with 500', function(done){
       var app = koa();
 
-      app.use(function(next){
-        return function *(){
+      app.use(function *(){
           throw new Error('boom!');
-        }
       });
 
       var server = http.createServer(app.callback());
@@ -241,13 +217,14 @@ describe('app.respond', function(){
       .end(done);
     })
 
+    /*
     it('should be catchable', function(done){
       var app = koa();
 
       app.use(function(next){
         return function *(){
           try {
-            yield next;
+            yield 'next';
             this.body = 'Hello';
           } catch (err) {
             error = err;
@@ -270,24 +247,23 @@ describe('app.respond', function(){
       .expect(200, 'Got error')
       .end(done);
     })
+    */
   })
 })
 
 describe('app.context(obj)', function(){
   it('should merge regular object properties', function(done){
     var app = koa();
-    
+
     app.context({
       a: 1,
       b: 2
     });
 
-    app.use(function(next){
-      return function *(){
+    app.use(function *(){
         this.a.should.equal(1);
         this.b.should.equal(2);
         this.status = 204;
-      }
     });
 
     var server = http.createServer(app.callback());
@@ -300,7 +276,7 @@ describe('app.context(obj)', function(){
 
   it('should merge accessor properties', function(done){
     var app = koa();
-    
+
     app.context({
       get something() {
         return this._something || 'hi';
@@ -311,13 +287,11 @@ describe('app.context(obj)', function(){
       }
     });
 
-    app.use(function(next){
-      return function *(){
+    app.use(function *(){
         this.something.should.equal('hi');
         this.something = 'hello';
         this.something.should.equal('hello');
         this.status = 204;
-      }
     });
 
     var server = http.createServer(app.callback());
@@ -334,17 +308,15 @@ describe('app.context(obj)', function(){
     app.context({
       a: 1
     });
-    
+
     app.context({
       b: 2
     });
 
-    app.use(function(next){
-      return function *(){
+    app.use(function *(){
         this.a.should.equal(1);
         this.b.should.equal(2);
         this.status = 204;
-      }
     });
 
     var server = http.createServer(app.callback());
@@ -363,11 +335,9 @@ describe('app.context(obj)', function(){
       a: 1
     });
 
-    app2.use(function(next){
-      return function *(){
+    app2.use(function *(){
         assert.equal(this.a, undefined);
         this.status = 204;
-      }
     });
 
     var server = http.createServer(app2.callback());
@@ -376,5 +346,135 @@ describe('app.context(obj)', function(){
     .get('/')
     .expect(204)
     .end(done);
+  })
+})
+
+describe('app.mount(path, app)', function(){
+  it('should mount an app', function(done){
+    var app = koa();
+    var app2 = koa();
+
+    app.use(function *() {
+      this.path.should.equal('/public/file');
+      yield 'next';
+      this.path.should.equal('/public/file');
+    })
+
+    app.mount('/public', app2);
+
+    app.use(function *() {
+      this.path.should.equal('/public/file');
+      yield 'next';
+      this.path.should.equal('/public/file');
+    })
+
+    app.use(function *() {
+      this.status = 204
+    })
+
+    app2.use(function *() {
+      this.path.should.equal('/file');
+      yield 'next';
+      this.path.should.equal('/file');
+    })
+
+    var server = http.createServer(app.callback());
+
+    request(server)
+    .get('/public/file')
+    .expect(204, done)
+  })
+
+  it('should skip mounted apps if path does not match', function(done){
+    var app = koa()
+    var app2 = koa()
+
+    app.mount('/something', app2)
+
+    app.use(function *(){
+      this.status = 204
+    })
+
+    app2.use(function* (){
+      throw new Error()
+    })
+
+    var server = http.createServer(app.callback());
+
+    request(server)
+    .get('/')
+    .expect(204, done)
+  })
+
+  it('should nest mounts', function() {})
+
+  it('should not continue downstream if stopped on a mount', function(done) {
+    var app = koa()
+    var app2 = koa()
+
+    app.mount('/something', app2)
+
+    app.use(function *(){
+      throw new Error()
+    })
+
+    app2.use(function* (){
+      this.status = 204
+    })
+
+    var server = http.createServer(app.callback());
+
+    request(server)
+    .get('/something/long')
+    .expect(204, done)
+  })
+
+  it('should switch app contexts', function(done){
+    var app = koa()
+    var app2 = koa()
+
+    app.context({
+      a: 1
+    })
+
+    app2.context({
+      b: 2
+    })
+
+    app.use(function* () {
+      this.a.should.equal(1)
+      assert.equal(this.b, undefined)
+      yield 'next'
+      this.a.should.equal(1)
+      assert.equal(this.b, undefined)
+    })
+
+    app.mount('/something', app2)
+
+    app.use(function* () {
+      this.a.should.equal(1)
+      assert.equal(this.b, undefined)
+      yield 'next'
+      this.a.should.equal(1)
+      assert.equal(this.b, undefined)
+    })
+
+    app2.use(function* () {
+      this.b.should.equal(2)
+      assert.equal(this.a, undefined)
+      yield 'next'
+      this.b.should.equal(2)
+      assert.equal(this.a, undefined)
+    })
+
+    app.use(function* () {
+      this.status = 204
+    })
+
+    var server = http.createServer(app.callback());
+
+    request(server)
+    .get('/something/long')
+    .expect(204, done)
   })
 })
