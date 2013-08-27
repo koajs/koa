@@ -295,16 +295,12 @@ this.type = 'png';
 
 ### ctx.query
  
-  Get parsed query-string using [qs](https://github.com/visionmedia/node-querystring). For example with the url "/shoes?page=2&sort=asc&filters[color]=blue"
-  `this.query` would be the following object:
+  Get parsed query-string, for example "color=blue&size=small":
 
 ```js
 {
-  page: '2',
-  sort: 'asc',
-  filters: {
-    color: 'blue'
-  }
+  color: 'blue',
+  size: 'small'
 }
 ```
 
