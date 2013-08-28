@@ -109,6 +109,7 @@ $ make test
 ## Authors
 
   - [TJ Holowaychuk](https://github.com/visionmedia)
+  - [Julian Gruber](https://github.com/juliangruber)
   - [Jonathan Ong](https://github.com/jonathanong)
 
 # License
