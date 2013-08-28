@@ -14,6 +14,11 @@ function logger(next){
   }
 }
 
+// passing any middleware to this middleware
+// will make it conditional, and will not be used
+// when an asset is requested. This is a modular
+// approach to conditiona-middleware.js
+
 function ignoreAssets(mw) {
   return function(next){
     return function *(){
