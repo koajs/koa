@@ -40,18 +40,14 @@ app.use(function(next){
 
 app.use(function(next){
   return function *(){
-    if (!this.hasContent) return yield next;
+    var body = this.body;
 
-    // TODO: fix ...
-    if (!this.body) return yield next;
+    if (!body || !body.readable) return yield next;
 
-    if (this.body.readable) {
-      var body = this.body;
-      var gzip = zlib.createGzip();
-      this.set('Content-Encoding', 'gzip');
-      this.body = gzip;
-      body.pipe(gzip);
-    }
+    var gzip = zlib.createGzip();
+    this.set('Content-Encoding', 'gzip');
+    this.body = gzip;
+    body.pipe(gzip);
 
     yield next;
   }
