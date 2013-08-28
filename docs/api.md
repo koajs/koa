@@ -192,6 +192,10 @@ app.context({
   if you have a typo an error will be thrown, displaying this list
   so you can make a correction.
 
+### ctx.hasContent
+
+  When the response status is __204__ or __304__ this returns __false__.
+
 ### ctx.length
 
   Return request Content-Length as a number when present, or undefined.
