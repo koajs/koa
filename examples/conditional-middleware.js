@@ -25,7 +25,6 @@ app.use(function(next){
     } else {
       this.body = 'Hello World';
       yield logger(next);
-      yield next;
     }
   }
 });
