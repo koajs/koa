@@ -513,6 +513,26 @@ switch (this.accepts('json', 'html', 'text')) {
 
   Request socket object.
 
+### ctx.error(msg, [status])
+
+  Helper method to throw an error with a `.status` property
+  that will allow Koa to respond appropriately. The following
+  combinations are allowed:
+
+```js
+this.error(403)
+this.error('name required', 400)
+this.error('something exploded')
+```
+
+  For example `this.error('name required', 400)` is requivalent to:
+
+```js
+var err = new Error('name required');
+err.status = 400;
+throw err;
+```
+
 ## Error handling
 
   By default outputs all errors to stderr unless __NODE_ENV__ is "test". To perform custom error-handling logic such as centralized logging you
