@@ -65,4 +65,4 @@ function route(method, path, fn) {
   }
 }
 
-http.createServer(app.callback()).listen(3000);
+app.listen(3000);
