@@ -30,7 +30,19 @@ app.use(function(next){
 app.use(function(next){
   return function *(){
     yield next;
+    if (!this.body) return;
     this.set('Content-Length', Buffer.byteLength(this.body));
+  }
+});
+
+// custom 404 handler
+
+app.use(function(next){
+  return function *(){
+    yield next;
+    if (this.body) return;
+    this.status = 404;
+    this.body = 'Sorry! No luck';
   }
 });
 
@@ -40,19 +52,7 @@ app.use(function(next){
   return function *(){
     yield next;
     if ('/' != this.url) return;
-    this.status = 200;
     this.body = 'Hello World';
-  }
-});
-
-// custom 404 handler
-
-app.use(function(next){
-  return function *(){
-    yield next;
-    this.status = 404;
-    this.body = 'Sorry cannot find that!';
-    console.log(this);
   }
 });
 
