@@ -544,6 +544,14 @@ app.on('error', function(err){
 });
 ```
 
+  If an error in the req/res cycle and it is _not_ possible to respond to the client, the `Context` instance is also passed:
+
+```js
+app.on('error', function(err){
+  log.error('server error', err);
+});
+```
+
   When an error occurs _and_ it is still possible to respond to the client, aka no data has been written to the socket, Koa will respond
   appropriately with a 500 "Internal Server Error". In either case
   an app-level "error" is emitted for logging purposes. 
