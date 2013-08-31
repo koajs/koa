@@ -20,7 +20,7 @@ app.use(function(next){
       // want to delegate to the regular app
       // level error handling as well so that
       // centralized still functions correctly.
-      this.app.emit('error', err);
+      this.app.emit('error', err, this);
     }
   }
 });
