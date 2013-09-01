@@ -1,5 +1,5 @@
 
-![koa middleware framework for nodejs](https://dsz91cxz97a03.cloudfront.net/uXIzgVnPWG-150x150.png)
+![koa middleware framework for nodejs](https://i.cloudup.com/uXIzgVnPWG-150x150.png)
 
   Expressive middleware for node.js using generators via [co](https://github.com/visionmedia/co)
   to make writing web applications and REST APIs more enjoyable to write. 
