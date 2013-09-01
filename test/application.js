@@ -34,7 +34,7 @@ describe('app.use(fn)', function(){
       }
     });
 
-    var server = http.createServer(app.callback());
+    var server = app.listen();
 
     request(server)
     .get('/')
@@ -57,7 +57,7 @@ describe('app.respond', function(){
         }
       });
 
-      var server = http.createServer(app.callback());
+      var server = app.listen();
 
       request(server)
       .head('/')
@@ -75,7 +75,7 @@ describe('app.respond', function(){
     it('should 404', function(done){
       var app = koa();
 
-      var server = http.createServer(app.callback());
+      var server = app.listen();
 
       request(server)
       .get('/')
@@ -94,7 +94,7 @@ describe('app.respond', function(){
         }
       });
 
-      var server = http.createServer(app.callback());
+      var server = app.listen();
 
       request(server)
       .get('/')
@@ -113,7 +113,7 @@ describe('app.respond', function(){
         }
       });
 
-      var server = http.createServer(app.callback());
+      var server = app.listen();
 
       request(server)
       .get('/')
@@ -131,7 +131,7 @@ describe('app.respond', function(){
         }
       });
 
-      var server = http.createServer(app.callback());
+      var server = app.listen();
 
       request(server)
       .get('/')
@@ -150,7 +150,7 @@ describe('app.respond', function(){
         }
       });
 
-      var server = http.createServer(app.callback());
+      var server = app.listen();
 
       request(server)
       .get('/')
@@ -174,7 +174,7 @@ describe('app.respond', function(){
         }
       });
 
-      var server = http.createServer(app.callback());
+      var server = app.listen();
 
       request(server)
       .get('/')
@@ -194,7 +194,7 @@ describe('app.respond', function(){
           }
         });
 
-        var server = http.createServer(app.callback());
+        var server = app.listen();
 
         request(server)
         .get('/')
@@ -233,7 +233,7 @@ describe('app.respond', function(){
         }
       });
 
-      var server = http.createServer(app.callback());
+      var server = app.listen();
 
       request(server)
       .get('/')
@@ -263,7 +263,7 @@ describe('app.respond', function(){
         }
       });
 
-      var server = http.createServer(app.callback());
+      var server = app.listen();
 
       request(server)
       .get('/')
@@ -290,7 +290,7 @@ describe('app.context(obj)', function(){
       }
     });
 
-    var server = http.createServer(app.callback());
+    var server = app.listen();
 
     request(server)
     .get('/')
@@ -320,7 +320,7 @@ describe('app.context(obj)', function(){
       }
     });
 
-    var server = http.createServer(app.callback());
+    var server = app.listen();
 
     request(server)
     .get('/')
@@ -347,7 +347,7 @@ describe('app.context(obj)', function(){
       }
     });
 
-    var server = http.createServer(app.callback());
+    var server = app.listen();
 
     request(server)
     .get('/')
