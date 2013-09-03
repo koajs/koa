@@ -133,5 +133,27 @@ function logger(format){
 }
 ```
 
+## Async operations
 
+  The [Co](https://github.com/visionmedia/co) forms Koa's foundation for generator delegation, allowing
+  you to write non-blocking sequential code. For example this middleware reads the filenames from `./docs`,
+  and then reads the contents of each markdown file in parallel before assigning the body to the joint result.
+
+
+```js
+var fs = require('co-fs');
+
+app.use(function(){
+  return function *(){
+    var paths = yield fs.readdir('docs');
+
+    var files = yield paths.map(function(path){
+      return fs.readFile('docs/' + path, 'utf8');
+    });
+
+    this.type = 'markdown';
+    this.body = files.join('');
+  }
+});
+```
 

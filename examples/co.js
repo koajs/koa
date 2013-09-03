@@ -15,7 +15,7 @@ app.use(function(){
     });
 
     this.type = 'markdown';
-    this.body = files.join(', ');
+    this.body = files.join('');
   }
 });
 
