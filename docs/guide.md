@@ -53,7 +53,33 @@ app.use(function(next){
  12. Set `X-Response-Time` header field before response
  13. Hand off to Koa to handle the response
 
-  Next we'll look at the best practices for creating Koa middleware.
+ Note that the final middleware (step __6__) yields to what looks to be nothing - it's actually
+ yielding to a no-op generator within Koa. This is so that every middleware can conform with the
+ same API, and may be placed before or after others. If you removed `yield next;` from the furthest
+ "downstream" middleware everything would function appropritaely, however it would no longer conform
+ to this behaviour.
+
+ For example this would be fine:
+
+```js
+app.use(function(){
+  return function *response(){
+    if ('/' != this.url) return;
+    this.body = 'Hello World';
+  }
+});
+```
+
+  It's important to note that not all middleware will need to conform, the best example of this
+  is a router, which are typically always acting as end-points, or downstream middleware:
+
+````js
+app.use(get('/', function *(){
+  this.body = 'Hello World';
+});
+```
+
+ Next we'll look at the best practices for creating Koa middleware.
 
 ## Middleware Best Practices
 
