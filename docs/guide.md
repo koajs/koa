@@ -20,8 +20,7 @@ function responseTime(next){
 app.use(responseTime);
 ```
 
-  If you're a front-end developer you can think any code before `yield next;` as the "capture" phase,
-  while any code after is the "bubble" phase. Here's another way to write the same thing, inline:
+  Here's another way to write the same thing, inline:
 
 ```js
 app.use(function(next){
@@ -33,6 +32,12 @@ app.use(function(next){
   }
 });
 ```
+
+  If you're a front-end developer you can think any code before `yield next;` as the "capture" phase,
+  while any code after is the "bubble" phase. This crude gif illustrates how ES6 generators allow us
+  to properly utilize stack flow to implement request and response flows:
+
+![koa middleware](https://i.cloudup.com/N7L5UakJo0.gif)
 
   Next we'll look at the best practices for creating Koa middleware.
 
