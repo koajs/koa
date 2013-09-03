@@ -38,6 +38,11 @@ app.use(function(next){
 
 ## Middleware Best Practices
 
+  This section covers middleware authoring best practices, such as middleware
+  accepting options, named middleware for debugging, among others.
+
+### Middleware options
+
   When creating public middleware it's useful to conform to the convention of
   wrapping the middleware in a function that accepts options, allowing users to
   extend functionality. Even if your middleware accepts _no_ options, this is still
@@ -65,6 +70,21 @@ function logger(format){
 
 app.use(logger());
 app.use(logger(':method :url'));
+```
+
+### Named middleware
+
+  Naming middleware is optional, however it's useful for debugging purposes to
+  assign a name.
+
+```js
+function logger(format){
+  return function(next){
+    return function *logger(){
+      // ^-- name this guy
+    }
+  }
+}
 ```
 
 
