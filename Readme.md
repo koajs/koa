@@ -30,6 +30,7 @@ alias node='node --harmony-generators'
  - [Wiki](https://github.com/koajs/koa/wiki/Koa)
  - [G+ Community](https://plus.google.com/communities/101845768320796750641)
  - [Mailing list](https://groups.google.com/forum/#!forum/koajs)
+ - [Guide](docs/guide.md)
  - [FAQ](docs/faq.md)
  - __#koajs__ on freenode
 
