@@ -53,6 +53,7 @@ app.use(function(next){
    12. Set `X-Response-Time` header field before response
    13. Hand off to Koa to handle the response
 
+
  Note that the final middleware (step __6__) yields to what looks to be nothing - it's actually
  yielding to a no-op generator within Koa. This is so that every middleware can conform with the
  same API, and may be placed before or after others. If you removed `yield next;` from the furthest
