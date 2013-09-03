@@ -47,7 +47,7 @@ app.use(function(next){
    6. Yield upstream to Koa's noop middleware
    7. Ignore setting the body unless the path is "/"
    8. Set the response to "Hello World"
-   9. Ignore setting Content-Length when no body is present
+   9. Ignore setting `Content-Length` when no body is present
    10. Set the field
    11. Output log line
    12. Set `X-Response-Time` header field before response
