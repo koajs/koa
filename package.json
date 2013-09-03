@@ -20,7 +20,6 @@
     "rack"
   ],
   "repository": "koajs/koa",
-  "author": "",
   "license": "MIT",
   "dependencies": {
     "co": "1.5.1",
@@ -35,7 +34,8 @@
     "bytes": "*",
     "should": "1.2.2",
     "mocha": "1.12.0",
-    "supertest": "0.7.1"
+    "supertest": "0.7.1",
+    "co-fs": "~1.0.1"
   },
   "engines": {
     "node": "> 0.11.4"
