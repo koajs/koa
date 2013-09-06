@@ -104,7 +104,7 @@ $ make test
 5117.46
 ```
 
-  With __50__ middleware (likely much more than you'll need), that's __307,020__ requests per minute, and __18,421,200__ per hour, so unless you're a facebook and can't manage to spin up more
+  With __50__ middleware (likely much more than you'll need), that's __307,020__ requests per minute, and __18,421,200__ per hour,  __442 million__ per day, so unless you're a facebook and can't manage to spin up more
   than one process to scale horizontally you'll be fine ;)
 
 ## Authors
