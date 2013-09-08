@@ -178,7 +178,7 @@ describe('app.respond', function(){
       request(server)
       .get('/')
       .expect('Content-Type', 'text/plain')
-      .expect(500)
+      .expect(404)
       .end(done);
     })
   })
