@@ -534,7 +534,7 @@ err.status = 400;
 throw err;
 ```
 
-## Error handling
+## Error Handling
 
   By default outputs all errors to stderr unless __NODE_ENV__ is "test". To perform custom error-handling logic such as centralized logging you
   can add an "error" event listener:
@@ -559,13 +559,27 @@ app.on('error', function(err){
 
 ## Notes
 
-### HEAD support
+### HEAD Support
 
   Koa's upstream response middleware supports __HEAD__ for you,
   however expensive requests would benefit from custom handling. For
   example instead of reading a file into memory and piping it to the
   client, you may wish to `stat()` and set the `Content-*` header fields
   appropriately to bypass the read. 
+
+### Socket Errors
+
+  Node http servers emit a "clientError" event when a socket error occurs. You'll probably want to delegate this to your
+  Koa handler by doing the following, in order to centralize
+  logging:
+
+```js
+var app = koa();
+var srv = app.listen(3000);
+srv.on('clientError', function(err){
+  app.emit('error', err);
+});
+```
 
 # License
 
