@@ -162,6 +162,25 @@ describe('app.respond', function(){
         done();
       });
     })
+
+    it('should handle errors', function(done){
+      var app = koa();
+
+      app.use(function(next){
+        return function *(){
+          this.set('Content-Type', 'application/json');
+          this.body = fs.createReadStream('does not exist');
+        }
+      });
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect('Content-Type', 'text/plain')
+      .expect(500)
+      .end(done);
+    })
   })
 
   describe('when .body is an Object', function(){
