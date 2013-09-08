@@ -204,6 +204,27 @@ describe('app.respond', function(){
     })
   })
 
+  describe('when a socket error occurs', function(){
+    it('should emit "error" on the app', function(done){
+      var app = koa();
+
+      app.use(function(next){
+        return function *(){
+          this.socket.emit('error', new Error('tobi escaped'));
+        }
+      });
+
+      app.on('error', function(err){
+        err.message.should.equal('tobi escaped');
+        done();
+      });
+
+      request(app.listen())
+      .get('/')
+      .end(function(){});
+    })
+  })
+
   describe('when an error occurs', function(){
     it('should emit "error" on the app', function(done){
       var app = koa();
