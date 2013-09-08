@@ -205,6 +205,25 @@ describe('app.respond', function(){
   })
 
   describe('when an error occurs', function(){
+    it('should emit "error" on the app', function(done){
+      var app = koa();
+
+      app.use(function(next){
+        return function *(){
+          throw new Error('boom');
+        }
+      });
+
+      app.on('error', function(err){
+        err.message.should.equal('boom');
+        done();
+      });
+
+      request(app.listen())
+      .get('/')
+      .end(function(){});
+    })
+
     describe('with a .status property', function(){
       it('should respond with .status', function(done){
         var app = koa();
