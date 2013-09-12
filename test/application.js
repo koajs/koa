@@ -243,6 +243,26 @@ describe('app.respond', function(){
       .end(function(){});
     })
 
+    describe('with an .expose property', function(){
+      it('should expose the message', function(done){
+        var app = koa();
+
+        app.use(function(next){
+          return function *(){
+            var err = new Error('sorry!');
+            err.status = 403;
+            err.expose = true;
+            throw err;
+          }
+        });
+
+        request(app.listen())
+        .get('/')
+        .expect(403, 'sorry!')
+        .end(done);
+      })
+    })
+
     describe('with a .status property', function(){
       it('should respond with .status', function(done){
         var app = koa();
