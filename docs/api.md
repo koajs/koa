@@ -534,6 +534,12 @@ err.status = 400;
 throw err;
 ```
 
+  Note that these are user-level errors and are flagged with
+  `err.expose` meaning the messages are appropriate for 
+  client responses, which is typically not the case for
+  error messages since you do not want to leak failure
+  details.
+
 ## Error Handling
 
   By default outputs all errors to stderr unless __NODE_ENV__ is "test". To perform custom error-handling logic such as centralized logging you
