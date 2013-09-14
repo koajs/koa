@@ -275,12 +275,16 @@ var ct = this.type;
   Set response `Content-Type` via mime string or file extension.
 
 ```js
+this.type = 'text/plain; charset=utf-8';
 this.type = 'image/png';
 this.type = '.png';
 this.type = 'png';
 ```
 
-  __NOTE__: when `ctx.body` is an object the content-type is set for you.
+  Note: when appropriate a `charset` is selected for you, for
+  example `ctx.type = 'html'` will default to "utf-8", however
+  when explicitly defined in full as `ctx.type = 'text/html'`
+  no charset is assigned.
 
 ### ctx.url
 
