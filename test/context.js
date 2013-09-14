@@ -26,7 +26,7 @@ describe('ctx.error(msg)', function(){
     var ctx = context();
 
     try {
-      ctx.error('boom');      
+      ctx.error('boom');
     } catch (err) {
       assert(500 == err.status);
       done();
@@ -68,6 +68,32 @@ describe('ctx.length', function(){
       var ctx = context();
       ctx.header['content-length'] = '120';
       ctx.length.should.equal(120);
+    })
+  })
+})
+
+describe('ctx.hasBody', function(){
+  describe('when Transfer-Encoding is defined', function(){
+    it('should return true', function(){
+      var ctx = context();
+      ctx.header['transfer-encoding'] = 'chunked';
+      ctx.hasBody.should.be.ok;
+    })
+  })
+
+  describe('when Content-Length is 0', function(){
+    it('should return false', function(){
+      var ctx = context();
+      ctx.header['content-length'] = '0';
+      ctx.hasBody.should.not.be.ok;
+    })
+  })
+
+  describe('when Content-Length is > 0', function(){
+    it('should return true', function(){
+      var ctx = context();
+      ctx.header['content-length'] = '1';
+      ctx.hasBody.should.be.ok;
     })
   })
 })
