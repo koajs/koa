@@ -219,7 +219,7 @@ app.context({
   - `string` written
   - `Buffer` written
   - `Stream` piped
-  - `Object` json stringified
+  - `Object` json-stringified
 
   When a Koa application is created it injects
   a middleware named `respond`, which handles
