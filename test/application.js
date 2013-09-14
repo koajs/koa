@@ -90,7 +90,6 @@ describe('app.respond', function(){
       app.use(function(next){
         return function *(){
           this.status = 400;
-          this.body = null;
         }
       });
 

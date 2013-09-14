@@ -192,9 +192,9 @@ app.context({
   if you have a typo an error will be thrown, displaying this list
   so you can make a correction.
 
-### ctx.hasContent
+### ctx.length=
 
-  When the response status is __204__ or __304__ this returns __false__.
+  Set response Content-Length to the given value.
 
 ### ctx.length
 
@@ -219,12 +219,27 @@ app.context({
   - `Buffer` written
   - `Stream` piped
   - `Object` json-stringified
+  - `null` no content response
 
-  When a Koa application is created it injects
-  a middleware named `respond`, which handles
-  each of these `ctx.body` values. The `Content-Length`
-  header field is set when possible, and objects are 
-  passed through `JSON.stringify()`.
+#### String
+
+  The Content-Type is defaulted to text/html or text/plain, both with
+  a default charset of utf-8. The Content-Length field is also set.
+
+#### Buffer
+
+  The Content-Type is defaulted to application/octet-stream, and Content-Length
+  is also set.
+
+#### Stream
+
+  The Content-Type is defaulted to application/octet-stream.
+
+#### Object
+
+  The Content-Type is defaulted to application/json.
+
+#### Notes
 
   To alter the JSON response formatting use the `app.jsonSpaces`
   setting, for example to compress JSON responses set:

@@ -21,6 +21,60 @@ function context(req, res) {
   return ctx;
 }
 
+describe('ctx.body=', function(){
+  describe('when a string is given', function(){
+    it('should default to text', function(){
+      var ctx = context();
+      ctx.body = 'Tobi';
+      assert('text/plain; charset=utf-8' == ctx.responseHeader['content-type']);
+    })
+
+    it('should set length', function(){
+      var ctx = context();
+      ctx.body = 'Tobi';
+      assert('4' == ctx.responseHeader['content-length']);
+    })
+  })
+
+  describe('when an html string is given', function(){
+    it('should default to html', function(){
+      var ctx = context();
+      ctx.body = '<h1>Tobi</h1>';
+      assert('text/html; charset=utf-8' == ctx.responseHeader['content-type']);
+    })
+  })
+
+  describe('when a stream is given', function(){
+    it('should default to an octet stream', function(){
+      var ctx = context();
+      ctx.body = fs.createReadStream('LICENSE');
+      assert('application/octet-stream' == ctx.responseHeader['content-type']);
+    })
+  })
+
+  describe('when a buffer is given', function(){
+    it('should default to an octet stream', function(){
+      var ctx = context();
+      ctx.body = new Buffer('hey');
+      assert('application/octet-stream' == ctx.responseHeader['content-type']);
+    })
+
+    it('should set length', function(){
+      var ctx = context();
+      ctx.body = new Buffer('Tobi');
+      assert('4' == ctx.responseHeader['content-length']);
+    })
+  })
+
+  describe('when an object is given', function(){
+    it('should default to json', function(){
+      var ctx = context();
+      ctx.body = { foo: 'bar' };
+      assert('application/json' == ctx.responseHeader['content-type']);
+    })
+  })
+})
+
 describe('ctx.error(msg)', function(){
   it('should set .status to 500', function(done){
     var ctx = context();
@@ -91,9 +145,6 @@ describe('ctx.responseLength', function(){
 
         ctx.body = new Buffer('foo');
         ctx.responseLength.should.equal(3);
-
-        ctx.body = {};
-        assert(null == ctx.responseLength);
       })
     })
 
@@ -227,6 +278,7 @@ describe('ctx.status=', function(){
 
       app.use(function(next){
         return function *(){
+          this.body = { foo: 'bar' };
           this.set('Content-Type', 'application/json');
           this.set('Content-Length', '15');
           this.set('Transfer-Encoding', 'chunked');
