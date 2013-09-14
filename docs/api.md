@@ -1,4 +1,3 @@
-
 ## Application
 
   A Koa application is not a 1-to-1 representation of an HTTP server,
@@ -446,7 +445,7 @@ this.body = 'Redirecting to shopping cart';
   to prompt for download. Optionally specify the `filename` of the
   download.
 
-### ctx.accept(types)
+### ctx.accepts(types)
 
   Check if the given `type(s)` is acceptable, returning
   the best match when true, otherwise `undefined`, in which
