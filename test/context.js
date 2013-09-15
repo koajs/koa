@@ -22,6 +22,15 @@ function context(req, res) {
 }
 
 describe('ctx.body=', function(){
+  describe('when Content-Type is set', function(){
+    it('should not override', function(){
+      var ctx = context();
+      ctx.type = 'png';
+      ctx.body = new Buffer('something');
+      assert('image/png' == ctx.responseHeader['content-type']);
+    })
+  })
+
   describe('when a string is given', function(){
     it('should default to text', function(){
       var ctx = context();
