@@ -29,6 +29,13 @@ describe('ctx.body=', function(){
       ctx.body = new Buffer('something');
       assert('image/png' == ctx.responseHeader['content-type']);
     })
+
+    it('should override length', function(){
+      var ctx = context();
+      ctx.type = 'html';
+      ctx.body = 'something';
+      assert.equal(ctx.responseLength, 9);
+    })
   })
 
   describe('when a string is given', function(){
@@ -50,6 +57,21 @@ describe('ctx.body=', function(){
       var ctx = context();
       ctx.body = '<h1>Tobi</h1>';
       assert('text/html; charset=utf-8' == ctx.responseHeader['content-type']);
+    })
+
+    it('should set length', function(){
+      var string = '<h1>Tobi</h1>';
+      var ctx = context();
+      ctx.body = string;
+      assert.equal(ctx.responseLength, Buffer.byteLength(string));
+    })
+
+    it('should set length when body is override', function(){
+      var string = '<h1>Tobi</h1>';
+      var ctx = context();
+      ctx.body = string;
+      ctx.body = string + string;
+      assert.equal(ctx.responseLength, 2 * Buffer.byteLength(string));
     })
   })
 
