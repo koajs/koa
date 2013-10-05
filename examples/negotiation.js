@@ -36,7 +36,7 @@ app.use(function(next){
 
     // no body? nothing to format, early return
     if (!this.body) return;
-    
+
     // accepts json, koa handles this for us,
     // so just return
     if (this.accepts('json')) return;

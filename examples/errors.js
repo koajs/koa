@@ -15,7 +15,7 @@ app.use(function(next){
       this.status = err.status || 500;
       this.type = 'html';
       this.body = '<p>Something <em>exploded</em>, please contact Maru.</p>';
-    
+
       // since we handled this manually we'll
       // want to delegate to the regular app
       // level error handling as well so that

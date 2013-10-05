@@ -333,7 +333,7 @@ describe('app.respond', function(){
 describe('app.context(obj)', function(){
   it('should merge regular object properties', function(done){
     var app = koa();
-    
+
     app.context({
       a: 1,
       b: 2
@@ -357,7 +357,7 @@ describe('app.context(obj)', function(){
 
   it('should merge accessor properties', function(done){
     var app = koa();
-    
+
     app.context({
       get something() {
         return this._something || 'hi';
@@ -391,7 +391,7 @@ describe('app.context(obj)', function(){
     app.context({
       a: 1
     });
-    
+
     app.context({
       b: 2
     });

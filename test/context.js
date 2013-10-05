@@ -89,7 +89,7 @@ describe('ctx.error(msg)', function(){
     var ctx = context();
 
     try {
-      ctx.error('boom');      
+      ctx.error('boom');
     } catch (err) {
       assert(500 == err.status);
       done();
