@@ -30,11 +30,23 @@ describe('ctx.body=', function(){
       assert('image/png' == ctx.responseHeader['content-type']);
     })
 
+    describe('when body is an object', function(){
+      it('should override as json', function(){
+        var ctx = context();
+
+        ctx.body = '<em>hey</em>';
+        assert('text/html; charset=utf-8' == ctx.responseHeader['content-type']);
+        
+        ctx.body = { foo: 'bar' };
+        assert('application/json' == ctx.responseHeader['content-type']);
+      })
+    })
+
     it('should override length', function(){
       var ctx = context();
       ctx.type = 'html';
       ctx.body = 'something';
-      assert.equal(ctx.responseLength, 9);
+      ctx.responseLength.should.equal(9);
     })
   })
 
