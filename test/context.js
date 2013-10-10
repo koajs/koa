@@ -66,7 +66,7 @@ describe('ctx.body=', function(){
       assert.equal(ctx.responseLength, Buffer.byteLength(string));
     })
 
-    it('should set length when body is override', function(){
+    it('should set length when body is overriden', function(){
       var string = '<h1>Tobi</h1>';
       var ctx = context();
       ctx.body = string;
