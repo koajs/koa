@@ -21,7 +21,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "co": "1.5.1",
+    "co": "2.0.0",
     "debug": "*",
     "mime": "1.2.10",
     "fresh": "0.2.0",
