@@ -2,7 +2,7 @@
 ![koa middleware framework for nodejs](https://i.cloudup.com/uXIzgVnPWG-150x150.png)
 
   Expressive middleware for node.js using generators via [co](https://github.com/visionmedia/co)
-  to make writing web applications and REST APIs more enjoyable to write. 
+  to make writing web applications and REST APIs more enjoyable to write.
 
   Only methods that are common to nearly all HTTP servers are integrated directly into Koa's small ~400 SLOC codebase. This
   includes things like content-negotiation, normalization of node inconsistencies, redirection, and a few others.
@@ -16,12 +16,17 @@
 $ npm install koa
 ```
 
-  To use Koa you must be running __node 0.11.4__ or higher for generator support, and must run node(1)
-  with the `--harmony-generators` flag. If you don't like typing this, add an alias to your shell profile:
+  To use Koa, your version of node must have generator support.
+  There are currently two ways to achieve this:
 
-```
-alias node='node --harmony-generators'
-```
+  - Use __node 0.11.3__ or higher and run node(1) with the `--harmony-generators` flag.
+    If you don't like typing this, add an alias to your shell profile:
+
+      ```
+      alias node='node --harmony-generators'
+      ```
+
+  - Use [gnode](https://github.com/TooTallNate/gnode).
 
 ## Community
 
