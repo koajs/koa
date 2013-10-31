@@ -22,9 +22,9 @@ $ npm install koa
   - Use __node 0.11.3__ or higher and run node(1) with the `--harmony-generators` flag.
     If you don't like typing this, add an alias to your shell profile:
 
-      ```
-      alias node='node --harmony-generators'
-      ```
+    ```bash
+    alias node='node --harmony-generators'
+    ```
 
   - Use [gnode](https://github.com/TooTallNate/gnode).
 
