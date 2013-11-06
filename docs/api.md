@@ -528,6 +528,23 @@ switch (this.accepts('json', 'html', 'text')) {
   Check if a response header has already been sent. Useful for seeing
   if the client may be notified on error.
 
+### ctx.cookies.get(name, [options])
+
+  Get cookie `name` with `options`:
+
+ - `signed` the cookie requested should be signed
+
+### ctx.cookies.set(name, value, [options])
+
+  Set cookie `name` to `value` with `options`:
+
+ - `signed` sign the cookie value
+ - `expires` a `Date` for cookie expiration
+ - `path` cookie path, `/'` by default
+ - `domain` cookie domain
+ - `secure` secure cookie
+ - `httpOnly` server-accessible cookie, __true__ by default
+
 ### ctx.socket
 
   Request socket object.
