@@ -296,7 +296,11 @@ this.type = 'png';
 
 ### ctx.query
  
-  Get parsed query-string, for example "color=blue&size=small":
+  Get parsed query-string, returning an empty object when no
+  query-string is present. Note that this getter does _not_
+  support nested parsing.
+
+  For example "color=blue&size=small":
 
 ```js
 {
@@ -305,11 +309,10 @@ this.type = 'png';
 }
 ```
 
-  __NOTE__: this property returns `{}` when no query-string is present.
-
 ### ctx.query=
 
-  Set query-string to the given object.
+  Set query-string to the given object. Note that this
+  setter does _not_ support nested objects.
 
 ```js
 this.query = { next: '/login' };
