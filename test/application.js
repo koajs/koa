@@ -10,28 +10,22 @@ describe('app.use(fn)', function(){
     var app = koa();
     var calls = [];
 
-    app.use(function(next){
-      return function *(){
-        calls.push(1);
-        yield next;
-        calls.push(6);
-      }
+    app.use(function *(next){
+      calls.push(1);
+      yield next;
+      calls.push(6);
     });
 
-    app.use(function(next){
-      return function *(){
-        calls.push(2);
-        yield next;
-        calls.push(5);
-      }
+    app.use(function *(next){
+      calls.push(2);
+      yield next;
+      calls.push(5);
     });
 
-    app.use(function(next){
-      return function *(){
-        calls.push(3);
-        yield next;
-        calls.push(4);
-      }
+    app.use(function *(next){
+      calls.push(3);
+      yield next;
+      calls.push(4);
     });
 
     var server = app.listen();
@@ -51,10 +45,8 @@ describe('app.respond', function(){
     it('should not respond with the body', function(done){
       var app = koa();
 
-      app.use(function(next){
-        return function *(){
-          this.body = 'Hello';
-        }
+      app.use(function *(){
+        this.body = 'Hello';
       });
 
       var server = app.listen();
@@ -87,10 +79,8 @@ describe('app.respond', function(){
     it('should respond with the associated status message', function(done){
       var app = koa();
 
-      app.use(function(next){
-        return function *(){
-          this.status = 400;
-        }
+      app.use(function *(){
+        this.status = 400;
       });
 
       var server = app.listen();
@@ -106,10 +96,8 @@ describe('app.respond', function(){
     it('should respond', function(done){
       var app = koa();
 
-      app.use(function(next){
-        return function *(){
-          this.body = 'Hello';
-        }
+      app.use(function *(){
+        this.body = 'Hello';
       });
 
       var server = app.listen();
@@ -124,10 +112,8 @@ describe('app.respond', function(){
     it('should respond', function(done){
       var app = koa();
 
-      app.use(function(next){
-        return function *(){
-          this.body = new Buffer('Hello');
-        }
+      app.use(function *(){
+        this.body = new Buffer('Hello');
       });
 
       var server = app.listen();
@@ -142,11 +128,9 @@ describe('app.respond', function(){
     it('should respond', function(done){
       var app = koa();
 
-      app.use(function(next){
-        return function *(){
-          this.body = fs.createReadStream('package.json');
-          this.set('Content-Type', 'application/json');
-        }
+      app.use(function *(){
+        this.body = fs.createReadStream('package.json');
+        this.set('Content-Type', 'application/json');
       });
 
       var server = app.listen();
@@ -165,11 +149,9 @@ describe('app.respond', function(){
     it('should handle errors', function(done){
       var app = koa();
 
-      app.use(function(next){
-        return function *(){
-          this.set('Content-Type', 'application/json');
-          this.body = fs.createReadStream('does not exist');
-        }
+      app.use(function *(){
+        this.set('Content-Type', 'application/json');
+        this.body = fs.createReadStream('does not exist');
       });
 
       var server = app.listen();
@@ -186,10 +168,8 @@ describe('app.respond', function(){
     it('should respond with json', function(done){
       var app = koa();
 
-      app.use(function(next){
-        return function *(){
-          this.body = { hello: 'world' };
-        }
+      app.use(function *(){
+        this.body = { hello: 'world' };
       });
 
       var server = app.listen();
@@ -206,10 +186,8 @@ describe('app.respond', function(){
 
         app.jsonSpaces = 0;
 
-        app.use(function(next){
-          return function *(){
-            this.body = { hello: 'world' };
-          }
+        app.use(function *(){
+          this.body = { hello: 'world' };
         });
 
         var server = app.listen();
@@ -226,10 +204,8 @@ describe('app.respond', function(){
     it('should emit "error" on the app', function(done){
       var app = koa();
 
-      app.use(function(next){
-        return function *(){
-          throw new Error('boom');
-        }
+      app.use(function *(){
+        throw new Error('boom');
       });
 
       app.on('error', function(err){
@@ -246,13 +222,11 @@ describe('app.respond', function(){
       it('should expose the message', function(done){
         var app = koa();
 
-        app.use(function(next){
-          return function *(){
-            var err = new Error('sorry!');
-            err.status = 403;
-            err.expose = true;
-            throw err;
-          }
+        app.use(function *(){
+          var err = new Error('sorry!');
+          err.status = 403;
+          err.expose = true;
+          throw err;
         });
 
         request(app.listen())
@@ -266,12 +240,10 @@ describe('app.respond', function(){
       it('should respond with .status', function(done){
         var app = koa();
 
-        app.use(function(next){
-          return function *(){
-            var err = new Error('s3 explodes');
-            err.status = 403;
-            throw err;
-          }
+        app.use(function *(){
+          var err = new Error('s3 explodes');
+          err.status = 403;
+          throw err;
         });
 
         request(app.listen())
@@ -284,10 +256,8 @@ describe('app.respond', function(){
     it('should respond with 500', function(done){
       var app = koa();
 
-      app.use(function(next){
-        return function *(){
-          throw new Error('boom!');
-        }
+      app.use(function *(){
+        throw new Error('boom!');
       });
 
       var server = app.listen();
@@ -301,23 +271,19 @@ describe('app.respond', function(){
     it('should be catchable', function(done){
       var app = koa();
 
-      app.use(function(next){
-        return function *(){
-          try {
-            yield next;
-            this.body = 'Hello';
-          } catch (err) {
-            error = err;
-            this.body = 'Got error';
-          }
+      app.use(function *(next){
+        try {
+          yield next;
+          this.body = 'Hello';
+        } catch (err) {
+          error = err;
+          this.body = 'Got error';
         }
       });
 
-      app.use(function(next){
-        return function *(){
-          throw new Error('boom!');
-          this.body = 'Oh no';
-        }
+      app.use(function *(next){
+        throw new Error('boom!');
+        this.body = 'Oh no';
       });
 
       var server = app.listen();
@@ -339,12 +305,10 @@ describe('app.context(obj)', function(){
       b: 2
     });
 
-    app.use(function(next){
-      return function *(){
-        this.a.should.equal(1);
-        this.b.should.equal(2);
-        this.status = 204;
-      }
+    app.use(function *(next){
+      this.a.should.equal(1);
+      this.b.should.equal(2);
+      this.status = 204;
     });
 
     var server = app.listen();
@@ -368,13 +332,11 @@ describe('app.context(obj)', function(){
       }
     });
 
-    app.use(function(next){
-      return function *(){
-        this.something.should.equal('hi');
-        this.something = 'hello';
-        this.something.should.equal('hello');
-        this.status = 204;
-      }
+    app.use(function *(next){
+      this.something.should.equal('hi');
+      this.something = 'hello';
+      this.something.should.equal('hello');
+      this.status = 204;
     });
 
     var server = app.listen();
@@ -396,12 +358,10 @@ describe('app.context(obj)', function(){
       b: 2
     });
 
-    app.use(function(next){
-      return function *(){
-        this.a.should.equal(1);
-        this.b.should.equal(2);
-        this.status = 204;
-      }
+    app.use(function *(){
+      this.a.should.equal(1);
+      this.b.should.equal(2);
+      this.status = 204;
     });
 
     var server = app.listen();
@@ -420,11 +380,9 @@ describe('app.context(obj)', function(){
       a: 1
     });
 
-    app2.use(function(next){
-      return function *(){
-        assert.equal(this.a, undefined);
-        this.status = 204;
-      }
+    app2.use(function *(next){
+      assert.equal(this.a, undefined);
+      this.status = 204;
     });
 
     var server = http.createServer(app2.callback());

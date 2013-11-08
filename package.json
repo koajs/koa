@@ -21,12 +21,12 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "co": "2.0.0",
+    "co": "2.2.0",
     "debug": "*",
     "mime": "1.2.10",
     "fresh": "0.2.0",
     "negotiator": "0.2.7",
-    "koa-compose": "1.0.0",
+    "koa-compose": "2.0.0",
     "cookies": "~0.3.6"
   },
   "devDependencies": {
