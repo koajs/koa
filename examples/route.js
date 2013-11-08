@@ -1,5 +1,4 @@
 
-var http = require('http');
 var koa = require('..');
 var app = koa();
 
@@ -7,13 +6,11 @@ var data;
 
 // logger
 
-app.use(function(next){
-  return function *(){
-    var start = new Date;
-    yield next;
-    var ms = new Date - start;
-    console.log('%s %s - %s', this.method, this.url, ms);
-  }
+app.use(function *(next){
+  var start = new Date;
+  yield next;
+  var ms = new Date - start;
+  console.log('%s %s - %s', this.method, this.url, ms);
 });
 
 // response
@@ -56,12 +53,10 @@ function post(path, fn) {
 }
 
 function route(method, path, fn) {
-  return function(next){
-    return function *() {
-      var match = method == this.method && this.path == path;
-      if (match) return yield fn;
-      yield next;
-    }
+  return function *(next){
+    var match = method == this.method && this.path == path;
+    if (match) return yield fn;
+    yield next;
   }
 }
 

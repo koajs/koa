@@ -6,51 +6,43 @@ var app = koa();
 
 // ignore favicons
 
-app.use(function(next){
-  return function *(){
-    if ('/favicon.ico' == this.path) this.status = 404;
-    yield next;
-  }
+app.use(function *(next){
+  if ('/favicon.ico' == this.path) this.status = 404;
+  yield next;
 });
 
 // logger
 
-app.use(function(next){
-  return function *(){
-    console.log('%s %s', this.method, this.url);
-    yield next;
-  }
+app.use(function *(next){
+  console.log('%s %s', this.method, this.url);
+  yield next;
 });
 
 // stream a file
 
-app.use(function(next){
-  return function *(){
-    var path = __dirname + this.path;
-    var exists = yield isFile(path);
+app.use(function *(next){
+  var path = __dirname + this.path;
+  var exists = yield isFile(path);
 
-    if (!exists) return yield next;
+  if (!exists) return yield next;
 
-    this.body = fs.createReadStream(path);
-    yield next;
-  }
+  this.body = fs.createReadStream(path);
+  yield next;
 });
 
 // gzip the response
 
-app.use(function(next){
-  return function *(){
-    var body = this.body;
+app.use(function *(next){
+  var body = this.body;
 
-    if (!body || !body.readable) return yield next;
+  if (!body || !body.readable) return yield next;
 
-    var gzip = zlib.createGzip();
-    this.set('Content-Encoding', 'gzip');
-    this.body = gzip;
-    body.pipe(gzip);
+  var gzip = zlib.createGzip();
+  this.set('Content-Encoding', 'gzip');
+  this.body = gzip;
+  body.pipe(gzip);
 
-    yield next;
-  }
+  yield next;
 });
 
 app.listen(3000);
