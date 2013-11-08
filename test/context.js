@@ -28,7 +28,7 @@ describe('ctx.body=', function(){
 
         ctx.body = '<em>hey</em>';
         assert('text/html; charset=utf-8' == ctx.responseHeader['content-type']);
-        
+
         ctx.body = { foo: 'bar' };
         assert('application/json' == ctx.responseHeader['content-type']);
       })
@@ -394,7 +394,7 @@ describe('ctx.accepted', function(){
     it('should return accepted types', function(){
       var ctx = context();
       ctx.req.headers.accept = 'application/*;q=0.2, image/jpeg;q=0.8, text/html, text/plain';
-      ctx.accepted.should.eql(['text/plain',  'text/html', 'image/jpeg', 'application/*']);
+      ctx.accepted.should.eql(['text/html', 'text/plain', 'image/jpeg', 'application/*']);
     })
   })
 
