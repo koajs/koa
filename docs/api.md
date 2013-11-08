@@ -485,21 +485,74 @@ switch (this.accepts('json', 'html', 'text')) {
 }
 ```
 
-### ctx.accepted
+### ctx.acceptsEncodings(encodings)
 
-  Return accepted mime types ordered by quality.
+  Check if `encodings` are acceptable, returning
+  the best match when true, otherwise `undefined`.
 
-### ctx.acceptedEncodings
+```js
+// Accept-Encoding: gzip
+this.acceptsEncodings('gzip', 'deflate');
+// => "gzip"
 
-  Return accepted content encodings ordered by quality.
+this.acceptsEncodings(['gzip', 'deflate']);
+// => "gzip"
+```
 
-### ctx.acceptedCharsets
+  When no arguments are given all accepted encodings
+  are returned as an array:
 
-  Return accepted charsets ordered by quality.
+```js
+// Accept-Encoding: gzip, deflate
+this.acceptsEncodings();
+// => ["gzip", "deflate"]
+```
 
-### ctx.acceptedLanguages
+### ctx.acceptsCharsets(charsets)
 
-  Return accepted languages ordered by quality.
+  Check if `charsets` are acceptable, returning
+  the best match when true, otherwise `undefined`.
+
+```js
+// Accept-Charset: utf-8, iso-8859-1;q=0.2, utf-7;q=0.5
+this.acceptsCharsets('utf-8', 'utf-7');
+// => "utf-8"
+
+this.acceptsCharsets(['utf-7', 'utf-8']);
+// => "utf-8"
+```
+
+  When no arguments are given all accepted charsets
+  are returned as an array:
+
+```js
+// Accept-Charset: utf-8, iso-8859-1;q=0.2, utf-7;q=0.5
+this.acceptsCharsets();
+// => ["utf-8", "utf-7", "iso-8859-1"]
+```
+
+### ctx.acceptsLanguages(langs)
+
+  Check if `langs` are acceptable, returning
+  the best match when true, otherwise `undefined`.
+
+```js
+// Accept-Language: en;q=0.8, es, pt
+this.acceptsLanguages('es', 'en');
+// => "es"
+
+this.acceptsLanguages(['en', 'es']);
+// => "es"
+```
+
+  When no arguments are given all accepted languages
+  are returned as an array:
+
+```js
+// Accept-Language: en;q=0.8, es, pt
+this.acceptsLanguages();
+// => ["es", "pt", "en"]
+```
 
 ### ctx.headerSent
 

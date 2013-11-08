@@ -389,23 +389,6 @@ describe('ctx.fresh', function(){
   })
 })
 
-describe('ctx.accepted', function(){
-  describe('when Accept is populated', function(){
-    it('should return accepted types', function(){
-      var ctx = context();
-      ctx.req.headers.accept = 'application/*;q=0.2, image/jpeg;q=0.8, text/html, text/plain';
-      ctx.accepted.should.eql(['text/html', 'text/plain', 'image/jpeg', 'application/*']);
-    })
-  })
-
-  describe('when Accept is not populated', function(){
-    it('should return an empty array', function(){
-      var ctx = context();
-      ctx.accepted.should.eql([]);
-    })
-  })
-})
-
 describe('ctx.vary(field)', function(){
   describe('when Vary is not set', function(){
     it('should set it', function(){
@@ -437,10 +420,18 @@ describe('ctx.vary(field)', function(){
 })
 
 describe('ctx.accepts(types)', function(){
-  describe('with no types', function(){
+  describe('with no arguments', function(){
+    it('should return all accepted types', function(){
+      var ctx = context();
+      ctx.req.headers.accept = 'application/*;q=0.2, image/jpeg;q=0.8, text/html, text/plain';
+      ctx.accepts().should.eql(['text/html', 'text/plain', 'image/jpeg', 'application/*']);
+    })
+  })
+
+  describe('with no valid types', function(){
     it('should return false', function(){
       var ctx = context();
-      ctx.accepts('').should.be.false;
+      ctx.accepts('', 'hey').should.be.false;
     })
   })
 
@@ -504,53 +495,108 @@ describe('ctx.accepts(types)', function(){
   })
 })
 
-describe('ctx.acceptedLanguages', function(){
-  describe('when Accept-Language is populated', function(){
-    it('should return accepted types', function(){
+describe('ctx.acceptsLanguages(langs)', function(){
+  describe('with no arguments', function(){
+    describe('when Accept-Language is populated', function(){
+      it('should return accepted types', function(){
+        var ctx = context();
+        ctx.req.headers['accept-language'] = 'en;q=0.8, es, pt';
+        ctx.acceptsLanguages().should.eql(['es', 'pt', 'en']);
+      })
+    })
+
+    describe('when Accept-Language is not populated', function(){
+      it('should return an empty array', function(){
+        var ctx = context();
+        ctx.acceptsLanguages().should.eql([]);
+      })
+    })
+  })
+
+  describe('with multiple arguments', function(){
+    it('should return the best fit', function(){
       var ctx = context();
       ctx.req.headers['accept-language'] = 'en;q=0.8, es, pt';
-      ctx.acceptedLanguages.should.eql(['es', 'pt', 'en']);
+      ctx.acceptsLanguages('es', 'en').should.equal('es');
     })
   })
 
-  describe('when Accept-Language is not populated', function(){
-    it('should return an empty array', function(){
+  describe('with an array', function(){
+    it('should return the best fit', function(){
       var ctx = context();
-      ctx.acceptedLanguages.should.eql([]);
+      ctx.req.headers['accept-language'] = 'en;q=0.8, es, pt';
+      ctx.acceptsLanguages(['es', 'en']).should.equal('es');
     })
   })
 })
 
-describe('ctx.acceptedCharsets', function(){
-  describe('when Accept-Charset is populated', function(){
-    it('should return accepted types', function(){
+describe('ctx.acceptsCharsts()', function(){
+  describe('with no arguments', function(){
+    describe('when Accept-Charset is populated', function(){
+      it('should return accepted types', function(){
+        var ctx = context();
+        ctx.req.headers['accept-charset'] = 'utf-8, iso-8859-1;q=0.2, utf-7;q=0.5';
+        ctx.acceptsCharsets().should.eql(['utf-8', 'utf-7', 'iso-8859-1']);
+      })
+    })
+
+    describe('when Accept-Charset is not populated', function(){
+      it('should return an empty array', function(){
+        var ctx = context();
+        ctx.acceptsCharsets().should.eql([]);
+      })
+    })
+  })
+
+  describe('with multiple arguments', function(){
+    it('should return the best fit', function(){
       var ctx = context();
       ctx.req.headers['accept-charset'] = 'utf-8, iso-8859-1;q=0.2, utf-7;q=0.5';
-      ctx.acceptedCharsets.should.eql(['utf-8', 'utf-7', 'iso-8859-1']);
+      ctx.acceptsCharsets('utf-7', 'utf-8').should.equal('utf-8');
     })
   })
 
-  describe('when Accept-Charset is not populated', function(){
-    it('should return an empty array', function(){
+  describe('with an array', function(){
+    it('should return the best fit', function(){
       var ctx = context();
-      ctx.acceptedCharsets.should.eql([]);
+      ctx.req.headers['accept-charset'] = 'utf-8, iso-8859-1;q=0.2, utf-7;q=0.5';
+      ctx.acceptsCharsets(['utf-7', 'utf-8']).should.equal('utf-8');
     })
   })
 })
 
-describe('ctx.acceptedEncodings', function(){
-  describe('when Accept-Encoding is populated', function(){
-    it('should return accepted types', function(){
-      var ctx = context();
-      ctx.req.headers['accept-encoding'] = 'gzip, compress;q=0.2';
-      ctx.acceptedEncodings.should.eql(['gzip', 'compress', 'identity']);
+describe('ctx.acceptsEncodings()', function(){
+  describe('with no arguments', function(){
+    describe('when Accept-Encoding is populated', function(){
+      it('should return accepted types', function(){
+        var ctx = context();
+        ctx.req.headers['accept-encoding'] = 'gzip, compress;q=0.2';
+        ctx.acceptsEncodings().should.eql(['gzip', 'compress', 'identity']);
+      })
+    })
+
+    describe('when Accept-Encoding is not populated', function(){
+      it('should return identity', function(){
+        var ctx = context();
+        ctx.acceptsEncodings().should.eql(['identity']);
+      })
     })
   })
 
-  describe('when Accept-Encoding is not populated', function(){
-    it('should return identity', function(){
+  describe('with multiple arguments', function(){
+    it('should return the best fit', function(){
       var ctx = context();
-      ctx.acceptedEncodings.should.eql(['identity']);
+      ctx.req.headers['accept-encoding'] = 'gzip, compress;q=0.2';
+      ctx.acceptsEncodings('compress', 'gzip').should.eql('gzip');
+      ctx.acceptsEncodings('gzip', 'compress').should.eql('gzip');
+    })
+  })
+
+  describe('with an array', function(){
+    it('should return the best fit', function(){
+      var ctx = context();
+      ctx.req.headers['accept-encoding'] = 'gzip, compress;q=0.2';
+      ctx.acceptsEncodings(['compress', 'gzip']).should.eql('gzip');
     })
   })
 })
