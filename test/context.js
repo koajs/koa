@@ -509,7 +509,7 @@ describe('ctx.acceptedLanguages', function(){
     it('should return accepted types', function(){
       var ctx = context();
       ctx.req.headers['accept-language'] = 'en;q=0.8, es, pt';
-      ctx.acceptedLanguages.should.eql(['pt', 'es', 'en']);
+      ctx.acceptedLanguages.should.eql(['es', 'pt', 'en']);
     })
   })
 
