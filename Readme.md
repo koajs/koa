@@ -42,22 +42,17 @@ var app = koa();
 
 // logger
 
-app.use(function(next){
-  return function *(){
-    var start = new Date;
-    yield next;
-    var ms = new Date - start;
-    console.log('%s %s - %s', this.method, this.url, ms);
-  }
+app.use(function *(next){
+  var start = new Date;
+  yield next;
+  var ms = new Date - start;
+  console.log('%s %s - %s', this.method, this.url, ms);
 });
 
 // response
 
-app.use(function(next){
-  return function *(){
-    yield next;
-    this.body = 'Hello World';
-  }
+app.use(function *(){
+  this.body = 'Hello World';
 });
 
 app.listen(3000);
@@ -110,8 +105,8 @@ $ make test
 ## Authors
 
   - [TJ Holowaychuk](https://github.com/visionmedia)
-  - [Julian Gruber](https://github.com/juliangruber)
   - [Jonathan Ong](https://github.com/jonathanong)
+  - [Julian Gruber](https://github.com/juliangruber)
 
 # License
 
