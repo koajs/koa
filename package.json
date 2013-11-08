@@ -21,22 +21,22 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "co": "2.2.0",
+    "co": "~2.2.0",
     "debug": "*",
-    "mime": "1.2.10",
-    "fresh": "0.2.0",
-    "negotiator": "0.2.7",
-    "koa-compose": "2.0.0",
+    "mime": "~1.2.11",
+    "fresh": "~0.2.0",
+    "negotiator": "~0.3.0",
+    "koa-compose": "~2.0.0",
     "cookies": "~0.3.6"
   },
   "devDependencies": {
-    "bytes": "*",
-    "should": "1.2.2",
-    "mocha": "1.12.0",
-    "supertest": "0.7.1",
-    "co-fs": "~1.0.1",
-    "co-views": "0.0.1",
-    "ejs": "~0.8.4"
+    "bytes": "0.2.1 - 1",
+    "should": "^2.0.2",
+    "mocha": "^1.14.0",
+    "supertest": "0.7.1 - 1",
+    "co-fs": "^1.1",
+    "co-views": "0.1.0 - 1",
+    "ejs": "0.8.4 - 1"
   },
   "engines": {
     "node": "> 0.11.4"
