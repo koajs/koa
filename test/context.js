@@ -1,17 +1,9 @@
 
-var _context = require('../lib/context');
+var Context = require('../lib/context');
 var request = require('supertest');
 var assert = require('assert');
 var koa = require('..');
 var fs = require('fs');
-
-function Context(app, req, res) {
-  this.app = app;
-  this.req = req;
-  this.res = res;
-}
-
-Context.prototype = _context;
 
 function context(req, res) {
   req = req || { headers: {} };
