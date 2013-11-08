@@ -1,8 +1,10 @@
 
 ![koa middleware framework for nodejs](https://i.cloudup.com/uXIzgVnPWG-150x150.png)
 
+  [![Build Status](https://travis-ci.org/koajs/koa.png)](https://travis-ci.org/koajs/koa)
+
   Expressive middleware for node.js using generators via [co](https://github.com/visionmedia/co)
-  to make writing web applications and REST APIs more enjoyable to write. 
+  to make writing web applications and REST APIs more enjoyable to write.
 
   Only methods that are common to nearly all HTTP servers are integrated directly into Koa's small ~400 SLOC codebase. This
   includes things like content-negotiation, normalization of node inconsistencies, redirection, and a few others.
