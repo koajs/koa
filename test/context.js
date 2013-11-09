@@ -849,6 +849,30 @@ describe('ctx.redirect(url)', function(){
       ctx.body.should.equal('Redirecting to ' + url + '.');
     })
   })
+
+  describe('when status is 301', function(){
+    it('should not change the status code', function(){
+      var ctx = context();
+      var url = 'http://google.com';
+      ctx.status = 301;
+      ctx.header.accept = 'text/plain';
+      ctx.redirect('http://google.com');
+      ctx.status.should.equal(301);
+      ctx.body.should.equal('Redirecting to ' + url + '.');
+    })
+  })
+
+  describe('when status is 304', function(){
+    it('should change the status code', function(){
+      var ctx = context();
+      var url = 'http://google.com';
+      ctx.status = 304;
+      ctx.header.accept = 'text/plain';
+      ctx.redirect('http://google.com');
+      ctx.status.should.equal(302);
+      ctx.body.should.equal('Redirecting to ' + url + '.');
+    })
+  })
 })
 
 function escape(html) {
