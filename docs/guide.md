@@ -8,13 +8,11 @@
   `X-Response-Time` header field the middleware would look like the following:
 
 ```js
-function responseTime(next){
-  return function *(){
-    var start = new Date;
-    yield next;
-    var ms = new Date - start;
-    this.set('X-Response-Time', ms + 'ms');
-  }
+function *responseTime(next){
+  var start = new Date;
+  yield next;
+  var ms = new Date - start;
+  this.set('X-Response-Time', ms + 'ms');
 }
 
 app.use(responseTime);
@@ -23,13 +21,11 @@ app.use(responseTime);
   Here's another way to write the same thing, inline:
 
 ```js
-app.use(function(next){
-  return function *(){
-    var start = new Date;
-    yield next;
-    var ms = new Date - start;
-    this.set('X-Response-Time', ms + 'ms');
-  }
+app.use(function *(next){
+  var start = new Date;
+  yield next;
+  var ms = new Date - start;
+  this.set('X-Response-Time', ms + 'ms');
 });
 ```
 
@@ -63,19 +59,8 @@ to this behaviour.
  For example this would be fine:
 
 ```js
-app.use(function(){
-  return function *response(){
-    if ('/' != this.url) return;
-    this.body = 'Hello World';
-  }
-});
-```
-
-  It's important to note that not all middleware will need to conform, the best example of this
-  is a router, which are typically always acting as end-points, or downstream middleware:
-
-````js
-app.use(get('/', function *(){
+app.use(function *response(){
+  if ('/' != this.url) return;
   this.body = 'Hello World';
 });
 ```
@@ -101,16 +86,14 @@ app.use(get('/', function *(){
 function logger(format){
   format = format || ':method ":url"';
 
-  return function(next){
-    return function *(){
-      var str = format
-        .replace(':method', this.method)
-        .replace(':url', this.url);
+  return function *(next){
+    var str = format
+      .replace(':method', this.method)
+      .replace(':url', this.url);
 
-      console.log(str);
-      
-      yield next;
-    }
+    console.log(str);
+    
+    yield next;
   }
 }
 
@@ -125,10 +108,8 @@ app.use(logger(':method :url'));
 
 ```js
 function logger(format){
-  return function(next){
-    return function *logger(){
-      // ^-- name this guy
-    }
+  return function *logger(next){
+
   }
 }
 ```
@@ -143,17 +124,15 @@ function logger(format){
 ```js
 var fs = require('co-fs');
 
-app.use(function(){
-  return function *(){
-    var paths = yield fs.readdir('docs');
+app.use(function *(){
+  var paths = yield fs.readdir('docs');
 
-    var files = yield paths.map(function(path){
-      return fs.readFile('docs/' + path, 'utf8');
-    });
+  var files = yield paths.map(function(path){
+    return fs.readFile('docs/' + path, 'utf8');
+  });
 
-    this.type = 'markdown';
-    this.body = files.join('');
-  }
+  this.type = 'markdown';
+  this.body = files.join('');
 });
 ```
 
