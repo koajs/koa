@@ -67,14 +67,6 @@ $ make test
 
 ## Benchmarks
 
-  Average latency with one middleware:
-
-    0.628ms
-
-  Average latency with __400__ noop middleware:
-
-    1.5ms
-
   If you like silly benchmarks, here's the requests per second using
   [wrk](https://github.com/wg/wrk) 3.x on my MBP.
 
