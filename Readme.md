@@ -75,32 +75,36 @@ $ make test
 
     1.5ms
 
-  If you like silly benchmarks, here's the requests per second:
+  If you like silly benchmarks, here's the requests per second using
+  [wrk](https://github.com/wg/wrk) 3.x on my MBP.
 
 ```
 1 middleware
-8083.45
+8367.03
 
 5 middleware
-7449.95
+8074.10
 
 10 middleware
-7166.66
+7526.55
 
 15 middleware
-6992.18
+7399.92
 
 20 middleware
-6650.28
+7055.33
 
 30 middleware
-6113.57
+6460.17
 
 50 middleware
-5117.46
+5671.98
+
+100 middleware
+4349.37
 ```
 
-  With __50__ middleware (likely much more than you'll need), that's __307,020__ requests per minute, and __18,421,200__ per hour,  __442 million__ per day, so unless you're a facebook and can't manage to spin up more
+  With __50__ middleware (likely much more than you'll need), that's __340,260__ requests per minute, and __20,415,600__ per hour,  and over __440 million__ per day, so unless you're a facebook and can't manage to spin up more
   than one process to scale horizontally you'll be fine ;)
 
 ## Authors
