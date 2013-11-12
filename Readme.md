@@ -1,4 +1,3 @@
-
 ![koa middleware framework for nodejs](https://i.cloudup.com/uXIzgVnPWG-150x150.png)
 
   [![Build Status](https://travis-ci.org/koajs/koa.png)](https://travis-ci.org/koajs/koa)
@@ -28,7 +27,7 @@ alias node='node --harmony-generators'
 ## Community
 
  - [API](docs/api.md) documentation
- - [Middleware](https://github.com/koajs/koa/wiki/Koa) list
+ - [Middleware](https://github.com/koajs/koa/wiki) list
  - [Wiki](https://github.com/koajs/koa/wiki)
  - [G+ Community](https://plus.google.com/communities/101845768320796750641)
  - [Mailing list](https://groups.google.com/forum/#!forum/koajs)
