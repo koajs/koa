@@ -1,0 +1,38 @@
+
+var context = require('../context');
+
+describe('ctx.acceptsEncodings()', function(){
+  describe('with no arguments', function(){
+    describe('when Accept-Encoding is populated', function(){
+      it('should return accepted types', function(){
+        var ctx = context();
+        ctx.req.headers['accept-encoding'] = 'gzip, compress;q=0.2';
+        ctx.acceptsEncodings().should.eql(['gzip', 'compress', 'identity']);
+      })
+    })
+
+    describe('when Accept-Encoding is not populated', function(){
+      it('should return identity', function(){
+        var ctx = context();
+        ctx.acceptsEncodings().should.eql(['identity']);
+      })
+    })
+  })
+
+  describe('with multiple arguments', function(){
+    it('should return the best fit', function(){
+      var ctx = context();
+      ctx.req.headers['accept-encoding'] = 'gzip, compress;q=0.2';
+      ctx.acceptsEncodings('compress', 'gzip').should.eql('gzip');
+      ctx.acceptsEncodings('gzip', 'compress').should.eql('gzip');
+    })
+  })
+
+  describe('with an array', function(){
+    it('should return the best fit', function(){
+      var ctx = context();
+      ctx.req.headers['accept-encoding'] = 'gzip, compress;q=0.2';
+      ctx.acceptsEncodings(['compress', 'gzip']).should.eql('gzip');
+    })
+  })
+})
