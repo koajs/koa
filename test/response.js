@@ -1,9 +1,7 @@
 
 var Context = require('../lib/context');
-var request = require('supertest');
-var assert = require('assert');
+var Response = require('../lib/response');
 var koa = require('..');
-var fs = require('fs');
 
 function context(req, res) {
   req = req || { headers: {} };
@@ -13,4 +11,8 @@ function context(req, res) {
   return ctx;
 }
 
-module.exports = context;
+function response(req, res) {
+  return new Response(context(req, res));
+}
+
+module.exports = response;

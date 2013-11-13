@@ -1,0 +1,25 @@
+
+var context = require('../context');
+
+describe('ctx.query', function(){
+  describe('when missing', function(){
+    it('should return an empty object', function(){
+      var ctx = context({ url: '/' });
+      ctx.query.should.eql({});
+    })
+  })
+
+  it('should return a parsed query-string', function(){
+    var ctx = context({ url: '/?page=2' });
+    ctx.query.page.should.equal('2');
+  })
+})
+
+describe('ctx.query=', function(){
+  it('should stringify and replace the querystring', function(){
+    var ctx = context({ url: '/store/shoes' });
+    ctx.query = { page: 2, color: 'blue' };
+    ctx.url.should.equal('/store/shoes?page=2&color=blue');
+    ctx.querystring.should.equal('page=2&color=blue');
+  })
+})
