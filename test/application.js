@@ -40,6 +40,31 @@ describe('app.use(fn)', function(){
   })
 })
 
+describe('app.on(error)', function(){
+  it('should delegate context errors', function(done){
+    var app = koa();
+    var error = new Error();
+    var context;
+
+    app.use(function *(){
+      context = this;
+      throw error;
+    })
+
+    app.on('error', function(err, ctx){
+      err.should.equal(error);
+      ctx.should.equal(context);
+      done();
+    })
+
+    var server = app.listen();
+
+    request(server)
+    .get('/')
+    .end(function(err){});
+  })
+})
+
 describe('app.respond', function(){
   describe('when HEAD is used', function(){
     it('should not respond with the body', function(done){
