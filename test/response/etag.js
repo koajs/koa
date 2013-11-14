@@ -19,10 +19,4 @@ describe('res.etag', function(){
     res.etag = 'asdf';
     res.header.etag.should.equal('"asdf"');
   })
-
-  it('should get the etag', function(){
-    var res = response();
-    res.set('etag', '"asdf"');
-    res.etag.should.equal('"asdf"');
-  })
 })
