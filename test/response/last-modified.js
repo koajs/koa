@@ -1,5 +1,5 @@
 
-var response = require('../response');
+var response = require('../context').response;
 
 describe('res.lastModified', function(){
   it('should set the header as a UTCString', function(){

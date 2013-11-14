@@ -1,5 +1,5 @@
 
-var response = require('../response');
+var response = require('../context').response;
 
 describe('res.etag', function(){
   it('should not modify an etag with quotes', function(){
