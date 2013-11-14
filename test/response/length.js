@@ -1,5 +1,5 @@
 
-var response = require('../response');
+var response = require('../context').response;
 var assert = require('assert');
 
 describe('res.length', function(){

@@ -1,5 +1,5 @@
 
-var request = require('../request');
+var request = require('../context').request;
 
 describe('req.secure', function(){
   it('should return true when encrypted', function(){
