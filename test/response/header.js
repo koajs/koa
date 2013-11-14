@@ -1,5 +1,5 @@
 
-var response = require('../response');
+var response = require('../context').response;
 
 describe('res.header', function(){
   it('should return the response header object', function(){

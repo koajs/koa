@@ -1,5 +1,5 @@
 
-var request = require('../request');
+var request = require('../context').request;
 
 describe('req.host', function(){
   it('should return host void of port', function(){
