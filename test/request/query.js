@@ -22,4 +22,12 @@ describe('ctx.query=', function(){
     ctx.url.should.equal('/store/shoes?page=2&color=blue');
     ctx.querystring.should.equal('page=2&color=blue');
   })
+
+  it('should change .url but not .originalUrl', function(){
+    var ctx = context({ url: '/store/shoes' });
+    ctx.query = { page: 2 };
+    ctx.url.should.equal('/store/shoes?page=2');
+    ctx.originalUrl.should.equal('/store/shoes');
+    ctx.request.originalUrl.should.equal('/store/shoes');
+  })
 })
