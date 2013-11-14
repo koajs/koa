@@ -1,5 +1,5 @@
 
-var request = require('../request');
+var request = require('../context').request;
 
 describe('req.protocol', function(){
   describe('when encrypted', function(){

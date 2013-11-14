@@ -1,5 +1,5 @@
 
-var request = require('../request');
+var request = require('../context').request;
 
 describe('req.header', function(){
   it('should return the request header object', function(){

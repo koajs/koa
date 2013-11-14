@@ -1,5 +1,5 @@
 
-var response = require('../response');
+var response = require('../context').response;
 var request = require('supertest');
 var assert = require('assert');
 var koa = require('../..');
