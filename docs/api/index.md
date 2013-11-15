@@ -59,6 +59,26 @@ http.createServer(app.callback()).listen(3001);
   Add the given middleware function to this application. See [Middleware](#middleware) for
   more information.
 
+### app.keys=
+
+ Set signed cookie keys.
+  
+ These are passed to [KeyGrip](https://github.com/jed/keygrip),
+ however you may also pass your own `KeyGrip` instance. For
+ example the following are acceptable:
+
+```js 
+app.keys = ['im a newer secret', 'i like turtle'];
+app.keys = new KeyGrip(['im a newer secret', 'i like turtle'], 'sha256');
+```
+
+  These keys may be rotated and are used when signing cookies
+  with the `{ signed: true }` option:
+
+```js
+this.cookies.set('name', 'tobi', { signed: true });
+```
+
 ## Handling Requests
 
   Koa requests are manipulated using a `Context` object containing both a Koa `Request` and `Response` object. For more information on these view:
