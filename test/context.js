@@ -1,4 +1,4 @@
-
+var EventEmitter = require('events').EventEmitter;
 var context = require('../lib/context');
 var request = require('../lib/request');
 var response = require('../lib/response');
@@ -8,6 +8,7 @@ exports = module.exports = function(req, res){
   req = req || { headers: {} };
   res = res || { _headers: {} };
   res.setHeader = function(k, v){ res._headers[k.toLowerCase()] = v };
+  req.__proto__ = res.__proto__ = EventEmitter.prototype;
   return koa().createContext(req, res);
 }
 
