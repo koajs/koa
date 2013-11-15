@@ -18,4 +18,12 @@ describe('ctx.path=', function(){
     ctx.path.should.equal('/logout');
     ctx.url.should.equal('/logout?next=/dashboard');
   })
+
+  it('should change .url but not .originalUrl', function(){
+    var ctx = context({ url: '/login' });
+    ctx.path = '/logout';
+    ctx.url.should.equal('/logout');
+    ctx.originalUrl.should.equal('/login');
+    ctx.request.originalUrl.should.equal('/login');
+  })
 })
