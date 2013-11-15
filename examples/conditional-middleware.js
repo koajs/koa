@@ -20,7 +20,7 @@ app.use(function *(next){
     yield next;
   } else {
     this.body = 'Hello World';
-    yield logger(next);
+    yield logger.call(this, next);
   }
 });
 

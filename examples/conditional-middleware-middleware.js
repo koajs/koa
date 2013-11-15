@@ -21,7 +21,7 @@ function ignoreAssets(mw) {
     if (/(\.js|\.css|\.ico)$/.test(this.path)) {
       yield next;
     } else {
-      yield mw(next);
+      yield mw.call(this, next);
     }
   }
 }
