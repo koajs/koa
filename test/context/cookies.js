@@ -42,7 +42,7 @@ describe('ctx.cookies.set()', function(){
 
         request(app.listen())
         .get('/')
-        .expect('Cannot call method \'sign\' of undefined', done);
+        .expect('.keys required for signed cookies', done);
       })
     })
 

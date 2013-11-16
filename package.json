@@ -27,14 +27,14 @@
     "fresh": "~0.2.0",
     "negotiator": "~0.3.0",
     "koa-compose": "~2.0.0",
-    "cookies": "~0.3.6",
+    "cookies": "~0.3.7",
     "keygrip": "~0.2.4"
   },
   "devDependencies": {
     "bytes": "~0.2.1",
-    "should": "~2.0.2",
+    "should": "~2.1.0",
     "mocha": "~1.14.0",
-    "supertest": "~0.7.1",
+    "supertest": "~0.8.1",
     "co-fs": "~1.1",
     "co-views": "~0.1.0",
     "ejs": "~0.8.4"
