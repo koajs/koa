@@ -61,6 +61,34 @@ describe('app.respond', function(){
         done();
       });
     })
+
+    it('should respond with a 404 if no body was set', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.status = 200;
+      })
+
+      var server = app.listen();
+
+      request(server)
+      .head('/')
+      .expect(404, done);
+    })
+
+    it('should respond with a 200 if body = ""', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.body = '';
+      })
+
+      var server = app.listen();
+
+      request(server)
+      .head('/')
+      .expect(200, done);
+    })
   })
 
   describe('when no middleware are present', function(){
