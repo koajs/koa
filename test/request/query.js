@@ -16,11 +16,12 @@ describe('ctx.query', function(){
 })
 
 describe('ctx.query=', function(){
-  it('should stringify and replace the querystring', function(){
+  it('should stringify and replace the querystring and search', function(){
     var ctx = context({ url: '/store/shoes' });
     ctx.query = { page: 2, color: 'blue' };
     ctx.url.should.equal('/store/shoes?page=2&color=blue');
     ctx.querystring.should.equal('page=2&color=blue');
+    ctx.search.should.equal('?page=2&color=blue')
   })
 
   it('should change .url but not .originalUrl', function(){
