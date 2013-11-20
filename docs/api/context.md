@@ -62,6 +62,8 @@
   - `ctx.redirect()`
   - `ctx.attachment()`
   - `ctx.set()`
+  - `ctx.lastModified=`
+  - `ctx.etag=`
 
 ## API
 
