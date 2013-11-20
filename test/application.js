@@ -104,19 +104,107 @@ describe('app.respond', function(){
   })
 
   describe('when .body is missing', function(){
-    it('should respond with the associated status message', function(done){
-      var app = koa();
+    describe('with status=400', function(){
+      it('should respond with the associated status message', function(done){
+        var app = koa();
 
-      app.use(function *(){
-        this.status = 400;
-      });
+        app.use(function *(){
+          this.status = 400;
+        });
 
-      var server = app.listen();
+        var server = app.listen();
 
-      request(server)
-      .get('/')
-      .expect(400)
-      .expect('Bad Request', done);
+        request(server)
+        .get('/')
+        .expect(400)
+        .expect('Bad Request', done);
+      })
+    })
+
+    describe('with status=200', function(){
+      it('should respond with a 404', function(done){
+        var app = koa();
+
+        app.use(function *(){
+          this.status = 200;
+        })
+
+        var server = app.listen();
+
+        request(server)
+        .get('/')
+        .expect(404)
+        .expect('Not Found', done);
+      })
+    })
+
+    describe('with status=204', function(){
+      it('should respond without a body', function(done){
+        var app = koa();
+
+        app.use(function *(){
+          this.status = 204;
+        })
+
+        var server = app.listen();
+
+        request(server)
+        .get('/')
+        .expect(204)
+        .expect('')
+        .end(function (err, res) {
+          if (err) return done(err);
+
+          res.header.should.not.have.property('content-type');
+          done();
+        })
+      })
+    })
+
+    describe('with status=205', function(){
+      it('should respond without a body', function(done){
+        var app = koa();
+
+        app.use(function *(){
+          this.status = 205;
+        })
+
+        var server = app.listen();
+
+        request(server)
+        .get('/')
+        .expect(205)
+        .expect('')
+        .end(function (err, res) {
+          if (err) return done(err);
+
+          res.header.should.not.have.property('content-type');
+          done();
+        })
+      })
+    })
+
+    describe('with status=304', function(){
+      it('should respond without a body', function(done){
+        var app = koa();
+
+        app.use(function *(){
+          this.status = 304;
+        })
+
+        var server = app.listen();
+
+        request(server)
+        .get('/')
+        .expect(304)
+        .expect('')
+        .end(function (err, res) {
+          if (err) return done(err);
+
+          res.header.should.not.have.property('content-type');
+          done();
+        })
+      })
     })
   })
 
