@@ -12,7 +12,7 @@
   that they are added at this level, instead of a higher level framework,
   which would force middlware to re-implement this common functionality.
 
-  A `Context` is created _per_ request, and is referenced in middleware 
+  A `Context` is created _per_ request, and is referenced in middleware
   as the receiver, or the `this` identifier.
 
 ## Request aliases
@@ -72,7 +72,7 @@
   Node's `request` object.
 
 ### ctx.res
- 
+
   Node's `response` object.
 
 ### ctx.request
@@ -80,7 +80,7 @@
   A koa `Request` object.
 
 ### ctx.response
-  
+
   A koa `Response` object.
 
 ### ctx.app
@@ -93,6 +93,8 @@
 
  - `signed` the cookie requested should be signed
 
+  Note: koa uses the [cookies](https://github.com/jed/cookies) module where options are simply passed.
+
 ### ctx.cookies.set(name, value, [options])
 
   Set cookie `name` to `value` with `options`:
@@ -104,19 +106,21 @@
  - `secure` secure cookie
  - `httpOnly` server-accessible cookie, __true__ by default
 
-### ctx.error(msg, [status])
+  Note: koa uses the [cookies](https://github.com/jed/cookies) module where options are simply passed.
+
+### ctx.throw(msg, [status])
 
   Helper method to throw an error with a `.status` property
   that will allow Koa to respond appropriately. The following
   combinations are allowed:
 
 ```js
-this.error(403)
-this.error('name required', 400)
-this.error('something exploded')
+this.throw(403)
+this.throw('name required', 400)
+this.throw('something exploded')
 ```
 
-  For example `this.error('name required', 400)` is requivalent to:
+  For example `this.throw('name required', 400)` is requivalent to:
 
 ```js
 var err = new Error('name required');
@@ -125,8 +129,7 @@ throw err;
 ```
 
   Note that these are user-level errors and are flagged with
-  `err.expose` meaning the messages are appropriate for 
+  `err.expose` meaning the messages are appropriate for
   client responses, which is typically not the case for
   error messages since you do not want to leak failure
   details.
-  

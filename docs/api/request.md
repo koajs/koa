@@ -22,7 +22,7 @@
 
 ### req.length
 
-  Return request Content-Length as a number when present, or undefined.
+  Return request Content-Length as a number when present, or `undefined`.
 
 ### req.type
 
@@ -31,7 +31,7 @@
 ```js
 var ct = this.type;
 // => "image/png"
-``` 
+```
 
 ### req.url
 
@@ -50,7 +50,7 @@ var ct = this.type;
   Set request pathname and retain query-string when present.
 
 ### req.query
- 
+
   Get parsed query-string, returning an empty object when no
   query-string is present. Note that this getter does _not_
   support nested parsing.
@@ -81,6 +81,14 @@ this.query = { next: '/login' };
 
   Set raw query string.
 
+### req.search
+
+  Get raw query string with the `?`.
+
+### req.search=
+
+  Set raw query string.
+
 ### req.host
 
   Get host void of port number when present. Supports `X-Forwarded-Host`
@@ -98,7 +106,7 @@ this.set('ETag', '123');
 if (this.fresh) {
   this.status = 304;
   return;
-} 
+}
 
 // cache is stale
 // fetch new data
@@ -133,21 +141,21 @@ this.body = yield db.find('something');
 ### req.subdomains
 
   Return subdomains as an array.
-  
+
   Subdomains are the dot-separated parts of the host before the main domain of
   the app. By default, the domain of the app is assumed to be the last two
   parts of the host. This can be changed by setting `app.subdomainOffset`.
-  
+
   For example, if the domain is "tobi.ferrets.example.com":
   If `app.subdomainOffset` is not set, this.subdomains is `["ferrets", "tobi"]`.
   If `app.subdomainOffset` is 3, this.subdomains is `["tobi"]`.
 
 ### req.is(type)
- 
+
   Check if the incoming request contains the `Content-Type`
   header field, and it contains the give mime `type`.
-  
-```js  
+
+```js
 // With Content-Type: text/html; charset=utf-8
 this.is('html');
 this.is('.html');
@@ -171,12 +179,12 @@ this.is('html');
   Check if the given `type(s)` is acceptable, returning
   the best match when true, otherwise `undefined`, in which
   case you should respond with 406 "Not Acceptable".
-  
+
   The `type` value may be one or more mime type string
   such as "application/json", the extension name
   such as "json", or an array `["json", "html", "text/plain"]`. When a list or array is given the _best_ match, if any is returned.
-  
-```js  
+
+```js
 // Accept: text/html
 this.accepts('html');
 // => "html"
@@ -282,28 +290,3 @@ this.acceptsLanguages();
 // => ["es", "pt", "en"]
 ```
 
-### req.error(msg, [status])
-
-  Helper method to throw an error with a `.status` property
-  that will allow Koa to respond appropriately. The following
-  combinations are allowed:
-
-```js
-this.error(403)
-this.error('name required', 400)
-this.error('something exploded')
-```
-
-  For example `this.error('name required', 400)` is requivalent to:
-
-```js
-var err = new Error('name required');
-err.status = 400;
-throw err;
-```
-
-  Note that these are user-level errors and are flagged with
-  `err.expose` meaning the messages are appropriate for 
-  client responses, which is typically not the case for
-  error messages since you do not want to leak failure
-  details.

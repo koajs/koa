@@ -87,7 +87,7 @@
 ### res.length
 
   Return response Content-Length as a number when present, or deduce
-  from `res.body` when possible, or undefined.
+  from `res.body` when possible, or `undefined`.
 
 ### res.body
 
@@ -166,7 +166,7 @@ this.set({
 ```js
 var ct = this.type;
 // => "image/png"
-``` 
+```
 
 ### res.type=
 
@@ -186,13 +186,13 @@ this.type = 'png';
 
 ### res.redirect(url, [alt])
 
-  Perform a 302 redirect to `url`.
-  
+  Perform a [302] redirect to `url`.
+
   The string "back" is special-cased
   to provide Referrer support, when Referrer
   is not present `alt` or "/" is used.
-  
-```js  
+
+```js
 this.redirect('back');
 this.redirect('back', '/index.html');
 this.redirect('/login');
@@ -200,11 +200,11 @@ this.redirect('http://google.com');
 ```
 
   To alter the default status of `302` or the response
-  body simply re-assign after this call:
+  body simply assign before and re-assign after this call:
 
 ```js
-this.redirect('/cart');
 this.status = 301;
+this.redirect('/cart');
 this.body = 'Redirecting to shopping cart';
 ```
 
@@ -219,3 +219,24 @@ this.body = 'Redirecting to shopping cart';
   Check if a response header has already been sent. Useful for seeing
   if the client may be notified on error.
 
+### res.lastModified
+
+  Return the `Last-Modified` header as a `Date`, if it exists.
+
+### res.lastModified=
+
+  Set the `Last-Modified` header as an appropriate UTC string.
+  You can either set it as a `Date` or date string.
+
+```js
+this.response.lastModified = new Date();
+```
+
+### res.etag=
+
+  Set the ETag of a response including the wrapped `"`s.
+  Note that there is no corresponding `res.etag` getter.
+
+```js
+this.response.etag = crypto.createHash('md5').update(this.body).digest('hex');
+```

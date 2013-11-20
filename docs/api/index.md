@@ -53,6 +53,8 @@ http.createServer(app.callback()).listen(3001);
 
   Return a callback function suitable for the `http.createServer()`
   method to handle a request.
+  You may also use this callback function to mount your koa app in a
+  Connect/Express app.
 
 ### app.use(function)
 
@@ -62,12 +64,12 @@ http.createServer(app.callback()).listen(3001);
 ### app.keys=
 
  Set signed cookie keys.
-  
+
  These are passed to [KeyGrip](https://github.com/jed/keygrip),
  however you may also pass your own `KeyGrip` instance. For
  example the following are acceptable:
 
-```js 
+```js
 app.keys = ['im a newer secret', 'i like turtle'];
 app.keys = new KeyGrip(['im a newer secret', 'i like turtle'], 'sha256');
 ```
@@ -101,14 +103,14 @@ app.on('error', function(err){
   If an error in the req/res cycle and it is _not_ possible to respond to the client, the `Context` instance is also passed:
 
 ```js
-app.on('error', function(err){
-  log.error('server error', err);
+app.on('error', function(err, ctx){
+  log.error('server error', err, ctx);
 });
 ```
 
   When an error occurs _and_ it is still possible to respond to the client, aka no data has been written to the socket, Koa will respond
   appropriately with a 500 "Internal Server Error". In either case
-  an app-level "error" is emitted for logging purposes. 
+  an app-level "error" is emitted for logging purposes.
 
 ## Notes
 
@@ -118,7 +120,12 @@ app.on('error', function(err){
   however expensive requests would benefit from custom handling. For
   example instead of reading a file into memory and piping it to the
   client, you may wish to `stat()` and set the `Content-*` header fields
-  appropriately to bypass the read. 
+  appropriately to bypass the read.
+
+  On a valid __HEAD__ request, you should either set the status code
+  to anything but `200` or set `this.body = ''`,
+  otherwise koa will not consider the request "handled" and instead
+  respond with a 404.
 
 ### Socket Errors
 
