@@ -8,6 +8,7 @@ describe('ctx.acceptsEncodings()', function(){
         var ctx = context();
         ctx.req.headers['accept-encoding'] = 'gzip, compress;q=0.2';
         ctx.acceptsEncodings().should.eql(['gzip', 'compress', 'identity']);
+        ctx.acceptsEncodings('gzip', 'compress').should.equal('gzip');
       })
     })
 
@@ -15,6 +16,7 @@ describe('ctx.acceptsEncodings()', function(){
       it('should return identity', function(){
         var ctx = context();
         ctx.acceptsEncodings().should.eql(['identity']);
+        ctx.acceptsEncodings('gzip', 'deflate').should.equal('identity');
       })
     })
   })

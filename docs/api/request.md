@@ -224,7 +224,7 @@ switch (this.accepts('json', 'html', 'text')) {
 ### req.acceptsEncodings(encodings)
 
   Check if `encodings` are acceptable, returning
-  the best match when true, otherwise `undefined`.
+  the best match when true, otherwise `identity`.
 
 ```js
 // Accept-Encoding: gzip
