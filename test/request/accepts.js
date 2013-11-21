@@ -3,17 +3,36 @@ var context = require('../context');
 
 describe('ctx.accepts(types)', function(){
   describe('with no arguments', function(){
-    it('should return all accepted types', function(){
-      var ctx = context();
-      ctx.req.headers.accept = 'application/*;q=0.2, image/jpeg;q=0.8, text/html, text/plain';
-      ctx.accepts().should.eql(['text/html', 'text/plain', 'image/jpeg', 'application/*']);
+    describe('when Accept is populated', function(){
+      it('should return all accepted types', function(){
+        var ctx = context();
+        ctx.req.headers.accept = 'application/*;q=0.2, image/jpeg;q=0.8, text/html, text/plain';
+        ctx.accepts().should.eql(['text/html', 'text/plain', 'image/jpeg', 'application/*']);
+      })
+    })
+
+    describe('when Accept is not populated', function(){
+      it('should return []', function(){
+        var ctx = context();
+        ctx.accepts().should.eql([]);
+      })
     })
   })
 
   describe('with no valid types', function(){
-    it('should return false', function(){
-      var ctx = context();
-      ctx.accepts('', 'hey').should.be.false;
+    describe('when Accept is populated', function(){
+      it('should return false', function(){
+        var ctx = context();
+        ctx.req.headers.accept = 'application/*;q=0.2, image/jpeg;q=0.8, text/html, text/plain';
+        ctx.accepts('image/png', 'image/tiff').should.be.false;
+      })
+    })
+
+    describe('when Accept is not populated', function(){
+      it('should return the first type', function(){
+        var ctx = context();
+        ctx.accepts('text/html', 'text/plain', 'image/jpeg', 'application/*').should.equal('text/html');
+      })
     })
   })
 

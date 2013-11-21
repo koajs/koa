@@ -177,12 +177,16 @@ this.is('html');
 ### req.accepts(types)
 
   Check if the given `type(s)` is acceptable, returning
-  the best match when true, otherwise `undefined`, in which
+  the best match when true, otherwise `false`, in which
   case you should respond with 406 "Not Acceptable".
 
   The `type` value may be one or more mime type string
   such as "application/json", the extension name
-  such as "json", or an array `["json", "html", "text/plain"]`. When a list or array is given the _best_ match, if any is returned.
+  such as "json", or an array `["json", "html", "text/plain"]`.
+  When a list or array is given the _best_ match, if any is returned.
+
+  Note that if the client did not send an `Accept` header,
+  the first `type` will be returned.
 
 ```js
 // Accept: text/html
@@ -218,6 +222,7 @@ switch (this.accepts('json', 'html', 'text')) {
   case 'json': break;
   case 'html': break;
   case 'text': break;
+  case false: break;
 }
 ```
 
