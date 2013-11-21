@@ -222,7 +222,7 @@ switch (this.accepts('json', 'html', 'text')) {
   case 'json': break;
   case 'html': break;
   case 'text': break;
-  case false: break;
+  default: this.throw(406);
 }
 ```
 
