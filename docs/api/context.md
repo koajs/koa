@@ -62,6 +62,7 @@
   - `ctx.redirect()`
   - `ctx.attachment()`
   - `ctx.set()`
+  - `ctx.remove()`
   - `ctx.lastModified=`
   - `ctx.etag=`
 

@@ -8,6 +8,7 @@ exports = module.exports = function(req, res){
   req = req || { headers: {} };
   res = res || { _headers: {} };
   res.setHeader = function(k, v){ res._headers[k.toLowerCase()] = v };
+  res.removeHeader = function(k, v){ delete res._headers[k.toLowerCase()] };
   return koa().createContext(req, res);
 }
 

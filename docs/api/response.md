@@ -159,6 +159,10 @@ this.set({
 });
 ```
 
+### res.remove(field)
+
+  Remove header `field`.
+
 ### res.type
 
   Get response `Content-Type` void of parameters such as "charset".
