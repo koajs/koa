@@ -92,7 +92,7 @@ function logger(format){
       .replace(':url', this.url);
 
     console.log(str);
-    
+
     yield next;
   }
 }
@@ -103,8 +103,7 @@ app.use(logger(':method :url'));
 
 ### Named middleware
 
-  Naming middleware is optional, however it's useful for debugging purposes to
-  assign a name.
+  Naming middleware is optional, however it's useful for debugging purposes to assign a name.
 
 ```js
 function logger(format){
@@ -134,5 +133,22 @@ app.use(function *(){
   this.type = 'markdown';
   this.body = files.join('');
 });
+```
+
+## Debugging Koa
+
+  Koa along with many of the libraries it's built with support the __DEBUG__ environment variable from [debug](https://github.com/visionmedia/debug) which provides simple conditional logging.
+
+  For example
+  to see all koa-specific debugging information just pass `DEBUG=koa*` and upon boot you'll see the list of middleware used, among other things.
+
+```
+$ DEBUG=koa* node --harmony examples/simple
+  koa:application use responseTime +0ms
+  koa:application use logger +4ms
+  koa:application use contentLength +0ms
+  koa:application use notfound +0ms
+  koa:application use response +0ms
+  koa:application listen +0ms
 ```
 
