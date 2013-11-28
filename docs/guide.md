@@ -113,6 +113,57 @@ function logger(format){
 }
 ```
 
+### Response Middleware
+
+  Middleware that decide to respond to a request and wish to bypass downstream middleware may
+  simply omit `yield next`. Typically this will be in routing middleware, but this can be performed by
+  any. For example the following will respond with "two", however all three are executed, giving the
+  downstream "three" middleware a chance to manipulate the response.
+
+```js
+app.use(function *(next){
+  console.log('>> one');
+  yield next;
+  console.log('<< one');
+});
+
+app.use(function *(next){
+  console.log('>> two');
+  this.body = 'two';
+  yield next;
+  console.log('<< two');
+});
+
+app.use(function *(next){
+  console.log('>> three');
+  yield next;
+  console.log('<< three');
+});
+```
+
+  The following configuration omits `yield next` in the second middleware, and will still respond
+  with "two", however the third (and any other downstream middleware) will be ignored:
+
+```js
+app.use(function *(next){
+  console.log('>> one');
+  yield next;
+  console.log('<< one');
+});
+
+app.use(function *(next){
+  console.log('>> two');
+  this.body = 'two';
+  console.log('<< two');
+});
+
+app.use(function *(next){
+  console.log('>> three');
+  yield next;
+  console.log('<< three');
+});
+```
+
 ## Async operations
 
   The [Co](https://github.com/visionmedia/co) forms Koa's foundation for generator delegation, allowing
