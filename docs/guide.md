@@ -164,6 +164,9 @@ app.use(function *(next){
 });
 ```
 
+  When the furthest downstream middleware executes `yield next;` it's really yielding to a noop
+  function, allowing the middleware to compose correctly anywhere in the stack.
+
 ## Async operations
 
   The [Co](https://github.com/visionmedia/co) forms Koa's foundation for generator delegation, allowing
