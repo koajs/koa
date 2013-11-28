@@ -37,7 +37,10 @@
     "supertest": "~0.8.1",
     "co-fs": "~1.1",
     "co-views": "~0.1.0",
-    "ejs": "~0.8.4"
+    "ejs": "~0.8.4",
+    "koa-logger": "~1.0.1",
+    "koa-static": "~1.2.0",
+    "co-busboy": "git://github.com/cojs/busboy"
   },
   "engines": {
     "node": "> 0.11.4"
