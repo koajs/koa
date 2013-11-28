@@ -7,6 +7,7 @@ var render = require('./lib/render');
 var logger = require('koa-logger');
 var route = require('koa-route');
 var views = require('co-views');
+var parse = require('co-body');
 var koa = require('../..');
 var app = koa();
 
@@ -63,28 +64,6 @@ function *create() {
   post.created_at = new Date;
   post.id = id;
   this.redirect('/');
-}
-
-// TODO: use a lib...
-
-var qs = require('querystring');
-
-function parse(ctx) {
-  return function(done){
-    var buf = '';
-    var req = ctx.req;
-    req.setEncoding('utf8');
-    req.on('data', function(chunk){ buf += chunk });
-    req.on('end', function(){
-      try {
-        done(null, qs.parse(buf));
-      } catch (err){
-        err.body = buf;
-        err.status = 400;
-        done(err);
-      }
-    });
-  }
 }
 
 // listen

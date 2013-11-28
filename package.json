@@ -42,7 +42,8 @@
     "koa-static": "~1.2.0",
     "co-busboy": "git://github.com/cojs/busboy",
     "koa-route": "~1.0.2",
-    "swig": "~1.1.0"
+    "swig": "~1.1.0",
+    "co-body": "0.0.1"
   },
   "engines": {
     "node": "> 0.11.4"
