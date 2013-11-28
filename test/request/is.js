@@ -1,6 +1,7 @@
 
-var should = require('should');
 var context = require('../context');
+var should = require('should');
+var assert = require('assert');
 
 describe('ctx.is(type)', function(){
   it('should ignore params', function(){
@@ -8,16 +9,16 @@ describe('ctx.is(type)', function(){
     ctx.header['content-type'] = 'text/html; charset=utf-8';
     ctx.header['transfer-encoding'] = 'chunked';
 
-    ctx.is('text/*').should.equal('text/*');
+    ctx.is('text/*').should.equal('text/html');
   })
 
   describe('when no body is given', function(){
     it('should return null', function(){
       var ctx = context();
 
-      should(ctx.is()).null;
-      should(ctx.is('image/*')).null;
-      should(ctx.is('text/*', 'image/*')).null;
+      assert(null == ctx.is());
+      assert(null == ctx.is('image/*'));
+      assert(null == ctx.is('image/*', 'text/*'));
     })
   })
 
@@ -48,11 +49,11 @@ describe('ctx.is(type)', function(){
       ctx.header['content-type'] = 'image/png';
       ctx.header['transfer-encoding'] = 'chunked';
 
-      ctx.is('png').should.equal('png');
-      ctx.is('.png').should.equal('.png');
+      ctx.is('png').should.equal('image/png');
+      ctx.is('.png').should.equal('image/png');
       ctx.is('image/png').should.equal('image/png');
-      ctx.is('image/*').should.equal('image/*');
-      ctx.is('*/png').should.equal('*/png');
+      ctx.is('image/*').should.equal('image/png');
+      ctx.is('*/png').should.equal('image/png');
 
       ctx.is('jpeg').should.be.false;
       ctx.is('.jpeg').should.be.false;
@@ -68,11 +69,11 @@ describe('ctx.is(type)', function(){
       ctx.header['content-type'] = 'image/png';
       ctx.header['transfer-encoding'] = 'chunked';
 
-      ctx.is('png').should.equal('png');
-      ctx.is('.png').should.equal('.png');
-      ctx.is('text/*', 'image/*').should.equal('image/*');
-      ctx.is('image/*', 'text/*').should.equal('image/*');
-      ctx.is('image/*', 'image/png').should.equal('image/*');
+      ctx.is('png').should.equal('image/png');
+      ctx.is('.png').should.equal('image/png');
+      ctx.is('text/*', 'image/*').should.equal('image/png');
+      ctx.is('image/*', 'text/*').should.equal('image/png');
+      ctx.is('image/*', 'image/png').should.equal('image/png');
       ctx.is('image/png', 'image/*').should.equal('image/png');
 
       ctx.is('jpeg').should.be.false;
@@ -83,14 +84,14 @@ describe('ctx.is(type)', function(){
   })
 
   describe('when Content-Type: application/x-www-form-urlencoded', function(){
-    it('should match `urlencoded', function(){
+    it('should match "urlencoded"', function(){
       var ctx = context();
       ctx.header['content-type'] = 'application/x-www-form-urlencoded';
       ctx.header['transfer-encoding'] = 'chunked';
 
-      ctx.is('urlencoded').should.equal('urlencoded');
-      ctx.is('json', 'urlencoded').should.equal('urlencoded');
-      ctx.is('urlencoded', 'json').should.equal('urlencoded');
+      ctx.is('urlencoded').should.equal('application/x-www-form-urlencoded');
+      ctx.is('json', 'urlencoded').should.equal('application/x-www-form-urlencoded');
+      ctx.is('urlencoded', 'json').should.equal('application/x-www-form-urlencoded');
     })
   })
 })

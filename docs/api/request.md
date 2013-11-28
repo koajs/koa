@@ -154,22 +154,33 @@ this.body = yield db.find('something');
 
   Check if the incoming request contains the "Content-Type"
   header field, and it contains any of the give mime `type`s.
-  If there is no request body, `null` is returned.
-  If there is no content type, `false` is returned.
-  Otherwise, it returns the first `type` that matches.
+  If there is no request body, `undefined` is returned.
+  If there is no content type, or the match fails `false` is returned.
+  Otherwise, it returns the matching content-type.
 
 ```js
 // With Content-Type: text/html; charset=utf-8
 this.is('html'); // => 'html'
 this.is('text/html'); // => 'text/html'
-this.is('text/*', 'text/html'); // => 'text/*'
+this.is('text/*', 'text/html'); // => 'text/html'
 
 // When Content-Type is application/json
 this.is('json', 'urlencoded'); // => 'json'
 this.is('application/json'); // => 'application/json'
-this.is('html', 'application/*'); // => 'application/*'
+this.is('html', 'application/*'); // => 'application/json'
 
 this.is('html'); // => false
+```
+
+  For example if you want to ensure that
+  only images are sent to a given route:
+
+```js
+if (this.is('image/*')) {
+  // process
+} else {
+  this.throw(415, 'images only!');
+}
 ```
 
 ### req.accepts(types)
