@@ -152,26 +152,24 @@ this.body = yield db.find('something');
 
 ### req.is(type)
 
-  Check if the incoming request contains the `Content-Type`
-  header field, and it contains the give mime `type`.
+  Check if the incoming request contains the "Content-Type"
+  header field, and it contains any of the give mime `type`s.
+  If there is no request body, `null` is returned.
+  If there is no content type, `false` is returned.
+  Otherwise, it returns the first `type` that matches.
 
 ```js
 // With Content-Type: text/html; charset=utf-8
-this.is('html');
-this.is('.html');
-this.is('text/html');
-this.is('text/*');
-// => true
+this.is('html'); // => 'html'
+this.is('text/html'); // => 'text/html'
+this.is('text/*', 'text/html'); // => 'text/*'
 
 // When Content-Type is application/json
-this.is('json');
-this.is('.json');
-this.is('application/json');
-this.is('application/*');
-// => true
+this.is('json', 'urlencoded'); // => 'json'
+this.is('application/json'); // => 'application/json'
+this.is('html', 'application/*'); // => 'application/*'
 
-this.is('html');
-// => false
+this.is('html'); // => false
 ```
 
 ### req.accepts(types)
