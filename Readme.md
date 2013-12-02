@@ -3,7 +3,7 @@
   [![Build Status](https://travis-ci.org/koajs/koa.png)](https://travis-ci.org/koajs/koa)
 
   Expressive middleware for node.js using generators via [co](https://github.com/visionmedia/co)
-  to make writing web applications and REST APIs more enjoyable to write.
+  to make web applications and REST APIs more enjoyable to write.
 
   Only methods that are common to nearly all HTTP servers are integrated directly into Koa's small ~400 SLOC codebase. This
   includes things like content-negotiation, normalization of node inconsistencies, redirection, and a few others.
@@ -96,7 +96,7 @@ $ make test
 4349.37
 ```
 
-  With __50__ middleware (likely much more than you'll need), that's __340,260__ requests per minute, and __20,415,600__ per hour,  and over __440 million__ per day, so unless you're a facebook and can't manage to spin up more
+  With __50__ middlewares (likely much more than you'll need), that's __340,260__ requests per minute, and __20,415,600__ per hour,  and over __440 million__ per day, so unless you're a Facebook and can't manage to spin up more
   than one process to scale horizontally you'll be fine ;)
 
 ## Authors
