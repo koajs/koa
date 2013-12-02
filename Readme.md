@@ -74,25 +74,25 @@ $ make test
 1 middleware
 8367.03
 
-5 middleware
+5 middlewares
 8074.10
 
-10 middleware
+10 middlewares
 7526.55
 
-15 middleware
+15 middlewares
 7399.92
 
-20 middleware
+20 middlewares
 7055.33
 
-30 middleware
+30 middlewares
 6460.17
 
-50 middleware
+50 middlewares
 5671.98
 
-100 middleware
+100 middlewares
 4349.37
 ```
 
