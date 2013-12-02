@@ -74,29 +74,29 @@ $ make test
 1 middleware
 8367.03
 
-5 middlewares
+5 middleware
 8074.10
 
-10 middlewares
+10 middleware
 7526.55
 
-15 middlewares
+15 middleware
 7399.92
 
-20 middlewares
+20 middleware
 7055.33
 
-30 middlewares
+30 middleware
 6460.17
 
-50 middlewares
+50 middleware
 5671.98
 
-100 middlewares
+100 middleware
 4349.37
 ```
 
-  With __50__ middlewares (likely much more than you'll need), that's __340,260__ requests per minute, and __20,415,600__ per hour,  and over __440 million__ per day, so unless you're a Facebook and can't manage to spin up more
+  With __50__ middleware (likely much more than you'll need), that's __340,260__ requests per minute, and __20,415,600__ per hour,  and over __440 million__ per day, so unless you're a Facebook and can't manage to spin up more
   than one process to scale horizontally you'll be fine ;)
 
 ## Authors
