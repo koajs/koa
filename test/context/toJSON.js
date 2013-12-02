@@ -11,7 +11,7 @@ describe('ctx.toJSON()', function(){
     ctx.status = 200;
     ctx.body = '<p>Hey</p>';
 
-    var obj = ctx.toJSON();
+    var obj = JSON.parse(JSON.stringify(ctx));
     var req = obj.request;
     var res = obj.response;
 
