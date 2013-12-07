@@ -27,6 +27,7 @@ alias node='node --harmony-generators'
 ## Community
 
  - [API](docs/api/index.md) documentation
+ - [Examples](https://github.com/koajs/examples)
  - [Middleware](https://github.com/koajs/koa/wiki) list
  - [Wiki](https://github.com/koajs/koa/wiki)
  - [G+ Community](https://plus.google.com/communities/101845768320796750641)
