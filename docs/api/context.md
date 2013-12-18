@@ -95,7 +95,7 @@
 
  - `signed` the cookie requested should be signed
 
-  Note: koa uses the [cookies](https://github.com/jed/cookies) module where options are simply passed.
+Note: koa uses the [cookies](https://github.com/jed/cookies) module where options are simply passed.
 
 ### ctx.cookies.set(name, value, [options])
 
@@ -108,7 +108,7 @@
  - `secure` secure cookie
  - `httpOnly` server-accessible cookie, __true__ by default
 
-  Note: koa uses the [cookies](https://github.com/jed/cookies) module where options are simply passed.
+Note: koa uses the [cookies](https://github.com/jed/cookies) module where options are simply passed.
 
 ### ctx.throw(msg, [status])
 
