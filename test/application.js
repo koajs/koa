@@ -5,6 +5,26 @@ var http = require('http');
 var koa = require('..');
 var fs = require('fs');
 
+describe('app', function(){
+  it('should handle socket errors', function(done){
+    var app = koa();
+
+    app.use(function *(next){
+      // triggers this.socket.writable == false
+      this.socket.emit('error', new Error('boom'));
+    });
+
+    app.on('error', function(err){
+      err.message.should.equal('boom');
+      done();
+    });
+
+    request(app.listen())
+    .get('/')
+    .end(function(){});
+  })
+})
+
 describe('app.use(fn)', function(){
   it('should compose middleware', function(done){
     var app = koa();
