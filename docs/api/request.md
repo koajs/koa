@@ -24,15 +24,6 @@
 
   Return request Content-Length as a number when present, or `undefined`.
 
-### req.type
-
-  Get request `Content-Type` void of parameters such as "charset".
-
-```js
-var ct = this.type;
-// => "image/png"
-```
-
 ### req.url
 
   Get request URL.
@@ -48,6 +39,36 @@ var ct = this.type;
 ### req.path=
 
   Set request pathname and retain query-string when present.
+
+### req.querystring
+
+  Get raw query string void of `?`.
+
+### req.querystring=
+
+  Set raw query string.
+
+### req.search
+
+  Get raw query string with the `?`.
+
+### req.search=
+
+  Set raw query string.
+
+### req.host
+
+  Get host void of port number when present. Supports `X-Forwarded-Host`
+  when `app.proxy` is __true__, otherwise `Host` is used.
+
+### req.type
+
+  Get request `Content-Type` void of parameters such as "charset".
+
+```js
+var ct = this.type;
+// => "image/png"
+```
 
 ### req.query
 
@@ -72,27 +93,6 @@ var ct = this.type;
 ```js
 this.query = { next: '/login' };
 ```
-
-### req.querystring
-
-  Get raw query string void of `?`.
-
-### req.querystring=
-
-  Set raw query string.
-
-### req.search
-
-  Get raw query string with the `?`.
-
-### req.search=
-
-  Set raw query string.
-
-### req.host
-
-  Get host void of port number when present. Supports `X-Forwarded-Host`
-  when `app.proxy` is __true__, otherwise `Host` is used.
 
 ### req.fresh
 
