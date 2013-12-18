@@ -81,14 +81,6 @@ app.keys = new KeyGrip(['im a newer secret', 'i like turtle'], 'sha256');
 this.cookies.set('name', 'tobi', { signed: true });
 ```
 
-## Handling Requests
-
-  Koa requests are manipulated using a `Context` object containing both a Koa `Request` and `Response` object. For more information on these view:
-
-  - [Context](context.md)
-  - [Request](request.md)
-  - [Response](response.md)
-
 ## Error Handling
 
   By default outputs all errors to stderr unless __NODE_ENV__ is "test". To perform custom error-handling logic such as centralized logging you
@@ -112,31 +104,3 @@ app.on('error', function(err, ctx){
   appropriately with a 500 "Internal Server Error". In either case
   an app-level "error" is emitted for logging purposes.
 
-## Notes
-
-### HEAD Support
-
-  Koa's upstream response middleware supports __HEAD__ for you,
-  however expensive requests would benefit from custom handling. For
-  example instead of reading a file into memory and piping it to the
-  client, you may wish to `stat()` and set the `Content-*` header fields
-  appropriately to bypass the read.
-
-  On a valid __HEAD__ request, you should either set the status code
-  to anything but `200` or set `this.body = ''`,
-  otherwise koa will not consider the request "handled" and instead
-  respond with a 404.
-
-### Socket Errors
-
-  Node http servers emit a "clientError" event when a socket error occurs. You'll probably want to delegate this to your
-  Koa handler by doing the following, in order to centralize
-  logging:
-
-```js
-var app = koa();
-var srv = app.listen(3000);
-srv.on('clientError', function(err){
-  app.emit('error', err);
-});
-```
