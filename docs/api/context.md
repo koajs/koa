@@ -1,4 +1,3 @@
-
 # Context
 
   A Koa Context encapsulates node's `request` and `response` objects
@@ -114,8 +113,8 @@
 ### ctx.throw(msg, [status])
 
   Helper method to throw an error with a `.status` property
-  that will allow Koa to respond appropriately. The following
-  combinations are allowed:
+  defaulting to `500` that will allow Koa to respond appropriately. 
+  The following combinations are allowed:
 
 ```js
 this.throw(403)
@@ -135,4 +134,4 @@ throw err;
   `err.expose` meaning the messages are appropriate for
   client responses, which is typically not the case for
   error messages since you do not want to leak failure
-  details.
+  details. 
