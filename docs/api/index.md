@@ -1,4 +1,4 @@
-## Application
+# Application
 
   A Koa application is not a 1-to-1 representation of an HTTP server,
   as one or more Koa applications may be mounted together to form larger
@@ -32,7 +32,7 @@ http.createServer(app.callback()).listen(3000);
 http.createServer(app.callback()).listen(3001);
 ```
 
-### Settings
+## Settings
 
   Application settings are properties on the `app` instance, currently
   the following are supported:
@@ -44,24 +44,24 @@ http.createServer(app.callback()).listen(3001);
   - `app.jsonSpaces` default JSON response spaces [2]
   - `app.outputErrors` output err.stack to stderr [false in "test" environment]
 
-### app.listen(...)
+## app.listen(...)
 
   Create and return an HTTP server, passing the given arguments to
   `Server#listen()`. These arguments are documented on [nodejs.org](http://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback).
 
-### app.callback()
+## app.callback()
 
   Return a callback function suitable for the `http.createServer()`
   method to handle a request.
   You may also use this callback function to mount your koa app in a
   Connect/Express app.
 
-### app.use(function)
+## app.use(function)
 
   Add the given middleware function to this application. See [Middleware](#middleware) for
   more information.
 
-### app.keys=
+## app.keys=
 
  Set signed cookie keys.
 
@@ -140,7 +140,3 @@ srv.on('clientError', function(err){
   app.emit('error', err);
 });
 ```
-
-# License
-
-  MIT
