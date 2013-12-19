@@ -1,4 +1,9 @@
 
+# Guide
+
+  This guide covers Koa topics are not directly API related, such as best practices for writing middleware,
+  application structure suggestions.
+
 ## Writing Middleware
 
   Koa middleware are simple functions which return a `GeneratorFunction`, and accept another. When
