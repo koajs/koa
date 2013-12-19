@@ -12,7 +12,16 @@
   which would force middlware to re-implement this common functionality.
 
   A `Context` is created _per_ request, and is referenced in middleware
-  as the receiver, or the `this` identifier.
+  as the receiver, or the `this` identifier, as shown in the following
+  snippet:
+
+```js
+app.use(function *(){
+  this; // is the Context
+  this.request; // is a koa Request
+  this.response; // is a koa Response
+});
+```
 
 ## Request aliases
 
@@ -113,7 +122,7 @@ Note: koa uses the [cookies](https://github.com/jed/cookies) module where option
 ### ctx.throw(msg, [status])
 
   Helper method to throw an error with a `.status` property
-  defaulting to `500` that will allow Koa to respond appropriately. 
+  defaulting to `500` that will allow Koa to respond appropriately.
   The following combinations are allowed:
 
 ```js
@@ -134,4 +143,4 @@ throw err;
   `err.expose` meaning the messages are appropriate for
   client responses, which is typically not the case for
   error messages since you do not want to leak failure
-  details. 
+  details.
