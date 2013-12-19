@@ -1,4 +1,3 @@
-
 # Request
 
   A Koa `Request` object is an abstraction on top of node's vanilla request object,
@@ -124,7 +123,7 @@ this.body = yield db.find('something');
 
 ### req.secure
 
-  Shorthand for `this.protocol == "https"` to check if a requset was
+  Shorthand for `this.protocol == "https"` to check if a request was
   issued via TLS.
 
 ### req.ip
