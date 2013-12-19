@@ -1,4 +1,4 @@
-![koa middleware framework for nodejs](https://i.cloudup.com/uXIzgVnPWG-150x150.png)
+![koa middleware framework for nodejs](https://dl.dropboxusercontent.com/u/6396913/koa/logo.png)
 
   [![Build Status](https://travis-ci.org/koajs/koa.png)](https://travis-ci.org/koajs/koa)
 
