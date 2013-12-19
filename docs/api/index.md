@@ -28,7 +28,7 @@ app.listen(3000);
 
   Koa middleware cascading in a more traditional way as you may be use to with similar tools -
   this was previously difficult to make user friendly with node's use of callbacks.
-  However with generators we can achieve "true" middlware. Contrasting Connect's implementation which
+  However with generators we can achieve "true" middleware. Contrasting Connect's implementation which
   simply passes control through series of functions until one returns, Koa yields "downstream", then
   control flows back "upstream".
 
