@@ -6,7 +6,10 @@
   It's more like Connect, but a lot of the Express goodies
   were moved to the middleware level in Koa to help form
   a stronger foundation. This makes middleware more enjoyable
-  and less error-prone to write.
+  and less error-prone to write. Typically many middleware would
+  re-implement similar features, or even worse incorrectly implement them,
+  when features like signed cookie secrets among others are typically application-specific,
+  not middleware specific.
 
 ## Does Koa replace Connect?
 
