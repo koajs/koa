@@ -202,8 +202,8 @@ this.redirect('/login');
 this.redirect('http://google.com');
 ```
 
-  To alter the default status of `302` or the response
-  body simply assign before and re-assign after this call:
+  To alter the default status of `302`, simply assign the status
+  before or after this call. To alter the body, assign it after this call:
 
 ```js
 this.status = 301;
