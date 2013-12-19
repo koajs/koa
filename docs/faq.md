@@ -1,4 +1,3 @@
-
 # Frequently Asked Questions
 
 ## Does Koa replace Express?
@@ -24,7 +23,7 @@
 ## Do generators decrease performance?
 
   Barely - check out the benchmarks in our readme, the numbers
-  are more than fine, and there's no substition for proper
+  are more than fine, and there's no substitute for proper
   horizontal scaling.
 
 ## Does Koa include routing?
