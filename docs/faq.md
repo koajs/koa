@@ -14,3 +14,9 @@
   now that generators allow us to write code with less
   callbacks. Connect is equally capable, and some may still prefer it,
   it's up to what you prefer.
+
+## Do Generators Decrease Performance?
+
+  Barely - check out the benchmarks in our readme, the numbers
+  are more than fine, and there's no substition for proper
+  horizontal scaling.
