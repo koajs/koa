@@ -31,3 +31,11 @@
 
   No - out of the box Koa has no form of routing, however
   many routing middleware are available: https://github.com/koajs/koa/wiki
+
+## Why isn't Koa just Express 4.0?
+
+  Koa is a pretty large departure from what people know about Express,
+  the design is fundamentally much different, so the migration from
+  Express 3.0 to this Express 4.0 would effectively mean rewriting
+  the entire application, so we thought it would be more appropriate
+  to create a new library.
