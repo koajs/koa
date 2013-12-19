@@ -27,8 +27,8 @@ app.listen(3000);
 ## Cascading
 
   Koa middleware cascading in a more traditional way as you may be use to with similar tools -
-  this was previsouly not impossible, but difficult to make user friendly due to node's callbacks,
-  however with generators we can achieve "true" middlware. Contrasting Connect's implementation which
+  this was previously very difficult to make user friendly due to node's callbacks.
+  However with generators we can achieve "true" middlware. Contrasting Connect's implementation which
   simply passes control through series of functions until one returns, Koa yields "downstream", then
   control flows back "upstream".
 
@@ -84,9 +84,9 @@ app.listen(3000);
 
 ## app.listen(...)
 
-  A Koa application is not a 1-to-1 representation of an HTTP server,
-  as one or more Koa applications may be mounted together to form larger
-  applications, with a single HTTP server.
+  A Koa application is not a 1-to-1 representation of a HTTP server.
+  One or more Koa applications may be mounted together to form larger
+  applications with a single HTTP server.
 
   Create and return an HTTP server, passing the given arguments to
   `Server#listen()`. These arguments are documented on [nodejs.org](http://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback). The following is a useless Koa application bound to port `3000`:
@@ -106,7 +106,7 @@ var app = koa();
 http.createServer(app.callback()).listen(3000);
 ```
 
-  This means you can spin up the same application as both HTTP and HTTPS,
+  This means you can spin up the same application as both HTTP and HTTPS
   or on multiple addresses:
 
 ```js

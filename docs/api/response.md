@@ -1,4 +1,3 @@
-
 # Response
 
   A Koa `Response` object is an abstraction on top of node's vanilla response object,
@@ -76,9 +75,9 @@
   - 510 "not extended"
   - 511 "network authentication required"
 
-  __NOTE__: don't worry too much about memorizing these strings,
-  if you have a typo an error will be thrown, displaying this list
-  so you can make a correction.
+__NOTE__: don't worry too much about memorizing these strings,
+if you have a typo an error will be thrown, displaying this list
+so you can make a correction.
 
 ### res.length=
 
@@ -203,8 +202,8 @@ this.redirect('/login');
 this.redirect('http://google.com');
 ```
 
-  To alter the default status of `302` or the response
-  body simply assign before and re-assign after this call:
+  To alter the default status of `302`, simply assign the status
+  before or after this call. To alter the body, assign it after this call:
 
 ```js
 this.status = 301;
