@@ -4,7 +4,22 @@
   as one or more Koa applications may be mounted together to form larger
   applications, with a single HTTP server.
 
-  The following is a useless Koa application bound to port `3000`:
+## Settings
+
+  Application settings are properties on the `app` instance, currently
+  the following are supported:
+
+  - `app.name` optionally give your application a name
+  - `app.env` defaulting to the __NODE_ENV__ or "development"
+  - `app.proxy` when true proxy header fields will be trusted
+  - `app.subdomainOffset` offset of `.subdomains` to ignore [2]
+  - `app.jsonSpaces` default JSON response spaces [2]
+  - `app.outputErrors` output err.stack to stderr [false in "test" environment]
+
+## app.listen(...)
+
+  Create and return an HTTP server, passing the given arguments to
+  `Server#listen()`. These arguments are documented on [nodejs.org](http://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback). The following is a useless Koa application bound to port `3000`:
 
 ```js
 var koa = require('koa');
@@ -31,23 +46,6 @@ var app = koa();
 http.createServer(app.callback()).listen(3000);
 http.createServer(app.callback()).listen(3001);
 ```
-
-## Settings
-
-  Application settings are properties on the `app` instance, currently
-  the following are supported:
-
-  - `app.name` optionally give your application a name
-  - `app.env` defaulting to the __NODE_ENV__ or "development"
-  - `app.proxy` when true proxy header fields will be trusted
-  - `app.subdomainOffset` offset of `.subdomains` to ignore [2]
-  - `app.jsonSpaces` default JSON response spaces [2]
-  - `app.outputErrors` output err.stack to stderr [false in "test" environment]
-
-## app.listen(...)
-
-  Create and return an HTTP server, passing the given arguments to
-  `Server#listen()`. These arguments are documented on [nodejs.org](http://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback).
 
 ## app.callback()
 
