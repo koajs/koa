@@ -40,17 +40,15 @@ describe('res.status=', function(){
     it('should strip content related header fields', function(done){
       var app = koa();
 
-      app.use(function(next){
-        return function *(){
-          this.body = { foo: 'bar' };
-          this.set('Content-Type', 'application/json');
-          this.set('Content-Length', '15');
-          this.set('Transfer-Encoding', 'chunked');
-          this.status = status;
-          assert(null == this.response.header['content-type']);
-          assert(null == this.response.header['content-length']);
-          assert(null == this.response.header['transfer-encoding']);
-        }
+      app.use(function *(){
+        this.body = { foo: 'bar' };
+        this.set('Content-Type', 'application/json');
+        this.set('Content-Length', '15');
+        this.set('Transfer-Encoding', 'chunked');
+        this.status = status;
+        assert(null == this.response.header['content-type']);
+        assert(null == this.response.header['content-length']);
+        assert(null == this.response.header['transfer-encoding']);
       });
 
       request(app.listen())
