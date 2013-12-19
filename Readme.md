@@ -24,6 +24,10 @@ $ npm install koa
 alias node='node --harmony'
 ```
 
+  Another option, if you would like to use koa with __node 0.10.x__ (the current
+  stable branch), or are tired of typing the `--harmony` flag, is to use
+  [`gnode`](https://github.com/TooTallNate/gnode) to spawn your node instance.
+
 ## Community
 
  - [API](docs/api/index.md) documentation
