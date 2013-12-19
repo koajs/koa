@@ -21,8 +21,13 @@
   callbacks. Connect is equally capable, and some may still prefer it,
   it's up to what you prefer.
 
-## Do Generators Decrease Performance?
+## Do generators decrease performance?
 
   Barely - check out the benchmarks in our readme, the numbers
   are more than fine, and there's no substition for proper
   horizontal scaling.
+
+## Does Koa include routing?
+
+  No - out of the box Koa has no form of routing, however
+  many routing middleware are available: https://github.com/koajs/koa/wiki
