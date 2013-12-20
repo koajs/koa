@@ -131,7 +131,7 @@ this.throw('name required', 400)
 this.throw('something exploded')
 ```
 
-  For example `this.throw('name required', 400)` is requivalent to:
+  For example `this.throw('name required', 400)` is equivalent to:
 
 ```js
 var err = new Error('name required');
