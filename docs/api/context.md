@@ -4,7 +4,7 @@
   into a single object which provides many helpful methods for writing
   web applications and APIs.
 
-  Many accesors and methods simply delegate to their `ctx.request` or `ctx.response`
+  Many accessors and methods simply delegate to their `ctx.request` or `ctx.response`
   equivalents for convenience, and are otherwise identical.
 
   These operations are used so frequently in HTTP server development
