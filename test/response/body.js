@@ -2,6 +2,7 @@
 var response = require('../context').response;
 var assert = require('assert');
 var fs = require('fs');
+var pull = require('pull-stream');
 
 describe('res.body=', function(){
   describe('when Content-Type is set', function(){
@@ -75,6 +76,14 @@ describe('res.body=', function(){
       res.body = fs.createReadStream('LICENSE');
       assert('application/octet-stream' == res.header['content-type']);
     })
+  })
+
+  describe('when a duck stream is given', function(){
+    it('should default to an octet stream', function(){
+      var res = response();
+      res.body = pull.values([new Buffer('hello, world!')]);
+      assert('application/octet-stream' == res.header['content-type']);
+    });
   })
 
   describe('when a buffer is given', function(){

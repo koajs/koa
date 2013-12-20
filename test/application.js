@@ -4,6 +4,7 @@ var assert = require('assert');
 var http = require('http');
 var koa = require('..');
 var fs = require('fs');
+var pull = require('pull-stream');
 
 describe('app', function(){
   it('should handle socket errors', function(done){
@@ -309,6 +310,85 @@ describe('app.respond', function(){
       .expect(404)
       .end(done);
     })
+  })
+
+  describe('when .body is a duck stream', function(){
+    function proxy(read){
+      function pipe(dest){
+        (function next(){
+          read(null, function ondata(end, data){
+            if (end === true) return dest.end(data);
+            if (end) return dest.emit('error', end); // err
+            if (dest.write(data))
+              next();
+            else
+              read.once('drain', next);
+          });
+        })();
+      }
+      function noop() {return []}
+      return {pipe: pipe, listeners: noop, on: noop};
+    }
+
+    it('should respond', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        var data = new Buffer(JSON.stringify({hello: 'world'}));
+        this.body = proxy(pull.values([data]));
+        this.set('Content-Type', 'application/json');
+      });
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect('Content-Type', 'application/json')
+      .end(function(err, res){
+        if (err) return done(err);
+        res.body.should.eql({hello: 'world'});
+        done();
+      });
+    });
+
+    it('should handle end', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.set('Content-Type', 'application/x-www-form-urlencoded');
+        this.body = proxy(pull.empty());
+      });
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect('Content-Type', 'application/x-www-form-urlencoded')
+      .end(function(err, res){
+        if (err) return done(err);
+        res.body.should.eql({});
+        done();
+      });
+    });
+
+    it('should handle errors', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.set('Content-Type', 'application/json');
+        this.body = proxy(function(end, cb){
+          cb(end || new Error('failure'));
+        });
+      });
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect('Content-Type', 'text/plain; charset=utf-8')
+      .expect(500)
+      .end(done);
+    });
   })
 
   describe('when .body is an Object', function(){
