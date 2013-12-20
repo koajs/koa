@@ -33,16 +33,16 @@
   "devDependencies": {
     "bytes": "~0.2.1",
     "should": "~2.1.0",
-    "mocha": "~1.14.0",
+    "mocha": "~1.16.0",
     "supertest": "~0.8.1",
     "co-fs": "~1.1",
     "co-views": "~0.1.0",
     "ejs": "~0.8.4",
     "koa-logger": "~1.0.1",
-    "koa-static": "~1.2.0",
-    "co-busboy": "git://github.com/cojs/busboy",
+    "koa-static": "~1.3.0",
+    "co-busboy": "~0.1.0",
     "koa-route": "~1.0.2",
-    "swig": "~1.1.0",
+    "swig": "~1.2.0",
     "co-body": "0.0.1"
   },
   "engines": {
