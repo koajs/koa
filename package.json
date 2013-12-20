@@ -31,6 +31,7 @@
     "keygrip": "~0.2.4"
   },
   "devDependencies": {
+    "gnode": "~0.0.5",
     "bytes": "~0.2.1",
     "should": "~2.1.0",
     "mocha": "~1.16.0",
