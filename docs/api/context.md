@@ -128,6 +128,7 @@ Note: koa uses the [cookies](https://github.com/jed/cookies) module where option
 ```js
 this.throw(403)
 this.throw('name required', 400)
+this.throw(400, 'name required')
 this.throw('something exploded')
 ```
 

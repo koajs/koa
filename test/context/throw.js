@@ -29,6 +29,20 @@ describe('ctx.throw(msg, status)', function(){
   })
 })
 
+describe('ctx.throw(status, msg)', function(){
+  it('should throw an error', function(done){
+    var ctx = context();
+
+    try {
+      ctx.throw(400, 'name required');
+    } catch (err) {
+      assert('name required' == err.message);
+      assert(400 == err.status);
+      done();
+    }
+  })
+})
+
 describe('ctx.throw(status)', function(){
   it('should throw an error', function(done){
     var ctx = context();
