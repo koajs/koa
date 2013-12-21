@@ -3,7 +3,7 @@
   [![Build Status](https://travis-ci.org/koajs/koa.png)](https://travis-ci.org/koajs/koa)
 
   Expressive middleware for node.js using generators via [co](https://github.com/visionmedia/co)
-  to make web applications and REST APIs more enjoyable to write.
+  to make web applications and APIs more enjoyable to write. Koa's middleware flow in a stack-like manner allowing you to perform actions downstream, then filter and manipulate the response upstream. Koa's use of generators also greatly increases the readability and robustness of your application.
 
   Only methods that are common to nearly all HTTP servers are integrated directly into Koa's small ~400 SLOC codebase. This
   includes things like content-negotiation, normalization of node inconsistencies, redirection, and a few others.
