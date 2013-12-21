@@ -29,7 +29,7 @@
     "negotiator": "~0.3.0",
     "koa-compose": "~2.0.0",
     "cookies": "~0.3.7",
-    "keygrip": "~0.2.4"
+    "keygrip": "~1.0.0"
   },
   "devDependencies": {
     "bytes": "~0.2.1",
