@@ -28,7 +28,7 @@
     "fresh": "~0.2.0",
     "negotiator": "~0.3.0",
     "koa-compose": "~2.0.0",
-    "cookies": "~0.3.7",
+    "cookies": "~1.0.0",
     "keygrip": "~0.2.4"
   },
   "devDependencies": {
