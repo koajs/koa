@@ -9,7 +9,7 @@
 
   These operations are used so frequently in HTTP server development
   that they are added at this level, instead of a higher level framework,
-  which would force middlware to re-implement this common functionality.
+  which would force middleware to re-implement this common functionality.
 
   A `Context` is created _per_ request, and is referenced in middleware
   as the receiver, or the `this` identifier, as shown in the following
