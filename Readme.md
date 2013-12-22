@@ -26,7 +26,7 @@ alias node='node --harmony'
 
   Another option, if you would like to use koa with __node 0.10.x__ (the current
   stable branch), or are tired of typing the `--harmony` flag, is to use
-  [`gnode`](https://github.com/TooTallNate/gnode) to spawn your node instance.
+  [`gnode`](https://github.com/TooTallNate/gnode) to spawn your node instance. However note that performance degrades quickly compared to 0.11.x.
 
 ## Community
 
