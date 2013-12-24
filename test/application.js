@@ -134,6 +134,61 @@ describe('app.respond', function(){
     })
   })
 
+  describe('when res has already been written to', function(){
+
+    it('should not cause an app error', function(done){
+      var app = koa();
+
+      app.use(function *(next){
+        var res = this.res;
+        res.setHeader("Content-Type", "text/html")
+        res.status = 200;
+        res.write('Hello');
+        setTimeout(function () {
+          res.end("Goodbye")
+        }, 0);
+      });
+
+      var errorCaught = false;
+
+      app.on('error', function (err) {
+        errorCaught = err;
+      });
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect(200)
+      .end(function(err, res){
+        if (err) return done(err);
+        if (errorCaught) return done(errorCaught);
+        done();
+      });
+    })
+
+    it('should send the right body', function(done){
+      var app = koa();
+
+      app.use(function *(next){
+        var res = this.res;
+        res.setHeader("Content-Type", "text/html")
+        res.status = 200;
+        res.write('Hello');
+        setTimeout(function () {
+          res.end("Goodbye")
+        }, 0);
+      });
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect(200)
+      .expect('HelloGoodbye', done);
+    })
+  })
+
   describe('when .body is missing', function(){
     describe('with status=400', function(){
       it('should respond with the associated status message', function(done){
