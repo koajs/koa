@@ -23,6 +23,28 @@ describe('app', function(){
     .get('/')
     .end(function(){});
   })
+
+  it('should not .writeHead when !socket.writable', function(done){
+    var app = koa();
+
+    app.use(function *(next){
+      // set .writable to false
+      this.socket.writable = false;
+      this.status = 204;
+      // throw if .writeHead or .end is called
+      this.res.writeHead =
+      this.res.end = function () {
+        throw new Error('response sent');
+      };
+    })
+
+    // hackish, but the response should occur in a single ticket
+    setImmediate(done);
+
+    request(app.listen())
+    .get('/')
+    .end(function(){});
+  })
 })
 
 describe('app.use(fn)', function(){
