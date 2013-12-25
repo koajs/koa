@@ -23,57 +23,6 @@ app.use(function *(){
 });
 ```
 
-## Request aliases
-
-  The following accessors and alias [Request](request.md) equivalents:
-
-  - `ctx.header`
-  - `ctx.method`
-  - `ctx.method=`
-  - `ctx.url`
-  - `ctx.url=`
-  - `ctx.path`
-  - `ctx.path=`
-  - `ctx.query`
-  - `ctx.query=`
-  - `ctx.querystring`
-  - `ctx.querystring=`
-  - `ctx.length`
-  - `ctx.host`
-  - `ctx.fresh`
-  - `ctx.stale`
-  - `ctx.socket`
-  - `ctx.protocol`
-  - `ctx.secure`
-  - `ctx.ip`
-  - `ctx.ips`
-  - `ctx.subdomains`
-  - `ctx.is()`
-  - `ctx.accepts()`
-  - `ctx.acceptsEncodings()`
-  - `ctx.acceptsCharsets()`
-  - `ctx.acceptsLanguages()`
-  - `ctx.get()`
-
-## Response aliases
-
-  The following accessors and alias [Response](response.md) equivalents:
-
-  - `ctx.body`
-  - `ctx.body=`
-  - `ctx.status`
-  - `ctx.status=`
-  - `ctx.length=`
-  - `ctx.type`
-  - `ctx.type=`
-  - `ctx.headerSent`
-  - `ctx.redirect()`
-  - `ctx.attachment()`
-  - `ctx.set()`
-  - `ctx.remove()`
-  - `ctx.lastModified=`
-  - `ctx.etag=`
-
 ## API
 
   `Context` specific methods and accessors.
@@ -145,3 +94,54 @@ throw err;
   client responses, which is typically not the case for
   error messages since you do not want to leak failure
   details.
+
+## Request aliases
+
+  The following accessors and alias [Request](request.md) equivalents:
+
+  - `ctx.header`
+  - `ctx.method`
+  - `ctx.method=`
+  - `ctx.url`
+  - `ctx.url=`
+  - `ctx.path`
+  - `ctx.path=`
+  - `ctx.query`
+  - `ctx.query=`
+  - `ctx.querystring`
+  - `ctx.querystring=`
+  - `ctx.length`
+  - `ctx.host`
+  - `ctx.fresh`
+  - `ctx.stale`
+  - `ctx.socket`
+  - `ctx.protocol`
+  - `ctx.secure`
+  - `ctx.ip`
+  - `ctx.ips`
+  - `ctx.subdomains`
+  - `ctx.is()`
+  - `ctx.accepts()`
+  - `ctx.acceptsEncodings()`
+  - `ctx.acceptsCharsets()`
+  - `ctx.acceptsLanguages()`
+  - `ctx.get()`
+
+## Response aliases
+
+  The following accessors and alias [Response](response.md) equivalents:
+
+  - `ctx.body`
+  - `ctx.body=`
+  - `ctx.status`
+  - `ctx.status=`
+  - `ctx.length=`
+  - `ctx.type`
+  - `ctx.type=`
+  - `ctx.headerSent`
+  - `ctx.redirect()`
+  - `ctx.attachment()`
+  - `ctx.set()`
+  - `ctx.remove()`
+  - `ctx.lastModified=`
+  - `ctx.etag=`
