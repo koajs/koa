@@ -81,6 +81,43 @@ describe('app.use(fn)', function(){
     });
   })
 
+  it('should compose multiple middleware', function(done){
+    var app = koa();
+    var calls = [];
+
+    var fns = [];
+
+    fns.push(function *(next){
+      calls.push(1);
+      yield next;
+      calls.push(6);
+    });
+
+    fns.push(function *(next){
+      calls.push(2);
+      yield next;
+      calls.push(5);
+    });
+
+    fns.push(function *(next){
+      calls.push(3);
+      yield next;
+      calls.push(4);
+    });
+
+    app.use(fns);
+
+    var server = app.listen();
+
+    request(server)
+    .get('/')
+    .end(function(err){
+      if (err) return done(err);
+      calls.should.eql([1,2,3,4,5,6]);
+      done();
+    });
+  })
+
   it('should error when a non-generator function is passed', function(done){
     var app = koa();
 
