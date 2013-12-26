@@ -35,6 +35,8 @@ app.use(function *(){
 
   Node's `response` object.
 
+  Note: bypassing Koa's response handling and calling `res.writeHead()`, `res.write()` or `res.end()` is __not__ supported.
+
 ### ctx.request
 
   A koa `Request` object.
