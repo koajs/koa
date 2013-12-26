@@ -37,7 +37,7 @@ TO DO:
 
 ## Is Koa faster than Express?
 
-  To our amazement, yes, but only if you use [`yield *next`](http://wiki.ecmascript.org/doku.php?id=harmony%3agenerators#delegating_yield). We do not provide examples of using delegated yields as we find it confusing as well as unnecessary for most people. Here are Koa's benchmarks when using delegated yields:
+  Koa and Express have very similar benchmark results, both of which are more than enough for most applications. This is especially true for applications with high traffic running multiple instances, because you are scaling horizontally right?
 
 ```
   1 middleware
@@ -92,8 +92,6 @@ TO DO:
   100 middleware
   5000.98
 ```
-
-  Also note that Express uses many more middleware than Koa, so these benchmarks are largely in Koa's favor.
 
 ## How is Koa different than Connect/Express?
 
