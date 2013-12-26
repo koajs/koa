@@ -39,6 +39,8 @@ TO DO:
 
   Koa and Express have very similar benchmark results, both of which are more than enough for most applications. This is especially true for applications with high traffic running multiple instances, because you are scaling horizontally right?
 
+  The following results were produced on a Retina Macbook Pro, showing only the cost of running noop middleware.
+
 ```
   1 middleware
   8849.36
