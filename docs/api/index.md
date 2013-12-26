@@ -126,8 +126,12 @@ http.createServer(app.callback()).listen(3001);
 
 ## app.use(function)
 
-  Add the given middleware function to this application. See [Middleware](https://github.com/koajs/koa/wiki#middleware) for
-  more information.
+  Add the given middleware function to this application.
+  If an array is passed, the functions will be added to the call stack in acending order. 
+  See [Middleware](https://github.com/koajs/koa/wiki#middleware)
+  for more information.
+
+
 
 ## app.keys=
 
