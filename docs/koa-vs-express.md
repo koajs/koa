@@ -1,4 +1,3 @@
-
 THIS DOCUMENT IS IN PROGRESS. THIS PARAGRAPH SHALL BE REMOVED WHEN THIS DOCUMENT IS DONE.
 
 TO DO:
@@ -37,63 +36,20 @@ TO DO:
 
 ## Is Koa faster than Express?
 
-  Koa and Express have very similar benchmark results, both of which are more than enough for most applications. This is especially true for applications with high traffic running multiple instances, because you are scaling horizontally right?
+Koa and Express have very similar benchmark results, both of which are more than enough for most applications. This is especially true for applications with high traffic running multiple instances, because you are scaling horizontally right?
 
-  The following results were produced on a Retina Macbook Pro, showing only the cost of running noop middleware.
+The following results were produced on a Retina Macbook Pro, showing only the cost of running noop middleware.
 
-```
-  1 middleware
-  8849.36
-
-  5 middleware
-  8685.74
-
-  10 middleware
-  8511.08
-
-  15 middleware
-  8456.86
-
-  20 middleware
-  8211.93
-
-  30 middleware
-  8102.98
-
-  50 middleware
-  7617.67
-
-  100 middleware
-  6899.45
-```
-
-  Here are the benchmarks for Express:
-
-```
-  1 middleware
-  7805.19
-
-  5 middleware
-  7707.15
-
-  10 middleware
-  7475.08
-
-  15 middleware
-  7261.73
-
-  20 middleware
-  7012.07
-
-  30 middleware
-  6672.76
-
-  50 middleware
-  6255.92
-
-  100 middleware
-  5000.98
-```
+| no. middleware | Koa     | Express |
+| --------------:| ------- | ------- |
+|              1 | 8849.36 | 7805.19 |
+|              5 | 8685.74 | 7707.15 |
+|             10 | 8511.08 | 7475.08 |
+|             15 | 8456.86 | 7261.73 |
+|             20 | 8211.93 | 7012.07 |
+|             30 | 8102.98 | 6672.76 |
+|             50 | 7617.67 | 6255.92 |
+|            100 | 6899.45 | 5000.98 |
 
 ## How is Koa different than Connect/Express?
 
