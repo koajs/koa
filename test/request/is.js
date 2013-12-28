@@ -49,8 +49,8 @@ describe('ctx.is(type)', function(){
       ctx.header['content-type'] = 'image/png';
       ctx.header['transfer-encoding'] = 'chunked';
 
-      ctx.is('png').should.equal('image/png');
-      ctx.is('.png').should.equal('image/png');
+      ctx.is('png').should.equal('png');
+      ctx.is('.png').should.equal('.png');
       ctx.is('image/png').should.equal('image/png');
       ctx.is('image/*').should.equal('image/png');
       ctx.is('*/png').should.equal('image/png');
@@ -69,8 +69,8 @@ describe('ctx.is(type)', function(){
       ctx.header['content-type'] = 'image/png';
       ctx.header['transfer-encoding'] = 'chunked';
 
-      ctx.is('png').should.equal('image/png');
-      ctx.is('.png').should.equal('image/png');
+      ctx.is('png').should.equal('png');
+      ctx.is('.png').should.equal('.png');
       ctx.is('text/*', 'image/*').should.equal('image/png');
       ctx.is('image/*', 'text/*').should.equal('image/png');
       ctx.is('image/*', 'image/png').should.equal('image/png');
@@ -89,9 +89,9 @@ describe('ctx.is(type)', function(){
       ctx.header['content-type'] = 'application/x-www-form-urlencoded';
       ctx.header['transfer-encoding'] = 'chunked';
 
-      ctx.is('urlencoded').should.equal('application/x-www-form-urlencoded');
-      ctx.is('json', 'urlencoded').should.equal('application/x-www-form-urlencoded');
-      ctx.is('urlencoded', 'json').should.equal('application/x-www-form-urlencoded');
+      ctx.is('urlencoded').should.equal('urlencoded');
+      ctx.is('json', 'urlencoded').should.equal('urlencoded');
+      ctx.is('urlencoded', 'json').should.equal('urlencoded');
     })
   })
 })
