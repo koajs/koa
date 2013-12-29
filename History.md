@@ -1,6 +1,13 @@
-HEAD
+
+0.2.0 / 2013-12-28
 ==================
 
+ * add support for .throw(status, msg). Closes #130
+ * add GeneratorFunction assertion for app.use(). Closes #120
+ * refactor: move `.is()` to `type-is`
+ * refactor: move content negotiation to "accepts"
+ * refactor: allow any streams with .pipe method
+ * remove `next` in callback for now
 
 0.1.2 / 2013-12-21
 ==================
