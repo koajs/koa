@@ -7,7 +7,7 @@
   middleware layer. This improves interoperability, robustness, and makes writing middleware much
   more enjoyable.
 
-  This includes methods for common tasks like content-negotation, cache freshness, proxy support, and redirection
+  This includes methods for common tasks like content-negotiation, cache freshness, proxy support, and redirection
   among others. Despite supplying a reasonably large number of helpful methods Koa maintains a small footprint, as
   no middleware are bundled.
 
