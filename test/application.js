@@ -119,7 +119,7 @@ describe('app.respond', function(){
       var app = koa();
 
       app.use(function *(){
-        this.status = 200;
+
       })
 
       var server = app.listen();
@@ -226,23 +226,6 @@ describe('app.respond', function(){
         .get('/')
         .expect(400)
         .expect('Bad Request', done);
-      })
-    })
-
-    describe('with status=200', function(){
-      it('should respond with a 404', function(done){
-        var app = koa();
-
-        app.use(function *(){
-          this.status = 200;
-        })
-
-        var server = app.listen();
-
-        request(server)
-        .get('/')
-        .expect(404)
-        .expect('Not Found', done);
       })
     })
 
