@@ -118,6 +118,42 @@ function logger(format){
 }
 ```
 
+### Adding multiple middleware at once
+
+  To add multiple middleware at once chain them together with 
+  [.call()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call) 
+  and then return another function that yields the chain.
+
+```js
+function *random(next){
+  if (this.path == '/random') {
+    this.body = Math.floor(Math.random()*10);
+  } else {
+    yield next;
+  }
+};
+
+function *backwords(next) {
+  if (this.path == '/backwords') {
+    this.body = 'sdrowkcab';
+  } else {
+    yield next;
+  }
+}
+
+function *pi(next){
+  if (this.path == '/pi') {
+    this.body = String(Math.PI);
+  } else {
+    yield next;
+  }
+}
+
+app.use(function*(next){
+  yield random.call(this, backwords.call(this, pi.call(this, next)));
+});
+```
+
 ### Response Middleware
 
   Middleware that decide to respond to a request and wish to bypass downstream middleware may
