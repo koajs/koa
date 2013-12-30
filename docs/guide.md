@@ -211,3 +211,23 @@ $ DEBUG=koa* node --harmony examples/simple
   koa:application listen +0ms
 ```
 
+  Since JavaScript does not allow defining function names at
+  runtime, you can also set a middleware's name as `._name`.
+  This useful when you don't have control of a middleware's name.
+  For example:
+
+```js
+var path = require('path');
+var static = require('koa-static');
+
+var publicFiles = static(path.join(__dirname, 'public'));
+publicFiles._name = 'static /public';
+
+app.use(publicFiles);
+```
+
+  Now, instead of just seeing "static" when debugging, you will see:
+
+```
+  koa:application use static /public +0ms
+```
