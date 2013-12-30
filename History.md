@@ -1,4 +1,11 @@
 
+0.2.1 / 2013-12-30
+==================
+
+ * add better 404 handling
+ * add check for fn._name in debug() output
+ * add explicit .toJSON() calls to ctx.toJSON()
+
 0.2.0 / 2013-12-28
 ==================
 
