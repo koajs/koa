@@ -35,7 +35,12 @@ app.use(function *(){
 
   Node's `response` object.
 
-  Note: bypassing Koa's response handling and calling `res.writeHead()`, `res.write()` or `res.end()` is __not__ supported.
+  Bypassing Koa's response handling is __not supported__. Avoid using the following node properties:
+
+- `res.statusCode`
+- `res.writeHead()`
+- `res.write()`
+- `res.end()`
 
 ### ctx.request
 
