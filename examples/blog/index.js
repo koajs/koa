@@ -6,7 +6,6 @@
 var render = require('./lib/render');
 var logger = require('koa-logger');
 var route = require('koa-route');
-var views = require('co-views');
 var parse = require('co-body');
 var koa = require('../..');
 var app = koa();
