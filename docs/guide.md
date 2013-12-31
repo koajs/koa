@@ -118,15 +118,13 @@ function logger(format){
 }
 ```
 
-### Adding multiple middleware at once
+### Combining multiple middleware
 
-  To add multiple middleware at once chain them together with 
-  [.call()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call) 
-  and then return another function that yields the chain.
+  Sometimes you want to "compose" multiple middleware into a single middleware for easy re-use or exporting. To do so, you may chain them together with `.call(this, next)`s, then return another function that yields the chain.
 
 ```js
 function *random(next){
-  if (this.path == '/random') {
+  if ('/random' == this.path) {
     this.body = Math.floor(Math.random()*10);
   } else {
     yield next;
@@ -134,7 +132,7 @@ function *random(next){
 };
 
 function *backwords(next) {
-  if (this.path == '/backwords') {
+  if ('/backwords' == this.path) {
     this.body = 'sdrowkcab';
   } else {
     yield next;
@@ -142,17 +140,21 @@ function *backwords(next) {
 }
 
 function *pi(next){
-  if (this.path == '/pi') {
+  if ('/pi' == this.path) {
     this.body = String(Math.PI);
   } else {
     yield next;
   }
 }
 
-app.use(function*(next){
+function *all(next) {
   yield random.call(this, backwords.call(this, pi.call(this, next)));
-});
+}
+
+app.use(all);
 ```
+
+  This is exactly what [koa-compose](https://github.com/koajs/compose) does, which Koa internally uses to create and dispatch the middleware stack.
 
 ### Response Middleware
 
