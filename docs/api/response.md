@@ -12,7 +12,7 @@
 
 ### res.status
 
-  Get response status.
+  Get response status. By default, `res.status` is not set unlike node's `res.statusCode` which defaults to `200`.
 
 ### res.status=
 
@@ -90,9 +90,7 @@ so you can make a correction.
 
 ### res.body
 
-  Get response body. When `res.body` is `null` and `res.status` is still
-  200 it is considered a 404. This is to prevent the developer from manually
-  specifying `this.status = 200` on every response.
+  Get response body.
 
 ### res.body=
 
@@ -103,6 +101,8 @@ so you can make a correction.
   - `Stream` piped
   - `Object` json-stringified
   - `null` no content response
+
+  If `res.status` has been set, Koa will automatically set the status to `200` or `204`.
 
 #### String
 
