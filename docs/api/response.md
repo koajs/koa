@@ -102,7 +102,7 @@ so you can make a correction.
   - `Object` json-stringified
   - `null` no content response
 
-  If `res.status` has been set, Koa will automatically set the status to `200` or `204`.
+  If `res.status` has not been set, Koa will automatically set the status to `200` or `204`.
 
 #### String
 
