@@ -15,6 +15,51 @@ describe('ctx.throw(msg)', function(){
   })
 })
 
+describe('ctx.throw(err)', function(){
+  it('should set .status to 500', function(done){
+    var ctx = context();
+    var err = new Error('test');
+
+    try {
+      ctx.throw(err);
+    } catch (err) {
+      assert(500 == err.status);
+      assert('test' == err.message);
+      done();
+    }
+  })
+})
+
+describe('ctx.throw(err, status)', function(){
+  it('should throw the error and set .status', function(done){
+    var ctx = context();
+    var error = new Error('test');
+
+    try {
+      ctx.throw(error, 422);
+    } catch (err) {
+      assert(422 == err.status);
+      assert('test' == err.message);
+      done();
+    }
+  })
+})
+
+describe('ctx.throw(status, err)', function(){
+  it('should throw the error and set .status', function(done){
+    var ctx = context();
+    var error = new Error('test');
+
+    try {
+      ctx.throw(422, error);
+    } catch (err) {
+      assert(422 == err.status);
+      assert('test' == err.message);
+      done();
+    }
+  })
+})
+
 describe('ctx.throw(msg, status)', function(){
   it('should throw an error', function(done){
     var ctx = context();
