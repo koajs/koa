@@ -29,3 +29,12 @@ describe('req.host', function(){
     })
   })
 })
+
+describe('req.host=', function(){
+  it('should replace the host', function(){
+    var req = request();
+    req.header['host'] = 'foo.com';
+    req.host = 'bar.com';
+    req.host.should.equal('bar.com')
+  })
+})

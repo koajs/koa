@@ -60,6 +60,12 @@
   Get host void of port number when present. Supports `X-Forwarded-Host`
   when `app.proxy` is __true__, otherwise `Host` is used.
 
+### req.host=
+
+  Set host to a new value. It sets the `Host` header under the hood and will
+  behave correctly with req.subdomains.
+  This can be useful for a `hostOverride()` middleware
+
 ### req.type
 
   Get request `Content-Type` void of parameters such as "charset".
