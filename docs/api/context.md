@@ -119,6 +119,7 @@ throw err;
   - `ctx.querystring=`
   - `ctx.length`
   - `ctx.host`
+  - `ctx.host=`
   - `ctx.fresh`
   - `ctx.stale`
   - `ctx.socket`
