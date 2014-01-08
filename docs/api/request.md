@@ -62,9 +62,7 @@
 
 ### req.host=
 
-  Set host to a new value. It sets the `Host` header under the hood and will
-  behave correctly with req.subdomains.
-  This can be useful for a `hostOverride()` middleware
+  Set the `Host` header field to a new value.
 
 ### req.type
 
