@@ -23,7 +23,7 @@
   "dependencies": {
     "accepts": "~1.0.0",
     "type-is": "~1.0.0",
-    "on-socket-error": "~1.0.1",
+    "on-socket-error": "~1.1.0",
     "co": "~3.0.2",
     "debug": "*",
     "mime": "~1.2.11",
