@@ -23,7 +23,7 @@
   "dependencies": {
     "accepts": "~1.0.0",
     "type-is": "~1.0.0",
-    "on-socket-error": "~1.1.0",
+    "finished": "~1.1.1",
     "co": "~3.0.2",
     "debug": "*",
     "mime": "~1.2.11",
@@ -36,7 +36,7 @@
   "devDependencies": {
     "bytes": "~0.2.1",
     "should": "~2.1.0",
-    "mocha": "~1.16.0",
+    "mocha": "~1.17.0",
     "supertest": "~0.8.1",
     "co-fs": "~1.1",
     "co-views": "~0.1.0",
