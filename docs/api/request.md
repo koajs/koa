@@ -315,10 +315,6 @@ this.acceptsLanguages();
 
   Return the request socket.
 
-### req.vary(field)
-
-  Vary on `field`.
-  
 ### req.get(field)
 
   Return request header.
