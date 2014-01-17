@@ -3,13 +3,13 @@
   "version": "0.2.1",
   "description": "Koa web app framework",
   "main": "index.js",
-  "directories": {
-    "example": "examples"
-  },
   "scripts": {
     "test": "make test"
   },
-  "repository": "koajs/koa",
+  "repository":{
+    "type": "git",
+    "url": "https://github.com/koajs/koa"
+  },
   "keywords": [
     "web",
     "app",
