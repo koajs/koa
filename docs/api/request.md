@@ -307,3 +307,15 @@ this.acceptsLanguages();
 // => ["es", "pt", "en"]
 ```
 
+### req.idempotent
+
+  Check if the request is idempotent.
+
+### req.socket
+
+  Return the request socket.
+
+### req.get(field)
+
+  Return request header.
+

@@ -8,11 +8,19 @@
 
 ### res.header
 
- Response header object.
+  Response header object.
+
+### res.socket
+  
+  Request socket.
 
 ### res.status
 
   Get response status. By default, `res.status` is not set unlike node's `res.statusCode` which defaults to `200`.
+
+### res.statusString
+
+  Response status string
 
 ### res.status=
 
@@ -243,3 +251,13 @@ this.response.lastModified = new Date();
 ```js
 this.response.etag = crypto.createHash('md5').update(this.body).digest('hex');
 ```
+
+### res.append(field, val)
+
+  Append `val` to header `field`.
+
+### res.vary(field)
+  
+  Vary on `field`.
+
+
