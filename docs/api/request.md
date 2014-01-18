@@ -186,19 +186,26 @@ if (this.is('image/*')) {
 }
 ```
 
+### Content Negotiation
+
+  Koa's `request` object includes helpful content negotiation utilities powered by [accepts](http://github.com/expressjs/accepts) and [negotiator](https://github.com/federomero/negotiator). These utilities are:
+
+- `req.accepts(types)`
+- `req.acceptsEncodings(types)`
+- `req.acceptsCharsets(charsets)`
+- `req.acceptsLanguages(langs)`
+
+  If no types are supplied, __all__ acceptable types are returned.
+
+  If multiple types are supplied, the best match will be returned. If no matches are found, a `false` is returned, and you should send a `406 "Not Acceptable"` response to the client.
+
+  In the case of missing accept headers where any type is acceptable, the first type will be returned. Thus, the order of types you supply is important.
+
 ### req.accepts(types)
 
-  Check if the given `type(s)` is acceptable, returning
-  the best match when true, otherwise `false`, in which
-  case you should respond with 406 "Not Acceptable".
-
-  The `type` value may be one or more mime type string
+  Check if the given `type(s)` is acceptable, returning the best match when true, otherwise `false`. The `type` value may be one or more mime type string
   such as "application/json", the extension name
   such as "json", or an array `["json", "html", "text/plain"]`.
-  When a list or array is given the _best_ match, if any is returned.
-
-  Note that if the client did not send an `Accept` header,
-  the first `type` will be returned.
 
 ```js
 // Accept: text/html
@@ -218,11 +225,17 @@ this.accepts('application/json');
 // Accept: text/*, application/json
 this.accepts('image/png');
 this.accepts('png');
-// => undefined
+// => false
 
 // Accept: text/*;q=.5, application/json
 this.accepts(['html', 'json']);
 this.accepts('html', 'json');
+// => "json"
+
+// No Accept header
+this.accepts('html', 'json');
+// => "html"
+this.accepts('json', 'html');
 // => "json"
 ```
 
@@ -234,21 +247,20 @@ switch (this.accepts('json', 'html', 'text')) {
   case 'json': break;
   case 'html': break;
   case 'text': break;
-  default: this.throw(406);
+  default: this.throw(406, 'json, html, or text only');
 }
 ```
 
 ### req.acceptsEncodings(encodings)
 
-  Check if `encodings` are acceptable, returning
-  the best match when true, otherwise `identity`.
+  Check if `encodings` are acceptable, returning the best match when true, otherwise `false`. Note that you should include `identity` as one of the encodings!
 
 ```js
 // Accept-Encoding: gzip
-this.acceptsEncodings('gzip', 'deflate');
+this.acceptsEncodings('gzip', 'deflate', 'identity');
 // => "gzip"
 
-this.acceptsEncodings(['gzip', 'deflate']);
+this.acceptsEncodings(['gzip', 'deflate', 'identity']);
 // => "gzip"
 ```
 
@@ -258,13 +270,15 @@ this.acceptsEncodings(['gzip', 'deflate']);
 ```js
 // Accept-Encoding: gzip, deflate
 this.acceptsEncodings();
-// => ["gzip", "deflate"]
+// => ["gzip", "deflate", "identity"]
 ```
+
+  Note that the `identity` encoding (which means no encoding) could be unacceptable if the client explicitly sends `identity;q=0`. Although this is an edge case, you should still handle the case where this method returns `false`.
 
 ### req.acceptsCharsets(charsets)
 
   Check if `charsets` are acceptable, returning
-  the best match when true, otherwise `undefined`.
+  the best match when true, otherwise `false`.
 
 ```js
 // Accept-Charset: utf-8, iso-8859-1;q=0.2, utf-7;q=0.5
@@ -287,7 +301,7 @@ this.acceptsCharsets();
 ### req.acceptsLanguages(langs)
 
   Check if `langs` are acceptable, returning
-  the best match when true, otherwise `undefined`.
+  the best match when true, otherwise `false`.
 
 ```js
 // Accept-Language: en;q=0.8, es, pt

@@ -16,7 +16,7 @@ describe('ctx.acceptsEncodings()', function(){
       it('should return identity', function(){
         var ctx = context();
         ctx.acceptsEncodings().should.eql(['identity']);
-        ctx.acceptsEncodings('gzip', 'deflate').should.equal('identity');
+        ctx.acceptsEncodings('gzip', 'deflate', 'identity').should.equal('identity');
       })
     })
   })
