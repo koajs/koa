@@ -1,4 +1,12 @@
 
+0.3.0 / 2014-01-17
+==================
+
+ * add ctx.host= delegate
+ * add req.host=
+ * add: context.throw supports Error instances
+ * update co
+
 0.2.1 / 2013-12-30
 ==================
 
