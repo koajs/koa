@@ -10,6 +10,7 @@ describe('ctx.throw(msg)', function(){
       ctx.throw('boom');
     } catch (err) {
       assert(500 == err.status);
+      assert(false === err.expose);
       done();
     }
   })
