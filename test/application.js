@@ -94,6 +94,31 @@ describe('app.use(fn)', function(){
 })
 
 describe('app.respond', function(){
+  describe('when this.respond === false', function(){
+    it('should bypass app.respond', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.body = 'Hello';
+        this.respond = false;
+
+        var res = this.res;
+        setImmediate(function () {
+          res.setHeader('Content-Type', 'text/plain');
+          res.end('lol');
+        })
+      })
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect(200)
+      .expect('lol')
+      .end(done);
+    })
+  })
+
   describe('when HEAD is used', function(){
     it('should not respond with the body', function(done){
       var app = koa();
