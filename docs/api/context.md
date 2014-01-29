@@ -102,6 +102,12 @@ throw err;
   error messages since you do not want to leak failure
   details.
 
+### ctx.respond
+
+  To bypass Koa's built-in response handling, you may explicitly set `this.respond = false;`. Use this if you want to write to the raw `res` object instead of letting Koa handle the response for you.
+
+  Note that using this is __not__ supported by Koa. This may break intended functionality of Koa middleware and Koa itself. Using this properly is considered a hack and is only a convenience to those wishing to use traditional `fn(req, res)` functions and middleware within Koa.
+
 ## Request aliases
 
   The following accessors and alias [Request](request.md) equivalents:
