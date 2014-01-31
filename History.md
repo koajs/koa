@@ -6,6 +6,7 @@
  * add req.host=
  * add: context.throw supports Error instances
  * update co
+ * update cookies
 
 0.2.1 / 2013-12-30
 ==================

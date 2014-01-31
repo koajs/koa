@@ -29,8 +29,7 @@
     "mime": "~1.2.11",
     "fresh": "~0.2.1",
     "koa-compose": "~2.2.0",
-    "cookies": "~0.3.7",
-    "keygrip": "~1.0.0",
+    "cookies": "~0.4.0",
     "delegates": "0.0.3"
   },
   "devDependencies": {
