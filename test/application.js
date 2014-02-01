@@ -409,26 +409,7 @@ describe('app.respond', function(){
       request(server)
       .get('/')
       .expect('Content-Type', 'application/json')
-      .expect('{\n  "hello": "world"\n}', done);
-    })
-
-    describe('when app.jsonSpaces is altered', function(){
-      it('should reflect in the formatting', function(done){
-        var app = koa();
-
-        app.jsonSpaces = 0;
-
-        app.use(function *(){
-          this.body = { hello: 'world' };
-        });
-
-        var server = app.listen();
-
-        request(server)
-        .get('/')
-        .expect('Content-Type', 'application/json')
-        .expect('{"hello":"world"}', done);
-      })
+      .expect('{"hello":"world"}', done);
     })
   })
 

@@ -11,7 +11,7 @@
   Response header object.
 
 ### res.socket
-  
+
   Request socket.
 
 ### res.status
@@ -129,15 +129,6 @@ so you can make a correction.
 #### Object
 
   The Content-Type is defaulted to application/json.
-
-#### Notes
-
-  To alter the JSON response formatting use the `app.jsonSpaces`
-  setting, for example to compress JSON responses set:
-
-```js
-app.jsonSpaces = 0;
-```
 
 ### res.get(field)
 
@@ -257,7 +248,7 @@ this.response.etag = crypto.createHash('md5').update(this.body).digest('hex');
   Append `val` to header `field`.
 
 ### res.vary(field)
-  
+
   Vary on `field`.
 
 
