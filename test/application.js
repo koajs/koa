@@ -396,6 +396,30 @@ describe('app.respond', function(){
     })
   })
 
+  describe('when .body is a Generator', function(){
+    it('should respond', function(done){
+      var app = koa();
+  
+      app.use(function *(){
+        var i = 0;
+        this.body = function*(){
+          return {
+            0: 'hello ',
+            1: 'world',
+            2: false
+          }[i++];
+        };
+      });
+  
+      var server = app.listen();
+  
+      request(server)
+      .get('/')
+      .expect('Content-Type', 'application/octet-stream')
+      .expect('hello world', done);
+    })
+  })
+
   describe('when .body is an Object', function(){
     it('should respond with json', function(done){
       var app = koa();
