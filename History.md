@@ -1,4 +1,15 @@
 
+0.4.0 / 2014-02-11
+==================
+
+ * remove app.jsonSpaces settings - moved to [koa-json](https://github.com/koajs/json)
+ * add this.response=false to bypass koa's response handling
+ * fix response handling after body has been sent
+ * changed ctx.throw() to no longer .expose 5xx errors
+ * remove app.keys getter/setter, update cookies, and remove keygrip deps
+ * update fresh
+ * update koa-compose
+
 0.3.0 / 2014-01-17
 ==================
 
