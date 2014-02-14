@@ -3,12 +3,8 @@
   A Koa Context encapsulates node's `request` and `response` objects
   into a single object which provides many helpful methods for writing
   web applications and APIs.
-
-  Many accessors and methods simply delegate to their `ctx.request` or `ctx.response`
-  equivalents for convenience, and are otherwise identical.
-
   These operations are used so frequently in HTTP server development
-  that they are added at this level, instead of a higher level framework,
+  that they are added at this level instead of a higher level framework,
   which would force middleware to re-implement this common functionality.
 
   A `Context` is created _per_ request, and is referenced in middleware
@@ -22,6 +18,12 @@ app.use(function *(){
   this.response; // is a koa Response
 });
 ```
+
+  Many of the context's accessors and methods simply delegate to their `ctx.request` or `ctx.response`
+  equivalents for convenience, and are otherwise identical.
+  In general, getters are delegated to `ctx.request` and setters are delegated to `ctx.response`.
+  For example, `this.length` returns the request's `content-length`, whereas `this.length = 1024` sets the response's `content-length` to `1024`.
+  If this confuses you, simply use `ctx.request` or `ctx.response` directly.
 
 ## API
 
