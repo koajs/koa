@@ -149,10 +149,12 @@ throw err;
   - `ctx.body=`
   - `ctx.status`
   - `ctx.status=`
-  - `ctx.length=`
   - `ctx.length`
-  - `ctx.type=`
+  - `ctx.length=`
   - `ctx.type`
+  - `ctx.type=`
+  - `ctx.charset`
+  - `ctx.charset=`
   - `ctx.headerSent`
   - `ctx.redirect()`
   - `ctx.attachment()`
