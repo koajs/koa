@@ -69,7 +69,7 @@
   Get request `Content-Type` void of parameters such as "charset".
 
 ```js
-var ct = this.type;
+var ct = this.request.type;
 // => "image/png"
 ```
 
@@ -78,7 +78,7 @@ var ct = this.type;
   Get request charset when present, or `undefined`:
 
 ```js
-this.charset
+this.request.charset
 // => "utf-8"
 ```
 
