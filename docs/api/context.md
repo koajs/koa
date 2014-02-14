@@ -126,6 +126,7 @@ throw err;
   - `ctx.querystring`
   - `ctx.querystring=`
   - `ctx.length`
+  - `ctx.type`
   - `ctx.host`
   - `ctx.host=`
   - `ctx.fresh`
@@ -152,7 +153,6 @@ throw err;
   - `ctx.status`
   - `ctx.status=`
   - `ctx.length=`
-  - `ctx.type`
   - `ctx.type=`
   - `ctx.headerSent`
   - `ctx.redirect()`
