@@ -73,6 +73,15 @@ var ct = this.type;
 // => "image/png"
 ```
 
+### res.charset
+
+  Get request charset when present, or `undefined`:
+
+```js
+this.charset
+// => "utf-8"
+```
+
 ### req.query
 
   Get parsed query-string, returning an empty object when no
