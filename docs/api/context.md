@@ -20,10 +20,8 @@ app.use(function *(){
 ```
 
   Many of the context's accessors and methods simply delegate to their `ctx.request` or `ctx.response`
-  equivalents for convenience, and are otherwise identical.
-  In general, getters are delegated to `ctx.request` and setters are delegated to `ctx.response`.
-  For example, `this.length` returns the request's `content-length`, whereas `this.length = 1024` sets the response's `content-length` to `1024`.
-  If this confuses you, simply use `ctx.request` or `ctx.response` directly.
+  equivalents for convenience, and are otherwise identical. For example `ctx.type` and `ctx.length`
+  delegate to the `response` object, and `ctx.path` and `ctx.method` delegate to the `request`.
 
 ## API
 
@@ -125,7 +123,6 @@ throw err;
   - `ctx.query=`
   - `ctx.querystring`
   - `ctx.querystring=`
-  - `ctx.length`
   - `ctx.type`
   - `ctx.host`
   - `ctx.host=`
@@ -153,7 +150,9 @@ throw err;
   - `ctx.status`
   - `ctx.status=`
   - `ctx.length=`
+  - `ctx.length`
   - `ctx.type=`
+  - `ctx.type`
   - `ctx.headerSent`
   - `ctx.redirect()`
   - `ctx.attachment()`
