@@ -44,6 +44,14 @@ describe('res.body=', function(){
       res.body = 'Tobi';
       assert('4' == res.header['content-length']);
     })
+
+    describe('and contains a non-leading <', function(){
+      it('should default to text', function(){
+        var res = response();
+        res.body = 'aklsdjf < klajsdlfjasd';
+        assert('text/plain; charset=utf-8' == res.header['content-type']);
+      })
+    })
   })
 
   describe('when an html string is given', function(){
@@ -66,6 +74,29 @@ describe('res.body=', function(){
       res.body = string;
       res.body = string + string;
       assert.equal(res.length, 2 * Buffer.byteLength(string));
+    })
+
+    describe('when it contains leading whitespace', function(){
+      it('should default to html', function(){
+        var res = response();
+        res.body = '    <h1>Tobi</h1>';
+        assert('text/html; charset=utf-8' == res.header['content-type']);
+      })
+    })
+  })
+
+  describe('when an xml string is given', function(){
+    it('should default to html', function(){
+      /**
+       * This test is to show that we're not going
+       * to be stricter with the html sniff
+       * or that we will sniff other string types.
+       * You should `.type=` if this simple test fails.
+       */
+
+      var res = response();
+      res.body = '<?xml version="1.0" encoding="UTF-8"?>\n<俄语>данные</俄语>';
+      assert('text/html; charset=utf-8' == res.header['content-type']);
     })
   })
 
