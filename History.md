@@ -1,4 +1,15 @@
 
+0.5.0 / 2014-02-19
+==================
+
+ * add context.charset
+ * add context.charset=
+ * add request.charset
+ * add response.charset
+ * add response.charset=
+ * fix response.body= html content sniffing
+ * change ctx.length and ctx.type to always delegate to response object [breaking change]
+
 0.4.0 / 2014-02-11
 ==================
 
