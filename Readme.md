@@ -11,6 +11,13 @@
   No middleware are bundled with koa. If you prefer to only define a single dependency for common middleware, much like Connect, you may use
   [koa-common](https://github.com/koajs/common).
 
+
+## Features
+
+* Using generators via co: make applications enjoyable to write and read (no callback hell), robustness
+* small codebase: only keep common HTTP server methods, no middleware bundled with
+* stack-like middleware architecture 
+
 ## Installation
 
 ```
