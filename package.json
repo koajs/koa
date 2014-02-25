@@ -38,7 +38,7 @@
     "supertest": "~0.9.0"
   },
   "optionalDependencies": {
-    "dtrace-provider": "git://github.com/rvagg/node-dtrace-provider#0.2.8"
+    "dtrace-provider": "git://github.com/rvagg/node-dtrace-provider"
   },
   "engines": {
     "node": ">= 0.11.9"
