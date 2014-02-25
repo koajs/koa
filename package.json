@@ -37,6 +37,9 @@
     "mocha": "~1.17.0",
     "supertest": "~0.9.0"
   },
+  "optionalDependencies": {
+    "dtrace-provider": "git://github.com/rvagg/node-dtrace-provider#0.2.8"
+  },
   "engines": {
     "node": ">= 0.11.9"
   }
