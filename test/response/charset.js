@@ -20,6 +20,21 @@ describe('ctx.charset=', function(){
       ctx.response.get('Content-Type').should.equal('text/plain; charset=utf8');
     })
   })
+
+  describe('before ctx.=type', function(){
+    it('should set it', function (){
+      var ctx = context();
+      ctx.charset = 'hey';
+      ctx.type = 'text/html';
+      ctx.response.get('Content-Type').should.equal('text/html; charset=hey');
+    })
+    it('should set by type', function (){
+      var ctx = context();
+      ctx.charset = 'hey';
+      ctx.type='text/html; charset=utf8';
+      ctx.response.get('Content-Type').should.equal('text/html; charset=utf8');
+    })
+  })
 })
 
 describe('ctx.charset', function(){
