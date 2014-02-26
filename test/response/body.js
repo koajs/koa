@@ -30,6 +30,19 @@ describe('res.body=', function(){
       res.body = 'something';
       res.length.should.equal(9);
     })
+
+    describe('when charset is set', function (){
+      it('should not override charset', function (){
+        var res = response();
+        res.charset = 'gbk';
+
+        res.body = '<em>hey</em>';
+        assert('text/html; charset=gbk' == res.header['content-type']);
+
+        res.body = {foo: 'bar'};
+        assert('application/json; charset=gbk' == res.header['content-type']);
+      })
+    })
   })
 
   describe('when a string is given', function(){
