@@ -63,7 +63,7 @@ The following results were produced on a Retina Macbook Pro, showing only the co
 
   No need for domains.
 
-### Koa is barebone
+### Koa is barebones
 
   Unlike both Connect and Express, Koa does not include any middleware.
 
@@ -71,14 +71,16 @@ The following results were produced on a Retina Macbook Pro, showing only the co
 
   Unlike Express, many convenience utilities are not provided. For example, sending files.
 
-  More modular.
+  Koa is more modular.
 
-### Koa relies less middleware
+### Koa relies less on middleware
 
   For example, instead of a "body parsing" middleware, you would instead use a body parsing function.
 
 ### Koa abstracts node's request/response
 
   Less hackery.
+  
+  Better user experience.
 
   Proper stream handling.
