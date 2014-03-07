@@ -186,20 +186,6 @@ this.type = 'png';
   when explicitly defined in full as `res.type = 'text/html'`
   no charset is assigned.
 
-### res.charset
-
-  Get response charset when present, or `undefined`:
-
-```js
-this.type = 'text/plain; charset=utf-8';
-this.charset
-// => "utf-8"
-```
-
-### res.charset=
-
-  Set the response charset, overriding if present.
-
 ### res.redirect(url, [alt])
 
   Perform a [302] redirect to `url`.
