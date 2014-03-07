@@ -1,4 +1,11 @@
 
+0.5.1 / 2014-03-06
+==================
+
+ * add request.hostname(getter). Closes #224
+ * remove response.charset and ctx.charset (too confusing in relation to ctx.type) [breaking change]
+ * fix a debug() name
+
 0.5.0 / 2014-02-19
 ==================
 
