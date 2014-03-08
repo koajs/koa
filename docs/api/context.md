@@ -123,7 +123,6 @@ throw err;
   - `ctx.query=`
   - `ctx.querystring`
   - `ctx.querystring=`
-  - `ctx.type`
   - `ctx.host`
   - `ctx.host=`
   - `ctx.fresh`
