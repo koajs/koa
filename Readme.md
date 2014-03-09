@@ -31,6 +31,7 @@ alias node='node --harmony'
  - [Middleware](https://github.com/koajs/koa/wiki) list
  - [Wiki](https://github.com/koajs/koa/wiki)
  - [G+ Community](https://plus.google.com/communities/101845768320796750641)
+ - [Reddit Community](reddit.com/r/koajs)
  - [Mailing list](https://groups.google.com/forum/#!forum/koajs)
  - [Guide](docs/guide.md)
  - [FAQ](docs/faq.md)
