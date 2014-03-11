@@ -47,6 +47,20 @@ describe('app', function(){
   })
 })
 
+describe('app.toJSON()', function(){
+  it('should work', function(){
+    var app = koa();
+    var obj = app.toJSON();
+
+    obj.should.eql({
+      outputErrors: false,
+      subdomainOffset: 2,
+      poweredBy: true,
+      env: 'test'
+    });
+  })
+})
+
 describe('app.use(fn)', function(){
   it('should compose middleware', function(done){
     var app = koa();
