@@ -514,7 +514,7 @@ describe('app.context', function(){
   app1.context.message = 'hello';
   var app2 = koa();
 
-  it('should merge properties', function(){
+  it('should merge properties', function(done){
     app1.use(function *(next){
       assert.equal(this.message, 'hello')
       this.status = 204
@@ -522,10 +522,10 @@ describe('app.context', function(){
 
     request(app1.listen())
     .get('/')
-    .expect(204);
+    .expect(204, done);
   })
 
-  it('should not affect the original prototype', function(){
+  it('should not affect the original prototype', function(done){
     app2.use(function *(next){
       assert.equal(this.message, undefined)
       this.status = 204;
@@ -533,7 +533,7 @@ describe('app.context', function(){
 
     request(app2.listen())
     .get('/')
-    .expect(204);
+    .expect(204, done);
   })
 })
 
@@ -542,7 +542,7 @@ describe('app.request', function(){
   app1.request.message = 'hello';
   var app2 = koa();
 
-  it('should merge properties', function(){
+  it('should merge properties', function(done){
     app1.use(function *(next){
       assert.equal(this.request.message, 'hello')
       this.status = 204
@@ -550,10 +550,10 @@ describe('app.request', function(){
 
     request(app1.listen())
     .get('/')
-    .expect(204);
+    .expect(204, done);
   })
 
-  it('should not affect the original prototype', function(){
+  it('should not affect the original prototype', function(done){
     app2.use(function *(next){
       assert.equal(this.request.message, undefined)
       this.status = 204;
@@ -561,7 +561,7 @@ describe('app.request', function(){
 
     request(app2.listen())
     .get('/')
-    .expect(204);
+    .expect(204, done);
   })
 })
 
@@ -570,7 +570,7 @@ describe('app.response', function(){
   app1.response.message = 'hello';
   var app2 = koa();
 
-  it('should merge properties', function(){
+  it('should merge properties', function(done){
     app1.use(function *(next){
       assert.equal(this.response.message, 'hello')
       this.status = 204
@@ -578,10 +578,10 @@ describe('app.response', function(){
 
     request(app1.listen())
     .get('/')
-    .expect(204);
+    .expect(204, done);
   })
 
-  it('should not affect the original prototype', function(){
+  it('should not affect the original prototype', function(done){
     app2.use(function *(next){
       assert.equal(this.response.message, undefined)
       this.status = 204;
@@ -589,6 +589,6 @@ describe('app.response', function(){
 
     request(app2.listen())
     .get('/')
-    .expect(204);
+    .expect(204, done);
   })
 })
