@@ -61,6 +61,14 @@ describe('app.toJSON()', function(){
   })
 })
 
+describe('app.inspect()', function(){
+  it('should work', function(){
+    var app = koa();
+    var util = require('util');
+    var str = util.inspect(app);
+  })
+})
+
 describe('app.use(fn)', function(){
   it('should compose middleware', function(done){
     var app = koa();
