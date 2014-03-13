@@ -1,4 +1,12 @@
 
+HEAD
+==================
+
+ * fix: inspection of `app` and `app.toJSON()`
+ * fix: let `this.throw`n errors provide their own status
+ * refactor: use statuses
+ * refactor: use escape-html
+
 0.5.1 / 2014-03-06
 ==================
 
