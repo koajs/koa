@@ -9,14 +9,14 @@ describe('ctx.onerror(err)', function(){
     app.use(function *(next){
       this.body = 'something else';
 
-      this.throw(499, 'boom');
+      this.throw(418, 'boom');
     })
 
     var server = app.listen();
 
     request(server)
     .get('/')
-    .expect(499)
+    .expect(418)
     .expect('Content-Type', 'text/plain; charset=utf-8')
     .expect('Content-Length', '4')
     .end(done);
@@ -30,14 +30,14 @@ describe('ctx.onerror(err)', function(){
       this.set('X-CSRF-Token', 'asdf');
       this.body = 'response';
 
-      this.throw(499, 'boom');
+      this.throw(418, 'boom');
     })
 
     var server = app.listen();
 
     request(server)
     .get('/')
-    .expect(499)
+    .expect(418)
     .expect('Content-Type', 'text/plain; charset=utf-8')
     .expect('Content-Length', '4')
     .end(function(err, res){

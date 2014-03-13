@@ -21,6 +21,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "statuses": "~1.0.1",
     "accepts": "~1.0.0",
     "type-is": "~1.0.0",
     "finished": "~1.1.1",
