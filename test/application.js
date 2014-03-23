@@ -189,6 +189,22 @@ describe('app.respond', function(){
       .head('/')
       .expect(200, done);
     })
+
+    it('should not overwrite the content-type', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.status = 200;
+        this.type = 'application/javascript';
+      })
+
+      var server = app.listen();
+
+      request(server)
+      .head('/')
+      .expect('content-type', 'application/javascript')
+      .expect(200, done);
+    })
   })
 
   describe('when no middleware are present', function(){

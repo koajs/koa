@@ -4,6 +4,7 @@ HEAD
 
  * fix: inspection of `app` and `app.toJSON()`
  * fix: let `this.throw`n errors provide their own status
+ * fix: overwriting of `content-type` w/ `HEAD` requests
  * refactor: use statuses
  * refactor: use escape-html
 
