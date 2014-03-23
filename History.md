@@ -7,6 +7,7 @@ HEAD
  * fix: overwriting of `content-type` w/ `HEAD` requests
  * refactor: use statuses
  * refactor: use escape-html
+ * bump dev deps
 
 0.5.1 / 2014-03-06
 ==================
