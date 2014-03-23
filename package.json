@@ -2,7 +2,7 @@
   "name": "koa",
   "version": "0.5.1",
   "description": "Koa web app framework",
-  "main": "index.js",
+  "main": "lib/application.js",
   "scripts": {
     "test": "make test"
   },
