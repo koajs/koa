@@ -1,5 +1,5 @@
 
-HEAD
+0.5.2 / 2014-03-23
 ==================
 
  * fix: inspection of `app` and `app.toJSON()`
