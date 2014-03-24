@@ -33,7 +33,7 @@ describe('app', function(){
       this.status = 204;
       // throw if .writeHead or .end is called
       this.res.writeHead =
-      this.res.end = function () {
+      this.res.end = function(){
         throw new Error('response sent');
       };
     })
@@ -125,7 +125,7 @@ describe('app.respond', function(){
         this.respond = false;
 
         var res = this.res;
-        setImmediate(function () {
+        setImmediate(function(){
           res.setHeader('Content-Type', 'text/plain');
           res.end('lol');
         })
@@ -229,14 +229,14 @@ describe('app.respond', function(){
         res.setHeader("Content-Type", "text/html")
         res.status = 200;
         res.write('Hello');
-        setTimeout(function () {
+        setTimeout(function(){
           res.end("Goodbye")
         }, 0);
       });
 
       var errorCaught = false;
 
-      app.on('error', function (err) {
+      app.on('error', function(err){
         errorCaught = err;
       });
 
@@ -260,7 +260,7 @@ describe('app.respond', function(){
         res.setHeader("Content-Type", "text/html")
         res.status = 200;
         res.write('Hello');
-        setTimeout(function () {
+        setTimeout(function(){
           res.end("Goodbye")
         }, 0);
       });
@@ -306,7 +306,7 @@ describe('app.respond', function(){
         .get('/')
         .expect(204)
         .expect('')
-        .end(function (err, res) {
+        .end(function(err, res){
           if (err) return done(err);
 
           res.header.should.not.have.property('content-type');
@@ -329,7 +329,7 @@ describe('app.respond', function(){
         .get('/')
         .expect(205)
         .expect('')
-        .end(function (err, res) {
+        .end(function(err, res){
           if (err) return done(err);
 
           res.header.should.not.have.property('content-type');
@@ -352,7 +352,7 @@ describe('app.respond', function(){
         .get('/')
         .expect(304)
         .expect('')
-        .end(function (err, res) {
+        .end(function(err, res){
           if (err) return done(err);
 
           res.header.should.not.have.property('content-type');

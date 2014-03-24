@@ -13,7 +13,7 @@
   `X-Response-Time` header field the middleware would look like the following:
 
 ```js
-function *responseTime(next){
+function *responseTime(next) {
   var start = new Date;
   yield next;
   var ms = new Date - start;
@@ -88,7 +88,7 @@ app.use(function *response(){
   and returns the middleware itself:
 
 ```js
-function logger(format){
+function logger(format) {
   format = format || ':method ":url"';
 
   return function *(next){
@@ -111,7 +111,7 @@ app.use(logger(':method :url'));
   Naming middleware is optional, however it's useful for debugging purposes to assign a name.
 
 ```js
-function logger(format){
+function logger(format) {
   return function *logger(next){
 
   }
@@ -123,7 +123,7 @@ function logger(format){
   Sometimes you want to "compose" multiple middleware into a single middleware for easy re-use or exporting. To do so, you may chain them together with `.call(this, next)`s, then return another function that yields the chain.
 
 ```js
-function *random(next){
+function *random(next) {
   if ('/random' == this.path) {
     this.body = Math.floor(Math.random()*10);
   } else {
@@ -139,7 +139,7 @@ function *backwords(next) {
   }
 }
 
-function *pi(next){
+function *pi(next) {
   if ('/pi' == this.path) {
     this.body = String(Math.PI);
   } else {
