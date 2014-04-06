@@ -1,6 +1,6 @@
 <img src="https://dl.dropboxusercontent.com/u/6396913/koa/logo.png" alt="koa middleware framework for nodejs" width="255px" />
 
-  [![Build Status](https://travis-ci.org/koajs/koa.png)](https://travis-ci.org/koajs/koa)
+  [![Build Status](https://travis-ci.org/koajs/koa.svg)](https://travis-ci.org/koajs/koa)
 
   Expressive middleware for node.js using generators via [co](https://github.com/visionmedia/co)
   to make web applications and APIs more enjoyable to write. Koa's middleware flow in a stack-like manner allowing you to perform actions downstream, then filter and manipulate the response upstream. Koa's use of generators also greatly increases the readability and robustness of your application.
