@@ -432,6 +432,21 @@ describe('app.respond', function(){
       .expect(404)
       .end(done);
     })
+
+    it('should handle errors when no content status', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.status = 204;
+        this.body = fs.createReadStream('does not exist');
+      });
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect(204, done);
+    })
   })
 
   describe('when .body is an Object', function(){
@@ -544,6 +559,46 @@ describe('app.respond', function(){
       .expect(200, 'Got error')
       .end(done);
     })
+  })
+
+  describe('when status and body property', function(){
+    it('should 200', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.status = 304;
+        this.body = 'hello';
+        this.status = 200;
+      });
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect(200)
+      .expect('hello', done);
+    })
+
+    it('should 204', function(done) {
+      var app = koa();
+
+      app.use(function *(){
+        this.status = 200;
+        this.body = 'hello';
+        this.set('content-type', 'text/plain; charset=utf8');
+        this.status = 204;
+      });
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect(204)
+      .end(function (err, res) {
+        res.should.not.have.header('content-type');
+        done(err);
+      });
+    });
   })
 })
 
