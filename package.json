@@ -33,6 +33,7 @@
     "koa-compose": "~2.2.0",
     "cookies": "~0.4.0",
     "delegates": "0.0.3",
+    "dethroy": "~1.0.0",
     "only": "0.0.2"
   },
   "devDependencies": {
