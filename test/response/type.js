@@ -8,7 +8,7 @@ describe('ctx.type=', function(){
       var ctx = context();
       ctx.type = 'text/plain';
       ctx.type.should.equal('text/plain');
-      ctx.response.header['content-type'].should.equal('text/plain');
+      ctx.response.header['content-type'].should.equal('text/plain; charset=utf-8');
     })
   })
 
@@ -18,6 +18,24 @@ describe('ctx.type=', function(){
       ctx.type = 'json';
       ctx.type.should.equal('application/json');
       ctx.response.header['content-type'].should.equal('application/json');
+    })
+  })
+
+  describe('without a charset', function(){
+    it('should default the charset', function(){
+      var ctx = context();
+      ctx.type = 'text/html';
+      ctx.type.should.equal('text/html');
+      ctx.response.header['content-type'].should.equal('text/html; charset=utf-8');
+    })
+  })
+
+  describe('with a charset', function(){
+    it('should not default the charset', function(){
+      var ctx = context();
+      ctx.type = 'text/html; charset=foo';
+      ctx.type.should.equal('text/html');
+      ctx.response.header['content-type'].should.equal('text/html; charset=foo');
     })
   })
 })
