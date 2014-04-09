@@ -1,4 +1,10 @@
 
+0.5.3 / 2014-04-09
+==================
+
+ * change res.type= to always default charset. Closes #252
+ * remove ctx.inspect() implementation. Closes #164
+
 0.5.2 / 2014-03-23
 ==================
 
