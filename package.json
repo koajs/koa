@@ -34,6 +34,7 @@
     "cookies": "~0.4.0",
     "delegates": "0.0.3",
     "dethroy": "~1.0.0",
+    "error-inject": "~1.0.0",
     "only": "0.0.2"
   },
   "devDependencies": {

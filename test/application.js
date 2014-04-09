@@ -447,6 +447,22 @@ describe('app.respond', function(){
       .get('/')
       .expect(204, done);
     })
+
+    it('should handle all intermediate stream body errors', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.body = fs.createReadStream('does not exist');
+        this.body = fs.createReadStream('does not exist');
+        this.body = fs.createReadStream('does not exist');
+      });
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect(404, done);
+    })
   })
 
   describe('when .body is an Object', function(){
