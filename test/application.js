@@ -288,6 +288,7 @@ describe('app.respond', function(){
         request(server)
         .get('/')
         .expect(400)
+        .expect('content-length', '11')
         .expect('Bad Request', done);
       })
     })
@@ -362,6 +363,73 @@ describe('app.respond', function(){
     })
   })
 
+  describe('when .body is a null', function(){
+    it('should respond 204 by default', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.body = null;
+      })
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect(204)
+      .expect('')
+      .end(function(err, res){
+        if (err) return done(err);
+
+        res.header.should.not.have.property('content-type');
+        done();
+      })
+    })
+
+    it('should respond 204 with status=200', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.status=200;
+        this.body = null;
+      })
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect(204)
+      .expect('')
+      .end(function(err, res){
+        if (err) return done(err);
+
+        res.header.should.not.have.property('content-type');
+        done();
+      })
+    })
+
+    it('should respond 205 with status=205', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.status=205;
+        this.body = null;
+      })
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect(205)
+      .expect('')
+      .end(function(err, res){
+        if (err) return done(err);
+
+        res.header.should.not.have.property('content-type');
+        done();
+      })
+    })
+  })
+
   describe('when .body is a string', function(){
     it('should respond', function(done){
       var app = koa();
@@ -431,6 +499,37 @@ describe('app.respond', function(){
       .expect('Content-Type', 'text/plain; charset=utf-8')
       .expect(404)
       .end(done);
+    })
+
+    it('should handle errors when no content status', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.status = 204;
+        this.body = fs.createReadStream('does not exist');
+      });
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect(204, done);
+    })
+
+    it('should handle all intermediate stream body errors', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.body = fs.createReadStream('does not exist');
+        this.body = fs.createReadStream('does not exist');
+        this.body = fs.createReadStream('does not exist');
+      });
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect(404, done);
     })
   })
 
@@ -544,6 +643,46 @@ describe('app.respond', function(){
       .expect(200, 'Got error')
       .end(done);
     })
+  })
+
+  describe('when status and body property', function(){
+    it('should 200', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.status = 304;
+        this.body = 'hello';
+        this.status = 200;
+      });
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect(200)
+      .expect('hello', done);
+    })
+
+    it('should 204', function(done) {
+      var app = koa();
+
+      app.use(function *(){
+        this.status = 200;
+        this.body = 'hello';
+        this.set('content-type', 'text/plain; charset=utf8');
+        this.status = 204;
+      });
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect(204)
+      .end(function (err, res) {
+        res.should.not.have.header('content-type');
+        done(err);
+      });
+    });
   })
 })
 

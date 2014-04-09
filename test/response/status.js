@@ -46,20 +46,48 @@ describe('res.status=', function(){
         this.set('Content-Length', '15');
         this.set('Transfer-Encoding', 'chunked');
         this.status = status;
-        assert(null == this.response.header['content-type']);
-        assert(null == this.response.header['content-length']);
-        assert(null == this.response.header['transfer-encoding']);
       });
 
       request(app.listen())
         .get('/')
         .expect(status)
-        .end(done);
+        .end(function(err, res) {
+          res.should.not.have.header('content-type');
+          res.should.not.have.header('content-length');
+          res.should.not.have.header('content-encoding');
+          done(err);
+        });
+    })
+
+    it('should strip content releated header fields after status set', function(done) {
+      var app = koa();
+
+      app.use(function *(){
+        this.status = status;
+        this.body = { foo: 'bar' };
+        this.set('Content-Type', 'application/json');
+        this.set('Content-Length', '15');
+        this.set('Transfer-Encoding', 'chunked');
+      });
+
+      request(app.listen())
+        .get('/')
+        .expect(status)
+        .end(function(err, res) {
+          res.should.not.have.header('content-type');
+          res.should.not.have.header('content-length');
+          res.should.not.have.header('content-encoding');
+          done(err);
+        });
     })
   }
 
   describe('when 204', function(){
     strip(204);
+  })
+
+  describe('when 205', function() {
+    strip(205);
   })
 
   describe('when 304', function(){
