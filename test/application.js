@@ -288,6 +288,7 @@ describe('app.respond', function(){
         request(server)
         .get('/')
         .expect(400)
+        .expect('content-length', '11')
         .expect('Bad Request', done);
       })
     })
@@ -358,6 +359,73 @@ describe('app.respond', function(){
           res.header.should.not.have.property('content-type');
           done();
         })
+      })
+    })
+  })
+
+  describe('when .body is a null', function(){
+    it('should respond 204 by default', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.body = null;
+      })
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect(204)
+      .expect('')
+      .end(function(err, res){
+        if (err) return done(err);
+
+        res.header.should.not.have.property('content-type');
+        done();
+      })
+    })
+
+    it('should respond 204 with status=200', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.status=200;
+        this.body = null;
+      })
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect(204)
+      .expect('')
+      .end(function(err, res){
+        if (err) return done(err);
+
+        res.header.should.not.have.property('content-type');
+        done();
+      })
+    })
+
+    it('should respond 205 with status=205', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.status=205;
+        this.body = null;
+      })
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect(205)
+      .expect('')
+      .end(function(err, res){
+        if (err) return done(err);
+
+        res.header.should.not.have.property('content-type');
+        done();
       })
     })
   })
