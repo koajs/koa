@@ -1,11 +1,12 @@
 
+var ReadableStream = require('stream').Readable;
 var context = require('../lib/context');
 var request = require('../lib/request');
 var response = require('../lib/response');
 var koa = require('..');
 
 exports = module.exports = function(req, res){
-  req = req || { headers: {} };
+  req = req || { headers: {}, socket: new ReadableStream() };
   res = res || { _headers: {} };
   res.setHeader = function(k, v){ res._headers[k.toLowerCase()] = v };
   res.removeHeader = function(k, v){ delete res._headers[k.toLowerCase()] };

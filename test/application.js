@@ -261,7 +261,7 @@ describe('app.respond', function(){
         res.status = 200;
         res.write('Hello');
         setTimeout(function(){
-          res.end("Goodbye")
+          res.end("Goodbye");
         }, 0);
       });
 
@@ -431,6 +431,38 @@ describe('app.respond', function(){
       .expect('Content-Type', 'text/plain; charset=utf-8')
       .expect(404)
       .end(done);
+    })
+
+    it('should handle errors when no content status', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.status = 204;
+        this.body = fs.createReadStream('does not exist');
+      });
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect(204, done);
+    })
+
+
+    it('should handle all intermediate stream body errors', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.body = fs.createReadStream('does not exist');
+        this.body = fs.createReadStream('does not exist');
+        this.body = fs.createReadStream('does not exist');
+      });
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect(404, done);
     })
   })
 
