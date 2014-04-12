@@ -73,7 +73,7 @@ var ct = this.request.type;
 // => "image/png"
 ```
 
-### res.charset
+### req.charset
 
   Get request charset when present, or `undefined`:
 
