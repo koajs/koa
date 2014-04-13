@@ -288,6 +288,7 @@ describe('app.respond', function(){
         request(server)
         .get('/')
         .expect(400)
+        .expect('Content-Length', 11)
         .expect('Bad Request', done);
       })
     })
