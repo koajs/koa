@@ -163,7 +163,7 @@ describe('app.respond', function(){
       });
     })
 
-    it('should keep the headers', function(done){
+    it('should keep json headers', function(done){
       var app = koa();
 
       app.use(function *(){
@@ -179,6 +179,27 @@ describe('app.respond', function(){
         if (err) return done(err);
         res.should.have.header('Content-Type', 'application/json');
         res.should.have.header('Content-Length', '17');
+        assert(0 == res.text.length);
+        done();
+      });
+    })
+
+    it('should keep string headers', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.body = 'hello world';
+      });
+
+      var server = app.listen();
+
+      request(server)
+      .head('/')
+      .expect(200)
+      .end(function(err, res){
+        if (err) return done(err);
+        res.should.have.header('Content-Type', 'text/plain; charset=utf-8');
+        res.should.have.header('Content-Length', '11');
         assert(0 == res.text.length);
         done();
       });
