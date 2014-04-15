@@ -205,6 +205,27 @@ describe('app.respond', function(){
       });
     })
 
+    it('should keep buffer headers', function(done){
+      var app = koa();
+
+      app.use(function *(){
+        this.body = new Buffer('hello world');
+      });
+
+      var server = app.listen();
+
+      request(server)
+      .head('/')
+      .expect(200)
+      .end(function(err, res){
+        if (err) return done(err);
+        res.should.have.header('Content-Type', 'application/octet-stream');
+        res.should.have.header('Content-Length', '11');
+        assert(0 == res.text.length);
+        done();
+      });
+    })
+
     it('should respond with a 404 if no body was set', function(done){
       var app = koa();
 
