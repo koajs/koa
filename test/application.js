@@ -103,15 +103,36 @@ describe('app.use(fn)', function(){
     });
   })
 
-  it('should error when a non-generator function is passed', function(done){
+  it('should allow non-generator functions as middleware', function(done){
     var app = koa();
+    var calls = [];
 
-    try {
-      app.use(function(){});
-    } catch (err) {
-      err.message.should.equal('app.use() requires a generator function');
+    app.use(function *(next){
+      calls.push(1);
+      yield next;
+      calls.push(5);
+    });
+
+    // Non-generator function continues to allow rest of middleware to respond.
+    app.use(function() {
+      calls.push(2);
+    });
+
+    app.use(function *(next){
+      calls.push(3);
+      yield next;
+      calls.push(4);
+    });
+
+    var server = app.listen();
+
+    request(server)
+    .get('/')
+    .end(function(err){
+      if (err) return done(err);
+      calls.should.eql([1,2,3,4,5]);
       done();
-    }
+    });
   })
 })
 
