@@ -18,10 +18,10 @@ $ npm install koa
 ```
 
   To use Koa you must be running __node 0.11.9__ or higher for generator support, and must run node(1)
-  with the `--harmony` flag. If you don't like typing this, add an alias to your shell profile:
+  with the `--harmony_generators` flag. If you don't like typing this, add an alias to your shell profile:
 
 ```
-alias node='node --harmony'
+alias node='node --harmony_generators'
 ```
 
 ## Community
