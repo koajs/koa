@@ -29,6 +29,7 @@
     "co": "~3.0.2",
     "debug": "*",
     "mime": "~1.2.11",
+    "mime-extended": "^1.0.0",
     "fresh": "~0.2.1",
     "koa-compose": "~2.2.0",
     "cookies": "~0.4.0",
