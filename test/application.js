@@ -565,10 +565,34 @@ describe('app.respond', function(){
       .end(function(err, res){
         if (err) return done(err);
         var pkg = require('../package');
+        res.should.not.have.header('Content-Length');
         res.body.should.eql(pkg);
         done();
       });
     })
+
+    it('should strip content-length header', function (done) {
+      var app = koa();
+
+      app.use(function *(){
+        this.body = 'hello';
+        this.body = fs.createReadStream('package.json');
+        this.set('Content-Type', 'application/json');
+      });
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect('Content-Type', 'application/json')
+      .end(function(err, res){
+        if (err) return done(err);
+        var pkg = require('../package');
+        res.should.not.have.header('Content-Length');
+        res.body.should.eql(pkg);
+        done();
+      });
+    });
 
     it('should handle errors', function(done){
       var app = koa();
