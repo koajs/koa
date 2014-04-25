@@ -32,6 +32,7 @@
     "mime-extended": "^1.0.0",
     "fresh": "~0.2.1",
     "koa-compose": "~2.2.0",
+    "koa-is-json": "~1.0.0",
     "cookies": "~0.4.0",
     "delegates": "0.0.3",
     "dethroy": "~1.0.0",
