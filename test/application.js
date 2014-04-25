@@ -571,7 +571,7 @@ describe('app.respond', function(){
       });
     })
 
-    it('should strip content-length header', function (done) {
+    it('should strip content-length when overwriting', function (done) {
       var app = koa();
 
       app.use(function *(){
@@ -591,8 +591,56 @@ describe('app.respond', function(){
         res.should.not.have.header('Content-Length');
         res.body.should.eql(pkg);
         done();
+      })
+    })
+
+    it('should keep content-length if not overwrite', function (done) {
+      var app = koa();
+
+      app.use(function *(){
+        this.length = fs.readFileSync('package.json').length;
+        this.body = fs.createReadStream('package.json');
+        this.set('Content-Type', 'application/json');
       });
-    });
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect('Content-Type', 'application/json')
+      .end(function(err, res){
+        if (err) return done(err);
+        var pkg = require('../package');
+        res.should.have.header('Content-Length');
+        res.body.should.eql(pkg);
+        done();
+      })
+    })
+
+    it('should keep content-length if overwrite with the same stream', function (done) {
+      var app = koa();
+
+      app.use(function *(){
+        this.length = fs.readFileSync('package.json').length;
+        var stream = fs.createReadStream('package.json');
+        this.body = stream;
+        this.body = stream;
+        this.set('Content-Type', 'application/json');
+      });
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect('Content-Type', 'application/json')
+      .end(function(err, res){
+        if (err) return done(err);
+        var pkg = require('../package');
+        res.should.have.header('Content-Length');
+        res.body.should.eql(pkg);
+        done();
+      })
+    })
 
     it('should handle errors', function(done){
       var app = koa();
