@@ -2,8 +2,9 @@
 HEAD /
 ==================
 
- * refactor mime with mime-extended
- * refactor to use koa-is-json
+ * refactor to use:
+    * koa-is-json
+    * set-type
 
 0.5.5 / 2014-04-14
 ==================
