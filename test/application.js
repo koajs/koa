@@ -125,6 +125,7 @@ describe('app.respond', function(){
         this.respond = false;
 
         var res = this.res;
+        res.statusCode = 200;
         setImmediate(function(){
           res.setHeader('Content-Type', 'text/plain');
           res.end('lol');
@@ -284,14 +285,13 @@ describe('app.respond', function(){
   })
 
   describe('when res has already been written to', function(){
-
     it('should not cause an app error', function(done){
       var app = koa();
 
       app.use(function *(next){
         var res = this.res;
+        this.status = 200;
         res.setHeader("Content-Type", "text/html")
-        res.status = 200;
         res.write('Hello');
         setTimeout(function(){
           res.end("Goodbye")
@@ -321,8 +321,8 @@ describe('app.respond', function(){
 
       app.use(function *(next){
         var res = this.res;
+        this.status = 200;
         res.setHeader("Content-Type", "text/html")
-        res.status = 200;
         res.write('Hello');
         setTimeout(function(){
           res.end("Goodbye");
