@@ -1,4 +1,6 @@
 
+var fs = require('fs');
+var should = require('should');
 var response = require('../context').response;
 var assert = require('assert');
 
@@ -27,10 +29,31 @@ describe('res.length', function(){
         var res = response();
 
         res.body = 'foo';
+        res.remove('Content-Length');
         res.length.should.equal(3);
 
-        res.body = new Buffer('foo');
+        res.body = 'foo';
         res.length.should.equal(3);
+
+        res.body = new Buffer('foo bar');
+        res.remove('Content-Length');
+        res.length.should.equal(7);
+
+        res.body = new Buffer('foo bar');
+        res.length.should.equal(7);
+
+        res.body = { hello: 'world' };
+        res.remove('Content-Length');
+        res.length.should.equal(17);
+
+        res.body = { hello: 'world' };
+        res.length.should.equal(17);
+
+        res.body = fs.createReadStream('package.json');
+        should.not.exist(res.length);
+
+        res.body = null;
+        should.not.exist(res.length);
       })
     })
 
