@@ -1,3 +1,13 @@
+# Installation
+
+ Koa currently requires node 0.11.x for the --harmony flag which exposes generators to your script. If you're running an earlier version of node you may install [n](https://github.com/visionmedia/n), a node version manager to quickly install 0.11.x:
+
+```
+$ npm install -g n
+$ n 0.11.12
+$ node --harmony my-koa-app.js
+```
+
 # Application
 
   A Koa application is an object containing an array of middleware generator functions
