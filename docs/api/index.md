@@ -79,7 +79,6 @@ app.listen(3000);
   - `app.env` defaulting to the __NODE_ENV__ or "development"
   - `app.proxy` when true proxy header fields will be trusted
   - `app.subdomainOffset` offset of `.subdomains` to ignore [2]
-  - `app.outputErrors` output err.stack to stderr [false in "test" environment]
 
 ## app.listen(...)
 

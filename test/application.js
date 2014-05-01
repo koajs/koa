@@ -53,7 +53,6 @@ describe('app.toJSON()', function(){
     var obj = app.toJSON();
 
     obj.should.eql({
-      outputErrors: false,
       subdomainOffset: 2,
       poweredBy: true,
       env: 'test'
