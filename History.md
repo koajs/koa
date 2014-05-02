@@ -1,10 +1,12 @@
 
-HEAD /
+0.6.0 / 2014-05-01
 ==================
 
- * refactor to use:
-    * koa-is-json
-    * set-type
+ * add nicer error formatting
+ * add: assert object type in ctx.onerror
+ * change .status default to 404. Closes #263
+ * remove .outputErrors, suppress output when handled by the dev. Closes #272
+ * fix content-length when body is re-assigned. Closes #267
 
 0.5.5 / 2014-04-14
 ==================
