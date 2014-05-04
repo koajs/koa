@@ -14,7 +14,7 @@ describe('req.host', function(){
         var req = request();
         req.header['x-forwarded-host'] = 'bar.com';
         req.header['host'] = 'foo.com';
-        req.host.should.equal('foo.com')
+        req.host.should.equal('foo.com');
       })
     })
 
@@ -24,17 +24,8 @@ describe('req.host', function(){
         req.app.proxy = true;
         req.header['x-forwarded-host'] = 'bar.com, baz.com';
         req.header['host'] = 'foo.com';
-        req.host.should.equal('bar.com')
+        req.host.should.equal('bar.com');
       })
     })
-  })
-})
-
-describe('req.host=', function(){
-  it('should replace the host', function(){
-    var req = request();
-    req.header['host'] = 'foo.com';
-    req.host = 'bar.com';
-    req.host.should.equal('bar.com')
   })
 })

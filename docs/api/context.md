@@ -124,7 +124,7 @@ throw err;
   - `ctx.querystring`
   - `ctx.querystring=`
   - `ctx.host`
-  - `ctx.host=`
+  - `ctx.hostname`
   - `ctx.fresh`
   - `ctx.stale`
   - `ctx.socket`
