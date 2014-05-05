@@ -57,10 +57,11 @@
 
 ### req.host
 
-  Get host(hostname:port) when present. Supports `X-Forwarded-Host`
+  Get host (hostname:port) when present. Supports `X-Forwarded-Host`
   when `app.proxy` is __true__, otherwise `Host` is used.
 
 ### req.hostname
+
   Get hostname when present. Supports `X-Forwarded-Host`
   when `app.proxy` is __true__, otherwise `Host` is used.
 
