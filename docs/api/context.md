@@ -117,6 +117,7 @@ throw err;
   - `ctx.method=`
   - `ctx.url`
   - `ctx.url=`
+  - `ctx.originalUrl`
   - `ctx.path`
   - `ctx.path=`
   - `ctx.query`

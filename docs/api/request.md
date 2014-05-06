@@ -31,6 +31,10 @@
 
   Set request URL, useful for url rewrites.
 
+### req.originalUrl
+
+  Get request original URL.
+
 ### req.path
 
   Get request pathname.
