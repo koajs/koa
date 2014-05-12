@@ -5,6 +5,7 @@
 ```
 $ npm install -g n
 $ n 0.11.12
+$ npm install koa
 $ node --harmony my-koa-app.js
 ```
 
