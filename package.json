@@ -25,7 +25,7 @@
     "statuses": "~1.0.1",
     "accepts": "~1.0.0",
     "type-is": "~1.2.0",
-    "set-type": "~1.0.0",
+    "mime-types": "~1.0.0",
     "finished": "~1.1.1",
     "co": "~3.0.2",
     "debug": "*",

@@ -20,7 +20,7 @@ describe('res.body=', function(){
         assert('text/html; charset=utf-8' == res.header['content-type']);
 
         res.body = { foo: 'bar' };
-        assert('application/json' == res.header['content-type']);
+        assert('application/json; charset=utf-8' == res.header['content-type']);
       })
     })
 
@@ -126,7 +126,7 @@ describe('res.body=', function(){
     it('should default to json', function(){
       var res = response();
       res.body = { foo: 'bar' };
-      assert('application/json' == res.header['content-type']);
+      assert('application/json; charset=utf-8' == res.header['content-type']);
     })
   })
 })

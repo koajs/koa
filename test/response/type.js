@@ -17,7 +17,7 @@ describe('ctx.type=', function(){
       var ctx = context();
       ctx.type = 'json';
       ctx.type.should.equal('application/json');
-      ctx.response.header['content-type'].should.equal('application/json');
+      ctx.response.header['content-type'].should.equal('application/json; charset=utf-8');
     })
   })
 

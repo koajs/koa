@@ -42,7 +42,7 @@ describe('res.status=', function(){
 
       app.use(function *(){
         this.body = { foo: 'bar' };
-        this.set('Content-Type', 'application/json');
+        this.set('Content-Type', 'application/json; charset=utf-8');
         this.set('Content-Length', '15');
         this.set('Transfer-Encoding', 'chunked');
         this.status = status;
@@ -69,7 +69,7 @@ describe('res.status=', function(){
       app.use(function *(){
         this.status = status;
         this.body = { foo: 'bar' };
-        this.set('Content-Type', 'application/json');
+        this.set('Content-Type', 'application/json; charset=utf-8');
         this.set('Content-Length', '15');
         this.set('Transfer-Encoding', 'chunked');
       });

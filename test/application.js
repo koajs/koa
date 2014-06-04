@@ -177,7 +177,7 @@ describe('app.respond', function(){
       .expect(200)
       .end(function(err, res){
         if (err) return done(err);
-        res.should.have.header('Content-Type', 'application/json');
+        res.should.have.header('Content-Type', 'application/json; charset=utf-8');
         res.should.have.header('Content-Length', '17');
         assert(0 == res.text.length);
         done();
@@ -553,14 +553,14 @@ describe('app.respond', function(){
 
       app.use(function *(){
         this.body = fs.createReadStream('package.json');
-        this.set('Content-Type', 'application/json');
+        this.set('Content-Type', 'application/json; charset=utf-8');
       });
 
       var server = app.listen();
 
       request(server)
       .get('/')
-      .expect('Content-Type', 'application/json')
+      .expect('Content-Type', 'application/json; charset=utf-8')
       .end(function(err, res){
         if (err) return done(err);
         var pkg = require('../package');
@@ -576,14 +576,14 @@ describe('app.respond', function(){
       app.use(function *(){
         this.body = 'hello';
         this.body = fs.createReadStream('package.json');
-        this.set('Content-Type', 'application/json');
+        this.set('Content-Type', 'application/json; charset=utf-8');
       });
 
       var server = app.listen();
 
       request(server)
       .get('/')
-      .expect('Content-Type', 'application/json')
+      .expect('Content-Type', 'application/json; charset=utf-8')
       .end(function(err, res){
         if (err) return done(err);
         var pkg = require('../package');
@@ -599,14 +599,14 @@ describe('app.respond', function(){
       app.use(function *(){
         this.length = fs.readFileSync('package.json').length;
         this.body = fs.createReadStream('package.json');
-        this.set('Content-Type', 'application/json');
+        this.set('Content-Type', 'application/json; charset=utf-8');
       });
 
       var server = app.listen();
 
       request(server)
       .get('/')
-      .expect('Content-Type', 'application/json')
+      .expect('Content-Type', 'application/json; charset=utf-8')
       .end(function(err, res){
         if (err) return done(err);
         var pkg = require('../package');
@@ -624,14 +624,14 @@ describe('app.respond', function(){
         var stream = fs.createReadStream('package.json');
         this.body = stream;
         this.body = stream;
-        this.set('Content-Type', 'application/json');
+        this.set('Content-Type', 'application/json; charset=utf-8');
       });
 
       var server = app.listen();
 
       request(server)
       .get('/')
-      .expect('Content-Type', 'application/json')
+      .expect('Content-Type', 'application/json; charset=utf-8')
       .end(function(err, res){
         if (err) return done(err);
         var pkg = require('../package');
@@ -645,7 +645,7 @@ describe('app.respond', function(){
       var app = koa();
 
       app.use(function *(){
-        this.set('Content-Type', 'application/json');
+        this.set('Content-Type', 'application/json; charset=utf-8');
         this.body = fs.createReadStream('does not exist');
       });
 
@@ -703,7 +703,7 @@ describe('app.respond', function(){
 
       request(server)
       .get('/')
-      .expect('Content-Type', 'application/json')
+      .expect('Content-Type', 'application/json; charset=utf-8')
       .expect('{"hello":"world"}', done);
     })
   })

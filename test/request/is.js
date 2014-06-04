@@ -79,7 +79,7 @@ describe('ctx.is(type)', function(){
       ctx.is('jpeg').should.be.false;
       ctx.is('.jpeg').should.be.false;
       ctx.is('text/*', 'application/*').should.be.false;
-      ctx.is('text/html', 'text/plain', 'application/json').should.be.false;
+      ctx.is('text/html', 'text/plain', 'application/json; charset=utf-8').should.be.false;
     })
   })
 
