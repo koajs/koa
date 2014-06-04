@@ -10,13 +10,6 @@ describe('ctx.accepts(types)', function(){
         ctx.accepts().should.eql(['text/html', 'text/plain', 'image/jpeg', 'application/*']);
       })
     })
-
-    describe('when Accept is not populated', function(){
-      it('should return []', function(){
-        var ctx = context();
-        ctx.accepts().should.eql([]);
-      })
-    })
   })
 
   describe('with no valid types', function(){

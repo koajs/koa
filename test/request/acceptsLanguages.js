@@ -10,13 +10,6 @@ describe('ctx.acceptsLanguages(langs)', function(){
         ctx.acceptsLanguages().should.eql(['es', 'pt', 'en']);
       })
     })
-
-    describe('when Accept-Language is not populated', function(){
-      it('should return an empty array', function(){
-        var ctx = context();
-        ctx.acceptsLanguages().should.eql([]);
-      })
-    })
   })
 
   describe('with multiple arguments', function(){

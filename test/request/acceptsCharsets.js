@@ -10,13 +10,6 @@ describe('ctx.acceptsCharsets()', function(){
         ctx.acceptsCharsets().should.eql(['utf-8', 'utf-7', 'iso-8859-1']);
       })
     })
-
-    describe('when Accept-Charset is not populated', function(){
-      it('should return an empty array', function(){
-        var ctx = context();
-        ctx.acceptsCharsets().should.eql([]);
-      })
-    })
   })
 
   describe('with multiple arguments', function(){
