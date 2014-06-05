@@ -36,6 +36,7 @@
     "delegates": "0.0.3",
     "dethroy": "~1.0.0",
     "error-inject": "~1.0.0",
+    "vary": "~0.1.0",
     "only": "0.0.2"
   },
   "devDependencies": {
