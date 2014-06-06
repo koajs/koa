@@ -38,6 +38,15 @@ describe('ctx.type=', function(){
       ctx.response.header['content-type'].should.equal('text/html; charset=foo');
     })
   })
+
+  describe('with an unknown extension', function(){
+    it('should default to application/octet-stream',function(){
+      var ctx = context();
+      ctx.type = 'asdf';
+      ctx.type.should.equal('application/octet-stream');
+      ctx.response.header['content-type'].should.equal('application/octet-stream');
+    })
+  })
 })
 
 describe('ctx.type', function(){
