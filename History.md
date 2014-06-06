@@ -1,9 +1,16 @@
 
+0.6.3 / 2014-06-06
+==================
+
+ * fix res.type= when the extension is unknown
+ * assert when non-error is passed to app.onerror #287
+ * bump finished
+
 0.6.2 / 2014-06-03
 ==================
 
  * switch from set-type to mime-types
- 
+
 0.6.1 / 2014-05-11
 ==================
 
