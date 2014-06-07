@@ -243,12 +243,6 @@ this.response.lastModified = new Date();
 this.response.etag = crypto.createHash('md5').update(this.body).digest('hex');
 ```
 
-### res.append(field, val)
-
-  Append `val` to header `field`.
-
 ### res.vary(field)
 
   Vary on `field`.
-
-
