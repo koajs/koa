@@ -271,6 +271,19 @@ describe('app.respond', function(){
     })
   })
 
+  describe('when PUT is used and Content-Range is set', function(){
+    it('should 400', function(done){
+      var app = koa();
+
+      var server = app.listen();
+
+      request(server)
+      .put('/')
+      .set('Content-Range', 'bytes 21010-47021/47022')
+      .expect(400, done);
+    })
+  })
+
   describe('when no middleware are present', function(){
     it('should 404', function(done){
       var app = koa();
