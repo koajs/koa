@@ -1,4 +1,12 @@
 
+0.7.0 / 2014-06-07
+==================
+
+ * add `this.lastModified` and `this.etag` as both getters and setters for ubiquity #292.
+   See koajs/koa@4065bf7 for an explanation.
+ * refactor `this.response.vary()` to use [vary](https://github.com/expressjs/vary) #291
+ * remove `this.response.append()` #291
+
 0.6.3 / 2014-06-06
 ==================
 
