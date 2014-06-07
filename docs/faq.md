@@ -38,3 +38,18 @@
   Express 3.0 to this Express 4.0 would effectively mean rewriting
   the entire application, so we thought it would be more appropriate
   to create a new library.
+
+## What custom properties do the Koa objects have?
+
+  Koa uses its own custom objects: `this`, `this.request`, and `this.response`.
+  These objects abstract node's `req` and `res` objects with convenience methods and getters/setters.
+  Generally, properties added to these objects must obey the following rules:
+
+  - They must be either very commonly used and/or must do something useful
+  - If a property exists as a setter, then it will also exist as a getter, but not vice versa
+
+  Many of `this.request` and `this.response`'s properties are delegated to `this`.
+  If it's a getter/setter, then both the getter and the setter will strictly
+  correspond to either `this.request` or `this.response`.
+
+  Please think about these rules before suggesting additional properties.
