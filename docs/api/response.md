@@ -18,10 +18,6 @@
 
   Get response status. By default, `res.status` is not set unlike node's `res.statusCode` which defaults to `200`.
 
-### res.statusString
-
-  Response status string
-
 ### res.status=
 
   Set response status via numeric code or case-insensitive string:
