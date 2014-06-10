@@ -5,34 +5,35 @@ var assert = require('assert');
 var koa = require('../..');
 
 describe('res.status=', function(){
-  describe('when a status string', function(){
+  describe('when a status code', function(){
     describe('and valid', function(){
       it('should set the status', function(){
         var res = response();
-        res.status = 'forbidden';
+        res.status = 403;
         res.status.should.equal(403);
       })
 
-      it('should be case-insensitive', function(){
-        var res = response();
-        res.status = 'ForBidden';
-        res.status.should.equal(403);
+      it('should not throw', function(){
+        assert.doesNotThrow(function() { 
+          response().status = 403;
+        });
       })
     })
 
     describe('and invalid', function(){
       it('should throw', function(){
-        var res = response();
-        var err;
-
-        try {
-          res.status = 'maru';
-        } catch (e) {
-          err = e;
-        }
-
-        assert(err);
+        assert.throws(function() { 
+          response().status = 999;
+        }, 'invalid status code: 999');
       })
+    })
+  })
+
+  describe('when a status string', function(){
+    it('should throw', function(){
+      assert.throws(function() { 
+        response().status = 'forbidden';
+      }, 'status code must be a number');
     })
   })
 
