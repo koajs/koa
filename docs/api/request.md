@@ -167,7 +167,7 @@ this.body = yield db.find('something');
   If `app.subdomainOffset` is not set, this.subdomains is `["ferrets", "tobi"]`.
   If `app.subdomainOffset` is 3, this.subdomains is `["tobi"]`.
 
-### req.is(type)
+### req.is(types...)
 
   Check if the incoming request contains the "Content-Type"
   header field, and it contains any of the give mime `type`s.
@@ -346,4 +346,3 @@ this.acceptsLanguages();
 ### req.get(field)
 
   Return request header.
-

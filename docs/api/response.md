@@ -20,7 +20,7 @@
 
 ### res.status=
 
-  Set response status via numeric code or case-insensitive string:
+  Set response status via numeric code:
 
   - 100 "continue"
   - 101 "switching protocols"
@@ -181,6 +181,33 @@ this.type = 'png';
   example `res.type = 'html'` will default to "utf-8", however
   when explicitly defined in full as `res.type = 'text/html'`
   no charset is assigned.
+
+### res.is(types...)
+
+  Very similar to `this.request.is()`.
+  Check whether the response type is one of the supplied types.
+  This is particularly useful for creating middleware that
+  change certain responses.
+
+  For example, this is a middleware that minifies
+  all HTML response except for streamss.
+
+```js
+var minify = require('html-minifier');
+
+app.use(function *minifyHTML(next){
+  yield* next;
+
+  if (!this.response.is('html')) return;
+
+  var body = this.response.body;
+  if (!body) return;
+  // too difficult to do this with a stream
+  if ('function' == typeof body.pipe) return;
+  if (Buffer.isBuffer(body)) body = body.toString('utf8');
+  this.response.body = minify(body);
+});
+```
 
 ### res.redirect(url, [alt])
 
