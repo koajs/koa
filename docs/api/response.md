@@ -187,25 +187,24 @@ this.type = 'png';
   Very similar to `this.request.is()`.
   Check whether the response type is one of the supplied types.
   This is particularly useful for creating middleware that
-  change certain responses.
+  manipulate responses.
 
   For example, this is a middleware that minifies
-  all HTML response except for streamss.
+  all HTML responses except for streams.
 
 ```js
 var minify = require('html-minifier');
 
 app.use(function *minifyHTML(next){
-  yield* next;
+  yield next;
 
   if (!this.response.is('html')) return;
 
-  var body = this.response.body;
-  if (!body) return;
-  // too difficult to do this with a stream
-  if ('function' == typeof body.pipe) return;
-  if (Buffer.isBuffer(body)) body = body.toString('utf8');
-  this.response.body = minify(body);
+  var body = this.body;
+  if (!body || body.pipe) return;
+
+  if (Buffer.isBuffer(body)) body = body.toString();
+  this.body = minify(body);
 });
 ```
 
