@@ -1,4 +1,10 @@
 
+0.8.0 / 2014-06-13
+==================
+
+ * add `this.response.is()``
+ * remove `.status=string` and `res.statusString` #298
+
 0.7.0 / 2014-06-07
 ==================
 
