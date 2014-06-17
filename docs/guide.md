@@ -131,9 +131,9 @@ function *random(next) {
   }
 };
 
-function *backwords(next) {
-  if ('/backwords' == this.path) {
-    this.body = 'sdrowkcab';
+function *backwards(next) {
+  if ('/backwards' == this.path) {
+    this.body = 'sdrawkcab';
   } else {
     yield next;
   }
@@ -148,7 +148,7 @@ function *pi(next) {
 }
 
 function *all(next) {
-  yield random.call(this, backwords.call(this, pi.call(this, next)));
+  yield random.call(this, backwards.call(this, pi.call(this, next)));
 }
 
 app.use(all);
