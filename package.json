@@ -43,6 +43,7 @@
     "should": "^3.1.0",
     "mocha": "^1.17.0",
     "supertest": "~0.13.0",
+    "istanbul-harmony": "~0.2.9",
     "make-lint": "^1.0.1"
   },
   "engines": {
