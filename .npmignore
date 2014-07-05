@@ -3,3 +3,4 @@ benchmarks
 examples
 test
 Makefile
+coverage
