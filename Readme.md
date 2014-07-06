@@ -2,6 +2,7 @@
 
   [![NPM version](https://badge.fury.io/js/koa.svg)](https://badge.fury.io/js/koa)
   [![Build Status](https://travis-ci.org/koajs/koa.svg)](https://travis-ci.org/koajs/koa)
+  [![Coverage Status](https://img.shields.io/coveralls/koajs/koa.svg)](https://coveralls.io/r/koajs/koa?branch=master)
 
   Expressive middleware for node.js using generators via [co](https://github.com/visionmedia/co)
   to make web applications and APIs more enjoyable to write. Koa's middleware flow in a stack-like manner allowing you to perform actions downstream, then filter and manipulate the response upstream. Koa's use of generators also greatly increases the readability and robustness of your application.
