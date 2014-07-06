@@ -1,5 +1,6 @@
 <img src="https://dl.dropboxusercontent.com/u/6396913/koa/logo.png" alt="koa middleware framework for nodejs" width="255px" />
 
+  [![NPM version](https://badge.fury.io/js/media-typer.svg)](https://badge.fury.io/js/media-typer)
   [![Build Status](https://travis-ci.org/koajs/koa.svg)](https://travis-ci.org/koajs/koa)
 
   Expressive middleware for node.js using generators via [co](https://github.com/visionmedia/co)
