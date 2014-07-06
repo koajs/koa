@@ -76,6 +76,11 @@ describe('ctx.is(type)', function(){
       ctx.is('image/*', 'image/png').should.equal('image/png');
       ctx.is('image/png', 'image/*').should.equal('image/png');
 
+      ctx.is(['text/*', 'image/*']).should.equal('image/png');
+      ctx.is(['image/*', 'text/*']).should.equal('image/png');
+      ctx.is(['image/*', 'image/png']).should.equal('image/png');
+      ctx.is(['image/png', 'image/*']).should.equal('image/png');
+
       ctx.is('jpeg').should.be.false;
       ctx.is('.jpeg').should.be.false;
       ctx.is('text/*', 'application/*').should.be.false;

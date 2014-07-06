@@ -1,4 +1,5 @@
 
+var assert = require('assert');
 var request = require('../context').request;
 
 describe('req.hostname', function(){
@@ -6,6 +7,13 @@ describe('req.hostname', function(){
     var req = request();
     req.header.host = 'foo.com:3000';
     req.hostname.should.equal('foo.com');
+  })
+
+  describe('with no host present', function(){
+    it('should return null', function(){
+      var req = request();
+      assert(null == req.hostname);
+    })
   })
 
   describe('when X-Forwarded-Host is present', function(){

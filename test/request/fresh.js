@@ -2,6 +2,14 @@
 var context = require('../context');
 
 describe('ctx.fresh', function(){
+  describe('the request method is not GET and HEAD', function (){
+    it('should return false', function (){
+      var ctx = context();
+      ctx.req.method = 'POST';
+      ctx.fresh.should.be.false;
+    })
+  })
+
   describe('the response is non-2xx', function(){
     it('should return false', function(){
       var ctx = context();
