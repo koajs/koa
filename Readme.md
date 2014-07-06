@@ -1,8 +1,8 @@
 <img src="https://dl.dropboxusercontent.com/u/6396913/koa/logo.png" alt="koa middleware framework for nodejs" width="255px" />
 
-  [![NPM version](https://badge.fury.io/js/koa.svg)](https://badge.fury.io/js/koa)
-  [![Build Status](https://travis-ci.org/koajs/koa.svg)](https://travis-ci.org/koajs/koa)
-  [![Coverage Status](https://img.shields.io/coveralls/koajs/koa.svg)](https://coveralls.io/r/koajs/koa?branch=master)
+  [![NPM version][npm-image]][npm-url] 
+  [![build status][travis-image]][travis-url] 
+  [![Test coverage][coveralls-image]][coveralls-url]
 
   Expressive middleware for node.js using generators via [co](https://github.com/visionmedia/co)
   to make web applications and APIs more enjoyable to write. Koa's middleware flow in a stack-like manner allowing you to perform actions downstream, then filter and manipulate the response upstream. Koa's use of generators also greatly increases the readability and robustness of your application.
@@ -78,3 +78,10 @@ $ make test
 # License
 
   MIT
+
+[npm-image]: https://img.shields.io/npm/v/koa.svg?style=flat
+[npm-url]: https://npmjs.org/package/koa
+[travis-image]: https://img.shields.io/travis/koajs/koa.svg?style=flat
+[travis-url]: https://travis-ci.org/koajs/koa
+[coveralls-image]: https://img.shields.io/coveralls/koajs/koa.svg?style=flat
+[coveralls-url]: https://coveralls.io/r/koajs/koa?branch=master
