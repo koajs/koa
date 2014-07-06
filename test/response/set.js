@@ -13,6 +13,12 @@ describe('ctx.set(name, val)', function(){
     ctx.set('x-foo', 5);
     ctx.response.header['x-foo'].should.equal('5');
   })
+
+  it('should set a field value of array', function(){
+    var ctx = context();
+    ctx.set('x-foo', ['foo', 'bar']);
+    ctx.response.header['x-foo'].should.eql([ 'foo', 'bar' ]);
+  })
 })
 
 describe('ctx.set(object)', function(){

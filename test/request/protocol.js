@@ -27,6 +27,16 @@ describe('req.protocol', function(){
         req.header['x-forwarded-proto'] = 'https, http';
         req.protocol.should.equal('https');
       })
+
+      describe('and X-Forwarded-Proto is empty', function(){
+        it('should return "http"', function(){
+          var req = request();
+          req.app.proxy = true;
+          req.req.socket = {};
+          req.header['x-forwarded-proto'] = '';
+          req.protocol.should.equal('http');
+        })
+      })
     })
 
     describe('and proxy is not trusted', function(){

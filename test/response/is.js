@@ -60,6 +60,11 @@ describe('response.is(type)', function(){
       res.is('image/*', 'image/png').should.equal('image/png');
       res.is('image/png', 'image/*').should.equal('image/png');
 
+      res.is(['text/*', 'image/*']).should.equal('image/png');
+      res.is(['image/*', 'text/*']).should.equal('image/png');
+      res.is(['image/*', 'image/png']).should.equal('image/png');
+      res.is(['image/png', 'image/*']).should.equal('image/png');
+
       res.is('jpeg').should.be.false;
       res.is('.jpeg').should.be.false;
       res.is('text/*', 'application/*').should.be.false;
