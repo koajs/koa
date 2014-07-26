@@ -37,6 +37,7 @@ alias node='node --harmony'
  - [Mailing list](https://groups.google.com/forum/#!forum/koajs)
  - [Guide](docs/guide.md)
  - [FAQ](docs/faq.md)
+ - [中文文档](http://koajs.cn/)
  - __#koajs__ on freenode
 
 ## Getting start
