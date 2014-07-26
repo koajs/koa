@@ -1,7 +1,7 @@
 <img src="https://dl.dropboxusercontent.com/u/6396913/koa/logo.png" alt="koa middleware framework for nodejs" width="255px" />
 
-  [![NPM version][npm-image]][npm-url] 
-  [![build status][travis-image]][travis-url] 
+  [![NPM version][npm-image]][npm-url]
+  [![build status][travis-image]][travis-url]
   [![Test coverage][coveralls-image]][coveralls-url]
 
   Expressive middleware for node.js using generators via [co](https://github.com/visionmedia/co)
@@ -38,6 +38,11 @@ alias node='node --harmony'
  - [Guide](docs/guide.md)
  - [FAQ](docs/faq.md)
  - __#koajs__ on freenode
+
+## Getting start
+
+ - [kick-off-koa](https://github.com/koajs/kick-off-koa) - An intro to koa via a set of self-guided workshops.
+ - [workshop](https://github.com/koajs/workshop) - A workshop to learn the basics of koa, Express' spiritual successor.
 
 ## Example
 
