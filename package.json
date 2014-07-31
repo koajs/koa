@@ -33,7 +33,7 @@
     "fresh": "~0.2.1",
     "koa-compose": "~2.3.0",
     "koa-is-json": "~1.0.0",
-    "cookies": "~0.4.0",
+    "cookies": "~0.5.0",
     "delegates": "0.0.3",
     "dethroy": "~1.0.0",
     "error-inject": "~1.0.0",
