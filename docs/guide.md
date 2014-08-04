@@ -38,7 +38,7 @@ app.use(function *(next){
   while any code after is the "bubble" phase. This crude gif illustrates how ES6 generators allow us
   to properly utilize stack flow to implement request and response flows:
 
-![koa middleware](https://i.cloudup.com/N7L5UakJo0.gif)
+![koa middleware](/docs/middleware.gif)
 
    1. Create a date to track duration
    2. Yield control to the next middleware
