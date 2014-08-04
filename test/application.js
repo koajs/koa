@@ -266,7 +266,7 @@ describe('app.respond', function(){
 
       request(server)
       .head('/')
-      .expect('content-type', 'application/javascript')
+      .expect('content-type', /application\/javascript/)
       .expect(200, done);
     })
   })
