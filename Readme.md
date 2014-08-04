@@ -40,7 +40,7 @@ alias node='node --harmony'
  - [中文文档](http://koajs.cn/)
  - __#koajs__ on freenode
 
-## Getting start
+## Getting started
 
  - [kick-off-koa](https://github.com/koajs/kick-off-koa) - An intro to koa via a set of self-guided workshops.
  - [workshop](https://github.com/koajs/workshop) - A workshop to learn the basics of koa, Express' spiritual successor.
