@@ -10,6 +10,10 @@
 
  Request header object.
 
+### req.headers
+
+ Request header object. Alias as `req.header`.
+
 ### req.method
 
   Request method.
