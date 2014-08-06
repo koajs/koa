@@ -10,7 +10,7 @@ describe('ctx.throw(msg)', function(){
       ctx.throw('boom');
     } catch (err) {
       assert(500 == err.status);
-      assert(false === err.expose);
+      assert(!err.expose);
       done();
     }
   })
@@ -26,6 +26,7 @@ describe('ctx.throw(err)', function(){
     } catch (err) {
       assert(500 == err.status);
       assert('test' == err.message);
+      assert(!err.expose);
       done();
     }
   })
@@ -41,6 +42,7 @@ describe('ctx.throw(err, status)', function(){
     } catch (err) {
       assert(422 == err.status);
       assert('test' == err.message);
+      assert(true === err.expose);
       done();
     }
   })
@@ -56,6 +58,7 @@ describe('ctx.throw(status, err)', function(){
     } catch (err) {
       assert(422 == err.status);
       assert('test' == err.message);
+      assert(true === err.expose);
       done();
     }
   })
@@ -70,6 +73,7 @@ describe('ctx.throw(msg, status)', function(){
     } catch (err) {
       assert('name required' == err.message);
       assert(400 == err.status);
+      assert(true === err.expose);
       done();
     }
   })
@@ -84,6 +88,7 @@ describe('ctx.throw(status, msg)', function(){
     } catch (err) {
       assert('name required' == err.message);
       assert(400 == err.status);
+      assert(true === err.expose);
       done();
     }
   })
@@ -98,7 +103,24 @@ describe('ctx.throw(status)', function(){
     } catch (err) {
       assert('Bad Request' == err.message);
       assert(400 == err.status);
+      assert(true === err.expose);
       done();
     }
+  })
+
+  describe('when not valid status', function(){
+    it('should not expose', function(done){
+      var ctx = context();
+
+      try {
+        var err = new Error('some error');
+        err.status = -1;
+        ctx.throw(err);
+      } catch(err) {
+        assert('some error' == err.message);
+        assert(!err.expose);
+        done();
+      }
+    })
   })
 })

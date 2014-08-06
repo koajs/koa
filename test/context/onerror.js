@@ -50,6 +50,7 @@ describe('ctx.onerror(err)', function(){
       done();
     })
   })
+
   describe('when invalid err.status', function(){
     describe('not number', function(){
       it('should respond 500', function(done){
@@ -59,7 +60,7 @@ describe('ctx.onerror(err)', function(){
           this.body = 'something else';
           var err = new Error('some error');
           err.status = 'notnumber';
-          this.throw(err);
+          throw err;
         })
 
         var server = app.listen();
@@ -80,7 +81,7 @@ describe('ctx.onerror(err)', function(){
           this.body = 'something else';
           var err = new Error('some error');
           err.status = 9999;
-          this.throw(err);
+          throw err;
         })
 
         var server = app.listen();
