@@ -50,4 +50,48 @@ describe('ctx.onerror(err)', function(){
       done();
     })
   })
+
+  describe('when invalid err.status', function(){
+    describe('not number', function(){
+      it('should respond 500', function(done){
+        var app = koa();
+
+        app.use(function *(next){
+          this.body = 'something else';
+          var err = new Error('some error');
+          err.status = 'notnumber';
+          throw err;
+        })
+
+        var server = app.listen();
+
+        request(server)
+        .get('/')
+        .expect(500)
+        .expect('Content-Type', 'text/plain; charset=utf-8')
+        .expect('Internal Server Error', done);
+      })
+    })
+
+    describe('not http status code', function(){
+      it('should respond 500', function(done){
+        var app = koa();
+
+        app.use(function *(next){
+          this.body = 'something else';
+          var err = new Error('some error');
+          err.status = 9999;
+          throw err;
+        })
+
+        var server = app.listen();
+
+        request(server)
+        .get('/')
+        .expect(500)
+        .expect('Content-Type', 'text/plain; charset=utf-8')
+        .expect('Internal Server Error', done);
+      })
+    })
+  })
 })
