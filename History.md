@@ -1,5 +1,16 @@
 
+0.9.0 / 2014-08-07
+==================
+
+ * add: do not set `err.expose` to true when err.status not a valid http status code
+ * add: alias `request.headers` as `request.header`
+ * add context.inspect(), cleanup app.inspect()
+ * update cookies
+ * fix `err.status` invalid lead to uncaughtException
+ * fix middleware gif, close #322
+
 0.8.2 / 2014-07-27
+==================
 
  * bump co
  * bump parseurl
