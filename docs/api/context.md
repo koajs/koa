@@ -75,17 +75,17 @@ Note: koa uses the [cookies](https://github.com/jed/cookies) module where option
 
 Note: koa uses the [cookies](https://github.com/jed/cookies) module where options are simply passed.
 
-### ctx.throw(msg, [status])
+### ctx.throw(msg, [status], [properties])
 
   Helper method to throw an error with a `.status` property
   defaulting to `500` that will allow Koa to respond appropriately.
   The following combinations are allowed:
 
 ```js
-this.throw(403)
-this.throw('name required', 400)
-this.throw(400, 'name required')
-this.throw('something exploded')
+this.throw(403);
+this.throw('name required', 400);
+this.throw(400, 'name required');
+this.throw('something exploded');
 ```
 
   For example `this.throw('name required', 400)` is equivalent to:
@@ -101,6 +101,12 @@ throw err;
   client responses, which is typically not the case for
   error messages since you do not want to leak failure
   details.
+
+  You may optionall pass a `properties` object which is merged into the error as-is, useful for decorating machine-friendly errors which are reported to the requester upstream.
+
+```js
+this.throw(401, 'access_denied', { user: user });
+```
 
 ### ctx.respond
 
