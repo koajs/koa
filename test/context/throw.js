@@ -124,3 +124,19 @@ describe('ctx.throw(status)', function(){
     })
   })
 })
+
+describe('ctx.throw(status, msg, props)', function(){
+  it('should mixin props', function(done){
+    var ctx = context();
+
+    try {
+      ctx.throw(400, 'msg', { prop: true });
+    } catch (err) {
+      assert('msg' == err.message);
+      assert(400 == err.status);
+      assert(true === err.expose);
+      assert(true === err.prop);
+      done();
+    }
+  })
+})
