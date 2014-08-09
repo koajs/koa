@@ -119,6 +119,7 @@ this.throw(401, 'access_denied', { user: user });
   The following accessors and alias [Request](request.md) equivalents:
 
   - `ctx.header`
+  - `ctx.headers`
   - `ctx.method`
   - `ctx.method=`
   - `ctx.url`
