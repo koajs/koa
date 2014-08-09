@@ -139,4 +139,23 @@ describe('ctx.throw(status, msg, props)', function(){
       done();
     }
   })
+
+  describe('when props include status', function(){
+    it('should be ignored', function(done){
+      var ctx = context();
+
+      try {
+        ctx.throw(400, 'msg', {
+          prop: true,
+          status: -1
+        });
+      } catch (err) {
+        assert('msg' == err.message);
+        assert(400 == err.status);
+        assert(true === err.expose);
+        assert(true === err.prop);
+        done();
+      }
+    })
+  })
 })
