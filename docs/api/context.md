@@ -102,10 +102,11 @@ throw err;
   error messages since you do not want to leak failure
   details.
 
-  You may optionall pass a `properties` object which is merged into the error as-is, useful for decorating machine-friendly errors which are reported to the requester upstream.
+  You may optionally pass a `properties` object which is merged into the error as-is, useful for decorating machine-friendly errors which are reported to the requester upstream.
 
 ```js
 this.throw(401, 'access_denied', { user: user });
+this.throw('access_denied', { user: user });
 ```
 
 ### ctx.respond
