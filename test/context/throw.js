@@ -159,3 +159,51 @@ describe('ctx.throw(status, msg, props)', function(){
     })
   })
 })
+
+describe('ctx.throw(msg, props)', function(){
+  it('should mixin props', function(done){
+    var ctx = context();
+
+    try {
+      ctx.throw('msg', { prop: true });
+    } catch (err) {
+      assert('msg' == err.message);
+      assert(500 == err.status);
+      assert(false === err.expose);
+      assert(true === err.prop);
+      done();
+    }
+  })
+})
+
+describe('ctx.throw(status, props)', function(){
+  it('should mixin props', function(done){
+    var ctx = context();
+
+    try {
+      ctx.throw(400, { prop: true });
+    } catch (err) {
+      assert('Bad Request' == err.message);
+      assert(400 == err.status);
+      assert(true === err.expose);
+      assert(true === err.prop);
+      done();
+    }
+  })
+})
+
+describe('ctx.throw(err, props)', function(){
+  it('should mixin props', function(done){
+    var ctx = context();
+
+    try {
+      ctx.throw(new Error('test'), { prop: true });
+    } catch (err) {
+      assert('test' == err.message);
+      assert(500 == err.status);
+      assert(false === err.expose);
+      assert(true === err.prop);
+      done();
+    }
+  })
+})
