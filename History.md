@@ -1,4 +1,10 @@
 
+0.10.0 / 2014-08-12
+==================
+
+ * add `ctx.throw(err, object)` support
+ * add `ctx.throw(err, status, object)` support
+
 0.9.0 / 2014-08-07
 ==================
 
