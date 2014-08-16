@@ -1,13 +1,14 @@
 
-var ReadableStream = require('stream').Readable;
+var Stream = require('stream');
 var context = require('../lib/context');
 var request = require('../lib/request');
 var response = require('../lib/response');
 var koa = require('..');
 
 exports = module.exports = function(req, res){
-  req = req || { headers: {}, socket: new ReadableStream() };
-  res = res || { _headers: {} };
+  var socket = new Stream.Duplex();
+  req = req || { headers: {}, socket: socket, __proto__: Stream.Readable.prototype };
+  res = res || { _headers: {}, socket: socket, __proto__: Stream.Writable.prototype };
   res.getHeader = function(k){ return res._headers[k.toLowerCase()] };
   res.setHeader = function(k, v){ res._headers[k.toLowerCase()] = v };
   res.removeHeader = function(k, v){ delete res._headers[k.toLowerCase()] };
