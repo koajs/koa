@@ -6,10 +6,7 @@
   "scripts": {
     "test": "make test"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/koajs/koa"
-  },
+  "repository": "koajs/koa",
   "keywords": [
     "web",
     "app",
@@ -49,6 +46,11 @@
     "make-lint": "^1.0.1"
   },
   "engines": {
-    "node": ">= 0.11.9"
-  }
+    "node": ">= 0.11.13"
+  },
+  "files": [
+    "lib",
+    "LICENSE",
+    "History.md"
+  ]
 }
