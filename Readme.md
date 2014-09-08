@@ -29,6 +29,7 @@ alias node='node --harmony'
 ## Community
 
  - [API](docs/api/index.md) documentation
+ - [Badgeboard](https://koajs.github.io/badgeboard) and list of official modules
  - [Examples](https://github.com/koajs/examples)
  - [Middleware](https://github.com/koajs/koa/wiki) list
  - [Wiki](https://github.com/koajs/koa/wiki)
