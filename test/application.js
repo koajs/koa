@@ -4,6 +4,8 @@ var assert = require('assert');
 var http = require('http');
 var koa = require('..');
 var fs = require('fs');
+var stderr = require("test-console").stderr;
+var AssertionError = assert.AssertionError;
 
 describe('app', function(){
   it('should handle socket errors', function(done){
@@ -111,6 +113,67 @@ describe('app.use(fn)', function(){
       err.message.should.equal('app.use() requires a generator function');
       done();
     }
+  })
+})
+
+describe('app.onerror(err)', function(){
+  it('should throw an error if a non-error is given', function(done){
+    var app = koa();
+
+    try {
+      app.onerror('foo');
+
+      should.fail();
+    } catch (err) {
+      err.should.be.instanceOf(AssertionError);
+      err.message.should.equal('non-error thrown: foo');
+    }
+
+    done();
+  })
+
+  it('should do nothing if status is 404', function(done){
+    var app = koa();
+    var err = new Error();
+
+    err.status = 404;
+
+    var output = stderr.inspectSync(function() {
+      app.onerror(err);
+    });
+
+    output.should.eql([]);
+
+    done();
+  })
+
+  it('should do nothing if env is test', function(done){
+    var app = koa();
+    var err = new Error();
+
+    var output = stderr.inspectSync(function() {
+      app.onerror(err);
+    });
+
+    output.should.eql([]);
+
+    done();
+  })
+
+  it('should log the error to stderr', function(done){
+    var app = koa();
+    app.env = 'dev';
+
+    var err = new Error();
+    err.stack = 'Foo';
+
+    var output = stderr.inspectSync(function() {
+      app.onerror(err);
+    });
+
+    output.should.eql(["\n", "  Foo\n", "\n"]);
+
+    done();
   })
 })
 
