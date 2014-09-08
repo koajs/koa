@@ -23,7 +23,7 @@
     "accepts": "~1.1.0",
     "type-is": "~1.5.0",
     "mime-types": "~2.0.0",
-    "media-typer": "~0.2.0",
+    "media-typer": "~0.3.0",
     "on-finished": "~2.1.0",
     "co": "~3.1.0",
     "debug": "*",
@@ -42,7 +42,7 @@
     "should": "^3.1.0",
     "mocha": "^1.17.0",
     "supertest": "~0.13.0",
-    "istanbul-harmony": "~0.2.9",
+    "istanbul-harmony": "~0.3.0",
     "make-lint": "^1.0.1"
   },
   "engines": {
