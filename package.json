@@ -39,11 +39,12 @@
     "only": "0.0.2"
   },
   "devDependencies": {
-    "should": "^3.1.0",
-    "mocha": "^1.17.0",
-    "supertest": "~0.13.0",
     "istanbul-harmony": "~0.3.0",
-    "make-lint": "^1.0.1"
+    "make-lint": "^1.0.1",
+    "mocha": "^1.17.0",
+    "should": "^3.1.0",
+    "supertest": "~0.13.0",
+    "test-console": "^0.7.1"
   },
   "engines": {
     "node": ">= 0.11.13"
