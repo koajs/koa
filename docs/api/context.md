@@ -60,7 +60,7 @@ app.use(function *(){
 
  - `signed` the cookie requested should be signed
 
-Note: koa uses the [cookies](https://github.com/jed/cookies) module where options are simply passed.
+koa uses the [cookies](https://github.com/jed/cookies) module where options are simply passed.
 
 ### ctx.cookies.set(name, value, [options])
 
@@ -73,9 +73,9 @@ Note: koa uses the [cookies](https://github.com/jed/cookies) module where option
  - `secure` secure cookie
  - `httpOnly` server-accessible cookie, __true__ by default
 
-Note: koa uses the [cookies](https://github.com/jed/cookies) module where options are simply passed.
+koa uses the [cookies](https://github.com/jed/cookies) module where options are simply passed.
 
-### ctx.throw(msg, [status], [properties])
+### ctx.throw([msg], [status], [properties])
 
   Helper method to throw an error with a `.status` property
   defaulting to `500` that will allow Koa to respond appropriately.
@@ -108,6 +108,20 @@ throw err;
 this.throw(401, 'access_denied', { user: user });
 this.throw('access_denied', { user: user });
 ```
+
+koa uses [http-errors](https://github.com/jshttp/http-errors) to create errors.
+
+### ctx.assert(value, [msg], [status], [properties])
+
+  Helper method to throw an error similar to `.throw()`
+  when `!value`. Similar to node's [assert()](http://nodejs.org/api/assert.html)
+  method.
+
+```js
+this.assert(this.user, 401, 'User not found. Please login!');
+```
+
+koa uses [http-assert](https://github.com/jshttp/http-assert) for assertions.
 
 ### ctx.respond
 
