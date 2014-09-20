@@ -1,10 +1,16 @@
 
+0.12.0 / 2014-09-20
+==================
+
+ * add this.assert()
+ * use content-disposition
+ 
 0.11.0 / 2014-09-08
 ==================
 
  * fix app.use() assertion #337
  * bump a lot of dependencies
- 
+
 0.10.0 / 2014-08-12
 ==================
 
