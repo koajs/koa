@@ -1,10 +1,16 @@
 
+0.12.1 / 2014-09-21
+==================
+
+ * bump content-disposition
+ * bump statuses
+
 0.12.0 / 2014-09-20
 ==================
 
  * add this.assert()
  * use content-disposition
- 
+
 0.11.0 / 2014-09-08
 ==================
 
