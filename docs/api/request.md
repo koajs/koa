@@ -6,74 +6,74 @@
 
 ## API
 
-### req.header
+### request.header
 
  Request header object.
 
-### req.headers
+### request.headers
 
- Request header object. Alias as `req.header`.
+ Request header object. Alias as `request.header`.
 
-### req.method
+### request.method
 
   Request method.
 
-### req.method=
+### request.method=
 
   Set request method, useful for implementing middleware
   such as `methodOverride()`.
 
-### req.length
+### request.length
 
   Return request Content-Length as a number when present, or `undefined`.
 
-### req.url
+### request.url
 
   Get request URL.
 
-### req.url=
+### request.url=
 
   Set request URL, useful for url rewrites.
 
-### req.originalUrl
+### request.originalUrl
 
   Get request original URL.
 
-### req.path
+### request.path
 
   Get request pathname.
 
-### req.path=
+### request.path=
 
   Set request pathname and retain query-string when present.
 
-### req.querystring
+### request.querystring
 
   Get raw query string void of `?`.
 
-### req.querystring=
+### request.querystring=
 
   Set raw query string.
 
-### req.search
+### request.search
 
   Get raw query string with the `?`.
 
-### req.search=
+### request.search=
 
   Set raw query string.
 
-### req.host
+### request.host
 
   Get host (hostname:port) when present. Supports `X-Forwarded-Host`
   when `app.proxy` is __true__, otherwise `Host` is used.
 
-### req.hostname
+### request.hostname
 
   Get hostname when present. Supports `X-Forwarded-Host`
   when `app.proxy` is __true__, otherwise `Host` is used.
 
-### req.type
+### request.type
 
   Get request `Content-Type` void of parameters such as "charset".
 
@@ -82,7 +82,7 @@ var ct = this.request.type;
 // => "image/png"
 ```
 
-### req.charset
+### request.charset
 
   Get request charset when present, or `undefined`:
 
@@ -91,7 +91,7 @@ this.request.charset
 // => "utf-8"
 ```
 
-### req.query
+### request.query
 
   Get parsed query-string, returning an empty object when no
   query-string is present. Note that this getter does _not_
@@ -106,7 +106,7 @@ this.request.charset
 }
 ```
 
-### req.query=
+### request.query=
 
   Set query-string to the given object. Note that this
   setter does _not_ support nested objects.
@@ -115,7 +115,7 @@ this.request.charset
 this.query = { next: '/login' };
 ```
 
-### req.fresh
+### request.fresh
 
   Check if a request cache is "fresh", aka the contents have not changed. This
   method is for cache negotiation between `If-None-Match` / `ETag`, and `If-Modified-Since` and `Last-Modified`. It should be referenced after setting one or more of these response headers.
@@ -134,32 +134,32 @@ if (this.fresh) {
 this.body = yield db.find('something');
 ```
 
-### req.stale
+### request.stale
 
-  Inverse of `req.fresh`.
+  Inverse of `request.fresh`.
 
-### req.protocol
+### request.protocol
 
   Return request protocol, "https" or "http". Supports `X-Forwarded-Proto`
   when `app.proxy` is __true__.
 
-### req.secure
+### request.secure
 
   Shorthand for `this.protocol == "https"` to check if a request was
   issued via TLS.
 
-### req.ip
+### request.ip
 
   Request remote address. Supports `X-Forwarded-For` when `app.proxy`
   is __true__.
 
-### req.ips
+### request.ips
 
   When `X-Forwarded-For` is present and `app.proxy` is enabled an array
   of these ips is returned, ordered from upstream -> downstream. When disabled
   an empty array is returned.
 
-### req.subdomains
+### request.subdomains
 
   Return subdomains as an array.
 
@@ -171,7 +171,7 @@ this.body = yield db.find('something');
   If `app.subdomainOffset` is not set, this.subdomains is `["ferrets", "tobi"]`.
   If `app.subdomainOffset` is 3, this.subdomains is `["tobi"]`.
 
-### req.is(types...)
+### request.is(types...)
 
   Check if the incoming request contains the "Content-Type"
   header field, and it contains any of the give mime `type`s.
@@ -208,10 +208,10 @@ if (this.is('image/*')) {
 
   Koa's `request` object includes helpful content negotiation utilities powered by [accepts](http://github.com/expressjs/accepts) and [negotiator](https://github.com/federomero/negotiator). These utilities are:
 
-- `req.accepts(types)`
-- `req.acceptsEncodings(types)`
-- `req.acceptsCharsets(charsets)`
-- `req.acceptsLanguages(langs)`
+- `request.accepts(types)`
+- `request.acceptsEncodings(types)`
+- `request.acceptsCharsets(charsets)`
+- `request.acceptsLanguages(langs)`
 
   If no types are supplied, __all__ acceptable types are returned.
 
@@ -219,7 +219,7 @@ if (this.is('image/*')) {
 
   In the case of missing accept headers where any type is acceptable, the first type will be returned. Thus, the order of types you supply is important.
 
-### req.accepts(types)
+### request.accepts(types)
 
   Check if the given `type(s)` is acceptable, returning the best match when true, otherwise `false`. The `type` value may be one or more mime type string
   such as "application/json", the extension name
@@ -269,7 +269,7 @@ switch (this.accepts('json', 'html', 'text')) {
 }
 ```
 
-### req.acceptsEncodings(encodings)
+### request.acceptsEncodings(encodings)
 
   Check if `encodings` are acceptable, returning the best match when true, otherwise `false`. Note that you should include `identity` as one of the encodings!
 
@@ -293,7 +293,7 @@ this.acceptsEncodings();
 
   Note that the `identity` encoding (which means no encoding) could be unacceptable if the client explicitly sends `identity;q=0`. Although this is an edge case, you should still handle the case where this method returns `false`.
 
-### req.acceptsCharsets(charsets)
+### request.acceptsCharsets(charsets)
 
   Check if `charsets` are acceptable, returning
   the best match when true, otherwise `false`.
@@ -316,7 +316,7 @@ this.acceptsCharsets();
 // => ["utf-8", "utf-7", "iso-8859-1"]
 ```
 
-### req.acceptsLanguages(langs)
+### request.acceptsLanguages(langs)
 
   Check if `langs` are acceptable, returning
   the best match when true, otherwise `false`.
@@ -339,14 +339,14 @@ this.acceptsLanguages();
 // => ["es", "pt", "en"]
 ```
 
-### req.idempotent
+### request.idempotent
 
   Check if the request is idempotent.
 
-### req.socket
+### request.socket
 
   Return the request socket.
 
-### req.get(field)
+### request.get(field)
 
   Return request header.

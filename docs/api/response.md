@@ -6,19 +6,19 @@
 
 ## API
 
-### res.header
+### response.header
 
   Response header object.
 
-### res.socket
+### response.socket
 
   Request socket.
 
-### res.status
+### response.status
 
-  Get response status. By default, `res.status` is not set unlike node's `res.statusCode` which defaults to `200`.
+  Get response status. By default, `response.status` is not set unlike node's `res.statusCode` which defaults to `200`.
 
-### res.status=
+### response.status=
 
   Set response status via numeric code:
 
@@ -83,20 +83,20 @@ __NOTE__: don't worry too much about memorizing these strings,
 if you have a typo an error will be thrown, displaying this list
 so you can make a correction.
 
-### res.length=
+### response.length=
 
   Set response Content-Length to the given value.
 
-### res.length
+### response.length
 
   Return response Content-Length as a number when present, or deduce
-  from `res.body` when possible, or `undefined`.
+  from `this.body` when possible, or `undefined`.
 
-### res.body
+### response.body
 
   Get response body.
 
-### res.body=
+### response.body=
 
   Set response body to one of the following:
 
@@ -106,7 +106,7 @@ so you can make a correction.
   - `Object` json-stringified
   - `null` no content response
 
-  If `res.status` has not been set, Koa will automatically set the status to `200` or `204`.
+  If `response.status` has not been set, Koa will automatically set the status to `200` or `204`.
 
 #### String
 
@@ -126,7 +126,7 @@ so you can make a correction.
 
   The Content-Type is defaulted to application/json.
 
-### res.get(field)
+### response.get(field)
 
   Get a response header field value with case-insensitive `field`.
 
@@ -134,7 +134,7 @@ so you can make a correction.
 var etag = this.get('ETag');
 ```
 
-### res.set(field, value)
+### response.set(field, value)
 
   Set response header `field` to `value`:
 
@@ -142,7 +142,7 @@ var etag = this.get('ETag');
 this.set('Cache-Control', 'no-cache');
 ```
 
-### res.set(fields)
+### response.set(fields)
 
   Set several response header `fields` with an object:
 
@@ -157,7 +157,7 @@ this.set({
 
   Remove header `field`.
 
-### res.type
+### response.type
 
   Get response `Content-Type` void of parameters such as "charset".
 
@@ -166,7 +166,7 @@ var ct = this.type;
 // => "image/png"
 ```
 
-### res.type=
+### response.type=
 
   Set response `Content-Type` via mime string or file extension.
 
@@ -178,11 +178,11 @@ this.type = 'png';
 ```
 
   Note: when appropriate a `charset` is selected for you, for
-  example `res.type = 'html'` will default to "utf-8", however
-  when explicitly defined in full as `res.type = 'text/html'`
+  example `response.type = 'html'` will default to "utf-8", however
+  when explicitly defined in full as `response.type = 'text/html'`
   no charset is assigned.
 
-### res.is(types...)
+### response.is(types...)
 
   Very similar to `this.request.is()`.
   Check whether the response type is one of the supplied types.
@@ -208,7 +208,7 @@ app.use(function *minifyHTML(next){
 });
 ```
 
-### res.redirect(url, [alt])
+### response.redirect(url, [alt])
 
   Perform a [302] redirect to `url`.
 
@@ -232,22 +232,22 @@ this.redirect('/cart');
 this.body = 'Redirecting to shopping cart';
 ```
 
-### res.attachment([filename])
+### response.attachment([filename])
 
   Set `Content-Disposition` to "attachment" to signal the client
   to prompt for download. Optionally specify the `filename` of the
   download.
 
-### res.headerSent
+### response.headerSent
 
   Check if a response header has already been sent. Useful for seeing
   if the client may be notified on error.
 
-### res.lastModified
+### response.lastModified
 
   Return the `Last-Modified` header as a `Date`, if it exists.
 
-### res.lastModified=
+### response.lastModified=
 
   Set the `Last-Modified` header as an appropriate UTC string.
   You can either set it as a `Date` or date string.
@@ -256,15 +256,15 @@ this.body = 'Redirecting to shopping cart';
 this.response.lastModified = new Date();
 ```
 
-### res.etag=
+### response.etag=
 
   Set the ETag of a response including the wrapped `"`s.
-  Note that there is no corresponding `res.etag` getter.
+  Note that there is no corresponding `response.etag` getter.
 
 ```js
 this.response.etag = crypto.createHash('md5').update(this.body).digest('hex');
 ```
 
-### res.vary(field)
+### response.vary(field)
 
   Vary on `field`.
