@@ -257,7 +257,7 @@ this.accepts('json', 'html');
 // => "json"
 ```
 
-  You may call `this.accepts()` as may times as you like,
+  You may call `this.accepts()` as many times as you like,
   or use a switch:
 
 ```js
