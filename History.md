@@ -1,4 +1,9 @@
 
+0.12.2 / 2014-09-28
+==================
+
+ * use wider semver ranges for dependencies koa maintainers also maintain
+
 0.12.1 / 2014-09-21
 ==================
 
