@@ -19,6 +19,25 @@ describe('ctx.set(name, val)', function(){
     ctx.set('x-foo', ['foo', 'bar']);
     ctx.response.header['x-foo'].should.eql([ 'foo', 'bar' ]);
   })
+
+  describe('ctx.set("Content-Type", val)', function(){
+    describe('without a charset', function () {
+      it('should default the charset', function(){
+        var ctx = context();
+        ctx.set('Content-Type', 'text/html');
+        ctx.response.header['content-type'].should.equal('text/html; charset=utf-8');
+      })
+    })
+
+    describe('with an unknown extension', function(){
+      it('should default to application/octet-stream',function(){
+        var ctx = context();
+        ctx.set('content-type', 'asdf');
+        ctx.type.should.equal('application/octet-stream');
+        ctx.response.header['content-type'].should.equal('application/octet-stream');
+      })
+    })
+  })
 })
 
 describe('ctx.set(object)', function(){
