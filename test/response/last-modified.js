@@ -24,4 +24,11 @@ describe('res.lastModified', function(){
     (res.lastModified.getTime() / 1000)
     .should.equal(Math.floor(date.getTime() / 1000));
   })
+
+  describe('when lastModified not set', function (){
+    it('should get undefined', function(){
+      var res = response();
+      (res.lastModified === undefined).should.be.ok;
+    })
+  })
 })
