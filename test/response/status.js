@@ -1,6 +1,7 @@
 
 var response = require('../context').response;
 var request = require('supertest');
+var statuses = require('statuses');
 var assert = require('assert');
 var koa = require('../..');
 
@@ -14,7 +15,7 @@ describe('res.status=', function(){
       })
 
       it('should not throw', function(){
-        assert.doesNotThrow(function() { 
+        assert.doesNotThrow(function() {
           response().status = 403;
         });
       })
@@ -22,16 +23,34 @@ describe('res.status=', function(){
 
     describe('and invalid', function(){
       it('should throw', function(){
-        assert.throws(function() { 
+        assert.throws(function() {
           response().status = 999;
         }, 'invalid status code: 999');
+      })
+    })
+
+    describe('and custom status', function (){
+      before(function () {
+        statuses['700'] = 'custom status';
+      })
+
+      it('should set the status', function (){
+        var res = response();
+        res.status = 700;
+        res.status.should.equal(700);
+      })
+
+      it('should not throw', function(){
+        assert.doesNotThrow(function() {
+          response().status = 700;
+        });
       })
     })
   })
 
   describe('when a status string', function(){
     it('should throw', function(){
-      assert.throws(function() { 
+      assert.throws(function() {
         response().status = 'forbidden';
       }, 'status code must be a number');
     })

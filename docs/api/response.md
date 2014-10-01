@@ -83,6 +83,15 @@ __NOTE__: don't worry too much about memorizing these strings,
 if you have a typo an error will be thrown, displaying this list
 so you can make a correction.
 
+### response.message
+
+  Get response status message. By default, `response.message` is
+  associated with `response.status`.
+
+### response.message=
+
+  Set response status message to the given value.
+
 ### response.length=
 
   Set response Content-Length to the given value.
@@ -106,7 +115,7 @@ so you can make a correction.
   - `Object` json-stringified
   - `null` no content response
 
-  If `response.status` has not been set, Koa will automatically set the status to `200` or `204`.
+If `response.status` has not been set, Koa will automatically set the status to `200` or `204`.
 
 #### String
 

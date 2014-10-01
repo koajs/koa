@@ -1,5 +1,6 @@
 
 var request = require('supertest');
+var statuses = require('statuses');
 var assert = require('assert');
 var http = require('http');
 var koa = require('..');
@@ -487,6 +488,69 @@ describe('app.respond', function(){
         })
       })
     })
+
+    describe('with custom status=700', function(){
+      it('should respond with the associated status message', function (done){
+        var app = koa();
+        statuses['700'] = 'custom status';
+
+        app.use(function *(){
+          this.status = 700;
+        })
+
+        var server = app.listen();
+
+        request(server)
+        .get('/')
+        .expect(700)
+        .expect('custom status')
+        .end(function(err, res){
+          if (err) return done(err);
+          res.res.statusMessage.should.equal('custom status');
+          done();
+        })
+      })
+    })
+
+    describe('with custom statusMessage=ok', function(){
+      it('should respond with the custom status message', function (done){
+        var app = koa();
+
+        app.use(function *(){
+          this.status = 200;
+          this.message = 'ok';
+        })
+
+        var server = app.listen();
+
+        request(server)
+        .get('/')
+        .expect(200)
+        .expect('ok')
+        .end(function(err, res){
+          if (err) return done(err);
+          res.res.statusMessage.should.equal('ok');
+          done();
+        })
+      })
+    })
+
+    describe('with custom status without message', function (){
+      it('should respond with the status code number', function (done){
+        var app = koa();
+
+        app.use(function *(){
+          this.res.statusCode = 701;
+        })
+
+        var server = app.listen();
+
+        request(server)
+        .get('/')
+        .expect(701)
+        .expect('701', done);
+      })
+    })
   })
 
   describe('when .body is a null', function(){
@@ -909,12 +973,12 @@ describe('app.respond', function(){
 
 describe('app.context', function(){
   var app1 = koa();
-  app1.context.message = 'hello';
+  app1.context.msg = 'hello';
   var app2 = koa();
 
   it('should merge properties', function(done){
     app1.use(function *(next){
-      assert.equal(this.message, 'hello')
+      assert.equal(this.msg, 'hello')
       this.status = 204
     });
 
@@ -925,7 +989,7 @@ describe('app.context', function(){
 
   it('should not affect the original prototype', function(done){
     app2.use(function *(next){
-      assert.equal(this.message, undefined)
+      assert.equal(this.msg, undefined)
       this.status = 204;
     });
 
@@ -965,12 +1029,12 @@ describe('app.request', function(){
 
 describe('app.response', function(){
   var app1 = koa();
-  app1.response.message = 'hello';
+  app1.response.msg = 'hello';
   var app2 = koa();
 
   it('should merge properties', function(done){
     app1.use(function *(next){
-      assert.equal(this.response.message, 'hello')
+      assert.equal(this.response.msg, 'hello')
       this.status = 204
     });
 
@@ -981,7 +1045,7 @@ describe('app.response', function(){
 
   it('should not affect the original prototype', function(done){
     app2.use(function *(next){
-      assert.equal(this.response.message, undefined)
+      assert.equal(this.response.msg, undefined)
       this.status = 204;
     });
 

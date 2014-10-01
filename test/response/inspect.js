@@ -19,7 +19,7 @@ describe('res.inspect()', function(){
     res.inspect().should.eql({
       body: 'hello',
       status: 200,
-      string: 'OK',
+      message: 'OK',
       header: {
         'content-length': '5',
         'content-type': 'text/plain; charset=utf-8'
