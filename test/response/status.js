@@ -88,6 +88,39 @@ describe('res.status=', function(){
     })
   }
 
+  function custom(code, msg) {
+    var status = require('statuses');
+
+    describe('call this.setStatus', function() {
+      it('should get custom status with given message', function(done) {
+        var app = koa();
+
+        app.use(function *() {
+          this.setStatus(code, msg);
+        });
+        request(app.listen())
+          .get('/')
+          .expect(code)
+          .expect(msg)
+          .end(function(err, res) {
+            res.res.statusMessage.should.eql(msg);
+            done(err);
+          });
+      });      
+      it('should only get RFC status without message', function(done) {
+        var app = koa();
+        var expect = status[code] ? code : 500;
+
+        app.use(function *() {
+          this.setStatus(code);
+        });
+        request(app.listen())
+          .get('/')
+          .expect(expect, done);
+      });
+    });
+  }
+
   describe('when 204', function(){
     strip(204);
   })
@@ -98,5 +131,13 @@ describe('res.status=', function(){
 
   describe('when 304', function(){
     strip(304);
+  })
+
+  describe('when 440', function() {
+    custom(440, 'login expired');
+  })
+
+  describe('when 418', function() {
+    custom(418, "I'm Java");
   })
 })
