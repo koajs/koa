@@ -83,6 +83,21 @@ __NOTE__: don't worry too much about memorizing these strings,
 if you have a typo an error will be thrown, displaying this list
 so you can make a correction.
 
+### response.setStatus(code, message)
+
+  Set custom response status with specific code and message.
+
+```js
+this.setStatus(200, 'GOOD');
+//=> HTTP/1.x 200 GOOD
+this.setStatus(200);
+//=> HTTP/1.x 200 OK
+this.setStatus(440, 'Login expired');
+//=> HTTP/1.x 440 Login expired
+this.setStatus(440);
+// throw error, message is required for custom status.
+```
+
 ### response.length=
 
   Set response Content-Length to the given value.
