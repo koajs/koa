@@ -81,6 +81,7 @@ $ make test
   - [TJ Holowaychuk](https://github.com/visionmedia)
   - [Jonathan Ong](https://github.com/jonathanong)
   - [Julian Gruber](https://github.com/juliangruber)
+  - [Yiyu He](https://github.com/dead-horse)
 
 # License
 
