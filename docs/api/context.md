@@ -171,6 +171,8 @@ koa uses [http-assert](https://github.com/jshttp/http-assert) for assertions.
   - `ctx.body=`
   - `ctx.status`
   - `ctx.status=`
+  - `ctx.message`
+  - `ctx.message=`
   - `ctx.length=`
   - `ctx.length`
   - `ctx.type=`

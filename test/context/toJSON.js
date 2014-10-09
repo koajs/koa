@@ -25,7 +25,7 @@ describe('ctx.toJSON()', function(){
 
     res.should.eql({
       status: 200,
-      string: 'OK',
+      message: 'OK',
       header: {
         'content-type': 'text/html; charset=utf-8',
         'content-length': '10'
