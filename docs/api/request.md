@@ -213,11 +213,11 @@ if (this.is('image/*')) {
 - `request.acceptsCharsets(charsets)`
 - `request.acceptsLanguages(langs)`
 
-  If no types are supplied, __all__ acceptable types are returned.
+If no types are supplied, __all__ acceptable types are returned.
 
-  If multiple types are supplied, the best match will be returned. If no matches are found, a `false` is returned, and you should send a `406 "Not Acceptable"` response to the client.
+If multiple types are supplied, the best match will be returned. If no matches are found, a `false` is returned, and you should send a `406 "Not Acceptable"` response to the client.
 
-  In the case of missing accept headers where any type is acceptable, the first type will be returned. Thus, the order of types you supply is important.
+In the case of missing accept headers where any type is acceptable, the first type will be returned. Thus, the order of types you supply is important.
 
 ### request.accepts(types)
 
