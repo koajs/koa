@@ -48,8 +48,8 @@
   - They must be either very commonly used and/or must do something useful
   - If a property exists as a setter, then it will also exist as a getter, but not vice versa
 
-  Many of `this.request` and `this.response`'s properties are delegated to `this`.
-  If it's a getter/setter, then both the getter and the setter will strictly
-  correspond to either `this.request` or `this.response`.
+Many of `this.request` and `this.response`'s properties are delegated to `this`.
+If it's a getter/setter, then both the getter and the setter will strictly
+correspond to either `this.request` or `this.response`.
 
-  Please think about these rules before suggesting additional properties.
+Please think about these rules before suggesting additional properties.
