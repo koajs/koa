@@ -2,7 +2,7 @@
 0.13.0 / 2014-10-17
 ==================
 
- * add this.status
+ * add this.message
  * custom status support via `statuses`
 
 0.12.2 / 2014-09-28
