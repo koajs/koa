@@ -20,7 +20,7 @@
   "dependencies": {
     "accepts": "^1.1.0",
     "co": "^3.1.0",
-    "content-disposition": "~0.3.0",
+    "content-disposition": "~0.5.0",
     "cookies": "~0.5.0",
     "debug": "*",
     "delegates": "0.0.3",
