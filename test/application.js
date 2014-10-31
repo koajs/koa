@@ -5,7 +5,7 @@ var assert = require('assert');
 var http = require('http');
 var koa = require('..');
 var fs = require('fs');
-var stderr = require("test-console").stderr;
+var stderr = require('test-console').stderr;
 var AssertionError = assert.AssertionError;
 
 describe('app', function(){
