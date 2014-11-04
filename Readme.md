@@ -4,6 +4,8 @@
   [![build status][travis-image]][travis-url]
   [![Test coverage][coveralls-image]][coveralls-url]
 
+  [![gitter][gitter-image]][gitter-url]
+
   Expressive middleware for node.js using generators via [co](https://github.com/visionmedia/co)
   to make web applications and APIs more enjoyable to write. Koa's middleware flow in a stack-like manner allowing you to perform actions downstream, then filter and manipulate the response upstream. Koa's use of generators also greatly increases the readability and robustness of your application.
 
@@ -93,3 +95,5 @@ $ make test
 [travis-url]: https://travis-ci.org/koajs/koa
 [coveralls-image]: https://img.shields.io/coveralls/koajs/koa/master.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/r/koajs/koa?branch=master
+[gitter-image]: https://badges.gitter.im/Join%20Chat.svg
+[gitter-url]: https://gitter.im/koajs/koa?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
