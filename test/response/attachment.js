@@ -1,6 +1,6 @@
 
-var request = require('supertest');
 var context = require('../context');
+var request = require('supertest');
 var koa = require('../..');
 
 describe('ctx.attachment([filename])', function(){

@@ -1,6 +1,6 @@
 
-var assert = require('assert');
 var response = require('../context').response;
+var assert = require('assert');
 
 describe('res.inspect()', function(){
   describe('with no response.res present', function(){

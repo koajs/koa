@@ -1,6 +1,6 @@
 
-var assert = require('assert');
 var request = require('../context').request;
+var assert = require('assert');
 
 describe('ctx.length', function(){
   it('should return length in content-length', function(){

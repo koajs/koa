@@ -1,6 +1,6 @@
 
-var Stream = require('stream');
 var response = require('../context').response;
+var Stream = require('stream');
 
 describe('res.socket', function(){
   it('should return the request socket object', function(){

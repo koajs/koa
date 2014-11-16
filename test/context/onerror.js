@@ -1,6 +1,6 @@
 
-var koa = require('../..');
 var request = require('supertest');
+var koa = require('../..');
 
 describe('ctx.onerror(err)', function(){
   it('should respond', function(done){

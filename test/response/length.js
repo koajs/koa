@@ -1,8 +1,8 @@
 
-var fs = require('fs');
-var should = require('should');
 var response = require('../context').response;
+var should = require('should');
 var assert = require('assert');
+var fs = require('fs');
 
 describe('res.length', function(){
   describe('when Content-Length is defined', function(){

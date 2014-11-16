@@ -1,6 +1,6 @@
 
-var assert = require('assert');
 var request = require('../context').request;
+var assert = require('assert');
 
 describe('req.host', function(){
   it('should return host with port', function(){

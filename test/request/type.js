@@ -1,6 +1,6 @@
 
-var assert = require('assert');
 var request = require('../context').request;
+var assert = require('assert');
 
 describe('req.type', function(){
   it('should return type void of parameters', function(){

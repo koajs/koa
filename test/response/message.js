@@ -1,6 +1,6 @@
 
-var Stream = require('stream');
 var response = require('../context').response;
+var Stream = require('stream');
 
 describe('res.message', function(){
   it('should return the response status message', function(){
