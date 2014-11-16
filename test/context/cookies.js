@@ -1,6 +1,6 @@
 
 var request = require('supertest');
-var koa = require('../..')
+var koa = require('../..');
 
 describe('ctx.cookies.set()', function(){
   it('should set an unsigned cookie', function(done){
