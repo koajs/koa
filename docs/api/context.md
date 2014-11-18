@@ -50,6 +50,14 @@ app.use(function *(){
 
   A koa `Response` object.
 
+### ctx.state
+
+  The recommended namespace for passing information through middleware and to your frontend views.
+
+```js
+this.state.user = yield User.find(id);
+```
+
 ### ctx.app
 
   Application instance reference.
