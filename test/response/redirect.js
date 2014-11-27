@@ -91,6 +91,19 @@ describe('ctx.redirect(url)', function(){
       ctx.body.should.equal('Redirecting to ' + url + '.');
     })
   })
+
+  describe('when content-type was present', function(){
+    it('should overwrite content-type', function() {
+      var ctx = context();
+      ctx.body = {};
+      var url = 'http://google.com';
+      ctx.header.accept = 'text/plain';
+      ctx.redirect('http://google.com');
+      ctx.status.should.equal(302);
+      ctx.body.should.equal('Redirecting to ' + url + '.');
+      ctx.type.should.equal('text/plain');
+    })
+  })
 })
 
 function escape(html) {
