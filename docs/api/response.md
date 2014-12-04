@@ -162,7 +162,7 @@ this.set({
 });
 ```
 
-### res.remove(field)
+### response.remove(field)
 
   Remove header `field`.
 
