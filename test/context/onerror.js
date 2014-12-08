@@ -45,7 +45,6 @@ describe('ctx.onerror(err)', function(){
 
       res.headers.should.not.have.property('vary');
       res.headers.should.not.have.property('x-csrf-token');
-      res.headers.should.not.have.property('x-powered-by');
 
       done();
     })
