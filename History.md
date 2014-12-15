@@ -1,4 +1,13 @@
 
+0.14.0 / 2014-12-15
+==================
+
+ * remove `x-powered-by` response header
+ * fix the content type on plain-text redirects
+ * add ctx.state
+ * bump `co@4`
+ * bump dependencies
+
 0.13.0 / 2014-10-17
 ==================
 
