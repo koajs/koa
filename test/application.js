@@ -104,15 +104,20 @@ describe('app.use(fn)', function(){
     });
   })
 
-  it('should error when a non-generator function is passed', function(done){
+  it('should error when a non-generator function is passed', function(){
     var app = koa();
 
     try {
       app.use(function(){});
     } catch (err) {
       err.message.should.equal('app.use() requires a generator function');
-      done();
     }
+  })
+
+  it('should not error when a non-generator function is passed when .experimental=true', function(){
+    var app = koa();
+    app.experimental = true;
+    app.use(function(){});
   })
 })
 

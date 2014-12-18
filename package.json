@@ -19,7 +19,8 @@
   "license": "MIT",
   "dependencies": {
     "accepts": "^1.2.2",
-    "co": "^4.1.0",
+    "co": "^4.4.0",
+    "composition": "^2.1.1",
     "content-disposition": "~0.5.0",
     "content-type": "^1.0.0",
     "cookies": "~0.5.0",
@@ -42,6 +43,7 @@
     "vary": "^1.0.0"
   },
   "devDependencies": {
+    "6to5": "^3.6.5",
     "istanbul-harmony": "~0.3.0",
     "make-lint": "^1.0.1",
     "mocha": "^2.0.1",

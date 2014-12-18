@@ -15,7 +15,8 @@ endif
 TESTS = test/application \
 	test/context/* \
 	test/request/* \
-	test/response/*
+	test/response/* \
+	test/experimental/index.js
 
 test:
 	@NODE_ENV=test $(BIN) $(FLAGS) \
