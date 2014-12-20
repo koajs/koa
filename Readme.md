@@ -20,7 +20,7 @@
 $ npm install koa
 ```
 
-  To use Koa you must be running __node 0.11.9__ or higher for generator support, and must run node(1)
+  To use Koa you must be running __node 0.11.13__ or higher for generator and promise support, and must run node(1)
   with the `--harmony` flag. If you don't like typing this, add an alias to your shell profile:
 
 ```
