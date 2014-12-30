@@ -4,7 +4,7 @@
 
 ```
 $ npm install -g n
-$ n 0.11.12
+$ n 0.11
 $ node --harmony my-koa-app.js
 ```
 
