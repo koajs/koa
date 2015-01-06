@@ -110,7 +110,8 @@ describe('app.use(fn)', function(){
     try {
       app.use(function(){});
     } catch (err) {
-      err.message.should.equal('app.use() requires a generator function');
+      err.message.should.equal('app.use() requires a generator function, ' +
+        'but the following object was passed: "function (){}"');
       done();
     }
   })
