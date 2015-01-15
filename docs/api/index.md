@@ -1,12 +1,7 @@
 # Installation
 
- Koa currently requires node 0.11.x for the --harmony flag which exposes generators to your script. If you're running an earlier version of node you may install [n](https://github.com/visionmedia/n), a node version manager to quickly install 0.11.x:
-
-```
-$ npm install -g n
-$ n 0.11
-$ node --harmony my-koa-app.js
-```
+  Koa current requires ES6 generators.
+  We recommend installing the latest version of [iojs](https://iojs.org).
 
 # Application
 
@@ -179,4 +174,3 @@ app.on('error', function(err, ctx){
   When an error occurs _and_ it is still possible to respond to the client, aka no data has been written to the socket, Koa will respond
   appropriately with a 500 "Internal Server Error". In either case
   an app-level "error" is emitted for logging purposes.
-

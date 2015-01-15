@@ -16,15 +16,11 @@
 
 ## Installation
 
-```
+  To use Koa, we recommend you install the latest version of [iojs](https://iojs.org).
+  To install Koa:
+
+```bash
 $ npm install koa
-```
-
-  To use Koa you must be running __node 0.11.13__ or higher for generator and promise support, and must run node(1)
-  with the `--harmony` flag. If you don't like typing this, add an alias to your shell profile:
-
-```
-alias node='node --harmony'
 ```
 
 ## Community

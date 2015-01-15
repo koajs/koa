@@ -240,7 +240,7 @@ app.use(function *(){
   to see all koa-specific debugging information just pass `DEBUG=koa*` and upon boot you'll see the list of middleware used, among other things.
 
 ```
-$ DEBUG=koa* node --harmony examples/simple
+$ DEBUG=koa* iojs examples/simple
   koa:application use responseTime +0ms
   koa:application use logger +4ms
   koa:application use contentLength +0ms
