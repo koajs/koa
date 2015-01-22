@@ -3,21 +3,25 @@ SRC = lib/*.js
 
 include node_modules/make-lint/index.mk
 
+BIN ?= node
+
+FLAGS ?= --harmony-generators
+
 TESTS = test/application \
 	test/context/* \
 	test/request/* \
 	test/response/*
 
 test:
-	@NODE_ENV=test ./node_modules/.bin/mocha \
+	@NODE_ENV=test $(BIN) $(FLAGS) \
+		./node_modules/.bin/_mocha \
 		--require should \
-		--harmony-generators \
 		$(TESTS) \
 		--bail
 
 test-cov:
-	@NODE_ENV=test node --harmony-generators \
-		node_modules/.bin/istanbul cover \
+	@NODE_ENV=test $(BIN) $(FLAGS) \
+		./node_modules/.bin/istanbul cover \
 		./node_modules/.bin/_mocha \
 		-- -u exports \
 		--require should \
@@ -25,8 +29,8 @@ test-cov:
 		--bail
 
 test-travis:
-	@NODE_ENV=test node --harmony-generators \
-		node_modules/.bin/istanbul cover \
+	@NODE_ENV=test $(BIN) $(FLAGS) \
+		./node_modules/.bin/istanbul cover \
 		./node_modules/.bin/_mocha \
 		--report lcovonly \
 		-- -u exports \
