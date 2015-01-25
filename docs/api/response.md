@@ -151,6 +151,13 @@ var etag = this.get('ETag');
 this.set('Cache-Control', 'no-cache');
 ```
 
+### response.append(field, value)
+  Append additional header `field` with value `val`.
+
+```js
+this.append('Link', '<http://127.0.0.1/>');
+```
+
 ### response.set(fields)
 
   Set several response header `fields` with an object:

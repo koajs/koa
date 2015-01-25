@@ -190,6 +190,7 @@ koa uses [http-assert](https://github.com/jshttp/http-assert) for assertions.
   - `ctx.redirect()`
   - `ctx.attachment()`
   - `ctx.set()`
+  - `ctx.append()`
   - `ctx.remove()`
   - `ctx.lastModified=`
   - `ctx.etag=`
