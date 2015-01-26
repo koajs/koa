@@ -1,5 +1,14 @@
 language: node_js
 node_js:
   - "0.11"
+env:
+  global:
+    - IOJS_VERSION="v1.0.4"
+  matrix:
+    - BIN="iojs" FLAGS=""
+    - BIN="node" FLAGS="--harmony-generators"
+before_install:
+  - "[ $BIN != 'iojs' ] || (wget https://iojs.org/dist/${IOJS_VERSION}/iojs-${IOJS_VERSION}-linux-x64.tar.xz && sudo tar xJf iojs-${IOJS_VERSION}-linux-x64.tar.xz -C /opt && rm iojs-${IOJS_VERSION}-linux-x64.tar.xz)"
+  - "[ $BIN != 'iojs' ] || (sudo ln -s /opt/iojs-${IOJS_VERSION}-linux-x64/bin/iojs /usr/local/bin/iojs && sudo chmod +x /usr/local/bin/iojs)"
 script: "make test-travis"
 after_script: "npm install coveralls@2.10.0 && cat ./coverage/lcov.info | coveralls"
