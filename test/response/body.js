@@ -68,7 +68,7 @@ describe('res.body=', function(){
       assert.equal(res.length, Buffer.byteLength(string));
     })
 
-    it('should set length when body is overriden', function(){
+    it('should set length when body is overridden', function(){
       var string = '<h1>Tobi</h1>';
       var res = response();
       res.body = string;
