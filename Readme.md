@@ -11,8 +11,7 @@
   Only methods that are common to nearly all HTTP servers are integrated directly into Koa's small ~550 SLOC codebase. This
   includes things like content-negotiation, normalization of node inconsistencies, redirection, and a few others.
 
-  No middleware are bundled with koa. If you prefer to only define a single dependency for common middleware, much like Connect, you may use
-  [koa-common](https://github.com/koajs/common).
+  No middleware are bundled with koa.
 
 ## Installation
 
