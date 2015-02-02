@@ -19,12 +19,10 @@
 $ npm install koa
 ```
 
-  To use Koa you must be running __node 0.11.13__ or higher for generator and promise support, and must run node(1)
-  with the `--harmony` flag. If you don't like typing this, add an alias to your shell profile:
+  Koa is supported in all versions of [iojs](https://iojs.org) without any flags.
 
-```
-alias node='node --harmony'
-```
+  To use Koa with node, you must be running __node 0.11.16__ or higher for generator and promise support, and must run node(1)
+  with the `--harmony-generators` or `--harmony` flag.
 
 ## Community
 
