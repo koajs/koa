@@ -1,4 +1,15 @@
 
+0.17.0 / 2015-02-05
+==================
+
+Breaking change if you're using an old version of node v0.11!
+Otherwise, you should have no trouble upgrading.
+
+ * official iojs support
+ * drop support for node.js `>= 0.11.0 < 0.11.16`
+ * use `Object.setPrototypeOf()` instead of `__proto__`
+ * update dependencies
+
 0.16.0 / 2015-01-27
 ==================
 
