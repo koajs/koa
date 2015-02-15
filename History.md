@@ -1,4 +1,10 @@
 
+0.18.0 / 2015-02-14
+==================
+
+ * experimental es6 async function support via `app.experimental = true`
+ * use `content-type` instead of `media-typer`
+ 
 0.17.0 / 2015-02-05
 ==================
 
