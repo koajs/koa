@@ -1,6 +1,6 @@
 
 /**
- * Separate file primarily because we use `require('6to5/register')`.
+ * Separate file primarily because we use `require('babel/register')`.
  */
 
 var request = require('supertest');
