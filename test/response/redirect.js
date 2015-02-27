@@ -6,7 +6,7 @@ describe('ctx.redirect(url)', function(){
     var ctx = context();
     ctx.redirect('http://google.com');
     ctx.response.header.location.should.equal('http://google.com');
-    ctx.status.should.equal(302);
+    ctx.status.should.equal(303);
   })
 
   describe('with "back"', function(){
@@ -87,7 +87,7 @@ describe('ctx.redirect(url)', function(){
       ctx.status = 304;
       ctx.header.accept = 'text/plain';
       ctx.redirect('http://google.com');
-      ctx.status.should.equal(302);
+      ctx.status.should.equal(303);
       ctx.body.should.equal('Redirecting to ' + url + '.');
     })
   })
@@ -99,7 +99,7 @@ describe('ctx.redirect(url)', function(){
       var url = 'http://google.com';
       ctx.header.accept = 'text/plain';
       ctx.redirect('http://google.com');
-      ctx.status.should.equal(302);
+      ctx.status.should.equal(303);
       ctx.body.should.equal('Redirecting to ' + url + '.');
       ctx.type.should.equal('text/plain');
     })

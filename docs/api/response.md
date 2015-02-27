@@ -226,7 +226,7 @@ app.use(function *minifyHTML(next){
 
 ### response.redirect(url, [alt])
 
-  Perform a [302] redirect to `url`.
+  Perform a [303] redirect to `url`.
 
   The string "back" is special-cased
   to provide Referrer support, when Referrer
@@ -239,7 +239,7 @@ this.redirect('/login');
 this.redirect('http://google.com');
 ```
 
-  To alter the default status of `302`, simply assign the status
+  To alter the default status of `303`, simply assign the status
   before or after this call. To alter the body, assign it after this call:
 
 ```js
