@@ -8,7 +8,7 @@
   You can quickly install a supposed version of node/iojs with your favorite version manager:
 
 ```bash
-$ nvm install iojs
+$ npm install iojs
 $ npm i koa
 $ node my-koa-app.js
 ```
