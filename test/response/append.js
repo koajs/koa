@@ -13,7 +13,8 @@ describe('ctx.append(name, val)', function(){
     var ctx = context();
 
     ctx.append('Set-Cookie', ['foo=bar', 'fizz=buzz']);
-    ctx.response.header['set-cookie'].should.eql(['foo=bar', 'fizz=buzz']);
+    ctx.append('Set-Cookie', 'hi=again');
+    ctx.response.header['set-cookie'].should.eql(['foo=bar', 'fizz=buzz', 'hi=again']);
   })
 
   it('should get reset by res.set(field, val)', function (){

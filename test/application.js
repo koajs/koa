@@ -48,6 +48,14 @@ describe('app', function(){
     .get('/')
     .end(function(){});
   })
+
+  it('should set development env when NODE_ENV missing', function(){
+    var NODE_ENV = process.env.NODE_ENV;
+    process.env.NODE_ENV = '';
+    var app = koa();
+    process.env.NODE_ENV = NODE_ENV;
+    assert.equal(app.env, 'development');
+  })
 })
 
 describe('app.toJSON()', function(){
@@ -177,6 +185,22 @@ describe('app.onerror(err)', function(){
     });
 
     output.should.eql(["\n", "  Foo\n", "\n"]);
+
+    done();
+  })
+
+  it('should use err.toString() instad of err.stack', function(done){
+    var app = koa();
+    app.env = 'dev';
+
+    var err = new Error('mock stack null');
+    err.stack = null;
+
+    var output = stderr.inspectSync(function() {
+      app.onerror(err);
+    });
+
+    output.should.eql(["\n", "  Error: mock stack null\n", "\n"]);
 
     done();
   })
