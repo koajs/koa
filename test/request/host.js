@@ -10,9 +10,9 @@ describe('req.host', function(){
   })
 
   describe('with no host present', function(){
-    it('should return null', function(){
+    it('should return ""', function(){
       var req = request();
-      assert(null == req.host);
+      assert.equal(req.host, '');
     })
   })
 
