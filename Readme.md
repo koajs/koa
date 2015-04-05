@@ -36,7 +36,7 @@ $ npm install koa
  - [Mailing list](https://groups.google.com/forum/#!forum/koajs)
  - [Guide](docs/guide.md)
  - [FAQ](docs/faq.md)
- - [中文文档](http://koajs.cn/)
+ - [中文文档](https://github.com/turingou/koa-guide)
  - __#koajs__ on freenode
 
 ## Getting started
