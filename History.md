@@ -1,4 +1,10 @@
 
+0.19.0 / 2015-04-05
+==================
+
+ * `req.host` and `req.hostname` now always return a string (semi-breaking change)
+ * improved test coverage
+
 0.18.1 / 2015-03-01
 ==================
 
