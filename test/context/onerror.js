@@ -93,4 +93,22 @@ describe('ctx.onerror(err)', function(){
       })
     })
   })
+
+  describe('when non-error thrown', function(){
+    it('should response non-error thrown message', function(done){
+      var app = koa();
+
+      app.use(function *(next){
+        throw 'string error';
+      })
+
+      var server = app.listen();
+
+      request(server)
+      .get('/')
+      .expect(500)
+      .expect('Content-Type', 'text/plain; charset=utf-8')
+      .expect('Internal Server Error', done);
+    })
+  })
 })
