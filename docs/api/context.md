@@ -126,7 +126,7 @@ koa uses [http-errors](https://github.com/jshttp/http-errors) to create errors.
   method.
 
 ```js
-this.assert(this.user, 401, 'User not found. Please login!');
+this.assert(this.state.user, 401, 'User not found. Please login!');
 ```
 
 koa uses [http-assert](https://github.com/jshttp/http-assert) for assertions.
