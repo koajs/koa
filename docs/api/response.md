@@ -10,6 +10,11 @@
 
   Response header object.
 
+### response.headers
+
+  Response header object. Alias as `response.header`.
+
+
 ### response.socket
 
   Request socket.
