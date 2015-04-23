@@ -1,13 +1,26 @@
 
-all:
-	@./run 1 middleware
-	@./run 5 middleware
-	@./run 10 middleware
-	@./run 15 middleware
-	@./run 20 middleware
-	@./run 30 middleware
-	@./run 50 middleware
-	@./run 100 middleware
+all: middleware experimental
+
+middleware:
+	@./run 1 $@
+	@./run 5 $@
+	@./run 10 $@
+	@./run 15 $@
+	@./run 20 $@
+	@./run 30 $@
+	@./run 50 $@
+	@./run 100 $@
 	@echo
 
-.PHONY: all
+experimental:
+	@./run 1 $@
+	@./run 5 $@
+	@./run 10 $@
+	@./run 15 $@
+	@./run 20 $@
+	@./run 30 $@
+	@./run 50 $@
+	@./run 100 $@
+	@echo
+
+.PHONY: all middleware experimental
