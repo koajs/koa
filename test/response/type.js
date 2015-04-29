@@ -51,10 +51,10 @@ describe('ctx.type=', function(){
 
 describe('ctx.type', function(){
   describe('with no Content-Type', function(){
-    it('should return null', function(){
+    it('should return ""', function(){
       var ctx = context();
       // TODO: this is lame
-      assert(null == ctx.type);
+      assert('' === ctx.type);
     })
   })
 
