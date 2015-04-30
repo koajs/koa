@@ -1,4 +1,13 @@
 
+0.20.0 / 2015-04-30
+==================
+
+Breaking change if you're using `this.get('ua') === undefined` etc.
+For more details please checkout [#438](https://github.com/koajs/koa/pull/438).
+
+  * make sure helpers return strict string
+  * feat: alias response.headers to response.header
+
 0.19.1 / 2015-04-14
 ==================
 
