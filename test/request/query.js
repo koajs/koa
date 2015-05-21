@@ -7,6 +7,13 @@ describe('ctx.query', function(){
       var ctx = context({ url: '/' });
       ctx.query.should.eql({});
     })
+
+    it('should return the same object each time it\'s accessed', function(done) {
+      var ctx = context({ url: '/' });
+      ctx.query.a = '2';
+      ctx.query.a.should.equal('2');
+      done();
+    });
   })
 
   it('should return a parsed query-string', function(){
