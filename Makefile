@@ -12,6 +12,8 @@ ifeq (node, $(BIN))
 	FLAGS = --harmony-generators
 endif
 
+REQUIRED = --require should --require should-http
+
 TESTS = test/application \
 	test/context/* \
 	test/request/* \
@@ -21,7 +23,7 @@ TESTS = test/application \
 test:
 	@NODE_ENV=test $(BIN) $(FLAGS) \
 		./node_modules/.bin/_mocha \
-		--require should \
+		$(REQUIRED) \
 		$(TESTS) \
 		--bail
 
@@ -30,7 +32,7 @@ test-cov:
 		./node_modules/.bin/istanbul cover \
 		./node_modules/.bin/_mocha \
 		-- -u exports \
-		--require should \
+		$(REQUIRED) \
 		$(TESTS) \
 		--bail
 
@@ -40,7 +42,7 @@ test-travis:
 		./node_modules/.bin/_mocha \
 		--report lcovonly \
 		-- -u exports \
-		--require should \
+		$(REQUIRED) \
 		$(TESTS) \
 		--bail
 
