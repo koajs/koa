@@ -1,4 +1,10 @@
 
+0.21.0 / 2015-05-23
+==================
+
+ * empty `request.query` objects are now always the same instance
+ * bump `fresh@0.3.0`
+
 0.20.0 / 2015-04-30
 ==================
 
