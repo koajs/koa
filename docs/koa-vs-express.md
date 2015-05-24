@@ -2,13 +2,13 @@ THIS DOCUMENT IS IN PROGRESS. THIS PARAGRAPH SHALL BE REMOVED WHEN THIS DOCUMENT
 
 # Koa vs Express
 
-  Philosophically, Koa aims to "fix and replace node", whereas Express "augments node". 
+  Philosophically, Koa aims to "fix and replace node", whereas Express "augments node".
   Koa uses co to rid apps of callback hell and simplify error handling.
   It exposes its own `this.request` and `this.response` objects instead of node's `req` and `res` objects.
-  
-  Express, on the other hand, augments node's `req` and `res` objects with additional properties and methods 
+
+  Express, on the other hand, augments node's `req` and `res` objects with additional properties and methods
   and includes many other "framework" features, such as routing and templating, which Koa does not.
-  
+
   Thus, Koa can be viewed as an abstraction of node.js's `http` modules, where as Express is an application framework for node.js.
 
 | Feature           | Koa | Express | Connect |
@@ -20,7 +20,7 @@ THIS DOCUMENT IS IN PROGRESS. THIS PARAGRAPH SHALL BE REMOVED WHEN THIS DOCUMENT
 | JSONP             |     | ✓       |         |
 
 
-  Thus, if you'd like to be closer to node.js and traditional node.js-style coding, you probably want to stick to Connect/Express or similar frameworks. 
+  Thus, if you'd like to be closer to node.js and traditional node.js-style coding, you probably want to stick to Connect/Express or similar frameworks.
   If you want to dive into the land of generators, use Koa.
 
   As result of this different philosophy is that traditional node.js "middleware", i.e. functions of the form `(req, res, next)`, are incompatible with Koa. Your application will essentially have to be rewritten from the ground, up.
@@ -53,23 +53,6 @@ THIS DOCUMENT IS IN PROGRESS. THIS PARAGRAPH SHALL BE REMOVED WHEN THIS DOCUMENT
   the entire application, so we thought it would be more appropriate
   to create a new library.
 
-## Is Koa faster than Express?
-
-Koa and Express have very similar benchmark results, both of which are more than enough for most applications. This is especially true for applications with high traffic running multiple instances, because you are scaling horizontally right?
-
-The following results were produced on a Retina Macbook Pro, showing only the cost of running noop middleware.
-
-| no. middleware | Koa     | Express |
-| --------------:| ------- | ------- |
-|              1 | 8849.36 | 7805.19 |
-|              5 | 8685.74 | 7707.15 |
-|             10 | 8511.08 | 7475.08 |
-|             15 | 8456.86 | 7261.73 |
-|             20 | 8211.93 | 7012.07 |
-|             30 | 8102.98 | 6672.76 |
-|             50 | 7617.67 | 6255.92 |
-|            100 | 6899.45 | 5000.98 |
-
 ## How is Koa different than Connect/Express?
 
 ### Generated-based control flow
@@ -99,7 +82,7 @@ The following results were produced on a Retina Macbook Pro, showing only the co
 ### Koa abstracts node's request/response
 
   Less hackery.
-  
+
   Better user experience.
 
   Proper stream handling.
