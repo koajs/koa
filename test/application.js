@@ -105,6 +105,7 @@ describe('app.use(fn)', function(){
 
     request(server)
     .get('/')
+    .expect(404)
     .end(function(err){
       if (err) return done(err);
       calls.should.eql([1,2,3,4,5,6]);
