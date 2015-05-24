@@ -48,7 +48,7 @@
     "make-lint": "^1.0.1",
     "mocha": "^2.0.1",
     "should": "^3.1.0",
-    "supertest": "~0.15.0",
+    "supertest": "^1.0.1",
     "test-console": "^0.7.1"
   },
   "engines": {
