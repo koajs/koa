@@ -41,7 +41,7 @@ describe('app', function(){
       };
     })
 
-    // hackish, but the response should occur in a single ticket
+    // hackish, but the response should occur in a single tick
     setImmediate(done);
 
     request(app.listen())
