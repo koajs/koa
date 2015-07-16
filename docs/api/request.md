@@ -130,6 +130,8 @@ this.query = { next: '/login' };
   method is for cache negotiation between `If-None-Match` / `ETag`, and `If-Modified-Since` and `Last-Modified`. It should be referenced after setting one or more of these response headers.
 
 ```js
+// freshness check requires status 20x or 304
+this.status = 200;
 this.set('ETag', '123');
 
 // cache is ok
