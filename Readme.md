@@ -1,5 +1,6 @@
 <img src="https://dl.dropboxusercontent.com/u/6396913/koa/logo.png" alt="koa middleware framework for nodejs" width="255px" />
 
+  [![Slack](http://slack.koajs.in/badge.svg)](http://slack.koajs.in/)
   [![gitter][gitter-image]][gitter-url]
   [![NPM version][npm-image]][npm-url]
   [![build status][travis-image]][travis-url]
