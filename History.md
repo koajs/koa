@@ -1,3 +1,9 @@
+1.0.0 / 2015-08-22
+==================
+
+ * add `this.req` check for `querystring()`
+ * don't log errors with `err.expose`
+ * `koa` now follows semver!
 
 0.21.0 / 2015-05-23
 ==================
