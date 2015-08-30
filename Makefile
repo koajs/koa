@@ -9,7 +9,7 @@ ifeq ($(findstring io.js, $(shell which node)),)
 endif
 
 ifeq (node, $(BIN))
-	FLAGS = --harmony-generators
+	FLAGS = --harmony
 endif
 
 REQUIRED = --require should --require should-http
