@@ -162,6 +162,15 @@ app.keys = new KeyGrip(['im a newer secret', 'i like turtle'], 'sha256');
 this.cookies.set('name', 'tobi', { signed: true });
 ```
 
+## app.context
+
+  The recommended namespace to extend with information that's useful
+  throughout the lifetime of your application, as opposed to a per request basis.
+
+```js
+app.context.db = db();
+```
+
 ## Error Handling
 
   By default outputs all errors to stderr unless __NODE_ENV__ is "test". To perform custom error-handling logic such as centralized logging you
