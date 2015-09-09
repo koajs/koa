@@ -3,7 +3,7 @@ node_js:
   - "0.12"
   - "iojs-v1"
   - "iojs-v2"
-  - "iojs-v3"  
+  - "iojs-v3"
   - "4.0.0"
 sudo: false
 script: "make test-travis"
