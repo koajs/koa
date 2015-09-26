@@ -13,7 +13,7 @@ describe('req.ip', function(){
   })
 
   describe('with no req.ips present', function(){
-    it('should return req.socket.removeAddress', function(){
+    it('should return req.socket.remoteAddress', function(){
       var req = request();
       req.socket.remoteAddress = '127.0.0.2';
       req.ip.should.equal('127.0.0.2');
