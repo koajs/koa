@@ -148,6 +148,7 @@ koa uses [http-assert](https://github.com/jshttp/http-assert) for assertions.
   - `ctx.url`
   - `ctx.url=`
   - `ctx.originalUrl`
+  - `ctx.origin`
   - `ctx.href`
   - `ctx.path`
   - `ctx.path=`
