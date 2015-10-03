@@ -18,7 +18,8 @@ describe('req.ip', function(){
       req.socket.remoteAddress = '127.0.0.2';
       req.ip.should.equal('127.0.0.2');
     })
-    describe('with req.socket.remoteAddress not present', function() {
+
+    describe('with req.socket.remoteAddress not present', function(){
       it('should return an empty string', function(){
         var req = request();
         req.socket.remoteAddress = null;

@@ -2,12 +2,13 @@
 var context = require('../context');
 
 describe('ctx.querystring', function(){
-  it('should return the querystring', function () {
+  it('should return the querystring', function(){
     var ctx = context({ url: '/store/shoes?page=2&color=blue' });
     ctx.querystring.should.equal('page=2&color=blue');
   })
-  describe('when ctx.req not present', function() {
-    it('should return an empty string', function (){
+
+  describe('when ctx.req not present', function(){
+    it('should return an empty string', function(){
       var ctx = context();
       ctx.request.req = null;
       ctx.querystring.should.equal('');
