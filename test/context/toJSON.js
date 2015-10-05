@@ -1,9 +1,9 @@
 
-var context = require('../context');
+const context = require('../context');
 
 describe('ctx.toJSON()', function(){
   it('should return a json representation', function(){
-    var ctx = context();
+    const ctx = context();
 
     ctx.req.method = 'POST';
     ctx.req.url = '/items';
@@ -11,9 +11,9 @@ describe('ctx.toJSON()', function(){
     ctx.status = 200;
     ctx.body = '<p>Hey</p>';
 
-    var obj = JSON.parse(JSON.stringify(ctx));
-    var req = obj.request;
-    var res = obj.response;
+    const obj = JSON.parse(JSON.stringify(ctx));
+    const req = obj.request;
+    const res = obj.response;
 
     req.should.eql({
       method: 'POST',
