@@ -1,16 +1,16 @@
 
-var context = require('../context');
+const context = require('../context');
 
 describe('ctx.append(name, val)', function(){
   it('should append multiple headers', function(){
-    var ctx = context();
+    const ctx = context();
     ctx.append('x-foo', 'bar1');
     ctx.append('x-foo', 'bar2');
     ctx.response.header['x-foo'].should.eql(['bar1', 'bar2']);
   })
 
  it('should accept array of values', function (){
-    var ctx = context();
+    const ctx = context();
 
     ctx.append('Set-Cookie', ['foo=bar', 'fizz=buzz']);
     ctx.append('Set-Cookie', 'hi=again');
@@ -18,7 +18,7 @@ describe('ctx.append(name, val)', function(){
   })
 
   it('should get reset by res.set(field, val)', function (){
-    var ctx = context();
+    const ctx = context();
 
     ctx.append('Link', '<http://localhost/>');
     ctx.append('Link', '<http://localhost:80/>');
@@ -29,7 +29,7 @@ describe('ctx.append(name, val)', function(){
   })
 
   it('should work with res.set(field, val) first', function (){
-    var ctx = context();
+    const ctx = context();
 
     ctx.set('Link', '<http://localhost/>');
     ctx.append('Link', '<http://localhost:80/>');
