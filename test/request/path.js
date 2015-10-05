@@ -1,9 +1,9 @@
 
-var context = require('../context');
+const context = require('../context');
 
 describe('ctx.path', function(){
   it('should return the pathname', function(){
-    var ctx = context();
+    const ctx = context();
     ctx.url = '/login?next=/dashboard';
     ctx.path.should.equal('/login');
   })
@@ -11,7 +11,7 @@ describe('ctx.path', function(){
 
 describe('ctx.path=', function(){
   it('should set the pathname', function(){
-    var ctx = context();
+    const ctx = context();
     ctx.url = '/login?next=/dashboard';
 
     ctx.path = '/logout';
@@ -20,7 +20,7 @@ describe('ctx.path=', function(){
   })
 
   it('should change .url but not .originalUrl', function(){
-    var ctx = context({ url: '/login' });
+    const ctx = context({ url: '/login' });
     ctx.path = '/logout';
     ctx.url.should.equal('/logout');
     ctx.originalUrl.should.equal('/login');
