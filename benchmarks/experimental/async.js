@@ -1,13 +1,13 @@
 
 const http = require('http');
 const koa = require('../..');
-var app = koa();
+const app = koa();
 
 app.experimental = true;
 
 // number of middleware
 
-var n = parseInt(process.env.MW || '1', 10);
+const n = parseInt(process.env.MW || '1', 10);
 console.log('  %s async middleware', n);
 
 while (n--) {
@@ -16,7 +16,7 @@ while (n--) {
   });
 }
 
-var body = new Buffer('Hello World');
+const body = new Buffer('Hello World');
 
 app.use(async function (next){
   await next;
