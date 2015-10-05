@@ -1,15 +1,15 @@
 
-var response = require('../context').response;
-var request = require('supertest');
-var statuses = require('statuses');
-var assert = require('assert');
-var koa = require('../..');
+const response = require('../context').response;
+const request = require('supertest');
+const statuses = require('statuses');
+const assert = require('assert');
+const koa = require('../..');
 
 describe('res.status=', function(){
   describe('when a status code', function(){
     describe('and valid', function(){
       it('should set the status', function(){
-        var res = response();
+        const res = response();
         res.status = 403;
         res.status.should.equal(403);
       })
@@ -35,7 +35,7 @@ describe('res.status=', function(){
       })
 
       it('should set the status', function (){
-        var res = response();
+        const res = response();
         res.status = 700;
         res.status.should.equal(700);
       })
@@ -58,7 +58,7 @@ describe('res.status=', function(){
 
   function strip(status) {
     it('should strip content related header fields', function(done){
-      var app = koa();
+      const app = koa();
 
       app.use(function *(){
         this.body = { foo: 'bar' };
@@ -84,7 +84,7 @@ describe('res.status=', function(){
     })
 
     it('should strip content releated header fields after status set', function(done) {
-      var app = koa();
+      const app = koa();
 
       app.use(function *(){
         this.status = status;
