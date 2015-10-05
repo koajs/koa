@@ -1,13 +1,13 @@
 
 'use strict';
 
-var context = require('../context');
-var should = require('should');
-var assert = require('assert');
+const context = require('../context');
+const should = require('should');
+const assert = require('assert');
 
 describe('response.is(type)', function(){
   it('should ignore params', function(){
-    var res = context().response;
+    const res = context().response;
     res.type = 'text/html; charset=utf-8';
 
     res.is('text/*').should.equal('text/html');
@@ -15,7 +15,7 @@ describe('response.is(type)', function(){
 
   describe('when no type is set', function(){
     it('should return false', function(){
-      var res = context().response;
+      const res = context().response;
 
       assert(false === res.is());
       assert(false === res.is('html'));
@@ -24,7 +24,7 @@ describe('response.is(type)', function(){
 
   describe('when given no types', function(){
     it('should return the type', function(){
-      var res = context().response;
+      const res = context().response;
       res.type = 'text/html; charset=utf-8';
 
       res.is().should.equal('text/html');
@@ -33,7 +33,7 @@ describe('response.is(type)', function(){
 
   describe('given one type', function(){
     it('should return the type or false', function(){
-      var res = context().response;
+      const res = context().response;
       res.type = 'image/png';
 
       res.is('png').should.equal('png');
@@ -52,7 +52,7 @@ describe('response.is(type)', function(){
 
   describe('given multiple types', function(){
     it('should return the first match or false', function(){
-      var res = context().response;
+      const res = context().response;
       res.type = 'image/png';
 
       res.is('png').should.equal('png');
@@ -76,7 +76,7 @@ describe('response.is(type)', function(){
 
   describe('when Content-Type: application/x-www-form-urlencoded', function(){
     it('should match "urlencoded"', function(){
-      var res = context().response;
+      const res = context().response;
       res.type = 'application/x-www-form-urlencoded';
 
       res.is('urlencoded').should.equal('urlencoded');
