@@ -1,6 +1,6 @@
 
-var http = require('http');
-var koa = require('..');
+const http = require('http');
+const koa = require('..');
 var app = koa();
 
 // number of middleware
