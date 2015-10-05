@@ -1,15 +1,15 @@
 
 'use strict';
 
-var response = require('../context').response;
-var should = require('should');
-var assert = require('assert');
-var fs = require('fs');
+const response = require('../context').response;
+const should = require('should');
+const assert = require('assert');
+const fs = require('fs');
 
 describe('res.length', function(){
   describe('when Content-Length is defined', function(){
     it('should return a number', function(){
-      var res = response();
+      const res = response();
       res.header['content-length'] = '120';
       res.length.should.equal(120);
     })
@@ -19,7 +19,7 @@ describe('res.length', function(){
 describe('res.length', function(){
   describe('when Content-Length is defined', function(){
     it('should return a number', function(){
-      var res = response();
+      const res = response();
       res.set('Content-Length', '1024');
       res.length.should.equal(1024);
     })
@@ -28,7 +28,7 @@ describe('res.length', function(){
   describe('when Content-Length is not defined', function(){
     describe('and a .body is set', function(){
       it('should return a number', function(){
-        var res = response();
+        const res = response();
 
         res.body = 'foo';
         res.remove('Content-Length');
@@ -61,7 +61,7 @@ describe('res.length', function(){
 
     describe('and .body is not', function(){
       it('should return undefined', function(){
-        var res = response();
+        const res = response();
         assert(null == res.length);
       })
     })

@@ -1,12 +1,12 @@
 
 'use strict';
 
-var response = require('../context').response;
-var Stream = require('stream');
+const response = require('../context').response;
+const Stream = require('stream');
 
 describe('res.socket', function(){
   it('should return the request socket object', function(){
-    var res = response();
+    const res = response();
     res.socket.should.be.instanceOf(Stream);
   })
 })

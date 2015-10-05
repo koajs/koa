@@ -1,13 +1,13 @@
 
 'use strict';
 
-var response = require('../context').response;
-var assert = require('assert');
+const response = require('../context').response;
+const assert = require('assert');
 
 describe('res.inspect()', function(){
   describe('with no response.res present', function(){
     it('should return null', function(){
-      var res = response();
+      const res = response();
       res.body = 'hello';
       delete res.res;
       assert(null == res.inspect());
@@ -15,7 +15,7 @@ describe('res.inspect()', function(){
   })
 
   it('should return a json representation', function(){
-    var res = response();
+    const res = response();
     res.body = 'hello';
 
     res.inspect().should.eql({
