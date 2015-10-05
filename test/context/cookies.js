@@ -2,11 +2,11 @@
 var request = require('supertest');
 var koa = require('../..');
 
-describe('ctx.cookies.set()', function(){
-  it('should set an unsigned cookie', function(done){
+describe('ctx.cookies.set()', function() {
+  it('should set an unsigned cookie', function(done) {
     var app = koa();
 
-    app.use(function *(next){
+    app.use(function *(next) {
       this.cookies.set('name', 'jon');
       this.status = 204;
     })
@@ -16,10 +16,10 @@ describe('ctx.cookies.set()', function(){
     request(server)
     .get('/')
     .expect(204)
-    .end(function(err, res){
+    .end(function(err, res) {
       if (err) return done(err);
 
-      res.headers['set-cookie'].some(function(cookie){
+      res.headers['set-cookie'].some(function(cookie) {
         return /^name=/.test(cookie);
       }).should.be.ok;
 
@@ -27,12 +27,12 @@ describe('ctx.cookies.set()', function(){
     })
   })
 
-  describe('with .signed', function(){
-    describe('when no .keys are set', function(){
-      it('should error', function(done){
+  describe('with .signed', function() {
+    describe('when no .keys are set', function() {
+      it('should error', function(done) {
         var app = koa();
 
-        app.use(function *(next){
+        app.use(function *(next) {
           try {
             this.cookies.set('foo', 'bar', { signed: true });
           } catch (err) {
@@ -46,12 +46,12 @@ describe('ctx.cookies.set()', function(){
       })
     })
 
-    it('should send a signed cookie', function(done){
+    it('should send a signed cookie', function(done) {
       var app = koa();
 
       app.keys = ['a', 'b'];
 
-      app.use(function *(next){
+      app.use(function *(next) {
         this.cookies.set('name', 'jon', { signed: true });
         this.status = 204;
       })
@@ -61,16 +61,16 @@ describe('ctx.cookies.set()', function(){
       request(server)
       .get('/')
       .expect(204)
-      .end(function(err, res){
+      .end(function(err, res) {
         if (err) return done(err);
 
         var cookies = res.headers['set-cookie'];
 
-        cookies.some(function(cookie){
+        cookies.some(function(cookie) {
           return /^name=/.test(cookie);
         }).should.be.ok;
 
-        cookies.some(function(cookie){
+        cookies.some(function(cookie) {
           return /^name\.sig=/.test(cookie);
         }).should.be.ok;
 

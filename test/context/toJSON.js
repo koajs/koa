@@ -1,8 +1,8 @@
 
 var context = require('../context');
 
-describe('ctx.toJSON()', function(){
-  it('should return a json representation', function(){
+describe('ctx.toJSON()', function() {
+  it('should return a json representation', function() {
     var ctx = context();
 
     ctx.req.method = 'POST';
