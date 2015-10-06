@@ -4,8 +4,8 @@ var http = require('http');
 var koa = require('../../');
 var context = require('../context');
 
-describe('ctx.origin', function(){
-  it('should return the origin of url', function(){
+describe('ctx.origin', function() {
+  it('should return the origin of url', function() {
     var socket = new Stream.Duplex();
     var req = {
       url: '/users/1?next=/dashboard',

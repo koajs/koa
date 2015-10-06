@@ -11,14 +11,14 @@ var n = parseInt(process.env.MW || '1', 10);
 console.log('  %s async middleware', n);
 
 while (n--) {
-  app.use(async function (next){
+  app.use(async function (next) {
     await next;
   });
 }
 
 var body = new Buffer('Hello World');
 
-app.use(async function (next){
+app.use(async function (next) {
   await next;
   this.body = body;
 });

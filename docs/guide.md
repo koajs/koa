@@ -26,7 +26,7 @@ app.use(responseTime);
   Here's another way to write the same thing, inline:
 
 ```js
-app.use(function *(next){
+app.use(function *(next) {
   var start = new Date;
   yield next;
   var ms = new Date - start;
@@ -64,7 +64,7 @@ to this behaviour.
  For example this would be fine:
 
 ```js
-app.use(function *response(){
+app.use(function *response() {
   if ('/' != this.url) return;
   this.body = 'Hello World';
 });
@@ -91,7 +91,7 @@ app.use(function *response(){
 function logger(format) {
   format = format || ':method ":url"';
 
-  return function *(next){
+  return function *(next) {
     var str = format
       .replace(':method', this.method)
       .replace(':url', this.url);
@@ -112,7 +112,7 @@ app.use(logger(':method :url'));
 
 ```js
 function logger(format) {
-  return function *logger(next){
+  return function *logger(next) {
 
   }
 }
@@ -164,20 +164,20 @@ app.use(all);
   downstream "three" middleware a chance to manipulate the response.
 
 ```js
-app.use(function *(next){
+app.use(function *(next) {
   console.log('>> one');
   yield next;
   console.log('<< one');
 });
 
-app.use(function *(next){
+app.use(function *(next) {
   console.log('>> two');
   this.body = 'two';
   yield next;
   console.log('<< two');
 });
 
-app.use(function *(next){
+app.use(function *(next) {
   console.log('>> three');
   yield next;
   console.log('<< three');
@@ -188,19 +188,19 @@ app.use(function *(next){
   with "two", however the third (and any other downstream middleware) will be ignored:
 
 ```js
-app.use(function *(next){
+app.use(function *(next) {
   console.log('>> one');
   yield next;
   console.log('<< one');
 });
 
-app.use(function *(next){
+app.use(function *(next) {
   console.log('>> two');
   this.body = 'two';
   console.log('<< two');
 });
 
-app.use(function *(next){
+app.use(function *(next) {
   console.log('>> three');
   yield next;
   console.log('<< three');
@@ -220,10 +220,10 @@ app.use(function *(next){
 ```js
 var fs = require('co-fs');
 
-app.use(function *(){
+app.use(function *() {
   var paths = yield fs.readdir('docs');
 
-  var files = yield paths.map(function(path){
+  var files = yield paths.map(function(path) {
     return fs.readFile('docs/' + path, 'utf8');
   });
 

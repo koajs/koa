@@ -12,7 +12,7 @@
   snippet:
 
 ```js
-app.use(function *(){
+app.use(function *() {
   this; // is the Context
   this.request; // is a koa Request
   this.response; // is a koa Response

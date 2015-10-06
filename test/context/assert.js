@@ -2,8 +2,8 @@
 var context = require('../context');
 var assert = require('assert');
 
-describe('ctx.assert(value, status)', function(){
-  it('should throw an error', function(){
+describe('ctx.assert(value, status)', function() {
+  it('should throw an error', function() {
     var ctx = context();
 
     try {

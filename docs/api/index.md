@@ -32,7 +32,7 @@ $ node my-koa-app.js
 var koa = require('koa');
 var app = koa();
 
-app.use(function *(){
+app.use(function *() {
   this.body = 'Hello World';
 });
 
@@ -60,7 +60,7 @@ var app = koa();
 
 // x-response-time
 
-app.use(function *(next){
+app.use(function *(next) {
   var start = new Date;
   yield next;
   var ms = new Date - start;
@@ -69,7 +69,7 @@ app.use(function *(next){
 
 // logger
 
-app.use(function *(next){
+app.use(function *(next) {
   var start = new Date;
   yield next;
   var ms = new Date - start;
@@ -78,7 +78,7 @@ app.use(function *(next){
 
 // response
 
-app.use(function *(){
+app.use(function *() {
   this.body = 'Hello World';
 });
 
@@ -177,7 +177,7 @@ app.context.db = db();
   can add an "error" event listener:
 
 ```js
-app.on('error', function(err){
+app.on('error', function(err) {
   log.error('server error', err);
 });
 ```
@@ -185,7 +185,7 @@ app.on('error', function(err){
   If an error in the req/res cycle and it is _not_ possible to respond to the client, the `Context` instance is also passed:
 
 ```js
-app.on('error', function(err, ctx){
+app.on('error', function(err, ctx) {
   log.error('server error', err, ctx);
 });
 ```

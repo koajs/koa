@@ -1,8 +1,8 @@
 
 var context = require('../context');
 
-describe('req.stale', function(){
-  it('should be the inverse of req.fresh', function(){
+describe('req.stale', function() {
+  it('should be the inverse of req.fresh', function() {
     var ctx = context();
     ctx.status = 200;
     ctx.method = 'GET';

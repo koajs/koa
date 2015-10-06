@@ -1,8 +1,8 @@
 
 var request = require('../context').request;
 
-describe('req.subdomains', function(){
-  it('should return subdomain array', function(){
+describe('req.subdomains', function() {
+  it('should return subdomain array', function() {
     var req = request();
     req.header.host = 'tobi.ferrets.example.com';
     req.app.subdomainOffset = 2;
@@ -12,7 +12,7 @@ describe('req.subdomains', function(){
     req.subdomains.should.eql(['tobi']);
   })
 
-  describe('with no host present', function(){
+  describe('with no host present', function() {
     var req = request();
     req.subdomains.should.eql([]);
   })

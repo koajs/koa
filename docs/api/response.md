@@ -216,7 +216,7 @@ this.type = 'png';
 ```js
 var minify = require('html-minifier');
 
-app.use(function *minifyHTML(next){
+app.use(function *minifyHTML(next) {
   yield next;
 
   if (!this.response.is('html')) return;

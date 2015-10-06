@@ -52,7 +52,7 @@ var app = koa();
 
 // logger
 
-app.use(function *(next){
+app.use(function *(next) {
   var start = new Date;
   yield next;
   var ms = new Date - start;
@@ -61,7 +61,7 @@ app.use(function *(next){
 
 // response
 
-app.use(function *(){
+app.use(function *() {
   this.body = 'Hello World';
 });
 
