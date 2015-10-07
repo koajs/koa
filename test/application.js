@@ -940,7 +940,6 @@ describe('app.respond', function(){
           yield next;
           this.body = 'Hello';
         } catch (err) {
-          error = err;
           this.body = 'Got error';
         }
       });
