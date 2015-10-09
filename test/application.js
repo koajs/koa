@@ -161,8 +161,9 @@ describe('app.onerror(err)', function(){
     done();
   })
 
-  it('should do nothing if env is test', function(done){
+  it('should do nothing if .silent', function(done){
     var app = koa();
+    app.silent = true;
     var err = new Error();
 
     var output = stderr.inspectSync(function() {
