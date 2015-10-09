@@ -8,7 +8,7 @@ app.experimental = true;
 // number of middleware
 
 const n = parseInt(process.env.MW || '1', 10);
-console.log('  %s async middleware', n);
+console.log(`  ${n} async middleware`);
 
 while (n--) {
   app.use(async function (next){
