@@ -6,7 +6,7 @@ var app = koa();
 // number of middleware
 
 var n = parseInt(process.env.MW || '1', 10);
-console.log('  %s middleware', n);
+console.log(`  ${n} middleware`);
 
 while (n--) {
   app.use(function *(next){
