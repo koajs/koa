@@ -7,8 +7,7 @@ REQUIRED = --require should --require should-http
 TESTS = test/application \
 	test/context/* \
 	test/request/* \
-	test/response/* \
-	test/experimental/index.js
+	test/response/*
 
 test:
 	@NODE_ENV=test node \
