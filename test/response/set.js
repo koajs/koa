@@ -1,4 +1,6 @@
 
+'use strict';
+
 const context = require('../context');
 
 describe('ctx.set(name, val)', function(){

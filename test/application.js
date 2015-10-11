@@ -1,4 +1,6 @@
 
+'use strict';
+
 const stderr = require('test-console').stderr;
 const request = require('supertest');
 const statuses = require('statuses');

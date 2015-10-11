@@ -1,4 +1,6 @@
 
+'use strict';
+
 const http = require('http');
 const koa = require('../..');
 const app = koa();

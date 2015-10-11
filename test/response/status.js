@@ -1,4 +1,6 @@
 
+'use strict';
+
 const response = require('../context').response;
 const request = require('supertest');
 const statuses = require('statuses');
