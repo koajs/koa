@@ -47,8 +47,8 @@ $ npm install koa
 ## Example
 
 ```js
-const koa = require('koa');
-const app = koa();
+const Koa = require('koa');
+const app = new Koa();
 
 // logger
 
