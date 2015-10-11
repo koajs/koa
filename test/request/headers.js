@@ -1,9 +1,9 @@
 
-var request = require('../context').request;
+const request = require('../context').request;
 
 describe('req.headers', function(){
   it('should return the request header object', function(){
-    var req = request();
+    const req = request();
     req.headers.should.equal(req.req.headers);
   })
 })
