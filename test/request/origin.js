@@ -3,7 +3,7 @@
 
 const Stream = require('stream');
 const http = require('http');
-const koa = require('../../');
+const Koa = require('../../');
 const context = require('../context');
 
 describe('ctx.origin', function(){

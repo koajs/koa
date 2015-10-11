@@ -5,7 +5,7 @@ const response = require('../context').response;
 const request = require('supertest');
 const statuses = require('statuses');
 const assert = require('assert');
-const koa = require('../..');
+const Koa = require('../..');
 
 describe('res.status=', function(){
   describe('when a status code', function(){
@@ -60,7 +60,7 @@ describe('res.status=', function(){
 
   function strip(status) {
     it('should strip content related header fields', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.body = { foo: 'bar' };
@@ -86,7 +86,7 @@ describe('res.status=', function(){
     })
 
     it('should strip content releated header fields after status set', function(done) {
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.status = status;

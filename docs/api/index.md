@@ -30,7 +30,7 @@ $ node my-koa-app.js
 
 ```js
 var koa = require('koa');
-var app = koa();
+var app = new Koa();
 
 app.use(function *(){
   this.body = 'Hello World';
@@ -56,7 +56,7 @@ app.listen(3000);
 
 ```js
 var koa = require('koa');
-var app = koa();
+var app = new Koa();
 
 // x-response-time
 
@@ -106,7 +106,7 @@ app.listen(3000);
 
 ```js
 var koa = require('koa');
-var app = koa();
+var app = new Koa();
 app.listen(3000);
 ```
 
@@ -115,7 +115,7 @@ app.listen(3000);
 ```js
 var http = require('http');
 var koa = require('koa');
-var app = koa();
+var app = new Koa();
 http.createServer(app.callback()).listen(3000);
 ```
 
@@ -125,7 +125,7 @@ http.createServer(app.callback()).listen(3000);
 ```js
 var http = require('http');
 var koa = require('koa');
-var app = koa();
+var app = new Koa();
 http.createServer(app.callback()).listen(3000);
 http.createServer(app.callback()).listen(3001);
 ```

@@ -2,11 +2,11 @@
 'use strict';
 
 const request = require('supertest');
-const koa = require('../..');
+const Koa = require('../..');
 
 describe('ctx.onerror(err)', function(){
   it('should respond', function(done){
-    const app = koa();
+    const app = new Koa();
 
     app.use(function *(next){
       this.body = 'something else';
@@ -25,7 +25,7 @@ describe('ctx.onerror(err)', function(){
   })
 
   it('should unset all headers', function(done){
-    const app = koa();
+    const app = new Koa();
 
     app.use(function *(next){
       this.set('Vary', 'Accept-Encoding');
@@ -55,7 +55,7 @@ describe('ctx.onerror(err)', function(){
   describe('when invalid err.status', function(){
     describe('not number', function(){
       it('should respond 500', function(done){
-        const app = koa();
+        const app = new Koa();
 
         app.use(function *(next){
           this.body = 'something else';
@@ -76,7 +76,7 @@ describe('ctx.onerror(err)', function(){
 
     describe('not http status code', function(){
       it('should respond 500', function(done){
-        const app = koa();
+        const app = new Koa();
 
         app.use(function *(next){
           this.body = 'something else';
@@ -98,7 +98,7 @@ describe('ctx.onerror(err)', function(){
 
   describe('when non-error thrown', function(){
     it('should response non-error thrown message', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(next){
         throw 'string error';
