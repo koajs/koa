@@ -162,9 +162,9 @@ describe('app.onerror(err)', function(){
   })
 
   it('should do nothing if .silent', function(done){
-    var app = koa();
+    const app = koa();
     app.silent = true;
-    var err = new Error();
+    const err = new Error();
 
     const output = stderr.inspectSync(function() {
       app.onerror(err);
