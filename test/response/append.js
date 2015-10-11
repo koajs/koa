@@ -1,4 +1,6 @@
 
+'use strict';
+
 var context = require('../context');
 
 describe('ctx.append(name, val)', function(){

@@ -1,4 +1,6 @@
 
+'use strict';
+
 var Stream = require('stream');
 var http = require('http');
 var koa = require('../../');

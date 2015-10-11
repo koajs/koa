@@ -1,4 +1,6 @@
 
+'use strict';
+
 /**
  * Separate file primarily because we use `require('babel/register')`.
  */

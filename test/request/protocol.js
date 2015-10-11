@@ -1,4 +1,6 @@
 
+'use strict';
+
 var request = require('../context').request;
 
 describe('req.protocol', function(){

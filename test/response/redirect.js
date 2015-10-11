@@ -1,4 +1,6 @@
 
+'use strict';
+
 var context = require('../context');
 
 describe('ctx.redirect(url)', function(){

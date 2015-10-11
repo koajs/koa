@@ -1,4 +1,6 @@
 
+'use strict';
+
 var context = require('../context');
 var should = require('should');
 var assert = require('assert');

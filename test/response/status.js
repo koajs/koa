@@ -1,4 +1,6 @@
 
+'use strict';
+
 var response = require('../context').response;
 var request = require('supertest');
 var statuses = require('statuses');
