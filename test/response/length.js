@@ -1,4 +1,6 @@
 
+'use strict';
+
 const response = require('../context').response;
 const should = require('should');
 const assert = require('assert');

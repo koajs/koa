@@ -1,4 +1,6 @@
 
+'use strict';
+
 const response = require('../context').response;
 const assert = require('assert');
 const fs = require('fs');

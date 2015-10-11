@@ -1,4 +1,6 @@
 
+'use strict';
+
 const response = require('../context').response;
 
 describe('res.etag=', function(){
