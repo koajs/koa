@@ -1,7 +1,7 @@
 
 const http = require('http');
-const koa = require('../..');
-const app = koa();
+const Koa = require('../..');
+const app = new Koa();
 
 app.experimental = true;
 

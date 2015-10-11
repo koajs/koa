@@ -1,10 +1,10 @@
 
 const request = require('supertest');
-const koa = require('../..');
+const Koa = require('../..');
 
 describe('ctx.cookies.set()', function(){
   it('should set an unsigned cookie', function(done){
-    const app = koa();
+    const app = new Koa();
 
     app.use(function *(next){
       this.cookies.set('name', 'jon');
@@ -30,7 +30,7 @@ describe('ctx.cookies.set()', function(){
   describe('with .signed', function(){
     describe('when no .keys are set', function(){
       it('should error', function(done){
-        const app = koa();
+        const app = new Koa();
 
         app.use(function *(next){
           try {
@@ -47,7 +47,7 @@ describe('ctx.cookies.set()', function(){
     })
 
     it('should send a signed cookie', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.keys = ['a', 'b'];
 
