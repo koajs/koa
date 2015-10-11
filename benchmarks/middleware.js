@@ -7,7 +7,7 @@ const app = koa();
 
 // number of middleware
 
-const n = parseInt(process.env.MW || '1', 10);
+let n = parseInt(process.env.MW || '1', 10);
 console.log(`  ${n} middleware`);
 
 while (n--) {
