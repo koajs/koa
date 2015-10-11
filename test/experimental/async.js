@@ -6,11 +6,11 @@
  */
 
 const request = require('supertest');
-const koa = require('../..');
+const Koa = require('../..');
 
 describe('.experimental=true', function () {
   it('should support async functions', function (done) {
-    const app = koa();
+    const app = new Koa();;
     app.experimental = true;
     app.use(async function (next) {
       const string = await Promise.resolve('asdf');

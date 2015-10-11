@@ -3,7 +3,7 @@
 
 const context = require('../context');
 const request = require('supertest');
-const koa = require('../..');
+const Koa = require('../..');
 
 describe('ctx.attachment([filename])', function(){
   describe('when given a filename', function(){
@@ -32,7 +32,7 @@ describe('ctx.attachment([filename])', function(){
     })
 
     it('should work with http client', function(done){
-      const app = koa();
+      const app = new Koa();;
 
       app.use(function* (next){
         this.attachment('path/to/include-no-ascii-char-中文名-ok.json')

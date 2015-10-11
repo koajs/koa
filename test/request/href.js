@@ -3,7 +3,7 @@
 
 const Stream = require('stream');
 const http = require('http');
-const koa = require('../../');
+const Koa = require('../../');
 const context = require('../context');
 
 describe('ctx.href', function(){
@@ -25,7 +25,7 @@ describe('ctx.href', function(){
   })
 
   it('should work with `GET http://example.com/foo`', function(done){
-    const app = koa()
+    const app = new Koa();
     app.use(function* (){
       this.body = this.href
     })
