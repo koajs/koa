@@ -1,4 +1,6 @@
 
+'use strict';
+
 var context = require('../context');
 var request = require('supertest');
 var koa = require('../..');

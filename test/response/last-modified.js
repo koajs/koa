@@ -1,4 +1,6 @@
 
+'use strict';
+
 var response = require('../context').response;
 
 describe('res.lastModified', function(){

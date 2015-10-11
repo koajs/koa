@@ -1,4 +1,6 @@
 
+'use strict';
+
 var response = require('../context').response;
 var Stream = require('stream');
 

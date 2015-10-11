@@ -1,4 +1,6 @@
 
+'use strict';
+
 var Stream = require('stream');
 var koa = require('..');
 
