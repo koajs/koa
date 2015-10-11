@@ -1,12 +1,14 @@
 
-var http = require('http');
-var koa = require('..');
-var app = koa();
+'use strict';
+
+const http = require('http');
+const Koa = require('..');
+const app = new Koa();
 
 // number of middleware
 
-var n = parseInt(process.env.MW || '1', 10);
-console.log('  %s middleware', n);
+const n = parseInt(process.env.MW || '1', 10);
+console.log(`  ${n} middleware`);
 
 while (n--) {
   app.use(function *(next){
@@ -14,7 +16,7 @@ while (n--) {
   });
 }
 
-var body = new Buffer('Hello World');
+const body = new Buffer('Hello World');
 
 app.use(function *(next){
   yield *next;

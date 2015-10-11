@@ -1,17 +1,19 @@
 
+'use strict';
+
 /**
  * Separate file primarily because we use `require('babel/register')`.
  */
 
-var request = require('supertest');
-var koa = require('../..');
+const request = require('supertest');
+const Koa = require('../..');
 
 describe('.experimental=true', function () {
   it('should support async functions', function (done) {
-    var app = koa();
+    const app = new Koa();;
     app.experimental = true;
     app.use(async function (next) {
-      var string = await Promise.resolve('asdf');
+      const string = await Promise.resolve('asdf');
       this.body = string;
     });
 

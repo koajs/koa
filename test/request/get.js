@@ -1,9 +1,11 @@
 
-var context = require('../context');
+'use strict';
+
+const context = require('../context');
 
 describe('ctx.get(name)', function(){
   it('should return the field value', function(){
-    var ctx = context();
+    const ctx = context();
     ctx.req.headers.host = 'http://google.com';
     ctx.req.headers.referer = 'http://google.com';
     ctx.get('HOST').should.equal('http://google.com');

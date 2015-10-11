@@ -1,13 +1,15 @@
 
-var Stream = require('stream');
-var http = require('http');
-var koa = require('../../');
-var context = require('../context');
+'use strict';
+
+const Stream = require('stream');
+const http = require('http');
+const Koa = require('../../');
+const context = require('../context');
 
 describe('ctx.href', function(){
   it('should return the full request url', function(){
-    var socket = new Stream.Duplex();
-    var req = {
+    const socket = new Stream.Duplex();
+    const req = {
       url: '/users/1?next=/dashboard',
       headers: {
         host: 'localhost'
@@ -15,7 +17,7 @@ describe('ctx.href', function(){
       socket: socket,
       __proto__: Stream.Readable.prototype
     };
-    var ctx = context(req);
+    const ctx = context(req);
     ctx.href.should.equal('http://localhost/users/1?next=/dashboard');
     // change it also work
     ctx.url = '/foo/users/1?next=/dashboard';
@@ -23,12 +25,12 @@ describe('ctx.href', function(){
   })
 
   it('should work with `GET http://example.com/foo`', function(done){
-    var app = koa()
+    const app = new Koa();
     app.use(function* (){
       this.body = this.href
     })
     app.listen(function(){
-      var address = this.address()
+      const address = this.address()
       http.get({
         host: 'localhost',
         path: 'http://example.com/foo',

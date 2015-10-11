@@ -1,17 +1,19 @@
 
-var request = require('supertest');
-var assert = require('assert');
-var koa = require('../..');
+'use strict';
+
+const request = require('supertest');
+const assert = require('assert');
+const Koa = require('../..');
 
 describe('ctx.state', function() {
   it('should provide a ctx.state namespace', function(done) {
-    var app = koa();
+    const app = new Koa();;
 
     app.use(function *() {
       assert.deepEqual(this.state, {});
     });
 
-    var server = app.listen();
+    const server = app.listen();
 
     request(server)
     .get('/')

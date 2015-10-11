@@ -47,15 +47,15 @@ $ npm install koa
 ## Example
 
 ```js
-var koa = require('koa');
-var app = koa();
+const Koa = require('koa');
+const app = new Koa();
 
 // logger
 
 app.use(function *(next){
-  var start = new Date;
+  const start = new Date;
   yield next;
-  var ms = new Date - start;
+  const ms = new Date - start;
   console.log('%s %s - %s', this.method, this.url, ms);
 });
 
