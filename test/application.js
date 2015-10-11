@@ -112,22 +112,6 @@ describe('app.use(fn)', function(){
       done();
     });
   })
-
-  it('should error when a non-generator function is passed', function(){
-    const app = koa();
-
-    try {
-      app.use(function(){});
-    } catch (err) {
-      err.message.should.equal('app.use() requires a generator function');
-    }
-  })
-
-  it('should not error when a non-generator function is passed when .experimental=true', function(){
-    const app = koa();
-    app.experimental = true;
-    app.use(function(){});
-  })
 })
 
 describe('app.onerror(err)', function(){
