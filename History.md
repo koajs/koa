@@ -1,3 +1,11 @@
+1.1.0 / 2015-10-11
+==================
+
+ * add `app.silent=<Boolean>` to toggle error logging @tejasmanohar #486
+ * add `ctx.origin` @chentsulin #480
+ * various refactoring
+   - add `use strict` everywhere
+
 1.0.0 / 2015-08-22
 ==================
 
