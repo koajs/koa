@@ -20,7 +20,6 @@
   "dependencies": {
     "accepts": "^1.2.2",
     "co": "^4.4.0",
-    "composition": "^2.1.1",
     "content-disposition": "~0.5.0",
     "content-type": "^1.0.0",
     "cookies": "~0.5.0",
@@ -32,7 +31,7 @@
     "fresh": "^0.3.0",
     "http-assert": "^1.1.0",
     "http-errors": "^1.2.8",
-    "koa-compose": "^2.3.0",
+    "koa-compose": "koajs/compose#es2016",
     "koa-is-json": "^1.0.0",
     "mime-types": "^2.0.7",
     "on-finished": "^2.1.0",
