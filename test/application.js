@@ -161,9 +161,10 @@ describe('app.onerror(err)', function(){
     done();
   })
 
-  it('should do nothing if env is test', function(done){
-    const app = koa();
-    const err = new Error();
+  it('should do nothing if .silent', function(done){
+    var app = koa();
+    app.silent = true;
+    var err = new Error();
 
     const output = stderr.inspectSync(function() {
       app.onerror(err);
@@ -940,7 +941,6 @@ describe('app.respond', function(){
           yield next;
           this.body = 'Hello';
         } catch (err) {
-          error = err;
           this.body = 'Got error';
         }
       });
