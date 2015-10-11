@@ -1,12 +1,12 @@
 
 'use strict';
 
-var context = require('../context');
-var assert = require('assert');
+let context = require('../context');
+let assert = require('assert');
 
 describe('ctx.assert(value, status)', function(){
   it('should throw an error', function(){
-    var ctx = context();
+    let ctx = context();
 
     try {
       ctx.assert(false, 404);
