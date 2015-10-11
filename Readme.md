@@ -18,10 +18,7 @@
 $ npm install koa
 ```
 
-  Koa is supported in all versions of [iojs](https://iojs.org) without any flags.
-
-  To use Koa with node, you must be running __node 0.12.0__ or higher for generator and promise support, and must run node(1)
-  with the `--harmony-generators` or `--harmony` flag.
+  Koa requires __node v4.0.0__ or higher for (partial) ES2015 support.
 
 ## Community
 
@@ -47,16 +44,16 @@ $ npm install koa
 ## Example
 
 ```js
-var koa = require('koa');
-var app = koa();
+const koa = require('koa');
+const app = koa();
 
 // logger
 
 app.use(function *(next){
-  var start = new Date;
+  const start = new Date;
   yield next;
-  var ms = new Date - start;
-  console.log('%s %s - %s', this.method, this.url, ms);
+  const ms = new Date - start;
+  console.log(`${this.method} ${this.url} - ${ms}`);
 });
 
 // response
