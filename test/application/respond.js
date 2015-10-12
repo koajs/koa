@@ -21,8 +21,8 @@ describe('app.respond', function(){
         setImmediate(function(){
           res.setHeader('Content-Type', 'text/plain');
           res.end('lol');
-        })
-      })
+        });
+      });
 
       const server = app.listen();
 
@@ -31,8 +31,8 @@ describe('app.respond', function(){
       .expect(200)
       .expect('lol')
       .end(done);
-    })
-  })
+    });
+  });
 
   describe('when HEAD is used', function(){
     it('should not respond with the body', function(done){
@@ -54,7 +54,7 @@ describe('app.respond', function(){
         assert(0 == res.text.length);
         done();
       });
-    })
+    });
 
     it('should keep json headers', function(done){
       const app = new Koa();
@@ -75,7 +75,7 @@ describe('app.respond', function(){
         assert(0 == res.text.length);
         done();
       });
-    })
+    });
 
     it('should keep string headers', function(done){
       const app = new Koa();
@@ -96,7 +96,7 @@ describe('app.respond', function(){
         assert(0 == res.text.length);
         done();
       });
-    })
+    });
 
     it('should keep buffer headers', function(done){
       const app = new Koa();
@@ -117,35 +117,35 @@ describe('app.respond', function(){
         assert(0 == res.text.length);
         done();
       });
-    })
+    });
 
     it('should respond with a 404 if no body was set', function(done){
       const app = new Koa();
 
       app.use(function *(){
 
-      })
+      });
 
       const server = app.listen();
 
       request(server)
       .head('/')
       .expect(404, done);
-    })
+    });
 
     it('should respond with a 200 if body = ""', function(done){
       const app = new Koa();
 
       app.use(function *(){
         this.body = '';
-      })
+      });
 
       const server = app.listen();
 
       request(server)
       .head('/')
       .expect(200, done);
-    })
+    });
 
     it('should not overwrite the content-type', function(done){
       const app = new Koa();
@@ -153,7 +153,7 @@ describe('app.respond', function(){
       app.use(function *(){
         this.status = 200;
         this.type = 'application/javascript';
-      })
+      });
 
       const server = app.listen();
 
@@ -161,8 +161,8 @@ describe('app.respond', function(){
       .head('/')
       .expect('content-type', /application\/javascript/)
       .expect(200, done);
-    })
-  })
+    });
+  });
 
   describe('when no middleware are present', function(){
     it('should 404', function(done){
@@ -173,8 +173,8 @@ describe('app.respond', function(){
       request(server)
       .get('/')
       .expect(404, done);
-    })
-  })
+    });
+  });
 
   describe('when res has already been written to', function(){
     it('should not cause an app error', function(done){
@@ -183,14 +183,14 @@ describe('app.respond', function(){
       app.use(function *(next){
         const res = this.res;
         this.status = 200;
-        res.setHeader("Content-Type", "text/html")
+        res.setHeader('Content-Type', 'text/html');
         res.write('Hello');
         setTimeout(function(){
-          res.end("Goodbye")
+          res.end('Goodbye');
         }, 0);
       });
 
-      const errorCaught = false;
+      let errorCaught = false;
 
       app.on('error', function(err){
         errorCaught = err;
@@ -206,7 +206,7 @@ describe('app.respond', function(){
         if (errorCaught) return done(errorCaught);
         done();
       });
-    })
+    });
 
     it('should send the right body', function(done){
       const app = new Koa();
@@ -214,10 +214,10 @@ describe('app.respond', function(){
       app.use(function *(next){
         const res = this.res;
         this.status = 200;
-        res.setHeader("Content-Type", "text/html")
+        res.setHeader('Content-Type', 'text/html');
         res.write('Hello');
         setTimeout(function(){
-          res.end("Goodbye");
+          res.end('Goodbye');
         }, 0);
       });
 
@@ -227,8 +227,8 @@ describe('app.respond', function(){
       .get('/')
       .expect(200)
       .expect('HelloGoodbye', done);
-    })
-  })
+    });
+  });
 
   describe('when .body is missing', function(){
     describe('with status=400', function(){
@@ -246,8 +246,8 @@ describe('app.respond', function(){
         .expect(400)
         .expect('Content-Length', 11)
         .expect('Bad Request', done);
-      })
-    })
+      });
+    });
 
     describe('with status=204', function(){
       it('should respond without a body', function(done){
@@ -255,7 +255,7 @@ describe('app.respond', function(){
 
         app.use(function *(){
           this.status = 204;
-        })
+        });
 
         const server = app.listen();
 
@@ -268,9 +268,9 @@ describe('app.respond', function(){
 
           res.header.should.not.have.property('content-type');
           done();
-        })
-      })
-    })
+        });
+      });
+    });
 
     describe('with status=205', function(){
       it('should respond without a body', function(done){
@@ -278,7 +278,7 @@ describe('app.respond', function(){
 
         app.use(function *(){
           this.status = 205;
-        })
+        });
 
         const server = app.listen();
 
@@ -291,9 +291,9 @@ describe('app.respond', function(){
 
           res.header.should.not.have.property('content-type');
           done();
-        })
-      })
-    })
+        });
+      });
+    });
 
     describe('with status=304', function(){
       it('should respond without a body', function(done){
@@ -301,7 +301,7 @@ describe('app.respond', function(){
 
         app.use(function *(){
           this.status = 304;
-        })
+        });
 
         const server = app.listen();
 
@@ -314,18 +314,18 @@ describe('app.respond', function(){
 
           res.header.should.not.have.property('content-type');
           done();
-        })
-      })
-    })
+        });
+      });
+    });
 
     describe('with custom status=700', function(){
-      it('should respond with the associated status message', function (done){
+      it('should respond with the associated status message', function(done){
         const app = new Koa();
         statuses['700'] = 'custom status';
 
         app.use(function *(){
           this.status = 700;
-        })
+        });
 
         const server = app.listen();
 
@@ -337,18 +337,18 @@ describe('app.respond', function(){
           if (err) return done(err);
           res.res.statusMessage.should.equal('custom status');
           done();
-        })
-      })
-    })
+        });
+      });
+    });
 
     describe('with custom statusMessage=ok', function(){
-      it('should respond with the custom status message', function (done){
+      it('should respond with the custom status message', function(done){
         const app = new Koa();
 
         app.use(function *(){
           this.status = 200;
           this.message = 'ok';
-        })
+        });
 
         const server = app.listen();
 
@@ -360,17 +360,17 @@ describe('app.respond', function(){
           if (err) return done(err);
           res.res.statusMessage.should.equal('ok');
           done();
-        })
-      })
-    })
+        });
+      });
+    });
 
-    describe('with custom status without message', function (){
-      it('should respond with the status code number', function (done){
+    describe('with custom status without message', function(){
+      it('should respond with the status code number', function(done){
         const app = new Koa();
 
         app.use(function *(){
           this.res.statusCode = 701;
-        })
+        });
 
         const server = app.listen();
 
@@ -378,9 +378,9 @@ describe('app.respond', function(){
         .get('/')
         .expect(701)
         .expect('701', done);
-      })
-    })
-  })
+      });
+    });
+  });
 
   describe('when .body is a null', function(){
     it('should respond 204 by default', function(done){
@@ -388,7 +388,7 @@ describe('app.respond', function(){
 
       app.use(function *(){
         this.body = null;
-      })
+      });
 
       const server = app.listen();
 
@@ -401,8 +401,8 @@ describe('app.respond', function(){
 
         res.header.should.not.have.property('content-type');
         done();
-      })
-    })
+      });
+    });
 
     it('should respond 204 with status=200', function(done){
       const app = new Koa();
@@ -410,7 +410,7 @@ describe('app.respond', function(){
       app.use(function *(){
         this.status = 200;
         this.body = null;
-      })
+      });
 
       const server = app.listen();
 
@@ -423,8 +423,8 @@ describe('app.respond', function(){
 
         res.header.should.not.have.property('content-type');
         done();
-      })
-    })
+      });
+    });
 
     it('should respond 205 with status=205', function(done){
       const app = new Koa();
@@ -432,7 +432,7 @@ describe('app.respond', function(){
       app.use(function *(){
         this.status = 205;
         this.body = null;
-      })
+      });
 
       const server = app.listen();
 
@@ -445,8 +445,8 @@ describe('app.respond', function(){
 
         res.header.should.not.have.property('content-type');
         done();
-      })
-    })
+      });
+    });
 
     it('should respond 304 with status=304', function(done){
       const app = new Koa();
@@ -454,7 +454,7 @@ describe('app.respond', function(){
       app.use(function *(){
         this.status = 304;
         this.body = null;
-      })
+      });
 
       const server = app.listen();
 
@@ -467,9 +467,9 @@ describe('app.respond', function(){
 
         res.header.should.not.have.property('content-type');
         done();
-      })
-    })
-  })
+      });
+    });
+  });
 
   describe('when .body is a string', function(){
     it('should respond', function(done){
@@ -484,8 +484,8 @@ describe('app.respond', function(){
       request(server)
       .get('/')
       .expect('Hello', done);
-    })
-  })
+    });
+  });
 
   describe('when .body is a Buffer', function(){
     it('should respond', function(done){
@@ -500,8 +500,8 @@ describe('app.respond', function(){
       request(server)
       .get('/')
       .expect('Hello', done);
-    })
-  })
+    });
+  });
 
   describe('when .body is a Stream', function(){
     it('should respond', function(done){
@@ -524,7 +524,7 @@ describe('app.respond', function(){
         res.body.should.eql(pkg);
         done();
       });
-    })
+    });
 
     it('should strip content-length when overwriting', function(done){
       const app = new Koa();
@@ -546,8 +546,8 @@ describe('app.respond', function(){
         res.should.not.have.header('Content-Length');
         res.body.should.eql(pkg);
         done();
-      })
-    })
+      });
+    });
 
     it('should keep content-length if not overwritten', function(done){
       const app = new Koa();
@@ -569,8 +569,8 @@ describe('app.respond', function(){
         res.should.have.header('Content-Length');
         res.body.should.eql(pkg);
         done();
-      })
-    })
+      });
+    });
 
     it('should keep content-length if overwritten with the same stream', function(done){
       const app = new Koa();
@@ -594,8 +594,8 @@ describe('app.respond', function(){
         res.should.have.header('Content-Length');
         res.body.should.eql(pkg);
         done();
-      })
-    })
+      });
+    });
 
     it('should handle errors', function(done){
       const app = new Koa();
@@ -612,7 +612,7 @@ describe('app.respond', function(){
       .expect('Content-Type', 'text/plain; charset=utf-8')
       .expect(404)
       .end(done);
-    })
+    });
 
     it('should handle errors when no content status', function(done){
       const app = new Koa();
@@ -627,8 +627,7 @@ describe('app.respond', function(){
       request(server)
       .get('/')
       .expect(204, done);
-    })
-
+    });
 
     it('should handle all intermediate stream body errors', function(done){
       const app = new Koa();
@@ -644,8 +643,8 @@ describe('app.respond', function(){
       request(server)
       .get('/')
       .expect(404, done);
-    })
-  })
+    });
+  });
 
   describe('when .body is an Object', function(){
     it('should respond with json', function(done){
@@ -661,8 +660,8 @@ describe('app.respond', function(){
       .get('/')
       .expect('Content-Type', 'application/json; charset=utf-8')
       .expect('{"hello":"world"}', done);
-    })
-  })
+    });
+  });
 
   describe('when an error occurs', function(){
     it('should emit "error" on the app', function(done){
@@ -680,7 +679,7 @@ describe('app.respond', function(){
       request(app.listen())
       .get('/')
       .end(function(){});
-    })
+    });
 
     describe('with an .expose property', function(){
       it('should expose the message', function(done){
@@ -697,8 +696,8 @@ describe('app.respond', function(){
         .get('/')
         .expect(403, 'sorry!')
         .end(done);
-      })
-    })
+      });
+    });
 
     describe('with a .status property', function(){
       it('should respond with .status', function(done){
@@ -714,8 +713,8 @@ describe('app.respond', function(){
         .get('/')
         .expect(403, 'Forbidden')
         .end(done);
-      })
-    })
+      });
+    });
 
     it('should respond with 500', function(done){
       const app = new Koa();
@@ -730,7 +729,7 @@ describe('app.respond', function(){
       .get('/')
       .expect(500, 'Internal Server Error')
       .end(done);
-    })
+    });
 
     it('should be catchable', function(done){
       const app = new Koa();
@@ -746,7 +745,6 @@ describe('app.respond', function(){
 
       app.use(function *(next){
         throw new Error('boom!');
-        this.body = 'Oh no';
       });
 
       const server = app.listen();
@@ -755,8 +753,8 @@ describe('app.respond', function(){
       .get('/')
       .expect(200, 'Got error')
       .end(done);
-    })
-  })
+    });
+  });
 
   describe('when status and body property', function(){
     it('should 200', function(done){
@@ -774,9 +772,9 @@ describe('app.respond', function(){
       .get('/')
       .expect(200)
       .expect('hello', done);
-    })
+    });
 
-    it('should 204', function(done) {
+    it('should 204', function(done){
       const app = new Koa();
 
       app.use(function *(){
@@ -791,10 +789,10 @@ describe('app.respond', function(){
       request(server)
       .get('/')
       .expect(204)
-      .end(function (err, res) {
+      .end(function(err, res){
         res.should.not.have.header('content-type');
         done(err);
       });
     });
-  })
-})
+  });
+});

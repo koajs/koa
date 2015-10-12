@@ -5,11 +5,11 @@ const request = require('supertest');
 const assert = require('assert');
 const Koa = require('../..');
 
-describe('ctx.state', function() {
-  it('should provide a ctx.state namespace', function(done) {
+describe('ctx.state', function(){
+  it('should provide a ctx.state namespace', function(done){
     const app = new Koa();
 
-    app.use(function *() {
+    app.use(function *(){
       assert.deepEqual(this.state, {});
     });
 
@@ -19,5 +19,5 @@ describe('ctx.state', function() {
     .get('/')
     .expect(404)
     .end(done);
-  })
-})
+  });
+});
