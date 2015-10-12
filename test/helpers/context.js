@@ -2,7 +2,7 @@
 'use strict';
 
 const Stream = require('stream');
-const koa = require('..');
+const koa = require('../..');
 
 exports = module.exports = function(req, res){
   const socket = new Stream.Duplex();

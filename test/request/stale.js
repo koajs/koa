@@ -1,7 +1,7 @@
 
 'use strict';
 
-const context = require('../context');
+const context = require('../helpers/context');
 
 describe('req.stale', function(){
   it('should be the inverse of req.fresh', function(){

@@ -1,7 +1,7 @@
 
 'use strict';
 
-const context = require('../context');
+const context = require('../helpers/context');
 
 describe('ctx.set(name, val)', function(){
   it('should set a field value', function(){

@@ -1,7 +1,7 @@
 
 'use strict';
 
-const response = require('../context').response;
+const response = require('../helpers/context').response;
 
 describe('res.etag=', function(){
   it('should not modify an etag with quotes', function(){

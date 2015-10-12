@@ -1,7 +1,7 @@
 
 'use strict';
 
-const request = require('../context').request;
+const request = require('../helpers/context').request;
 const assert = require('assert');
 
 describe('req.hostname', function(){

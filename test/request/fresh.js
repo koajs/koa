@@ -1,7 +1,7 @@
 
 'use strict';
 
-const context = require('../context');
+const context = require('../helpers/context');
 
 describe('ctx.fresh', function(){
   describe('the request method is not GET and HEAD', function (){

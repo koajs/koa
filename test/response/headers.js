@@ -1,7 +1,7 @@
 
 'use strict';
 
-const response = require('../context').response;
+const response = require('../helpers/context').response;
 
 describe('res.header', function(){
   it('should return the response header object', function(){

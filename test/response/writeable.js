@@ -1,7 +1,7 @@
 
 'use strict';
 
-const response = require('../context').response;
+const response = require('../helpers/context').response;
 
 describe('res.writable', function(){
   it('should return the request is writable', function(){

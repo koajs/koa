@@ -1,7 +1,7 @@
 
 'use strict';
 
-const response = require('../context').response;
+const response = require('../helpers/context').response;
 
 describe('res.lastModified', function(){
   it('should set the header as a UTCString', function(){
