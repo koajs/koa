@@ -54,7 +54,8 @@
     "test-console": "^0.7.1"
   },
   "standard": {
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "globals": [ "describe", "should", "it" ]
   },
   "engines": {
     "node": ">= 4"
