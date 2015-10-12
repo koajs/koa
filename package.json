@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "babel": "^5.0.0",
-    "istanbul-harmony": "~0.3.0",
+    "istanbul": "^0.3.22",
     "make-lint": "^1.0.1",
     "mocha": "^2.0.1",
     "should": "^6.0.3",
