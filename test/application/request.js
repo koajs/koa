@@ -1,23 +1,18 @@
 
 'use strict';
 
-const stderr = require('test-console').stderr;
 const request = require('supertest');
-const statuses = require('statuses');
 const assert = require('assert');
-const http = require('http');
-const koa = require('..');
-const fs = require('fs');
-const AssertionError = assert.AssertionError;
+const koa = require('../..');
 
-describe('app.response', function(){
+describe('app.request', function(){
   const app1 = koa();
-  app1.response.msg = 'hello';
+  app1.request.message = 'hello';
   const app2 = koa();
 
   it('should merge properties', function(done){
     app1.use(function *(next){
-      assert.equal(this.response.msg, 'hello')
+      assert.equal(this.request.message, 'hello')
       this.status = 204
     });
 
@@ -28,7 +23,7 @@ describe('app.response', function(){
 
   it('should not affect the original prototype', function(done){
     app2.use(function *(next){
-      assert.equal(this.response.msg, undefined)
+      assert.equal(this.request.message, undefined)
       this.status = 204;
     });
 
