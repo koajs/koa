@@ -1,7 +1,5 @@
 SRC = lib/*.js
 
-include node_modules/make-lint/index.mk
-
 REQUIRED = --require should --require should-http
 
 TESTS = test/application/* \
@@ -18,7 +16,7 @@ test:
 		--bail
 
 test-cov:
-	@NODE_ENV=test node \
+	@NODE_ENV=test standard && node \
 		./node_modules/.bin/istanbul cover \
 		./node_modules/.bin/_mocha \
 		-- -u exports \
@@ -27,7 +25,7 @@ test-cov:
 		--bail
 
 test-travis:
-	@NODE_ENV=test node \
+	@NODE_ENV=test standard && node \
 		./node_modules/.bin/istanbul cover \
 		./node_modules/.bin/_mocha \
 		--report lcovonly \
