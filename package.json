@@ -55,7 +55,7 @@
   },
   "standard": {
     "parser": "babel-eslint",
-    "globals": [ "describe", "should", "it" ]
+    "globals": [ "should", "describe", "it", "before" ]
   },
   "engines": {
     "node": ">= 4"
