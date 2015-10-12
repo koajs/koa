@@ -1,7 +1,7 @@
 
 'use strict';
 
-const context = require('../context');
+const context = require('.');
 const assert = require('assert');
 
 describe('ctx.assert(value, status)', function(){
