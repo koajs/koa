@@ -1,12 +1,11 @@
+'use strict'
 
-'use strict';
+const koa = require('../..')
 
-const koa = require('../..');
-
-describe('app.inspect()', function(){
-  it('should work', function(){
-    const app = koa();
-    const util = require('util');
-    const str = util.inspect(app);
+describe('app.inspect()', function () {
+  it('should work', function () {
+    const app = koa()
+    const util = require('util')
+    util.inspect(app)
   })
 })

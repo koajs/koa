@@ -1,24 +1,23 @@
+'use strict'
 
-'use strict';
+const request = require('../helpers/context').request
+const assert = require('assert')
 
-const request = require('../helpers/context').request;
-const assert = require('assert');
-
-describe('req.inspect()', function(){
-  describe('with no request.req present', function(){
-    it('should return null', function(){
-      const req = request();
-      req.method = 'GET';
-      delete req.req;
-      assert(null == req.inspect());
+describe('req.inspect()', function () {
+  describe('with no request.req present', function () {
+    it('should return null', function () {
+      const req = request()
+      req.method = 'GET'
+      delete req.req
+      assert(req.inspect() == null)
     })
   })
 
-  it('should return a json representation', function(){
-    const req = request();
-    req.method = 'GET';
-    req.url = 'example.com';
-    req.header.host = 'example.com';
+  it('should return a json representation', function () {
+    const req = request()
+    req.method = 'GET'
+    req.url = 'example.com'
+    req.header.host = 'example.com'
 
     req.inspect().should.eql({
       method: 'GET',
@@ -26,6 +25,6 @@ describe('req.inspect()', function(){
       header: {
         host: 'example.com'
       }
-    });
+    })
   })
 })
