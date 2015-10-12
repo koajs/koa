@@ -1,11 +1,11 @@
 
 'use strict';
 
-var Stream = require('stream');
-var koa = require('..');
+const Stream = require('stream');
+const koa = require('../..');
 
 exports = module.exports = function(req, res){
-  var socket = new Stream.Duplex();
+  const socket = new Stream.Duplex();
   req = req || { headers: {}, socket: socket, __proto__: Stream.Readable.prototype };
   res = res || { _headers: {}, socket: socket, __proto__: Stream.Writable.prototype };
   res.getHeader = function(k){ return res._headers[k.toLowerCase()] };
