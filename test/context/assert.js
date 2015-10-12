@@ -1,19 +1,18 @@
+'use strict'
 
-'use strict';
+const context = require('../helpers/context')
+const assert = require('assert')
 
-const context = require('../helpers/context');
-const assert = require('assert');
-
-describe('ctx.assert(value, status)', function(){
-  it('should throw an error', function(){
-    const ctx = context();
+describe('ctx.assert(value, status)', function () {
+  it('should throw an error', function () {
+    const ctx = context()
 
     try {
-      ctx.assert(false, 404);
-      throw new Error('asdf');
+      ctx.assert(false, 404)
+      throw new Error('asdf')
     } catch (err) {
-      assert(404 == err.status);
-      assert(err.expose);
+      assert(err.status === 404)
+      assert(err.expose)
     }
   })
 })
