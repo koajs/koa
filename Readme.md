@@ -73,10 +73,7 @@ $ make test
 
 ## Authors
 
-  - [TJ Holowaychuk](https://github.com/tj)
-  - [Jonathan Ong](https://github.com/jonathanong)
-  - [Julian Gruber](https://github.com/juliangruber)
-  - [Yiyu He](https://github.com/dead-horse)
+See [AUTHORS](AUTHORS).
 
 # License
 
