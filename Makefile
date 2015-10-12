@@ -9,7 +9,7 @@ TESTS = test/application/* \
 	test/experimental/index.js
 
 test:
-	@NODE_ENV=test node \
+	@NODE_ENV=test standard && node \
 		./node_modules/.bin/_mocha \
 		$(REQUIRED) \
 		$(TESTS) \
