@@ -1,214 +1,11 @@
 
 'use strict';
 
-const stderr = require('test-console').stderr;
 const request = require('supertest');
 const statuses = require('statuses');
 const assert = require('assert');
-const http = require('http');
-const koa = require('..');
+const koa = require('../..');
 const fs = require('fs');
-const AssertionError = assert.AssertionError;
-
-describe('app', function(){
-  it('should handle socket errors', function(done){
-    const app = koa();
-
-    app.use(function *(next){
-      // triggers this.socket.writable == false
-      this.socket.emit('error', new Error('boom'));
-    });
-
-    app.on('error', function(err){
-      err.message.should.equal('boom');
-      done();
-    });
-
-    request(app.listen())
-    .get('/')
-    .end(function(){});
-  })
-
-  it('should not .writeHead when !socket.writable', function(done){
-    const app = koa();
-
-    app.use(function *(next){
-      // set .writable to false
-      this.socket.writable = false;
-      this.status = 204;
-      // throw if .writeHead or .end is called
-      this.res.writeHead =
-      this.res.end = function(){
-        throw new Error('response sent');
-      };
-    })
-
-    // hackish, but the response should occur in a single tick
-    setImmediate(done);
-
-    request(app.listen())
-    .get('/')
-    .end(function(){});
-  })
-
-  it('should set development env when NODE_ENV missing', function(){
-    const NODE_ENV = process.env.NODE_ENV;
-    process.env.NODE_ENV = '';
-    const app = koa();
-    process.env.NODE_ENV = NODE_ENV;
-    assert.equal(app.env, 'development');
-  })
-})
-
-describe('app.toJSON()', function(){
-  it('should work', function(){
-    const app = koa();
-    const obj = app.toJSON();
-
-    obj.should.eql({
-      subdomainOffset: 2,
-      env: 'test'
-    });
-  })
-})
-
-describe('app.inspect()', function(){
-  it('should work', function(){
-    const app = koa();
-    const util = require('util');
-    const str = util.inspect(app);
-  })
-})
-
-describe('app.use(fn)', function(){
-  it('should compose middleware', function(done){
-    const app = koa();
-    const calls = [];
-
-    app.use(function *(next){
-      calls.push(1);
-      yield next;
-      calls.push(6);
-    });
-
-    app.use(function *(next){
-      calls.push(2);
-      yield next;
-      calls.push(5);
-    });
-
-    app.use(function *(next){
-      calls.push(3);
-      yield next;
-      calls.push(4);
-    });
-
-    const server = app.listen();
-
-    request(server)
-    .get('/')
-    .expect(404)
-    .end(function(err){
-      if (err) return done(err);
-      calls.should.eql([1,2,3,4,5,6]);
-      done();
-    });
-  })
-
-  it('should error when a non-generator function is passed', function(){
-    const app = koa();
-
-    try {
-      app.use(function(){});
-    } catch (err) {
-      err.message.should.equal('app.use() requires a generator function');
-    }
-  })
-
-  it('should not error when a non-generator function is passed when .experimental=true', function(){
-    const app = koa();
-    app.experimental = true;
-    app.use(function(){});
-  })
-})
-
-describe('app.onerror(err)', function(){
-  it('should throw an error if a non-error is given', function(done){
-    const app = koa();
-
-    try {
-      app.onerror('foo');
-
-      should.fail();
-    } catch (err) {
-      err.should.be.instanceOf(AssertionError);
-      err.message.should.equal('non-error thrown: foo');
-    }
-
-    done();
-  })
-
-  it('should do nothing if status is 404', function(done){
-    const app = koa();
-    const err = new Error();
-
-    err.status = 404;
-
-    const output = stderr.inspectSync(function() {
-      app.onerror(err);
-    });
-
-    output.should.eql([]);
-
-    done();
-  })
-
-  it('should do nothing if .silent', function(done){
-    const app = koa();
-    app.silent = true;
-    const err = new Error();
-
-    const output = stderr.inspectSync(function() {
-      app.onerror(err);
-    });
-
-    output.should.eql([]);
-
-    done();
-  })
-
-  it('should log the error to stderr', function(done){
-    const app = koa();
-    app.env = 'dev';
-
-    const err = new Error();
-    err.stack = 'Foo';
-
-    const output = stderr.inspectSync(function() {
-      app.onerror(err);
-    });
-
-    output.should.eql(["\n", "  Foo\n", "\n"]);
-
-    done();
-  })
-
-  it('should use err.toString() instad of err.stack', function(done){
-    const app = koa();
-    app.env = 'dev';
-
-    const err = new Error('mock stack null');
-    err.stack = null;
-
-    const output = stderr.inspectSync(function() {
-      app.onerror(err);
-    });
-
-    output.should.eql(["\n", "  Error: mock stack null\n", "\n"]);
-
-    done();
-  })
-})
 
 describe('app.respond', function(){
   describe('when this.respond === false', function(){
@@ -722,7 +519,7 @@ describe('app.respond', function(){
       .expect('Content-Type', 'application/json; charset=utf-8')
       .end(function(err, res){
         if (err) return done(err);
-        const pkg = require('../package');
+        const pkg = require('../../package');
         res.should.not.have.header('Content-Length');
         res.body.should.eql(pkg);
         done();
@@ -745,7 +542,7 @@ describe('app.respond', function(){
       .expect('Content-Type', 'application/json; charset=utf-8')
       .end(function(err, res){
         if (err) return done(err);
-        const pkg = require('../package');
+        const pkg = require('../../package');
         res.should.not.have.header('Content-Length');
         res.body.should.eql(pkg);
         done();
@@ -768,7 +565,7 @@ describe('app.respond', function(){
       .expect('Content-Type', 'application/json; charset=utf-8')
       .end(function(err, res){
         if (err) return done(err);
-        const pkg = require('../package');
+        const pkg = require('../../package');
         res.should.have.header('Content-Length');
         res.body.should.eql(pkg);
         done();
@@ -793,7 +590,7 @@ describe('app.respond', function(){
       .expect('Content-Type', 'application/json; charset=utf-8')
       .end(function(err, res){
         if (err) return done(err);
-        const pkg = require('../package');
+        const pkg = require('../../package');
         res.should.have.header('Content-Length');
         res.body.should.eql(pkg);
         done();
@@ -999,89 +796,5 @@ describe('app.respond', function(){
         done(err);
       });
     });
-  })
-})
-
-describe('app.context', function(){
-  const app1 = koa();
-  app1.context.msg = 'hello';
-  const app2 = koa();
-
-  it('should merge properties', function(done){
-    app1.use(function *(next){
-      assert.equal(this.msg, 'hello')
-      this.status = 204
-    });
-
-    request(app1.listen())
-    .get('/')
-    .expect(204, done);
-  })
-
-  it('should not affect the original prototype', function(done){
-    app2.use(function *(next){
-      assert.equal(this.msg, undefined)
-      this.status = 204;
-    });
-
-    request(app2.listen())
-    .get('/')
-    .expect(204, done);
-  })
-})
-
-describe('app.request', function(){
-  const app1 = koa();
-  app1.request.message = 'hello';
-  const app2 = koa();
-
-  it('should merge properties', function(done){
-    app1.use(function *(next){
-      assert.equal(this.request.message, 'hello')
-      this.status = 204
-    });
-
-    request(app1.listen())
-    .get('/')
-    .expect(204, done);
-  })
-
-  it('should not affect the original prototype', function(done){
-    app2.use(function *(next){
-      assert.equal(this.request.message, undefined)
-      this.status = 204;
-    });
-
-    request(app2.listen())
-    .get('/')
-    .expect(204, done);
-  })
-})
-
-describe('app.response', function(){
-  const app1 = koa();
-  app1.response.msg = 'hello';
-  const app2 = koa();
-
-  it('should merge properties', function(done){
-    app1.use(function *(next){
-      assert.equal(this.response.msg, 'hello')
-      this.status = 204
-    });
-
-    request(app1.listen())
-    .get('/')
-    .expect(204, done);
-  })
-
-  it('should not affect the original prototype', function(done){
-    app2.use(function *(next){
-      assert.equal(this.response.msg, undefined)
-      this.status = 204;
-    });
-
-    request(app2.listen())
-    .get('/')
-    .expect(204, done);
   })
 })

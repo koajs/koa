@@ -1,7 +1,7 @@
 
 'use strict';
 
-const context = require('../context');
+const context = require('../helpers/context');
 const should = require('should');
 const assert = require('assert');
 

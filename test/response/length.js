@@ -1,7 +1,7 @@
 
 'use strict';
 
-const response = require('../context').response;
+const response = require('../helpers/context').response;
 const should = require('should');
 const assert = require('assert');
 const fs = require('fs');

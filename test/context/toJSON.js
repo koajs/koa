@@ -1,7 +1,7 @@
 
 'use strict';
 
-const context = require('../context');
+const context = require('../helpers/context');
 
 describe('ctx.toJSON()', function(){
   it('should return a json representation', function(){

@@ -1,7 +1,7 @@
 
 'use strict';
 
-const context = require('../context');
+const context = require('../helpers/context');
 
 describe('ctx.redirect(url)', function(){
   it('should redirect to the given url', function(){

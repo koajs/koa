@@ -1,7 +1,7 @@
 
 'use strict';
 
-const request = require('../context').request;
+const request = require('../helpers/context').request;
 
 describe('ctx.idempotent', function(){
   describe('when the request method is idempotent', function (){

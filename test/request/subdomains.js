@@ -1,7 +1,7 @@
 
 'use strict';
 
-const request = require('../context').request;
+const request = require('../helpers/context').request;
 
 describe('req.subdomains', function(){
   it('should return subdomain array', function(){

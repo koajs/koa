@@ -1,7 +1,7 @@
 
 'use strict';
 
-const response = require('../context').response;
+const response = require('../helpers/context').response;
 const assert = require('assert');
 
 describe('res.inspect()', function(){

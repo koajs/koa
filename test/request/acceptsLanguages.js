@@ -1,7 +1,7 @@
 
 'use strict';
 
-const context = require('../context');
+const context = require('../helpers/context');
 
 describe('ctx.acceptsLanguages(langs)', function(){
   describe('with no arguments', function(){

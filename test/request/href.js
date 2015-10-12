@@ -4,7 +4,7 @@
 const Stream = require('stream');
 const http = require('http');
 const koa = require('../../');
-const context = require('../context');
+const context = require('../helpers/context');
 
 describe('ctx.href', function(){
   it('should return the full request url', function(){
