@@ -4,8 +4,7 @@ include node_modules/make-lint/index.mk
 
 REQUIRED = --require should --require should-http
 
-TESTS = test/application.js \
-	test/application/*.js \
+TESTS = test/application/*.js \
 	test/context/* \
 	test/request/* \
 	test/response/* \
