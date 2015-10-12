@@ -10,18 +10,6 @@ const koa = require('..');
 const fs = require('fs');
 const AssertionError = assert.AssertionError;
 
-describe('app.toJSON()', function(){
-  it('should work', function(){
-    const app = koa();
-    const obj = app.toJSON();
-
-    obj.should.eql({
-      subdomainOffset: 2,
-      env: 'test'
-    });
-  })
-})
-
 describe('app.inspect()', function(){
   it('should work', function(){
     const app = koa();
