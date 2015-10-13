@@ -1,11 +1,11 @@
 
 'use strict';
 
-const koa = require('../..');
+const Koa = require('../..');
 
 describe('app.toJSON()', function(){
   it('should work', function(){
-    const app = koa();
+    const app = new Koa();
     const obj = app.toJSON();
 
     obj.should.eql({

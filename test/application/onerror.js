@@ -2,12 +2,12 @@
 'use strict';
 
 const stderr = require('test-console').stderr;
-const koa = require('../..');
+const Koa = require('../..');
 const AssertionError = require('assert').AssertionError;
 
 describe('app.onerror(err)', function(){
   it('should throw an error if a non-error is given', function(done){
-    const app = koa();
+    const app = new Koa();
 
     try {
       app.onerror('foo');
@@ -22,7 +22,7 @@ describe('app.onerror(err)', function(){
   })
 
   it('should do nothing if status is 404', function(done){
-    const app = koa();
+    const app = new Koa();
     const err = new Error();
 
     err.status = 404;
@@ -37,7 +37,7 @@ describe('app.onerror(err)', function(){
   })
 
   it('should do nothing if .silent', function(done){
-    const app = koa();
+    const app = new Koa();
     app.silent = true;
     const err = new Error();
 
@@ -51,7 +51,7 @@ describe('app.onerror(err)', function(){
   })
 
   it('should log the error to stderr', function(done){
-    const app = koa();
+    const app = new Koa();
     app.env = 'dev';
 
     const err = new Error();
@@ -67,7 +67,7 @@ describe('app.onerror(err)', function(){
   })
 
   it('should use err.toString() instad of err.stack', function(done){
-    const app = koa();
+    const app = new Koa();
     app.env = 'dev';
 
     const err = new Error('mock stack null');
