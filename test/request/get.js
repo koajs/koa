@@ -13,5 +13,5 @@ describe('ctx.get(name)', function(){
     ctx.get('host').should.equal('http://google.com');
     ctx.get('referer').should.equal('http://google.com');
     ctx.get('referrer').should.equal('http://google.com');
-  })
-})
+  });
+});

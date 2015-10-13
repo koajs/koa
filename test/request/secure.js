@@ -8,5 +8,5 @@ describe('req.secure', function(){
     const req = request();
     req.req.socket = { encrypted: true };
     req.secure.should.be.true;
-  })
-})
+  });
+});

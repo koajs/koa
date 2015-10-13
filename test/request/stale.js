@@ -12,5 +12,5 @@ describe('req.stale', function(){
     ctx.set('ETag', '"123"');
     ctx.fresh.should.be.true;
     ctx.stale.should.be.false;
-  })
-})
+  });
+});

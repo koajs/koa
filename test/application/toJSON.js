@@ -12,5 +12,5 @@ describe('app.toJSON()', function(){
       subdomainOffset: 2,
       env: 'test'
     });
-  })
-})
+  });
+});

@@ -11,7 +11,7 @@ describe('ctx.cookies.set()', function(){
     app.use(function *(next){
       this.cookies.set('name', 'jon');
       this.status = 204;
-    })
+    });
 
     const server = app.listen();
 
@@ -26,8 +26,8 @@ describe('ctx.cookies.set()', function(){
       }).should.be.ok;
 
       done();
-    })
-  })
+    });
+  });
 
   describe('with .signed', function(){
     describe('when no .keys are set', function(){
@@ -45,8 +45,8 @@ describe('ctx.cookies.set()', function(){
         request(app.listen())
         .get('/')
         .expect('.keys required for signed cookies', done);
-      })
-    })
+      });
+    });
 
     it('should send a signed cookie', function(done){
       const app = new Koa();
@@ -56,7 +56,7 @@ describe('ctx.cookies.set()', function(){
       app.use(function *(next){
         this.cookies.set('name', 'jon', { signed: true });
         this.status = 204;
-      })
+      });
 
       const server = app.listen();
 
@@ -77,7 +77,7 @@ describe('ctx.cookies.set()', function(){
         }).should.be.ok;
 
         done();
-      })
-    })
-  })
-})
+      });
+    });
+  });
+});

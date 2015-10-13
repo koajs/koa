@@ -9,5 +9,5 @@ describe('ctx.remove(name)', function(){
     ctx.set('x-foo', 'bar');
     ctx.remove('x-foo');
     ctx.response.header.should.eql({});
-  })
-})
+  });
+});

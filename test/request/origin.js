@@ -2,8 +2,6 @@
 'use strict';
 
 const Stream = require('stream');
-const http = require('http');
-const Koa = require('../../');
 const context = require('../helpers/context');
 
 describe('ctx.origin', function(){
@@ -22,5 +20,5 @@ describe('ctx.origin', function(){
     // change it also work
     ctx.url = '/foo/users/1?next=/dashboard';
     ctx.origin.should.equal('http://localhost');
-  })
-})
+  });
+});
