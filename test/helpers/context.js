@@ -4,7 +4,7 @@
 const Stream = require('stream');
 const Koa = require('../..');
 
-exports = module.exports = function(req, res){
+module.exports = function(req, res){
   const socket = new Stream.Duplex();
   req = req || { headers: {}, socket: socket, __proto__: Stream.Readable.prototype };
   res = res || { _headers: {}, socket: socket, __proto__: Stream.Writable.prototype };
@@ -14,10 +14,10 @@ exports = module.exports = function(req, res){
   return (new Koa()).createContext(req, res);
 }
 
-exports.request = function(req, res){
-  return exports(req, res).request;
+module.exports.request = function(req, res){
+  return module.exports(req, res).request;
 }
 
-exports.response = function(req, res){
-  return exports(req, res).response;
+module.exports.response = function(req, res){
+  return module.exports(req, res).response;
 }
