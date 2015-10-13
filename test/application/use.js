@@ -2,11 +2,11 @@
 'use strict';
 
 const request = require('supertest');
-const koa = require('../..');
+const Koa = require('../..');
 
 describe('app.use(fn)', function(){
   it('should compose middleware', function(done){
-    const app = koa();
+    const app = new Koa();
     const calls = [];
 
     app.use(function *(next){
@@ -40,7 +40,7 @@ describe('app.use(fn)', function(){
   })
 
   it('should error when a non-generator function is passed', function(){
-    const app = koa();
+    const app = new Koa();
 
     try {
       app.use(function(){});
@@ -50,7 +50,7 @@ describe('app.use(fn)', function(){
   })
 
   it('should not error when a non-generator function is passed when .experimental=true', function(){
-    const app = koa();
+    const app = new Koa();
     app.experimental = true;
     app.use(function(){});
   })

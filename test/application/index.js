@@ -3,11 +3,11 @@
 
 const request = require('supertest');
 const assert = require('assert');
-const koa = require('../..');
+const Koa = require('../..');
 
 describe('app', function(){
   it('should handle socket errors', function(done){
-    const app = koa();
+    const app = new Koa();
 
     app.use(function *(next){
       // triggers this.socket.writable == false
@@ -25,7 +25,7 @@ describe('app', function(){
   })
 
   it('should not .writeHead when !socket.writable', function(done){
-    const app = koa();
+    const app = new Koa();
 
     app.use(function *(next){
       // set .writable to false
@@ -49,7 +49,7 @@ describe('app', function(){
   it('should set development env when NODE_ENV missing', function(){
     const NODE_ENV = process.env.NODE_ENV;
     process.env.NODE_ENV = '';
-    const app = koa();
+    const app = new Koa();
     process.env.NODE_ENV = NODE_ENV;
     assert.equal(app.env, 'development');
   })

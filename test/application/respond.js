@@ -4,13 +4,13 @@
 const request = require('supertest');
 const statuses = require('statuses');
 const assert = require('assert');
-const koa = require('../..');
+const Koa = require('../..');
 const fs = require('fs');
 
 describe('app.respond', function(){
   describe('when this.respond === false', function(){
     it('should bypass app.respond', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.body = 'Hello';
@@ -36,7 +36,7 @@ describe('app.respond', function(){
 
   describe('when HEAD is used', function(){
     it('should not respond with the body', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.body = 'Hello';
@@ -57,7 +57,7 @@ describe('app.respond', function(){
     })
 
     it('should keep json headers', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.body = { hello: 'world' };
@@ -78,7 +78,7 @@ describe('app.respond', function(){
     })
 
     it('should keep string headers', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.body = 'hello world';
@@ -99,7 +99,7 @@ describe('app.respond', function(){
     })
 
     it('should keep buffer headers', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.body = new Buffer('hello world');
@@ -120,7 +120,7 @@ describe('app.respond', function(){
     })
 
     it('should respond with a 404 if no body was set', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
 
@@ -134,7 +134,7 @@ describe('app.respond', function(){
     })
 
     it('should respond with a 200 if body = ""', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.body = '';
@@ -148,7 +148,7 @@ describe('app.respond', function(){
     })
 
     it('should not overwrite the content-type', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.status = 200;
@@ -166,7 +166,7 @@ describe('app.respond', function(){
 
   describe('when no middleware are present', function(){
     it('should 404', function(done){
-      const app = koa();
+      const app = new Koa();
 
       const server = app.listen();
 
@@ -178,7 +178,7 @@ describe('app.respond', function(){
 
   describe('when res has already been written to', function(){
     it('should not cause an app error', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(next){
         const res = this.res;
@@ -209,7 +209,7 @@ describe('app.respond', function(){
     })
 
     it('should send the right body', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(next){
         const res = this.res;
@@ -233,7 +233,7 @@ describe('app.respond', function(){
   describe('when .body is missing', function(){
     describe('with status=400', function(){
       it('should respond with the associated status message', function(done){
-        const app = koa();
+        const app = new Koa();
 
         app.use(function *(){
           this.status = 400;
@@ -251,7 +251,7 @@ describe('app.respond', function(){
 
     describe('with status=204', function(){
       it('should respond without a body', function(done){
-        const app = koa();
+        const app = new Koa();
 
         app.use(function *(){
           this.status = 204;
@@ -274,7 +274,7 @@ describe('app.respond', function(){
 
     describe('with status=205', function(){
       it('should respond without a body', function(done){
-        const app = koa();
+        const app = new Koa();
 
         app.use(function *(){
           this.status = 205;
@@ -297,7 +297,7 @@ describe('app.respond', function(){
 
     describe('with status=304', function(){
       it('should respond without a body', function(done){
-        const app = koa();
+        const app = new Koa();
 
         app.use(function *(){
           this.status = 304;
@@ -320,7 +320,7 @@ describe('app.respond', function(){
 
     describe('with custom status=700', function(){
       it('should respond with the associated status message', function (done){
-        const app = koa();
+        const app = new Koa();
         statuses['700'] = 'custom status';
 
         app.use(function *(){
@@ -343,7 +343,7 @@ describe('app.respond', function(){
 
     describe('with custom statusMessage=ok', function(){
       it('should respond with the custom status message', function (done){
-        const app = koa();
+        const app = new Koa();
 
         app.use(function *(){
           this.status = 200;
@@ -366,7 +366,7 @@ describe('app.respond', function(){
 
     describe('with custom status without message', function (){
       it('should respond with the status code number', function (done){
-        const app = koa();
+        const app = new Koa();
 
         app.use(function *(){
           this.res.statusCode = 701;
@@ -384,7 +384,7 @@ describe('app.respond', function(){
 
   describe('when .body is a null', function(){
     it('should respond 204 by default', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.body = null;
@@ -405,7 +405,7 @@ describe('app.respond', function(){
     })
 
     it('should respond 204 with status=200', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.status = 200;
@@ -427,7 +427,7 @@ describe('app.respond', function(){
     })
 
     it('should respond 205 with status=205', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.status = 205;
@@ -449,7 +449,7 @@ describe('app.respond', function(){
     })
 
     it('should respond 304 with status=304', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.status = 304;
@@ -473,7 +473,7 @@ describe('app.respond', function(){
 
   describe('when .body is a string', function(){
     it('should respond', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.body = 'Hello';
@@ -489,7 +489,7 @@ describe('app.respond', function(){
 
   describe('when .body is a Buffer', function(){
     it('should respond', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.body = new Buffer('Hello');
@@ -505,7 +505,7 @@ describe('app.respond', function(){
 
   describe('when .body is a Stream', function(){
     it('should respond', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.body = fs.createReadStream('package.json');
@@ -527,7 +527,7 @@ describe('app.respond', function(){
     })
 
     it('should strip content-length when overwriting', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.body = 'hello';
@@ -550,7 +550,7 @@ describe('app.respond', function(){
     })
 
     it('should keep content-length if not overwritten', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.length = fs.readFileSync('package.json').length;
@@ -573,7 +573,7 @@ describe('app.respond', function(){
     })
 
     it('should keep content-length if overwritten with the same stream', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.length = fs.readFileSync('package.json').length;
@@ -598,7 +598,7 @@ describe('app.respond', function(){
     })
 
     it('should handle errors', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.set('Content-Type', 'application/json; charset=utf-8');
@@ -615,7 +615,7 @@ describe('app.respond', function(){
     })
 
     it('should handle errors when no content status', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.status = 204;
@@ -631,7 +631,7 @@ describe('app.respond', function(){
 
 
     it('should handle all intermediate stream body errors', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.body = fs.createReadStream('does not exist');
@@ -649,7 +649,7 @@ describe('app.respond', function(){
 
   describe('when .body is an Object', function(){
     it('should respond with json', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.body = { hello: 'world' };
@@ -666,7 +666,7 @@ describe('app.respond', function(){
 
   describe('when an error occurs', function(){
     it('should emit "error" on the app', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         throw new Error('boom');
@@ -684,7 +684,7 @@ describe('app.respond', function(){
 
     describe('with an .expose property', function(){
       it('should expose the message', function(done){
-        const app = koa();
+        const app = new Koa();
 
         app.use(function *(){
           const err = new Error('sorry!');
@@ -702,7 +702,7 @@ describe('app.respond', function(){
 
     describe('with a .status property', function(){
       it('should respond with .status', function(done){
-        const app = koa();
+        const app = new Koa();
 
         app.use(function *(){
           const err = new Error('s3 explodes');
@@ -718,7 +718,7 @@ describe('app.respond', function(){
     })
 
     it('should respond with 500', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         throw new Error('boom!');
@@ -733,7 +733,7 @@ describe('app.respond', function(){
     })
 
     it('should be catchable', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(next){
         try {
@@ -760,7 +760,7 @@ describe('app.respond', function(){
 
   describe('when status and body property', function(){
     it('should 200', function(done){
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.status = 304;
@@ -777,7 +777,7 @@ describe('app.respond', function(){
     })
 
     it('should 204', function(done) {
-      const app = koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.status = 200;

@@ -2,7 +2,7 @@
 'use strict';
 
 const Stream = require('stream');
-const koa = require('../..');
+const Koa = require('../..');
 
 exports = module.exports = function(req, res){
   const socket = new Stream.Duplex();
@@ -11,7 +11,7 @@ exports = module.exports = function(req, res){
   res.getHeader = function(k){ return res._headers[k.toLowerCase()] };
   res.setHeader = function(k, v){ res._headers[k.toLowerCase()] = v };
   res.removeHeader = function(k, v){ delete res._headers[k.toLowerCase()] };
-  return koa().createContext(req, res);
+  return (new Koa()).createContext(req, res);
 }
 
 exports.request = function(req, res){
