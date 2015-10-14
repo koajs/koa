@@ -38,4 +38,18 @@ describe('app.use(fn)', function(){
       done();
     });
   });
+
+  // https://github.com/koajs/koa/pull/530#issuecomment-148138051
+  it('should catch thrown errors in non-async functions', function(done){
+    const app = new Koa();
+
+    app.use((ctx) => {
+      ctx.throw('Not Found', 404);
+    });
+
+    request(app.listen())
+    .get('/')
+    .expect(404)
+    .end(done);
+  });
 });
