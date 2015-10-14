@@ -62,7 +62,7 @@ describe('res.status=', function(){
     it('should strip content related header fields', function(done){
       const app = new Koa();
 
-      app.use(function *(ctx){
+      app.use(function (ctx){
         ctx.body = { foo: 'bar' };
         ctx.set('Content-Type', 'application/json; charset=utf-8');
         ctx.set('Content-Length', '15');
@@ -88,7 +88,7 @@ describe('res.status=', function(){
     it('should strip content releated header fields after status set', function(done){
       const app = new Koa();
 
-      app.use(function *(ctx){
+      app.use(function (ctx){
         ctx.status = status;
         ctx.body = { foo: 'bar' };
         ctx.set('Content-Type', 'application/json; charset=utf-8');
