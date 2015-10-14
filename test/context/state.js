@@ -9,8 +9,8 @@ describe('ctx.state', function(){
   it('should provide a ctx.state namespace', function(done){
     const app = new Koa();
 
-    app.use(function *(){
-      assert.deepEqual(this.state, {});
+    app.use(function *(ctx){
+      assert.deepEqual(ctx.state, {});
     });
 
     const server = app.listen();

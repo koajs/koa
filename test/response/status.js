@@ -62,15 +62,15 @@ describe('res.status=', function(){
     it('should strip content related header fields', function(done){
       const app = new Koa();
 
-      app.use(function *(){
-        this.body = { foo: 'bar' };
-        this.set('Content-Type', 'application/json; charset=utf-8');
-        this.set('Content-Length', '15');
-        this.set('Transfer-Encoding', 'chunked');
-        this.status = status;
-        assert(null == this.response.header['content-type']);
-        assert(null == this.response.header['content-length']);
-        assert(null == this.response.header['transfer-encoding']);
+      app.use(function *(ctx){
+        ctx.body = { foo: 'bar' };
+        ctx.set('Content-Type', 'application/json; charset=utf-8');
+        ctx.set('Content-Length', '15');
+        ctx.set('Transfer-Encoding', 'chunked');
+        ctx.status = status;
+        assert(null == ctx.response.header['content-type']);
+        assert(null == ctx.response.header['content-length']);
+        assert(null == ctx.response.header['transfer-encoding']);
       });
 
       request(app.listen())
@@ -88,12 +88,12 @@ describe('res.status=', function(){
     it('should strip content releated header fields after status set', function(done){
       const app = new Koa();
 
-      app.use(function *(){
-        this.status = status;
-        this.body = { foo: 'bar' };
-        this.set('Content-Type', 'application/json; charset=utf-8');
-        this.set('Content-Length', '15');
-        this.set('Transfer-Encoding', 'chunked');
+      app.use(function *(ctx){
+        ctx.status = status;
+        ctx.body = { foo: 'bar' };
+        ctx.set('Content-Type', 'application/json; charset=utf-8');
+        ctx.set('Content-Length', '15');
+        ctx.set('Transfer-Encoding', 'chunked');
       });
 
       request(app.listen())

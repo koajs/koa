@@ -9,9 +9,9 @@ describe('app', function(){
   it('should handle socket errors', function(done){
     const app = new Koa();
 
-    app.use(function *(next){
-      // triggers this.socket.writable == false
-      this.socket.emit('error', new Error('boom'));
+    app.use(function *(ctx, next){
+      // triggers ctx.socket.writable == false
+      ctx.socket.emit('error', new Error('boom'));
     });
 
     app.on('error', function(err){
@@ -27,13 +27,13 @@ describe('app', function(){
   it('should not .writeHead when !socket.writable', function(done){
     const app = new Koa();
 
-    app.use(function *(next){
+    app.use(function *(ctx, next){
       // set .writable to false
-      this.socket.writable = false;
-      this.status = 204;
+      ctx.socket.writable = false;
+      ctx.status = 204;
       // throw if .writeHead or .end is called
-      this.res.writeHead =
-      this.res.end = function(){
+      ctx.res.writeHead =
+      ctx.res.end = function(){
         throw new Error('response sent');
       };
     });
