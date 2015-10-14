@@ -10,9 +10,9 @@ describe('app.use(fn)', function(){
     const app = new Koa();
     const calls = [];
 
-    app.use(function (ctx, next){
+    app.use(function(ctx, next){
       calls.push(1);
-      return next().then(function () {
+      return next().then(function(){
         calls.push(8);
       });
     });
@@ -23,9 +23,9 @@ describe('app.use(fn)', function(){
       calls.push(7);
     }));
 
-    app.use(function (ctx, next){
+    app.use(function(ctx, next){
       calls.push(3);
-      return next().then(function () {
+      return next().then(function(){
         calls.push(6);
       });
     });
@@ -52,9 +52,9 @@ describe('app.use(fn)', function(){
     const app = new Koa();
     const calls = [];
 
-    app.use(function (ctx, next){
+    app.use(function(ctx, next){
       calls.push(1);
-      return next().then(function () {
+      return next().then(function(){
         calls.push(8);
       });
     });
@@ -75,7 +75,7 @@ describe('app.use(fn)', function(){
     // back compatible
     app.use(function *(next){
       calls.push(4);
-      yield *next;
+      yield* next;
       calls.push(5);
     });
 

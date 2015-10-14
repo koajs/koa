@@ -10,10 +10,10 @@ const co = require('co');
 
 describe('app.respond', function(){
   describe('when ctx.respond === false', function(){
-    it('should function (ctx)', function(done){
+    it('should function(ctx)', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.body = 'Hello';
         ctx.respond = false;
 
@@ -39,7 +39,7 @@ describe('app.respond', function(){
     it('should not respond with the body', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.body = 'Hello';
       });
 
@@ -60,7 +60,7 @@ describe('app.respond', function(){
     it('should keep json headers', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.body = { hello: 'world' };
       });
 
@@ -81,7 +81,7 @@ describe('app.respond', function(){
     it('should keep string headers', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.body = 'hello world';
       });
 
@@ -102,7 +102,7 @@ describe('app.respond', function(){
     it('should keep buffer headers', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.body = new Buffer('hello world');
       });
 
@@ -123,7 +123,7 @@ describe('app.respond', function(){
     it('should respond with a 404 if no body was set', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
 
       });
 
@@ -137,7 +137,7 @@ describe('app.respond', function(){
     it('should respond with a 200 if body = ""', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.body = '';
       });
 
@@ -151,7 +151,7 @@ describe('app.respond', function(){
     it('should not overwrite the content-type', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.status = 200;
         ctx.type = 'application/javascript';
       });
@@ -181,7 +181,7 @@ describe('app.respond', function(){
     it('should not cause an app error', function(done){
       const app = new Koa();
 
-      app.use(function (ctx, next){
+      app.use(function(ctx, next){
         const res = ctx.res;
         ctx.status = 200;
         res.setHeader('Content-Type', 'text/html');
@@ -212,7 +212,7 @@ describe('app.respond', function(){
     it('should send the right body', function(done){
       const app = new Koa();
 
-      app.use(function (ctx, next){
+      app.use(function(ctx, next){
         const res = ctx.res;
         ctx.status = 200;
         res.setHeader('Content-Type', 'text/html');
@@ -236,7 +236,7 @@ describe('app.respond', function(){
       it('should respond with the associated status message', function(done){
         const app = new Koa();
 
-        app.use(function (ctx){
+        app.use(function(ctx){
           ctx.status = 400;
         });
 
@@ -254,7 +254,7 @@ describe('app.respond', function(){
       it('should respond without a body', function(done){
         const app = new Koa();
 
-        app.use(function (ctx){
+        app.use(function(ctx){
           ctx.status = 204;
         });
 
@@ -277,7 +277,7 @@ describe('app.respond', function(){
       it('should respond without a body', function(done){
         const app = new Koa();
 
-        app.use(function (ctx){
+        app.use(function(ctx){
           ctx.status = 205;
         });
 
@@ -300,7 +300,7 @@ describe('app.respond', function(){
       it('should respond without a body', function(done){
         const app = new Koa();
 
-        app.use(function (ctx){
+        app.use(function(ctx){
           ctx.status = 304;
         });
 
@@ -324,7 +324,7 @@ describe('app.respond', function(){
         const app = new Koa();
         statuses['700'] = 'custom status';
 
-        app.use(function (ctx){
+        app.use(function(ctx){
           ctx.status = 700;
         });
 
@@ -346,7 +346,7 @@ describe('app.respond', function(){
       it('should respond with the custom status message', function(done){
         const app = new Koa();
 
-        app.use(function (ctx){
+        app.use(function(ctx){
           ctx.status = 200;
           ctx.message = 'ok';
         });
@@ -369,7 +369,7 @@ describe('app.respond', function(){
       it('should respond with the status code number', function(done){
         const app = new Koa();
 
-        app.use(function (ctx){
+        app.use(function(ctx){
           ctx.res.statusCode = 701;
         });
 
@@ -387,7 +387,7 @@ describe('app.respond', function(){
     it('should respond 204 by default', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.body = null;
       });
 
@@ -408,7 +408,7 @@ describe('app.respond', function(){
     it('should respond 204 with status=200', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.status = 200;
         ctx.body = null;
       });
@@ -430,7 +430,7 @@ describe('app.respond', function(){
     it('should respond 205 with status=205', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.status = 205;
         ctx.body = null;
       });
@@ -452,7 +452,7 @@ describe('app.respond', function(){
     it('should respond 304 with status=304', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.status = 304;
         ctx.body = null;
       });
@@ -476,7 +476,7 @@ describe('app.respond', function(){
     it('should respond', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.body = 'Hello';
       });
 
@@ -492,7 +492,7 @@ describe('app.respond', function(){
     it('should respond', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.body = new Buffer('Hello');
       });
 
@@ -508,7 +508,7 @@ describe('app.respond', function(){
     it('should respond', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.body = fs.createReadStream('package.json');
         ctx.set('Content-Type', 'application/json; charset=utf-8');
       });
@@ -530,7 +530,7 @@ describe('app.respond', function(){
     it('should strip content-length when overwriting', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.body = 'hello';
         ctx.body = fs.createReadStream('package.json');
         ctx.set('Content-Type', 'application/json; charset=utf-8');
@@ -553,7 +553,7 @@ describe('app.respond', function(){
     it('should keep content-length if not overwritten', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.length = fs.readFileSync('package.json').length;
         ctx.body = fs.createReadStream('package.json');
         ctx.set('Content-Type', 'application/json; charset=utf-8');
@@ -576,7 +576,7 @@ describe('app.respond', function(){
     it('should keep content-length if overwritten with the same stream', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.length = fs.readFileSync('package.json').length;
         const stream = fs.createReadStream('package.json');
         ctx.body = stream;
@@ -601,7 +601,7 @@ describe('app.respond', function(){
     it('should handle errors', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.set('Content-Type', 'application/json; charset=utf-8');
         ctx.body = fs.createReadStream('does not exist');
       });
@@ -618,7 +618,7 @@ describe('app.respond', function(){
     it('should handle errors when no content status', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.status = 204;
         ctx.body = fs.createReadStream('does not exist');
       });
@@ -633,7 +633,7 @@ describe('app.respond', function(){
     it('should handle all intermediate stream body errors', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.body = fs.createReadStream('does not exist');
         ctx.body = fs.createReadStream('does not exist');
         ctx.body = fs.createReadStream('does not exist');
@@ -651,7 +651,7 @@ describe('app.respond', function(){
     it('should respond with json', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.body = { hello: 'world' };
       });
 
@@ -668,7 +668,7 @@ describe('app.respond', function(){
     it('should emit "error" on the app', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         throw new Error('boom');
       });
 
@@ -686,7 +686,7 @@ describe('app.respond', function(){
       it('should expose the message', function(done){
         const app = new Koa();
 
-        app.use(function (ctx){
+        app.use(function(ctx){
           const err = new Error('sorry!');
           err.status = 403;
           err.expose = true;
@@ -704,7 +704,7 @@ describe('app.respond', function(){
       it('should respond with .status', function(done){
         const app = new Koa();
 
-        app.use(function (ctx){
+        app.use(function(ctx){
           const err = new Error('s3 explodes');
           err.status = 403;
           throw err;
@@ -720,7 +720,7 @@ describe('app.respond', function(){
     it('should respond with 500', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         throw new Error('boom!');
       });
 
@@ -744,7 +744,7 @@ describe('app.respond', function(){
         }
       }));
 
-      app.use(function (ctx, next){
+      app.use(function(ctx, next){
         throw new Error('boom!');
       });
 
@@ -761,7 +761,7 @@ describe('app.respond', function(){
     it('should 200', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.status = 304;
         ctx.body = 'hello';
         ctx.status = 200;
@@ -778,7 +778,7 @@ describe('app.respond', function(){
     it('should 204', function(done){
       const app = new Koa();
 
-      app.use(function (ctx){
+      app.use(function(ctx){
         ctx.status = 200;
         ctx.body = 'hello';
         ctx.set('content-type', 'text/plain; charset=utf8');

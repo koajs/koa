@@ -26,7 +26,7 @@ describe('ctx.href', function(){
 
   it('should work with `GET http://example.com/foo`', function(done){
     const app = new Koa();
-    app.use(function (ctx){
+    app.use(function(ctx){
       ctx.body = ctx.href;
     });
     app.listen(function(){
