@@ -9,21 +9,21 @@ describe('app.use(fn)', function(){
     const app = new Koa();
     const calls = [];
 
-    app.use(function *(next){
+    app.use(function *(ctx, next){
       calls.push(1);
-      yield next;
+      yield next();
       calls.push(6);
     });
 
-    app.use(function *(next){
+    app.use(function *(ctx, next){
       calls.push(2);
-      yield next;
+      yield next();
       calls.push(5);
     });
 
-    app.use(function *(next){
+    app.use(function *(ctx, next){
       calls.push(3);
-      yield next;
+      yield next();
       calls.push(4);
     });
 
@@ -37,21 +37,5 @@ describe('app.use(fn)', function(){
       calls.should.eql([1, 2, 3, 4, 5, 6]);
       done();
     });
-  });
-
-  it('should error when a non-generator function is passed', function(){
-    const app = new Koa();
-
-    try {
-      app.use(function(){});
-    } catch (err) {
-      err.message.should.equal('app.use() requires a generator function');
-    }
-  });
-
-  it('should not error when a non-generator function is passed when .experimental=true', function(){
-    const app = new Koa();
-    app.experimental = true;
-    app.use(function(){});
   });
 });

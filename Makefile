@@ -5,8 +5,7 @@ REQUIRED = --require should --require should-http
 TESTS = test/application/* \
 	test/context/* \
 	test/request/* \
-	test/response/* \
-	test/experimental/index.js
+	test/response/*
 
 lint:
 	@./node_modules/.bin/eslint lib test

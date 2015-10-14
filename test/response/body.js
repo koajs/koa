@@ -90,10 +90,10 @@ describe('res.body=', function(){
   describe('when an xml string is given', function(){
     it('should default to html', function(){
       /**
-       * This test is to show that we're not going
+       * ctx test is to show that we're not going
        * to be stricter with the html sniff
        * or that we will sniff other string types.
-       * You should `.type=` if this simple test fails.
+       * You should `.type=` if ctx simple test fails.
        */
 
       const res = response();
