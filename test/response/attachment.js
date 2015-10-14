@@ -34,9 +34,9 @@ describe('ctx.attachment([filename])', function(){
     it('should work with http client', function(done){
       const app = new Koa();
 
-      app.use(function *(next){
-        this.attachment('path/to/include-no-ascii-char-中文名-ok.json');
-        this.body = {foo: 'bar'};
+      app.use(function *(ctx, next){
+        ctx.attachment('path/to/include-no-ascii-char-中文名-ok.json');
+        ctx.body = {foo: 'bar'};
       });
 
       request(app.listen())
