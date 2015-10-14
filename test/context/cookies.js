@@ -8,7 +8,7 @@ describe('ctx.cookies.set()', function(){
   it('should set an unsigned cookie', function(done){
     const app = new Koa();
 
-    app.use(function *(ctx, next){
+    app.use(function(ctx, next){
       ctx.cookies.set('name', 'jon');
       ctx.status = 204;
     });
@@ -34,7 +34,7 @@ describe('ctx.cookies.set()', function(){
       it('should error', function(done){
         const app = new Koa();
 
-        app.use(function *(ctx, next){
+        app.use(function(ctx, next){
           try {
             ctx.cookies.set('foo', 'bar', { signed: true });
           } catch (err) {
@@ -53,7 +53,7 @@ describe('ctx.cookies.set()', function(){
 
       app.keys = ['a', 'b'];
 
-      app.use(function *(ctx, next){
+      app.use(function(ctx, next){
         ctx.cookies.set('name', 'jon', { signed: true });
         ctx.status = 204;
       });

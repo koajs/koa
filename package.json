@@ -33,6 +33,7 @@
     "http-errors": "^1.2.8",
     "is-generator-function": "^1.0.3",
     "koa-compose": "koajs/compose#es2016",
+    "koa-convert": "0.0.2",
     "koa-is-json": "^1.0.0",
     "mime-types": "^2.0.7",
     "on-finished": "^2.1.0",
