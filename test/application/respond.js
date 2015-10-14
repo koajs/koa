@@ -6,7 +6,6 @@ const statuses = require('statuses');
 const assert = require('assert');
 const Koa = require('../..');
 const fs = require('fs');
-const co = require('co');
 
 describe('app.respond', function(){
   describe('when ctx.respond === false', function(){
@@ -735,14 +734,13 @@ describe('app.respond', function(){
     it('should be catchable', function(done){
       const app = new Koa();
 
-      app.use(co.wrap(function *(ctx, next){
-        try {
-          yield next();
+      app.use(function(ctx, next){
+        return next().then(function(){
           ctx.body = 'Hello';
-        } catch (err) {
+        }, function(){
           ctx.body = 'Got error';
-        }
-      }));
+        });
+      });
 
       app.use(function(ctx, next){
         throw new Error('boom!');
