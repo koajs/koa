@@ -42,14 +42,14 @@ describe('ctx.type=', function(){
   })
 
   describe('with an unknown extension', function(){
-    it('should default to application/octet-stream',function(){
+    it('should not set a content-type', function(){
       var ctx = context();
       ctx.type = 'asdf';
-      ctx.type.should.equal('application/octet-stream');
-      ctx.response.header['content-type'].should.equal('application/octet-stream');
-    })
-  })
-})
+      assert(!ctx.type);
+      assert(!ctx.response.header['content-type']);
+    });
+  });
+});
 
 describe('ctx.type', function(){
   describe('with no Content-Type', function(){
