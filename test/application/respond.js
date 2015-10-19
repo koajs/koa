@@ -34,6 +34,28 @@ describe('app.respond', function(){
     });
   });
 
+  describe('when this.type === null', function(){
+    it('should not send Content-Type header', function(done){
+      var app = new Koa();
+
+      app.use(function *(){
+        this.body = '';
+        this.type = null;
+      });
+
+      var server = app.listen();
+
+      request(server)
+        .get('/')
+        .expect(200)
+        .end(function(err, res){
+          if (err) return done(err);
+          res.should.not.have.header('content-type');
+          done();
+        });
+    });
+  });
+
   describe('when HEAD is used', function(){
     it('should not respond with the body', function(done){
       const app = new Koa();
