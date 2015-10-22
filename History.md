@@ -4,6 +4,11 @@
  * drop node < 4 support and rewrite the codebase in ES6
  * change the middleware signature to `async (ctx, next) => await next()`
 
+1.1.1 / 2015-10-22
+==================
+
+ * do not send a content-type when the type is unknown #536
+
 1.1.0 / 2015-10-11
 ==================
 
