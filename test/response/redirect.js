@@ -51,7 +51,7 @@ describe('ctx.redirect(url)', function(){
 
     it('should escape the url', function(){
       const ctx = context();
-      var url = '<script>';
+      let url = '<script>';
       ctx.header.accept = 'text/html';
       ctx.redirect(url);
       url = escape(url);

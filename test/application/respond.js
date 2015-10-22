@@ -36,14 +36,14 @@ describe('app.respond', function(){
 
   describe('when this.type === null', function(){
     it('should not send Content-Type header', function(done){
-      var app = new Koa();
+      const app = new Koa();
 
       app.use(function *(){
         this.body = '';
         this.type = null;
       });
 
-      var server = app.listen();
+      const server = app.listen();
 
       request(server)
         .get('/')

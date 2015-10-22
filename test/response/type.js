@@ -43,7 +43,7 @@ describe('ctx.type=', function(){
 
   describe('with an unknown extension', function(){
     it('should not set a content-type', function(){
-      var ctx = context();
+      const ctx = context();
       ctx.type = 'asdf';
       assert(!ctx.type);
       assert(!ctx.response.header['content-type']);

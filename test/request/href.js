@@ -37,7 +37,7 @@ describe('ctx.href', function(){
         port: address.port
       }, function(res){
         res.statusCode.should.equal(200);
-        var buf = '';
+        let buf = '';
         res.setEncoding('utf8');
         res.on('data', function(s){ buf += s; });
         res.on('end', function(){
