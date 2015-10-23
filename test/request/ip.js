@@ -4,6 +4,25 @@
 const request = require('../helpers/context').request;
 
 describe('req.ip', function(){
+  describe('with x-real-ip present', function(){
+    it('should return x-real-ip', function(){
+      const req = request();
+      req.app.proxy = true;
+      req.header['x-real-ip'] = '127.0.0.1';
+      req.header['x-forwarded-for'] = '127.0.0.2';
+      req.socket.remoteAddress = '127.0.0.3';
+      req.ip.should.equal('127.0.0.1');
+    });
+
+    it('should return req.ips[0]', function(){
+      const req = request();
+      req.app.proxy = true;
+      req.header['x-forwarded-for'] = '127.0.0.2';
+      req.socket.remoteAddress = '127.0.0.3';
+      req.ip.should.equal('127.0.0.2');
+    });
+  });
+
   describe('with req.ips present', function(){
     it('should return req.ips[0]', function(){
       const req = request();
