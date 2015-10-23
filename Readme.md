@@ -42,6 +42,81 @@ $ npm install koa
  - [Introduction Screencast](http://knowthen.com/episode-3-koajs-quickstart-guide/) - An introduction to installing and getting started with Koa
 
 ## Example
+```js
+const Koa = require('koa');
+const app = new Koa();
+
+// logger
+
+app.use((ctx, next) => {
+  const start = new Date;
+  return next().then(() => {
+    const ms = new Date - start;
+    console.log(`${ctx.method} ${ctx.url} - ${ms}`);
+  });
+});
+
+// response
+
+app.use(ctx => {
+  ctx.body = 'Hello World';
+});
+
+app.listen(3000);
+```
+
+## Example with ___async___ functions (babel-node required)
+
+```js
+const Koa = require('koa');
+const app = new Koa();
+
+// logger
+
+app.use(async (ctx, next) => {
+  const start = new Date;
+  await next();
+  const ms = new Date - start;
+  console.log(`${ctx.method} ${ctx.url} - ${ms}`);
+});
+
+// response
+
+app.use(ctx => {
+  ctx.body = 'Hello World';
+});
+
+app.listen(3000);
+```
+
+## Example with generator
+
+To use generator functions, you must use a wrapper such as [co](https://github.com/tj/co) that is no longer supplied with Koa.
+
+```js
+const Koa = require('koa');
+const app = new Koa();
+const co = require('co');
+
+// logger
+
+app.use(co.wrap(function *(ctx, next){
+  const start = new Date;
+  yield next();
+  const ms = new Date - start;
+  console.log(`${ctx.method} ${ctx.url} - ${ms}`);
+}));
+
+// response
+
+app.use(ctx => {
+  ctx.body = 'Hello World';
+});
+
+app.listen(3000);
+```
+
+## Example with old version, Koa < 2
 
 ```js
 const Koa = require('koa');
