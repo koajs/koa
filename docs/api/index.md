@@ -64,7 +64,7 @@ app.use(function *(next){
   const start = new Date;
   yield next;
   const ms = new Date - start;
-  this.set('X-Response-Time', ms + 'ms');
+  this.set('X-Response-Time', `${ms}ms`);
 });
 
 // logger
@@ -73,7 +73,7 @@ app.use(function *(next){
   const start = new Date;
   yield next;
   const ms = new Date - start;
-  console.log('%s %s - %s', this.method, this.url, ms);
+  console.log(`${this.method} ${this.url} - ${ms}`);
 });
 
 // response
