@@ -17,7 +17,7 @@ function *responseTime(next) {
   const start = new Date;
   yield next;
   const ms = new Date - start;
-  this.set('X-Response-Time', ms + 'ms');
+  this.set('X-Response-Time', `${ms}ms`);
 }
 
 app.use(responseTime);
@@ -30,7 +30,7 @@ app.use(function *(next){
   const start = new Date;
   yield next;
   const ms = new Date - start;
-  this.set('X-Response-Time', ms + 'ms');
+  this.set('X-Response-Time', `${ms}ms`);
 });
 ```
 
@@ -223,9 +223,7 @@ const fs = require('co-fs');
 app.use(function *(){
   const paths = yield fs.readdir('docs');
 
-  const files = yield paths.map(function(path){
-    return fs.readFile('docs/' + path, 'utf8');
-  });
+  const files = yield paths.map(path => fs.readFile(`docs/${path}`, 'utf8'));
 
   this.type = 'markdown';
   this.body = files.join('');
