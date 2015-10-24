@@ -207,16 +207,12 @@ describe('app.respond', function(){
         ctx.status = 200;
         res.setHeader('Content-Type', 'text/html');
         res.write('Hello');
-        setTimeout(function(){
-          res.end('Goodbye');
-        }, 0);
+        setTimeout(() => res.end('Goodbye'), 0);
       });
 
       let errorCaught = false;
 
-      app.on('error', function(err){
-        errorCaught = err;
-      });
+      app.on('error', err => errorCaught = err);
 
       const server = app.listen();
 

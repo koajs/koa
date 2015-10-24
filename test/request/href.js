@@ -39,7 +39,7 @@ describe('ctx.href', function(){
         res.statusCode.should.equal(200);
         let buf = '';
         res.setEncoding('utf8');
-        res.on('data', function(s){ buf += s; });
+        res.on('data', s => buf += s);
         res.on('end', function(){
           buf.should.equal('http://example.com/foo');
           done();
