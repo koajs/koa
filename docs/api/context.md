@@ -99,7 +99,7 @@ this.throw('something exploded');
   For example `this.throw('name required', 400)` is equivalent to:
 
 ```js
-var err = new Error('name required');
+const err = new Error('name required');
 err.status = 400;
 throw err;
 ```

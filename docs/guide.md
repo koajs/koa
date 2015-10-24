@@ -14,9 +14,9 @@
 
 ```js
 function *responseTime(next) {
-  var start = new Date;
+  const start = new Date;
   yield next;
-  var ms = new Date - start;
+  const ms = new Date - start;
   this.set('X-Response-Time', ms + 'ms');
 }
 
@@ -27,9 +27,9 @@ app.use(responseTime);
 
 ```js
 app.use(function *(next){
-  var start = new Date;
+  const start = new Date;
   yield next;
-  var ms = new Date - start;
+  const ms = new Date - start;
   this.set('X-Response-Time', ms + 'ms');
 });
 ```
@@ -92,7 +92,7 @@ function logger(format) {
   format = format || ':method ":url"';
 
   return function *(next){
-    var str = format
+    const str = format
       .replace(':method', this.method)
       .replace(':url', this.url);
 
@@ -218,12 +218,12 @@ app.use(function *(next){
 
 
 ```js
-var fs = require('co-fs');
+const fs = require('co-fs');
 
 app.use(function *(){
-  var paths = yield fs.readdir('docs');
+  const paths = yield fs.readdir('docs');
 
-  var files = yield paths.map(function(path){
+  const files = yield paths.map(function(path){
     return fs.readFile('docs/' + path, 'utf8');
   });
 
@@ -255,10 +255,10 @@ $ DEBUG=koa* node --harmony examples/simple
   For example:
 
 ```js
-var path = require('path');
-var static = require('koa-static');
+const path = require('path');
+const static = require('koa-static');
 
-var publicFiles = static(path.join(__dirname, 'public'));
+const publicFiles = static(path.join(__dirname, 'public'));
 publicFiles._name = 'static /public';
 
 app.use(publicFiles);
