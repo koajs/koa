@@ -29,8 +29,8 @@ $ node my-koa-app.js
   The obligatory hello world application:
 
 ```js
-var koa = require('koa');
-var app = new Koa();
+const koa = require('koa');
+const app = new Koa();
 
 app.use(function *(){
   this.body = 'Hello World';
@@ -55,24 +55,24 @@ app.listen(3000);
   its upstream behaviour.
 
 ```js
-var koa = require('koa');
-var app = new Koa();
+const koa = require('koa');
+const app = new Koa();
 
 // x-response-time
 
 app.use(function *(next){
-  var start = new Date;
+  const start = new Date;
   yield next;
-  var ms = new Date - start;
+  const ms = new Date - start;
   this.set('X-Response-Time', ms + 'ms');
 });
 
 // logger
 
 app.use(function *(next){
-  var start = new Date;
+  const start = new Date;
   yield next;
-  var ms = new Date - start;
+  const ms = new Date - start;
   console.log('%s %s - %s', this.method, this.url, ms);
 });
 
@@ -105,17 +105,17 @@ app.listen(3000);
   `Server#listen()`. These arguments are documented on [nodejs.org](http://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback). The following is a useless Koa application bound to port `3000`:
 
 ```js
-var koa = require('koa');
-var app = new Koa();
+const koa = require('koa');
+const app = new Koa();
 app.listen(3000);
 ```
 
   The `app.listen(...)` method is simply sugar for the following:
 
 ```js
-var http = require('http');
-var koa = require('koa');
-var app = new Koa();
+const http = require('http');
+const koa = require('koa');
+const app = new Koa();
 http.createServer(app.callback()).listen(3000);
 ```
 
@@ -123,9 +123,9 @@ http.createServer(app.callback()).listen(3000);
   or on multiple addresses:
 
 ```js
-var http = require('http');
-var koa = require('koa');
-var app = new Koa();
+const http = require('http');
+const koa = require('koa');
+const app = new Koa();
 http.createServer(app.callback()).listen(3000);
 http.createServer(app.callback()).listen(3001);
 ```
