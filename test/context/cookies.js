@@ -21,9 +21,8 @@ describe('ctx.cookies.set()', function(){
     .end(function(err, res){
       if (err) return done(err);
 
-      res.headers['set-cookie'].some(function(cookie){
-        return /^name=/.test(cookie);
-      }).should.be.ok;
+      res.headers['set-cookie'].some(cookie => /^name=/.test(cookie))
+      .should.be.ok;
 
       done();
     });
@@ -68,13 +67,9 @@ describe('ctx.cookies.set()', function(){
 
         const cookies = res.headers['set-cookie'];
 
-        cookies.some(function(cookie){
-          return /^name=/.test(cookie);
-        }).should.be.ok;
+        cookies.some(cookie => /^name=/.test(cookie)).should.be.ok;
 
-        cookies.some(function(cookie){
-          return /^name\.sig=/.test(cookie);
-        }).should.be.ok;
+        cookies.some(cookie => /^name\.sig=/.test(cookie)).should.be.ok;
 
         done();
       });

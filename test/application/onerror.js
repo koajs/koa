@@ -9,9 +9,8 @@ describe('app.onerror(err)', function(){
   it('should throw an error if a non-error is given', function(done){
     const app = new Koa();
 
-    (function(){
-      app.onerror('foo');
-    }).should.throw(AssertionError, {message: 'non-error thrown: foo'});
+    (() => app.onerror('foo'))
+    .should.throw(AssertionError, {message: 'non-error thrown: foo'});
 
     done();
   });
@@ -22,9 +21,7 @@ describe('app.onerror(err)', function(){
 
     err.status = 404;
 
-    const output = stderr.inspectSync(function(){
-      app.onerror(err);
-    });
+    const output = stderr.inspectSync(() => app.onerror(err));
 
     output.should.eql([]);
 
@@ -36,9 +33,7 @@ describe('app.onerror(err)', function(){
     app.silent = true;
     const err = new Error();
 
-    const output = stderr.inspectSync(function(){
-      app.onerror(err);
-    });
+    const output = stderr.inspectSync(() => app.onerror(err));
 
     output.should.eql([]);
 
@@ -52,9 +47,7 @@ describe('app.onerror(err)', function(){
     const err = new Error();
     err.stack = 'Foo';
 
-    const output = stderr.inspectSync(function(){
-      app.onerror(err);
-    });
+    const output = stderr.inspectSync(() => app.onerror(err));
 
     output.should.eql(['\n', '  Foo\n', '\n']);
 
@@ -68,9 +61,7 @@ describe('app.onerror(err)', function(){
     const err = new Error('mock stack null');
     err.stack = null;
 
-    const output = stderr.inspectSync(function(){
-      app.onerror(err);
-    });
+    const output = stderr.inspectSync(() => app.onerror(err));
 
     output.should.eql(['\n', '  Error: mock stack null\n', '\n']);
 
