@@ -29,7 +29,7 @@ $ node my-koa-app.js
   The obligatory hello world application:
 
 ```js
-const koa = require('koa');
+const Koa = require('koa');
 const app = new Koa();
 
 app.use(function *(){
@@ -55,7 +55,7 @@ app.listen(3000);
   its upstream behaviour.
 
 ```js
-const koa = require('koa');
+const Koa = require('koa');
 const app = new Koa();
 
 // x-response-time
@@ -105,7 +105,7 @@ app.listen(3000);
   `Server#listen()`. These arguments are documented on [nodejs.org](http://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback). The following is a useless Koa application bound to port `3000`:
 
 ```js
-const koa = require('koa');
+const Koa = require('koa');
 const app = new Koa();
 app.listen(3000);
 ```
@@ -114,7 +114,7 @@ app.listen(3000);
 
 ```js
 const http = require('http');
-const koa = require('koa');
+const Koa = require('koa');
 const app = new Koa();
 http.createServer(app.callback()).listen(3000);
 ```
@@ -124,7 +124,7 @@ http.createServer(app.callback()).listen(3000);
 
 ```js
 const http = require('http');
-const koa = require('koa');
+const Koa = require('koa');
 const app = new Koa();
 http.createServer(app.callback()).listen(3000);
 http.createServer(app.callback()).listen(3001);
