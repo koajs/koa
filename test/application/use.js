@@ -5,8 +5,8 @@ const request = require('supertest');
 const should = require('should');
 const Koa = require('../..');
 
-describe('app.use(fn)', function(){
-  it('should compose middleware', function(done){
+describe('app.use(fn)', () => {
+  it('should compose middleware', done => {
     const app = new Koa();
     const calls = [];
 
@@ -36,7 +36,7 @@ describe('app.use(fn)', function(){
     request(server)
       .get('/')
       .expect(404)
-      .end(function(err){
+      .end(err => {
         if (err) return done(err);
         calls.should.eql([1, 2, 3, 4, 5, 6]);
         done();
@@ -44,7 +44,7 @@ describe('app.use(fn)', function(){
   });
 
   // https://github.com/koajs/koa/pull/530#issuecomment-148138051
-  it('should catch thrown errors in non-async functions', function(done){
+  it('should catch thrown errors in non-async functions', done => {
     const app = new Koa();
 
     app.use(ctx => {
@@ -70,7 +70,7 @@ describe('app.use(fn)', function(){
     (() => app.use(function *(){})).should.throw(/.+/);
   });
 
-  it('should throw error for non function', function(done){
+  it('should throw error for non function', done => {
     const app = new Koa();
 
     should(() => app.use('not a function')).throw('middleware must be a function!');

@@ -3,15 +3,15 @@
 
 const context = require('../helpers/context');
 
-describe('ctx.append(name, val)', function(){
-  it('should append multiple headers', function(){
+describe('ctx.append(name, val)', () => {
+  it('should append multiple headers', () => {
     const ctx = context();
     ctx.append('x-foo', 'bar1');
     ctx.append('x-foo', 'bar2');
     ctx.response.header['x-foo'].should.eql(['bar1', 'bar2']);
   });
 
-  it('should accept array of values', function(){
+  it('should accept array of values', () => {
     const ctx = context();
 
     ctx.append('Set-Cookie', ['foo=bar', 'fizz=buzz']);
@@ -19,7 +19,7 @@ describe('ctx.append(name, val)', function(){
     ctx.response.header['set-cookie'].should.eql(['foo=bar', 'fizz=buzz', 'hi=again']);
   });
 
-  it('should get reset by res.set(field, val)', function(){
+  it('should get reset by res.set(field, val)', () => {
     const ctx = context();
 
     ctx.append('Link', '<http://localhost/>');
@@ -30,7 +30,7 @@ describe('ctx.append(name, val)', function(){
     ctx.response.header.link.should.equal('<http://127.0.0.1/>');
   });
 
-  it('should work with res.set(field, val) first', function(){
+  it('should work with res.set(field, val) first', () => {
     const ctx = context();
 
     ctx.set('Link', '<http://localhost/>');

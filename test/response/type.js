@@ -4,9 +4,9 @@
 const context = require('../helpers/context');
 const assert = require('assert');
 
-describe('ctx.type=', function(){
-  describe('with a mime', function(){
-    it('should set the Content-Type', function(){
+describe('ctx.type=', () => {
+  describe('with a mime', () => {
+    it('should set the Content-Type', () => {
       const ctx = context();
       ctx.type = 'text/plain';
       ctx.type.should.equal('text/plain');
@@ -14,8 +14,8 @@ describe('ctx.type=', function(){
     });
   });
 
-  describe('with an extension', function(){
-    it('should lookup the mime', function(){
+  describe('with an extension', () => {
+    it('should lookup the mime', () => {
       const ctx = context();
       ctx.type = 'json';
       ctx.type.should.equal('application/json');
@@ -23,8 +23,8 @@ describe('ctx.type=', function(){
     });
   });
 
-  describe('without a charset', function(){
-    it('should default the charset', function(){
+  describe('without a charset', () => {
+    it('should default the charset', () => {
       const ctx = context();
       ctx.type = 'text/html';
       ctx.type.should.equal('text/html');
@@ -32,8 +32,8 @@ describe('ctx.type=', function(){
     });
   });
 
-  describe('with a charset', function(){
-    it('should not default the charset', function(){
+  describe('with a charset', () => {
+    it('should not default the charset', () => {
       const ctx = context();
       ctx.type = 'text/html; charset=foo';
       ctx.type.should.equal('text/html');
@@ -41,8 +41,8 @@ describe('ctx.type=', function(){
     });
   });
 
-  describe('with an unknown extension', function(){
-    it('should not set a content-type', function(){
+  describe('with an unknown extension', () => {
+    it('should not set a content-type', () => {
       const ctx = context();
       ctx.type = 'asdf';
       assert(!ctx.type);
@@ -51,16 +51,16 @@ describe('ctx.type=', function(){
   });
 });
 
-describe('ctx.type', function(){
-  describe('with no Content-Type', function(){
-    it('should return ""', function(){
+describe('ctx.type', () => {
+  describe('with no Content-Type', () => {
+    it('should return ""', () => {
       const ctx = context();
       assert(!ctx.type);
     });
   });
 
-  describe('with a Content-Type', function(){
-    it('should return the mime', function(){
+  describe('with a Content-Type', () => {
+    it('should return the mime', () => {
       const ctx = context();
       ctx.type = 'json';
       ctx.type.should.equal('application/json');

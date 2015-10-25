@@ -3,17 +3,17 @@
 
 const context = require('../helpers/context');
 
-describe('ctx.fresh', function(){
-  describe('the request method is not GET and HEAD', function(){
-    it('should return false', function(){
+describe('ctx.fresh', () => {
+  describe('the request method is not GET and HEAD', () => {
+    it('should return false', () => {
       const ctx = context();
       ctx.req.method = 'POST';
       ctx.fresh.should.be.false;
     });
   });
 
-  describe('the response is non-2xx', function(){
-    it('should return false', function(){
+  describe('the response is non-2xx', () => {
+    it('should return false', () => {
       const ctx = context();
       ctx.status = 404;
       ctx.req.method = 'GET';
@@ -23,9 +23,9 @@ describe('ctx.fresh', function(){
     });
   });
 
-  describe('the response is 2xx', function(){
-    describe('and etag matches', function(){
-      it('should return true', function(){
+  describe('the response is 2xx', () => {
+    describe('and etag matches', () => {
+      it('should return true', () => {
         const ctx = context();
         ctx.status = 200;
         ctx.req.method = 'GET';
@@ -35,8 +35,8 @@ describe('ctx.fresh', function(){
       });
     });
 
-    describe('and etag do not match', function(){
-      it('should return false', function(){
+    describe('and etag do not match', () => {
+      it('should return false', () => {
         const ctx = context();
         ctx.status = 200;
         ctx.req.method = 'GET';

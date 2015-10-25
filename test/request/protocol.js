@@ -3,26 +3,26 @@
 
 const request = require('../helpers/context').request;
 
-describe('req.protocol', function(){
-  describe('when encrypted', function(){
-    it('should return "https"', function(){
+describe('req.protocol', () => {
+  describe('when encrypted', () => {
+    it('should return "https"', () => {
       const req = request();
       req.req.socket = { encrypted: true };
       req.protocol.should.equal('https');
     });
   });
 
-  describe('when unencrypted', function(){
-    it('should return "http"', function(){
+  describe('when unencrypted', () => {
+    it('should return "http"', () => {
       const req = request();
       req.req.socket = {};
       req.protocol.should.equal('http');
     });
   });
 
-  describe('when X-Forwarded-Proto is set', function(){
-    describe('and proxy is trusted', function(){
-      it('should be used', function(){
+  describe('when X-Forwarded-Proto is set', () => {
+    describe('and proxy is trusted', () => {
+      it('should be used', () => {
         const req = request();
         req.app.proxy = true;
         req.req.socket = {};
@@ -30,8 +30,8 @@ describe('req.protocol', function(){
         req.protocol.should.equal('https');
       });
 
-      describe('and X-Forwarded-Proto is empty', function(){
-        it('should return "http"', function(){
+      describe('and X-Forwarded-Proto is empty', () => {
+        it('should return "http"', () => {
           const req = request();
           req.app.proxy = true;
           req.req.socket = {};
@@ -41,8 +41,8 @@ describe('req.protocol', function(){
       });
     });
 
-    describe('and proxy is not trusted', function(){
-      it('should not be used', function(){
+    describe('and proxy is not trusted', () => {
+      it('should not be used', () => {
         const req = request();
         req.req.socket = {};
         req.header['x-forwarded-proto'] = 'https, http';

@@ -3,8 +3,8 @@
 
 const context = require('../helpers/context');
 
-describe('req.stale', function(){
-  it('should be the inverse of req.fresh', function(){
+describe('req.stale', () => {
+  it('should be the inverse of req.fresh', () => {
     const ctx = context();
     ctx.status = 200;
     ctx.method = 'GET';

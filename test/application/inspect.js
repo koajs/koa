@@ -4,8 +4,8 @@
 const assert = require('assert');
 const Koa = require('../..');
 
-describe('app.inspect()', function(){
-  it('should work', function(){
+describe('app.inspect()', () => {
+  it('should work', () => {
     const app = new Koa();
     const util = require('util');
     const str = util.inspect(app);

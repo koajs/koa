@@ -3,15 +3,15 @@
 
 const response = require('../helpers/context').response;
 
-describe('res.header', function(){
-  it('should return the response header object', function(){
+describe('res.header', () => {
+  it('should return the response header object', () => {
     const res = response();
     res.set('X-Foo', 'bar');
     res.header.should.eql({ 'x-foo': 'bar' });
   });
 
-  describe('when res._headers not present', function(){
-    it('should return empty object', function(){
+  describe('when res._headers not present', () => {
+    it('should return empty object', () => {
       const res = response();
       res.res._headers = null;
       res.header.should.eql({});

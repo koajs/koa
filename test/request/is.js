@@ -4,8 +4,8 @@
 const context = require('../helpers/context');
 const assert = require('assert');
 
-describe('ctx.is(type)', function(){
-  it('should ignore params', function(){
+describe('ctx.is(type)', () => {
+  it('should ignore params', () => {
     const ctx = context();
     ctx.header['content-type'] = 'text/html; charset=utf-8';
     ctx.header['transfer-encoding'] = 'chunked';
@@ -13,8 +13,8 @@ describe('ctx.is(type)', function(){
     ctx.is('text/*').should.equal('text/html');
   });
 
-  describe('when no body is given', function(){
-    it('should return null', function(){
+  describe('when no body is given', () => {
+    it('should return null', () => {
       const ctx = context();
 
       assert(null == ctx.is());
@@ -23,8 +23,8 @@ describe('ctx.is(type)', function(){
     });
   });
 
-  describe('when no content type is given', function(){
-    it('should return false', function(){
+  describe('when no content type is given', () => {
+    it('should return false', () => {
       const ctx = context();
       ctx.header['transfer-encoding'] = 'chunked';
 
@@ -34,8 +34,8 @@ describe('ctx.is(type)', function(){
     });
   });
 
-  describe('give no types', function(){
-    it('should return the mime type', function(){
+  describe('give no types', () => {
+    it('should return the mime type', () => {
       const ctx = context();
       ctx.header['content-type'] = 'image/png';
       ctx.header['transfer-encoding'] = 'chunked';
@@ -44,8 +44,8 @@ describe('ctx.is(type)', function(){
     });
   });
 
-  describe('given one type', function(){
-    it('should return the type or false', function(){
+  describe('given one type', () => {
+    it('should return the type or false', () => {
       const ctx = context();
       ctx.header['content-type'] = 'image/png';
       ctx.header['transfer-encoding'] = 'chunked';
@@ -64,8 +64,8 @@ describe('ctx.is(type)', function(){
     });
   });
 
-  describe('given multiple types', function(){
-    it('should return the first match or false', function(){
+  describe('given multiple types', () => {
+    it('should return the first match or false', () => {
       const ctx = context();
       ctx.header['content-type'] = 'image/png';
       ctx.header['transfer-encoding'] = 'chunked';
@@ -89,8 +89,8 @@ describe('ctx.is(type)', function(){
     });
   });
 
-  describe('when Content-Type: application/x-www-form-urlencoded', function(){
-    it('should match "urlencoded"', function(){
+  describe('when Content-Type: application/x-www-form-urlencoded', () => {
+    it('should match "urlencoded"', () => {
       const ctx = context();
       ctx.header['content-type'] = 'application/x-www-form-urlencoded';
       ctx.header['transfer-encoding'] = 'chunked';

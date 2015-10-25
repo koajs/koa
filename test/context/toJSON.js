@@ -3,8 +3,8 @@
 
 const context = require('../helpers/context');
 
-describe('ctx.toJSON()', function(){
-  it('should return a json representation', function(){
+describe('ctx.toJSON()', () => {
+  it('should return a json representation', () => {
     const ctx = context();
 
     ctx.req.method = 'POST';

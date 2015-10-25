@@ -4,16 +4,16 @@
 const context = require('../helpers/context');
 const assert = require('assert');
 
-describe('response.is(type)', function(){
-  it('should ignore params', function(){
+describe('response.is(type)', () => {
+  it('should ignore params', () => {
     const res = context().response;
     res.type = 'text/html; charset=utf-8';
 
     res.is('text/*').should.equal('text/html');
   });
 
-  describe('when no type is set', function(){
-    it('should return false', function(){
+  describe('when no type is set', () => {
+    it('should return false', () => {
       const res = context().response;
 
       assert(false === res.is());
@@ -21,8 +21,8 @@ describe('response.is(type)', function(){
     });
   });
 
-  describe('when given no types', function(){
-    it('should return the type', function(){
+  describe('when given no types', () => {
+    it('should return the type', () => {
       const res = context().response;
       res.type = 'text/html; charset=utf-8';
 
@@ -30,8 +30,8 @@ describe('response.is(type)', function(){
     });
   });
 
-  describe('given one type', function(){
-    it('should return the type or false', function(){
+  describe('given one type', () => {
+    it('should return the type or false', () => {
       const res = context().response;
       res.type = 'image/png';
 
@@ -49,8 +49,8 @@ describe('response.is(type)', function(){
     });
   });
 
-  describe('given multiple types', function(){
-    it('should return the first match or false', function(){
+  describe('given multiple types', () => {
+    it('should return the first match or false', () => {
       const res = context().response;
       res.type = 'image/png';
 
@@ -73,8 +73,8 @@ describe('response.is(type)', function(){
     });
   });
 
-  describe('when Content-Type: application/x-www-form-urlencoded', function(){
-    it('should match "urlencoded"', function(){
+  describe('when Content-Type: application/x-www-form-urlencoded', () => {
+    it('should match "urlencoded"', () => {
       const res = context().response;
       res.type = 'application/x-www-form-urlencoded';
 

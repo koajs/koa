@@ -7,59 +7,59 @@ const statuses = require('statuses');
 const assert = require('assert');
 const Koa = require('../..');
 
-describe('res.status=', function(){
-  describe('when a status code', function(){
-    describe('and valid', function(){
-      it('should set the status', function(){
+describe('res.status=', () => {
+  describe('when a status code', () => {
+    describe('and valid', () => {
+      it('should set the status', () => {
         const res = response();
         res.status = 403;
         res.status.should.equal(403);
       });
 
-      it('should not throw', function(){
-        assert.doesNotThrow(function(){
+      it('should not throw', () => {
+        assert.doesNotThrow(() => {
           response().status = 403;
         });
       });
     });
 
-    describe('and invalid', function(){
-      it('should throw', function(){
-        assert.throws(function(){
+    describe('and invalid', () => {
+      it('should throw', () => {
+        assert.throws(() => {
           response().status = 999;
         }, 'invalid status code: 999');
       });
     });
 
-    describe('and custom status', function(){
-      before(function(){
+    describe('and custom status', () => {
+      before(() => {
         statuses['700'] = 'custom status';
       });
 
-      it('should set the status', function(){
+      it('should set the status', () => {
         const res = response();
         res.status = 700;
         res.status.should.equal(700);
       });
 
-      it('should not throw', function(){
-        assert.doesNotThrow(function(){
+      it('should not throw', () => {
+        assert.doesNotThrow(() => {
           response().status = 700;
         });
       });
     });
   });
 
-  describe('when a status string', function(){
-    it('should throw', function(){
-      assert.throws(function(){
+  describe('when a status string', () => {
+    it('should throw', () => {
+      assert.throws(() => {
         response().status = 'forbidden';
       }, 'status code must be a number');
     });
   });
 
   function strip(status){
-    it('should strip content related header fields', function(done){
+    it('should strip content related header fields', done => {
       const app = new Koa();
 
       app.use(function(ctx){
@@ -76,7 +76,7 @@ describe('res.status=', function(){
       request(app.listen())
         .get('/')
         .expect(status)
-        .end(function(err, res){
+        .end((err, res) => {
           res.should.not.have.header('content-type');
           res.should.not.have.header('content-length');
           res.should.not.have.header('content-encoding');
@@ -99,7 +99,7 @@ describe('res.status=', function(){
       request(app.listen())
         .get('/')
         .expect(status)
-        .end(function(err, res){
+        .end((err, res) => {
           res.should.not.have.header('content-type');
           res.should.not.have.header('content-length');
           res.should.not.have.header('content-encoding');
@@ -109,15 +109,15 @@ describe('res.status=', function(){
     });
   }
 
-  describe('when 204', function(){
+  describe('when 204', () => {
     strip(204);
   });
 
-  describe('when 205', function(){
+  describe('when 205', () => {
     strip(205);
   });
 
-  describe('when 304', function(){
+  describe('when 304', () => {
     strip(304);
   });
 });
