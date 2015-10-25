@@ -32,9 +32,7 @@ describe('res.status=', () => {
     });
 
     describe('and custom status', () => {
-      before(() => {
-        statuses['700'] = 'custom status';
-      });
+      before(() => statuses['700'] = 'custom status');
 
       it('should set the status', () => {
         const res = response();
@@ -43,18 +41,14 @@ describe('res.status=', () => {
       });
 
       it('should not throw', () => {
-        assert.doesNotThrow(() => {
-          response().status = 700;
-        });
+        assert.doesNotThrow(() => response().status = 700);
       });
     });
   });
 
   describe('when a status string', () => {
     it('should throw', () => {
-      assert.throws(() => {
-        response().status = 'forbidden';
-      }, 'status code must be a number');
+      assert.throws(() => response().status = 'forbidden', 'status code must be a number');
     });
   });
 
@@ -109,15 +103,9 @@ describe('res.status=', () => {
     });
   }
 
-  describe('when 204', () => {
-    strip(204);
-  });
+  describe('when 204', () => strip(204));
 
-  describe('when 205', () => {
-    strip(205);
-  });
+  describe('when 205', () => strip(205));
 
-  describe('when 304', () => {
-    strip(304);
-  });
+  describe('when 304', () => strip(304));
 });

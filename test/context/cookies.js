@@ -21,7 +21,13 @@ describe('ctx.cookies.set()', () => {
       .end((err, res) => {
         if (err) return done(err);
 
+<<<<<<< HEAD
         res.headers['set-cookie'].some(cookie => /^name=/.test(cookie)).should.be.ok;
+=======
+      res.headers['set-cookie']
+      .some(cookie => /^name=/.test(cookie))
+      .should.be.ok;
+>>>>>>> Remove non mandatory brackets
 
         done();
       });
