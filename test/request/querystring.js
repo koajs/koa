@@ -3,14 +3,14 @@
 
 const context = require('../helpers/context');
 
-describe('ctx.querystring', function(){
-  it('should return the querystring', function(){
+describe('ctx.querystring', () => {
+  it('should return the querystring', () => {
     const ctx = context({ url: '/store/shoes?page=2&color=blue' });
     ctx.querystring.should.equal('page=2&color=blue');
   });
 
-  describe('when ctx.req not present', function(){
-    it('should return an empty string', function(){
+  describe('when ctx.req not present', () => {
+    it('should return an empty string', () => {
       const ctx = context();
       ctx.request.req = null;
       ctx.querystring.should.equal('');
@@ -18,15 +18,15 @@ describe('ctx.querystring', function(){
   });
 });
 
-describe('ctx.querystring=', function(){
-  it('should replace the querystring', function(){
+describe('ctx.querystring=', () => {
+  it('should replace the querystring', () => {
     const ctx = context({ url: '/store/shoes' });
     ctx.querystring = 'page=2&color=blue';
     ctx.url.should.equal('/store/shoes?page=2&color=blue');
     ctx.querystring.should.equal('page=2&color=blue');
   });
 
-  it('should update ctx.search and ctx.query', function(){
+  it('should update ctx.search and ctx.query', () => {
     const ctx = context({ url: '/store/shoes' });
     ctx.querystring = 'page=2&color=blue';
     ctx.url.should.equal('/store/shoes?page=2&color=blue');
@@ -37,7 +37,7 @@ describe('ctx.querystring=', function(){
     });
   });
 
-  it('should change .url but not .originalUrl', function(){
+  it('should change .url but not .originalUrl', () => {
     const ctx = context({ url: '/store/shoes' });
     ctx.querystring = 'page=2&color=blue';
     ctx.url.should.equal('/store/shoes?page=2&color=blue');

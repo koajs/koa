@@ -4,24 +4,24 @@
 const request = require('../helpers/context').request;
 const assert = require('assert');
 
-describe('req.charset', function(){
-  describe('with no content-type present', function(){
-    it('should return ""', function(){
+describe('req.charset', () => {
+  describe('with no content-type present', () => {
+    it('should return ""', () => {
       const req = request();
       assert('' === req.charset);
     });
   });
 
-  describe('with charset present', function(){
-    it('should return ""', function(){
+  describe('with charset present', () => {
+    it('should return ""', () => {
       const req = request();
       req.header['content-type'] = 'text/plain';
       assert('' === req.charset);
     });
   });
 
-  describe('with a charset', function(){
-    it('should return the charset', function(){
+  describe('with a charset', () => {
+    it('should return the charset', () => {
       const req = request();
       req.header['content-type'] = 'text/plain; charset=utf-8';
       req.charset.should.equal('utf-8');

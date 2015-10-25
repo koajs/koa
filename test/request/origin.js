@@ -4,8 +4,8 @@
 const Stream = require('stream');
 const context = require('../helpers/context');
 
-describe('ctx.origin', function(){
-  it('should return the origin of url', function(){
+describe('ctx.origin', () => {
+  it('should return the origin of url', () => {
     const socket = new Stream.Duplex();
     const req = {
       url: '/users/1?next=/dashboard',

@@ -4,9 +4,9 @@
 const request = require('../helpers/context').request;
 const assert = require('assert');
 
-describe('req.inspect()', function(){
-  describe('with no request.req present', function(){
-    it('should return null', function(){
+describe('req.inspect()', () => {
+  describe('with no request.req present', () => {
+    it('should return null', () => {
       const req = request();
       req.method = 'GET';
       delete req.req;
@@ -14,7 +14,7 @@ describe('req.inspect()', function(){
     });
   });
 
-  it('should return a json representation', function(){
+  it('should return a json representation', () => {
     const req = request();
     req.method = 'GET';
     req.url = 'example.com';

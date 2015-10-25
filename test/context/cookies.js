@@ -4,11 +4,11 @@
 const request = require('supertest');
 const Koa = require('../..');
 
-describe('ctx.cookies.set()', function(){
-  it('should set an unsigned cookie', function(done){
+describe('ctx.cookies.set()', () => {
+  it('should set an unsigned cookie', done => {
     const app = new Koa();
 
-    app.use(function(ctx, next){
+    app.use((ctx, next) => {
       ctx.cookies.set('name', 'jon');
       ctx.status = 204;
     });
@@ -18,7 +18,7 @@ describe('ctx.cookies.set()', function(){
     request(server)
       .get('/')
       .expect(204)
-      .end(function(err, res){
+      .end((err, res) => {
         if (err) return done(err);
 
         res.headers['set-cookie'].some(cookie => /^name=/.test(cookie)).should.be.ok;
@@ -27,12 +27,12 @@ describe('ctx.cookies.set()', function(){
       });
   });
 
-  describe('with .signed', function(){
-    describe('when no .keys are set', function(){
-      it('should error', function(done){
+  describe('with .signed', () => {
+    describe('when no .keys are set', () => {
+      it('should error', done => {
         const app = new Koa();
 
-        app.use(function(ctx, next){
+        app.use((ctx, next) => {
           try {
             ctx.cookies.set('foo', 'bar', { signed: true });
           } catch (err) {
@@ -46,12 +46,12 @@ describe('ctx.cookies.set()', function(){
       });
     });
 
-    it('should send a signed cookie', function(done){
+    it('should send a signed cookie', done => {
       const app = new Koa();
 
       app.keys = ['a', 'b'];
 
-      app.use(function(ctx, next){
+      app.use((ctx, next) => {
         ctx.cookies.set('name', 'jon', { signed: true });
         ctx.status = 204;
       });
@@ -61,7 +61,7 @@ describe('ctx.cookies.set()', function(){
       request(server)
         .get('/')
         .expect(204)
-        .end(function(err, res){
+        .end((err, res) => {
           if (err) return done(err);
 
           const cookies = res.headers['set-cookie'];

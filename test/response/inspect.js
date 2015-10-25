@@ -4,9 +4,9 @@
 const response = require('../helpers/context').response;
 const assert = require('assert');
 
-describe('res.inspect()', function(){
-  describe('with no response.res present', function(){
-    it('should return null', function(){
+describe('res.inspect()', () => {
+  describe('with no response.res present', () => {
+    it('should return null', () => {
       const res = response();
       res.body = 'hello';
       delete res.res;
@@ -14,7 +14,7 @@ describe('res.inspect()', function(){
     });
   });
 
-  it('should return a json representation', function(){
+  it('should return a json representation', () => {
     const res = response();
     res.body = 'hello';
 

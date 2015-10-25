@@ -4,8 +4,8 @@
 const context = require('../helpers/context');
 const assert = require('assert');
 
-describe('ctx.assert(value, status)', function(){
-  it('should throw an error', function(){
+describe('ctx.assert(value, status)', () => {
+  it('should throw an error', () => {
     const ctx = context();
 
     try {

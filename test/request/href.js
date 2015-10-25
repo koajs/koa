@@ -6,8 +6,8 @@ const http = require('http');
 const Koa = require('../../');
 const context = require('../helpers/context');
 
-describe('ctx.href', function(){
-  it('should return the full request url', function(){
+describe('ctx.href', () => {
+  it('should return the full request url', () => {
     const socket = new Stream.Duplex();
     const req = {
       url: '/users/1?next=/dashboard',
@@ -24,9 +24,9 @@ describe('ctx.href', function(){
     ctx.href.should.equal('http://localhost/users/1?next=/dashboard');
   });
 
-  it('should work with `GET http://example.com/foo`', function(done){
+  it('should work with `GET http://example.com/foo`', done => {
     const app = new Koa();
-    app.use(function(ctx){
+    app.use(ctx => {
       ctx.body = ctx.href;
     });
     app.listen(function(){
@@ -35,12 +35,12 @@ describe('ctx.href', function(){
         host: 'localhost',
         path: 'http://example.com/foo',
         port: address.port
-      }, function(res){
+      }, res => {
         res.statusCode.should.equal(200);
         let buf = '';
         res.setEncoding('utf8');
         res.on('data', s => buf += s);
-        res.on('end', function(){
+        res.on('end', () => {
           buf.should.equal('http://example.com/foo');
           done();
         });

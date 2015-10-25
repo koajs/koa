@@ -4,11 +4,11 @@
 const request = require('supertest');
 const Koa = require('../..');
 
-describe('ctx.onerror(err)', function(){
-  it('should respond', function(done){
+describe('ctx.onerror(err)', () => {
+  it('should respond', done => {
     const app = new Koa();
 
-    app.use(function(ctx, next){
+    app.use((ctx, next) => {
       ctx.body = 'something else';
 
       ctx.throw(418, 'boom');
@@ -24,10 +24,10 @@ describe('ctx.onerror(err)', function(){
       .end(done);
   });
 
-  it('should unset all headers', function(done){
+  it('should unset all headers', done => {
     const app = new Koa();
 
-    app.use(function(ctx, next){
+    app.use((ctx, next) => {
       ctx.set('Vary', 'Accept-Encoding');
       ctx.set('X-CSRF-Token', 'asdf');
       ctx.body = 'response';
@@ -42,7 +42,7 @@ describe('ctx.onerror(err)', function(){
       .expect(418)
       .expect('Content-Type', 'text/plain; charset=utf-8')
       .expect('Content-Length', '4')
-      .end(function(err, res){
+      .end((err, res) => {
         if (err) return done(err);
 
         res.headers.should.not.have.property('vary');
@@ -52,12 +52,12 @@ describe('ctx.onerror(err)', function(){
       });
   });
 
-  describe('when invalid err.status', function(){
-    describe('not number', function(){
-      it('should respond 500', function(done){
+  describe('when invalid err.status', () => {
+    describe('not number', () => {
+      it('should respond 500', done => {
         const app = new Koa();
 
-        app.use(function(ctx, next){
+        app.use((ctx, next) => {
           ctx.body = 'something else';
           const err = new Error('some error');
           err.status = 'notnumber';
@@ -74,11 +74,11 @@ describe('ctx.onerror(err)', function(){
       });
     });
 
-    describe('not http status code', function(){
-      it('should respond 500', function(done){
+    describe('not http status code', () => {
+      it('should respond 500', done => {
         const app = new Koa();
 
-        app.use(function(ctx, next){
+        app.use((ctx, next) => {
           ctx.body = 'something else';
           const err = new Error('some error');
           err.status = 9999;
@@ -96,11 +96,11 @@ describe('ctx.onerror(err)', function(){
     });
   });
 
-  describe('when non-error thrown', function(){
-    it('should response non-error thrown message', function(done){
+  describe('when non-error thrown', () => {
+    it('should response non-error thrown message', done => {
       const app = new Koa();
 
-      app.use(function(ctx, next){
+      app.use((ctx, next) => {
         throw 'string error'; // eslint-disable-line no-throw-literal
       });
 

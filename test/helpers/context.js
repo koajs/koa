@@ -4,7 +4,7 @@
 const Stream = require('stream');
 const Koa = require('../..');
 
-module.exports = function(req, res){
+module.exports = (req, res) => {
   const socket = new Stream.Duplex();
   req = req || { headers: {}, socket: socket, __proto__: Stream.Readable.prototype };
   res = res || { _headers: {}, socket: socket, __proto__: Stream.Writable.prototype };

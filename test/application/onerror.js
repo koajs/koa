@@ -5,8 +5,8 @@ const stderr = require('test-console').stderr;
 const Koa = require('../..');
 const AssertionError = require('assert').AssertionError;
 
-describe('app.onerror(err)', function(){
-  it('should throw an error if a non-error is given', function(done){
+describe('app.onerror(err)', () => {
+  it('should throw an error if a non-error is given', done => {
     const app = new Koa();
 
     (() => app.onerror('foo')).should.throw(AssertionError, {message: 'non-error thrown: foo'});
@@ -14,7 +14,7 @@ describe('app.onerror(err)', function(){
     done();
   });
 
-  it('should do nothing if status is 404', function(done){
+  it('should do nothing if status is 404', done => {
     const app = new Koa();
     const err = new Error();
 
@@ -27,7 +27,7 @@ describe('app.onerror(err)', function(){
     done();
   });
 
-  it('should do nothing if .silent', function(done){
+  it('should do nothing if .silent', done => {
     const app = new Koa();
     app.silent = true;
     const err = new Error();
@@ -39,7 +39,7 @@ describe('app.onerror(err)', function(){
     done();
   });
 
-  it('should log the error to stderr', function(done){
+  it('should log the error to stderr', done => {
     const app = new Koa();
     app.env = 'dev';
 
@@ -53,7 +53,7 @@ describe('app.onerror(err)', function(){
     done();
   });
 
-  it('should use err.toString() instad of err.stack', function(done){
+  it('should use err.toString() instad of err.stack', done => {
     const app = new Koa();
     app.env = 'dev';
 

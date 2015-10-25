@@ -4,8 +4,8 @@
 const context = require('../helpers/context');
 const assert = require('assert');
 
-describe('ctx.throw(msg)', function(){
-  it('should set .status to 500', function(done){
+describe('ctx.throw(msg)', () => {
+  it('should set .status to 500', done => {
     const ctx = context();
 
     try {
@@ -18,8 +18,8 @@ describe('ctx.throw(msg)', function(){
   });
 });
 
-describe('ctx.throw(err)', function(){
-  it('should set .status to 500', function(done){
+describe('ctx.throw(err)', () => {
+  it('should set .status to 500', done => {
     const ctx = context();
     const err = new Error('test');
 
@@ -34,8 +34,8 @@ describe('ctx.throw(err)', function(){
   });
 });
 
-describe('ctx.throw(err, status)', function(){
-  it('should throw the error and set .status', function(done){
+describe('ctx.throw(err, status)', () => {
+  it('should throw the error and set .status', done => {
     const ctx = context();
     const error = new Error('test');
 
@@ -50,8 +50,8 @@ describe('ctx.throw(err, status)', function(){
   });
 });
 
-describe('ctx.throw(status, err)', function(){
-  it('should throw the error and set .status', function(done){
+describe('ctx.throw(status, err)', () => {
+  it('should throw the error and set .status', done => {
     const ctx = context();
     const error = new Error('test');
 
@@ -66,8 +66,8 @@ describe('ctx.throw(status, err)', function(){
   });
 });
 
-describe('ctx.throw(msg, status)', function(){
-  it('should throw an error', function(done){
+describe('ctx.throw(msg, status)', () => {
+  it('should throw an error', done => {
     const ctx = context();
 
     try {
@@ -81,8 +81,8 @@ describe('ctx.throw(msg, status)', function(){
   });
 });
 
-describe('ctx.throw(status, msg)', function(){
-  it('should throw an error', function(done){
+describe('ctx.throw(status, msg)', () => {
+  it('should throw an error', done => {
     const ctx = context();
 
     try {
@@ -96,8 +96,8 @@ describe('ctx.throw(status, msg)', function(){
   });
 });
 
-describe('ctx.throw(status)', function(){
-  it('should throw an error', function(done){
+describe('ctx.throw(status)', () => {
+  it('should throw an error', done => {
     const ctx = context();
 
     try {
@@ -110,8 +110,8 @@ describe('ctx.throw(status)', function(){
     }
   });
 
-  describe('when not valid status', function(){
-    it('should not expose', function(done){
+  describe('when not valid status', () => {
+    it('should not expose', done => {
       const ctx = context();
 
       try {
@@ -127,8 +127,8 @@ describe('ctx.throw(status)', function(){
   });
 });
 
-describe('ctx.throw(status, msg, props)', function(){
-  it('should mixin props', function(done){
+describe('ctx.throw(status, msg, props)', () => {
+  it('should mixin props', done => {
     const ctx = context();
 
     try {
@@ -142,8 +142,8 @@ describe('ctx.throw(status, msg, props)', function(){
     }
   });
 
-  describe('when props include status', function(){
-    it('should be ignored', function(done){
+  describe('when props include status', () => {
+    it('should be ignored', done => {
       const ctx = context();
 
       try {
@@ -162,8 +162,8 @@ describe('ctx.throw(status, msg, props)', function(){
   });
 });
 
-describe('ctx.throw(msg, props)', function(){
-  it('should mixin props', function(done){
+describe('ctx.throw(msg, props)', () => {
+  it('should mixin props', done => {
     const ctx = context();
 
     try {
@@ -178,8 +178,8 @@ describe('ctx.throw(msg, props)', function(){
   });
 });
 
-describe('ctx.throw(status, props)', function(){
-  it('should mixin props', function(done){
+describe('ctx.throw(status, props)', () => {
+  it('should mixin props', done => {
     const ctx = context();
 
     try {
@@ -194,8 +194,8 @@ describe('ctx.throw(status, props)', function(){
   });
 });
 
-describe('ctx.throw(err, props)', function(){
-  it('should mixin props', function(done){
+describe('ctx.throw(err, props)', () => {
+  it('should mixin props', done => {
     const ctx = context();
 
     try {

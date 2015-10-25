@@ -5,35 +5,35 @@ const request = require('supertest');
 const assert = require('assert');
 const Koa = require('../..');
 
-describe('app', function(){
-  it('should handle socket errors', function(done){
+describe('app', () => {
+  it('should handle socket errors', done => {
     const app = new Koa();
 
-    app.use(function(ctx, next){
+    app.use((ctx, next) => {
       // triggers ctx.socket.writable == false
       ctx.socket.emit('error', new Error('boom'));
     });
 
-    app.on('error', function(err){
+    app.on('error', err => {
       err.message.should.equal('boom');
       done();
     });
 
     request(app.listen())
       .get('/')
-      .end(function(){});
+      .end(() => {});
   });
 
-  it('should not .writeHead when !socket.writable', function(done){
+  it('should not .writeHead when !socket.writable', done => {
     const app = new Koa();
 
-    app.use(function(ctx, next){
+    app.use((ctx, next) => {
       // set .writable to false
       ctx.socket.writable = false;
       ctx.status = 204;
       // throw if .writeHead or .end is called
       ctx.res.writeHead =
-      ctx.res.end = function(){
+      ctx.res.end = () => {
         throw new Error('response sent');
       };
     });
@@ -43,10 +43,10 @@ describe('app', function(){
 
     request(app.listen())
       .get('/')
-      .end(function(){});
+      .end(() => {});
   });
 
-  it('should set development env when NODE_ENV missing', function(){
+  it('should set development env when NODE_ENV missing', () => {
     const NODE_ENV = process.env.NODE_ENV;
     process.env.NODE_ENV = '';
     const app = new Koa();
