@@ -52,4 +52,11 @@ describe('app.use(fn)', function(){
     .expect(404)
     .end(done);
   });
+
+  it('should throw error for non function', function(done){
+    const app = new Koa();
+
+    (() => app.use('not a function')).should.throw('middleware must be a function!');
+    done();
+  });
 });
