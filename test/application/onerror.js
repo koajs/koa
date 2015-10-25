@@ -9,8 +9,7 @@ describe('app.onerror(err)', function(){
   it('should throw an error if a non-error is given', function(done){
     const app = new Koa();
 
-    (() => app.onerror('foo'))
-    .should.throw(AssertionError, {message: 'non-error thrown: foo'});
+    (() => app.onerror('foo')).should.throw(AssertionError, {message: 'non-error thrown: foo'});
 
     done();
   });
