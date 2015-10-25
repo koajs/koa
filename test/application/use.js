@@ -57,7 +57,7 @@ describe('app.use(fn)', function(){
   it('should throw error for non function', function(done){
     const app = new Koa();
 
-    should(function() {app.use('not a function')}).throw('middleware must be a function!');
+    should(function(){ app.use('not a function'); }).throw('middleware must be a function!');
     done();
   });
 });
