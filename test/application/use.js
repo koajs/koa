@@ -2,6 +2,7 @@
 'use strict';
 
 const request = require('supertest');
+const should = require('should');
 const Koa = require('../..');
 
 describe('app.use(fn)', function(){
@@ -67,5 +68,12 @@ describe('app.use(fn)', function(){
     const app = new Koa();
 
     (() => app.use(function *(){})).should.throw(/.+/);
+  });
+
+  it('should throw error for non function', function(done){
+    const app = new Koa();
+
+    should(function() {app.use('not a function')}).throw('middleware must be a function!');
+    done();
   });
 });
