@@ -9,22 +9,25 @@ describe('app.use(fn)', function(){
     const app = new Koa();
     const calls = [];
 
-    app.use(function *(ctx, next){
+    app.use(function(ctx, next){
       calls.push(1);
-      yield next();
-      calls.push(6);
+      next().then(function(){
+        calls.push(6);
+      });
     });
 
-    app.use(function *(ctx, next){
+    app.use(function(ctx, next){
       calls.push(2);
-      yield next();
-      calls.push(5);
+      next().then(function(){
+        calls.push(5);
+      });
     });
 
-    app.use(function *(ctx, next){
+    app.use(function(ctx, next){
       calls.push(3);
-      yield next();
-      calls.push(4);
+      next().then(function(){
+        calls.push(4);
+      });
     });
 
     const server = app.listen();

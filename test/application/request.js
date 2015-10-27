@@ -11,7 +11,7 @@ describe('app.request', function(){
   const app2 = new Koa();
 
   it('should merge properties', function(done){
-    app1.use(function *(ctx, next){
+    app1.use(function(ctx, next){
       assert.equal(ctx.request.message, 'hello');
       ctx.status = 204;
     });
@@ -22,7 +22,7 @@ describe('app.request', function(){
   });
 
   it('should not affect the original prototype', function(done){
-    app2.use(function *(ctx, next){
+    app2.use(function(ctx, next){
       assert.equal(ctx.request.message, undefined);
       ctx.status = 204;
     });
