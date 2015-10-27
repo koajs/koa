@@ -11,21 +11,21 @@ describe('app.use(fn)', function(){
 
     app.use(function(ctx, next){
       calls.push(1);
-      next().then(function(){
+      return next().then(function(){
         calls.push(6);
       });
     });
 
     app.use(function(ctx, next){
       calls.push(2);
-      next().then(function(){
+      return next().then(function(){
         calls.push(5);
       });
     });
 
     app.use(function(ctx, next){
       calls.push(3);
-      next().then(function(){
+      return next().then(function(){
         calls.push(4);
       });
     });
