@@ -1,8 +1,15 @@
+2.0.0-alpha.2 / 2015-10-27
+==================
+
+ * remove `co` and generator support completely
+ * improved documentation
+ * more refactoring into ES6
+
 2.0.0-alpha.1 / 2015-10-22
 ==================
 
- * drop node < 4 support and rewrite the codebase in ES6
  * change the middleware signature to `async (ctx, next) => await next()`
+ * drop node < 4 support and rewrite the codebase in ES6
 
 1.1.1 / 2015-10-22
 ==================
