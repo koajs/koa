@@ -9,22 +9,25 @@ describe('app.use(fn)', function(){
     const app = new Koa();
     const calls = [];
 
-    app.use(function *(ctx, next){
+    app.use(function(ctx, next){
       calls.push(1);
-      yield next();
-      calls.push(6);
+      return next().then(function(){
+        calls.push(6);
+      });
     });
 
-    app.use(function *(ctx, next){
+    app.use(function(ctx, next){
       calls.push(2);
-      yield next();
-      calls.push(5);
+      return next().then(function(){
+        calls.push(5);
+      });
     });
 
-    app.use(function *(ctx, next){
+    app.use(function(ctx, next){
       calls.push(3);
-      yield next();
-      calls.push(4);
+      return next().then(function(){
+        calls.push(4);
+      });
     });
 
     const server = app.listen();
@@ -58,5 +61,11 @@ describe('app.use(fn)', function(){
 
     (() => app.use('not a function')).should.throw('middleware must be a function!');
     done();
+  });
+
+  it('should throw error for generator', function(){
+    const app = new Koa();
+
+    (() => app.use(function *(){})).should.throw('Support for generators has been removed. Use Promises or wrap your generator with co.wrap');
   });
 });
