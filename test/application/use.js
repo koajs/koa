@@ -62,4 +62,10 @@ describe('app.use(fn)', function(){
     (() => app.use('not a function')).should.throw('middleware must be a function!');
     done();
   });
+
+  it('should throw error for generator', function(){
+    const app = new Koa();
+
+    (() => app.use(function *(){})).should.throw('Support for generators has been removed. Use Promises or wrap your generator with co.wrap');
+  });
 });
