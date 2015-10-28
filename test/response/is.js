@@ -69,8 +69,7 @@ describe('response.is(type)', function(){
       res.is('jpeg').should.be.false;
       res.is('.jpeg').should.be.false;
       res.is('text/*', 'application/*').should.be.false;
-      res.is('text/html', 'text/plain', 'application/json; charset=utf-8')
-        .should.be.false;
+      res.is('text/html', 'text/plain', 'application/json; charset=utf-8').should.be.false;
     });
   });
 

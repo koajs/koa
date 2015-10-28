@@ -21,8 +21,7 @@ describe('ctx.cookies.set()', function(){
       .end(function(err, res){
         if (err) return done(err);
 
-        res.headers['set-cookie'].some(cookie => /^name=/.test(cookie))
-          .should.be.ok;
+        res.headers['set-cookie'].some(cookie => /^name=/.test(cookie)).should.be.ok;
 
         done();
       });

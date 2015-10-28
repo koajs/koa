@@ -92,8 +92,7 @@ describe('app.respond', function(){
         .expect(200)
         .end(function(err, res){
           if (err) return done(err);
-          res.should.have
-            .header('Content-Type', 'application/json; charset=utf-8');
+          res.should.have.header('Content-Type', 'application/json; charset=utf-8');
           res.should.have.header('Content-Length', '17');
           assert(0 == res.text.length);
           done();
