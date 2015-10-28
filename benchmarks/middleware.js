@@ -11,17 +11,11 @@ let n = parseInt(process.env.MW || '1', 10);
 console.log(`  ${n} middleware`);
 
 while (n--) {
-  app.use(function(ctx, next){
-    return next();
-  });
+  app.use((ctx, next) => next());
 }
 
 const body = new Buffer('Hello World');
 
-app.use(function(ctx, next){
-  return next().then(function(){
-    this.body = body;
-  });
-});
+app.use((ctx, next) => next().then(() => ctx.body = body));
 
 app.listen(3333);
