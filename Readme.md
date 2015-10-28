@@ -65,7 +65,7 @@ app.use(ctx => {
 app.listen(3000);
 ```
 
-## Example with ___async___ functions (babel-node required)
+## Example with ___async___ functions (Babel required)
 
 ```js
 const Koa = require('koa');
