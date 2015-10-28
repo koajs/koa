@@ -11,3 +11,5 @@ rules:
   yoda: 0
   arrow-parens: [2, "as-needed"]
   arrow-spacing: 2
+  dot-location: [2, "property"]
+  max-len: [2, 80, 4, {"ignoreComments": true, "ignoreUrls": true}]

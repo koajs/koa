@@ -18,7 +18,8 @@ describe('ctx.acceptsEncodings()', function(){
       it('should return identity', function(){
         const ctx = context();
         ctx.acceptsEncodings().should.eql(['identity']);
-        ctx.acceptsEncodings('gzip', 'deflate', 'identity').should.equal('identity');
+        ctx.acceptsEncodings('gzip', 'deflate', 'identity')
+          .should.equal('identity');
       });
     });
   });

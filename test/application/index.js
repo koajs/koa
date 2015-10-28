@@ -20,8 +20,8 @@ describe('app', function(){
     });
 
     request(app.listen())
-    .get('/')
-    .end(function(){});
+      .get('/')
+      .end(function(){});
   });
 
   it('should not .writeHead when !socket.writable', function(done){
@@ -42,8 +42,8 @@ describe('app', function(){
     setImmediate(done);
 
     request(app.listen())
-    .get('/')
-    .end(function(){});
+      .get('/')
+      .end(function(){});
   });
 
   it('should set development env when NODE_ENV missing', function(){

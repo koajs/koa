@@ -10,7 +10,8 @@ describe('ctx.type=', function(){
       const ctx = context();
       ctx.type = 'text/plain';
       ctx.type.should.equal('text/plain');
-      ctx.response.header['content-type'].should.equal('text/plain; charset=utf-8');
+      ctx.response.header['content-type']
+        .should.equal('text/plain; charset=utf-8');
     });
   });
 
@@ -19,7 +20,8 @@ describe('ctx.type=', function(){
       const ctx = context();
       ctx.type = 'json';
       ctx.type.should.equal('application/json');
-      ctx.response.header['content-type'].should.equal('application/json; charset=utf-8');
+      ctx.response.header['content-type']
+        .should.equal('application/json; charset=utf-8');
     });
   });
 
@@ -28,7 +30,8 @@ describe('ctx.type=', function(){
       const ctx = context();
       ctx.type = 'text/html';
       ctx.type.should.equal('text/html');
-      ctx.response.header['content-type'].should.equal('text/html; charset=utf-8');
+      ctx.response.header['content-type']
+        .should.equal('text/html; charset=utf-8');
     });
   });
 
@@ -37,7 +40,8 @@ describe('ctx.type=', function(){
       const ctx = context();
       ctx.type = 'text/html; charset=foo';
       ctx.type.should.equal('text/html');
-      ctx.response.header['content-type'].should.equal('text/html; charset=foo');
+      ctx.response.header['content-type']
+        .should.equal('text/html; charset=foo');
     });
   });
 

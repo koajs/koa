@@ -16,7 +16,8 @@ describe('ctx.append(name, val)', function(){
 
     ctx.append('Set-Cookie', ['foo=bar', 'fizz=buzz']);
     ctx.append('Set-Cookie', 'hi=again');
-    ctx.response.header['set-cookie'].should.eql(['foo=bar', 'fizz=buzz', 'hi=again']);
+    ctx.response.header['set-cookie']
+      .should.eql(['foo=bar', 'fizz=buzz', 'hi=again']);
   });
 
   it('should get reset by res.set(field, val)', function(){
@@ -36,6 +37,7 @@ describe('ctx.append(name, val)', function(){
     ctx.set('Link', '<http://localhost/>');
     ctx.append('Link', '<http://localhost:80/>');
 
-    ctx.response.header.link.should.eql(['<http://localhost/>', '<http://localhost:80/>']);
+    ctx.response.header.link
+      .should.eql(['<http://localhost/>', '<http://localhost:80/>']);
   });
 });

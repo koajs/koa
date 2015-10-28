@@ -45,7 +45,8 @@ describe('ctx.redirect(url)', function(){
       const url = 'http://google.com';
       ctx.header.accept = 'text/html';
       ctx.redirect(url);
-      ctx.response.header['content-type'].should.equal('text/html; charset=utf-8');
+      ctx.response.header['content-type']
+        .should.equal('text/html; charset=utf-8');
       ctx.body.should.equal(`Redirecting to <a href="${url}">${url}</a>.`);
     });
 
@@ -55,7 +56,8 @@ describe('ctx.redirect(url)', function(){
       ctx.header.accept = 'text/html';
       ctx.redirect(url);
       url = escape(url);
-      ctx.response.header['content-type'].should.equal('text/html; charset=utf-8');
+      ctx.response.header['content-type']
+        .should.equal('text/html; charset=utf-8');
       ctx.body.should.equal(`Redirecting to <a href="${url}">${url}</a>.`);
     });
   });

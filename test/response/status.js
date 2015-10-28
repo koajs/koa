@@ -85,7 +85,7 @@ describe('res.status=', function(){
         });
     });
 
-    it('should strip content releated header fields after status set', function(done){
+    it('should strip content releated header fields after status set', done => {
       const app = new Koa();
 
       app.use(function(ctx){

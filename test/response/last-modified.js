@@ -24,7 +24,7 @@ describe('res.lastModified', function(){
     const date = new Date();
     res.lastModified = date;
     (res.lastModified.getTime() / 1000)
-    .should.equal(Math.floor(date.getTime() / 1000));
+      .should.equal(Math.floor(date.getTime() / 1000));
   });
 
   describe('when lastModified not set', function(){

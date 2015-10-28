@@ -8,8 +8,14 @@ describe('ctx.accepts(types)', function(){
     describe('when Accept is populated', function(){
       it('should return all accepted types', function(){
         const ctx = context();
-        ctx.req.headers.accept = 'application/*;q=0.2, image/jpeg;q=0.8, text/html, text/plain';
-        ctx.accepts().should.eql(['text/html', 'text/plain', 'image/jpeg', 'application/*']);
+        ctx.req.headers.accept =
+          'application/*;q=0.2, image/jpeg;q=0.8, text/html, text/plain';
+        ctx.accepts().should.eql([
+          'text/html',
+          'text/plain',
+          'image/jpeg',
+          'application/*'
+        ]);
       });
     });
   });
@@ -18,7 +24,8 @@ describe('ctx.accepts(types)', function(){
     describe('when Accept is populated', function(){
       it('should return false', function(){
         const ctx = context();
-        ctx.req.headers.accept = 'application/*;q=0.2, image/jpeg;q=0.8, text/html, text/plain';
+        ctx.req.headers.accept =
+          'application/*;q=0.2, image/jpeg;q=0.8, text/html, text/plain';
         ctx.accepts('image/png', 'image/tiff').should.be.false;
       });
     });
@@ -26,7 +33,8 @@ describe('ctx.accepts(types)', function(){
     describe('when Accept is not populated', function(){
       it('should return the first type', function(){
         const ctx = context();
-        ctx.accepts('text/html', 'text/plain', 'image/jpeg', 'application/*').should.equal('text/html');
+        ctx.accepts('text/html', 'text/plain', 'image/jpeg', 'application/*')
+          .should.equal('text/html');
       });
     });
   });

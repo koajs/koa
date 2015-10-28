@@ -27,10 +27,10 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .get('/')
-      .expect(200)
-      .expect('lol')
-      .end(done);
+        .get('/')
+        .expect(200)
+        .expect('lol')
+        .end(done);
     });
   });
 
@@ -67,15 +67,15 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .head('/')
-      .expect(200)
-      .end(function(err, res){
-        if (err) return done(err);
-        res.should.have.header('Content-Type', 'text/plain; charset=utf-8');
-        res.should.have.header('Content-Length', '5');
-        assert(0 == res.text.length);
-        done();
-      });
+        .head('/')
+        .expect(200)
+        .end(function(err, res){
+          if (err) return done(err);
+          res.should.have.header('Content-Type', 'text/plain; charset=utf-8');
+          res.should.have.header('Content-Length', '5');
+          assert(0 == res.text.length);
+          done();
+        });
     });
 
     it('should keep json headers', function(done){
@@ -88,15 +88,16 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .head('/')
-      .expect(200)
-      .end(function(err, res){
-        if (err) return done(err);
-        res.should.have.header('Content-Type', 'application/json; charset=utf-8');
-        res.should.have.header('Content-Length', '17');
-        assert(0 == res.text.length);
-        done();
-      });
+        .head('/')
+        .expect(200)
+        .end(function(err, res){
+          if (err) return done(err);
+          res.should.have
+            .header('Content-Type', 'application/json; charset=utf-8');
+          res.should.have.header('Content-Length', '17');
+          assert(0 == res.text.length);
+          done();
+        });
     });
 
     it('should keep string headers', function(done){
@@ -109,15 +110,15 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .head('/')
-      .expect(200)
-      .end(function(err, res){
-        if (err) return done(err);
-        res.should.have.header('Content-Type', 'text/plain; charset=utf-8');
-        res.should.have.header('Content-Length', '11');
-        assert(0 == res.text.length);
-        done();
-      });
+        .head('/')
+        .expect(200)
+        .end(function(err, res){
+          if (err) return done(err);
+          res.should.have.header('Content-Type', 'text/plain; charset=utf-8');
+          res.should.have.header('Content-Length', '11');
+          assert(0 == res.text.length);
+          done();
+        });
     });
 
     it('should keep buffer headers', function(done){
@@ -130,15 +131,15 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .head('/')
-      .expect(200)
-      .end(function(err, res){
-        if (err) return done(err);
-        res.should.have.header('Content-Type', 'application/octet-stream');
-        res.should.have.header('Content-Length', '11');
-        assert(0 == res.text.length);
-        done();
-      });
+        .head('/')
+        .expect(200)
+        .end(function(err, res){
+          if (err) return done(err);
+          res.should.have.header('Content-Type', 'application/octet-stream');
+          res.should.have.header('Content-Length', '11');
+          assert(0 == res.text.length);
+          done();
+        });
     });
 
     it('should respond with a 404 if no body was set', function(done){
@@ -151,8 +152,8 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .head('/')
-      .expect(404, done);
+        .head('/')
+        .expect(404, done);
     });
 
     it('should respond with a 200 if body = ""', function(done){
@@ -165,8 +166,8 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .head('/')
-      .expect(200, done);
+        .head('/')
+        .expect(200, done);
     });
 
     it('should not overwrite the content-type', function(done){
@@ -180,9 +181,9 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .head('/')
-      .expect('content-type', /application\/javascript/)
-      .expect(200, done);
+        .head('/')
+        .expect('content-type', /application\/javascript/)
+        .expect(200, done);
     });
   });
 
@@ -193,8 +194,8 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .get('/')
-      .expect(404, done);
+        .get('/')
+        .expect(404, done);
     });
   });
 
@@ -217,13 +218,13 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .get('/')
-      .expect(200)
-      .end(function(err, res){
-        if (err) return done(err);
-        if (errorCaught) return done(errorCaught);
-        done();
-      });
+        .get('/')
+        .expect(200)
+        .end(function(err, res){
+          if (err) return done(err);
+          if (errorCaught) return done(errorCaught);
+          done();
+        });
     });
 
     it('should send the right body', function(done){
@@ -242,9 +243,9 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .get('/')
-      .expect(200)
-      .expect('HelloGoodbye', done);
+        .get('/')
+        .expect(200)
+        .expect('HelloGoodbye', done);
     });
   });
 
@@ -260,10 +261,10 @@ describe('app.respond', function(){
         const server = app.listen();
 
         request(server)
-        .get('/')
-        .expect(400)
-        .expect('Content-Length', 11)
-        .expect('Bad Request', done);
+          .get('/')
+          .expect(400)
+          .expect('Content-Length', 11)
+          .expect('Bad Request', done);
       });
     });
 
@@ -278,15 +279,15 @@ describe('app.respond', function(){
         const server = app.listen();
 
         request(server)
-        .get('/')
-        .expect(204)
-        .expect('')
-        .end(function(err, res){
-          if (err) return done(err);
+          .get('/')
+          .expect(204)
+          .expect('')
+          .end(function(err, res){
+            if (err) return done(err);
 
-          res.header.should.not.have.property('content-type');
-          done();
-        });
+            res.header.should.not.have.property('content-type');
+            done();
+          });
       });
     });
 
@@ -301,15 +302,15 @@ describe('app.respond', function(){
         const server = app.listen();
 
         request(server)
-        .get('/')
-        .expect(205)
-        .expect('')
-        .end(function(err, res){
-          if (err) return done(err);
+          .get('/')
+          .expect(205)
+          .expect('')
+          .end(function(err, res){
+            if (err) return done(err);
 
-          res.header.should.not.have.property('content-type');
-          done();
-        });
+            res.header.should.not.have.property('content-type');
+            done();
+          });
       });
     });
 
@@ -324,15 +325,15 @@ describe('app.respond', function(){
         const server = app.listen();
 
         request(server)
-        .get('/')
-        .expect(304)
-        .expect('')
-        .end(function(err, res){
-          if (err) return done(err);
+          .get('/')
+          .expect(304)
+          .expect('')
+          .end(function(err, res){
+            if (err) return done(err);
 
-          res.header.should.not.have.property('content-type');
-          done();
-        });
+            res.header.should.not.have.property('content-type');
+            done();
+          });
       });
     });
 
@@ -348,14 +349,14 @@ describe('app.respond', function(){
         const server = app.listen();
 
         request(server)
-        .get('/')
-        .expect(700)
-        .expect('custom status')
-        .end(function(err, res){
-          if (err) return done(err);
-          res.res.statusMessage.should.equal('custom status');
-          done();
-        });
+          .get('/')
+          .expect(700)
+          .expect('custom status')
+          .end(function(err, res){
+            if (err) return done(err);
+            res.res.statusMessage.should.equal('custom status');
+            done();
+          });
       });
     });
 
@@ -371,14 +372,14 @@ describe('app.respond', function(){
         const server = app.listen();
 
         request(server)
-        .get('/')
-        .expect(200)
-        .expect('ok')
-        .end(function(err, res){
-          if (err) return done(err);
-          res.res.statusMessage.should.equal('ok');
-          done();
-        });
+          .get('/')
+          .expect(200)
+          .expect('ok')
+          .end(function(err, res){
+            if (err) return done(err);
+            res.res.statusMessage.should.equal('ok');
+            done();
+          });
       });
     });
 
@@ -393,9 +394,9 @@ describe('app.respond', function(){
         const server = app.listen();
 
         request(server)
-        .get('/')
-        .expect(701)
-        .expect('701', done);
+          .get('/')
+          .expect(701)
+          .expect('701', done);
       });
     });
   });
@@ -411,15 +412,15 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .get('/')
-      .expect(204)
-      .expect('')
-      .end(function(err, res){
-        if (err) return done(err);
+        .get('/')
+        .expect(204)
+        .expect('')
+        .end(function(err, res){
+          if (err) return done(err);
 
-        res.header.should.not.have.property('content-type');
-        done();
-      });
+          res.header.should.not.have.property('content-type');
+          done();
+        });
     });
 
     it('should respond 204 with status=200', function(done){
@@ -433,15 +434,15 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .get('/')
-      .expect(204)
-      .expect('')
-      .end(function(err, res){
-        if (err) return done(err);
+        .get('/')
+        .expect(204)
+        .expect('')
+        .end(function(err, res){
+          if (err) return done(err);
 
-        res.header.should.not.have.property('content-type');
-        done();
-      });
+          res.header.should.not.have.property('content-type');
+          done();
+        });
     });
 
     it('should respond 205 with status=205', function(done){
@@ -455,15 +456,15 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .get('/')
-      .expect(205)
-      .expect('')
-      .end(function(err, res){
-        if (err) return done(err);
+        .get('/')
+        .expect(205)
+        .expect('')
+        .end(function(err, res){
+          if (err) return done(err);
 
-        res.header.should.not.have.property('content-type');
-        done();
-      });
+          res.header.should.not.have.property('content-type');
+          done();
+        });
     });
 
     it('should respond 304 with status=304', function(done){
@@ -477,15 +478,15 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .get('/')
-      .expect(304)
-      .expect('')
-      .end(function(err, res){
-        if (err) return done(err);
+        .get('/')
+        .expect(304)
+        .expect('')
+        .end(function(err, res){
+          if (err) return done(err);
 
-        res.header.should.not.have.property('content-type');
-        done();
-      });
+          res.header.should.not.have.property('content-type');
+          done();
+        });
     });
   });
 
@@ -500,8 +501,8 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .get('/')
-      .expect('Hello', done);
+        .get('/')
+        .expect('Hello', done);
     });
   });
 
@@ -516,8 +517,8 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .get('/')
-      .expect('Hello', done);
+        .get('/')
+        .expect('Hello', done);
     });
   });
 
@@ -533,15 +534,15 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .get('/')
-      .expect('Content-Type', 'application/json; charset=utf-8')
-      .end(function(err, res){
-        if (err) return done(err);
-        const pkg = require('../../package');
-        res.should.not.have.header('Content-Length');
-        res.body.should.eql(pkg);
-        done();
-      });
+        .get('/')
+        .expect('Content-Type', 'application/json; charset=utf-8')
+        .end(function(err, res){
+          if (err) return done(err);
+          const pkg = require('../../package');
+          res.should.not.have.header('Content-Length');
+          res.body.should.eql(pkg);
+          done();
+        });
     });
 
     it('should strip content-length when overwriting', function(done){
@@ -556,15 +557,15 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .get('/')
-      .expect('Content-Type', 'application/json; charset=utf-8')
-      .end(function(err, res){
-        if (err) return done(err);
-        const pkg = require('../../package');
-        res.should.not.have.header('Content-Length');
-        res.body.should.eql(pkg);
-        done();
-      });
+        .get('/')
+        .expect('Content-Type', 'application/json; charset=utf-8')
+        .end(function(err, res){
+          if (err) return done(err);
+          const pkg = require('../../package');
+          res.should.not.have.header('Content-Length');
+          res.body.should.eql(pkg);
+          done();
+        });
     });
 
     it('should keep content-length if not overwritten', function(done){
@@ -579,41 +580,42 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .get('/')
-      .expect('Content-Type', 'application/json; charset=utf-8')
-      .end(function(err, res){
-        if (err) return done(err);
-        const pkg = require('../../package');
-        res.should.have.header('Content-Length');
-        res.body.should.eql(pkg);
-        done();
-      });
+        .get('/')
+        .expect('Content-Type', 'application/json; charset=utf-8')
+        .end(function(err, res){
+          if (err) return done(err);
+          const pkg = require('../../package');
+          res.should.have.header('Content-Length');
+          res.body.should.eql(pkg);
+          done();
+        });
     });
 
-    it('should keep content-length if overwritten with the same stream', function(done){
-      const app = new Koa();
+    it('should keep content-length if overwritten with the same stream',
+      done => {
+        const app = new Koa();
 
-      app.use(function(ctx){
-        ctx.length = fs.readFileSync('package.json').length;
-        const stream = fs.createReadStream('package.json');
-        ctx.body = stream;
-        ctx.body = stream;
-        ctx.set('Content-Type', 'application/json; charset=utf-8');
+        app.use(function(ctx){
+          ctx.length = fs.readFileSync('package.json').length;
+          const stream = fs.createReadStream('package.json');
+          ctx.body = stream;
+          ctx.body = stream;
+          ctx.set('Content-Type', 'application/json; charset=utf-8');
+        });
+
+        const server = app.listen();
+
+        request(server)
+          .get('/')
+          .expect('Content-Type', 'application/json; charset=utf-8')
+          .end(function(err, res){
+            if (err) return done(err);
+            const pkg = require('../../package');
+            res.should.have.header('Content-Length');
+            res.body.should.eql(pkg);
+            done();
+          });
       });
-
-      const server = app.listen();
-
-      request(server)
-      .get('/')
-      .expect('Content-Type', 'application/json; charset=utf-8')
-      .end(function(err, res){
-        if (err) return done(err);
-        const pkg = require('../../package');
-        res.should.have.header('Content-Length');
-        res.body.should.eql(pkg);
-        done();
-      });
-    });
 
     it('should handle errors', function(done){
       const app = new Koa();
@@ -626,10 +628,10 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .get('/')
-      .expect('Content-Type', 'text/plain; charset=utf-8')
-      .expect(404)
-      .end(done);
+        .get('/')
+        .expect('Content-Type', 'text/plain; charset=utf-8')
+        .expect(404)
+        .end(done);
     });
 
     it('should handle errors when no content status', function(done){
@@ -643,8 +645,8 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .get('/')
-      .expect(204, done);
+        .get('/')
+        .expect(204, done);
     });
 
     it('should handle all intermediate stream body errors', function(done){
@@ -659,8 +661,8 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .get('/')
-      .expect(404, done);
+        .get('/')
+        .expect(404, done);
     });
   });
 
@@ -675,9 +677,9 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .get('/')
-      .expect('Content-Type', 'application/json; charset=utf-8')
-      .expect('{"hello":"world"}', done);
+        .get('/')
+        .expect('Content-Type', 'application/json; charset=utf-8')
+        .expect('{"hello":"world"}', done);
     });
   });
 
@@ -695,8 +697,8 @@ describe('app.respond', function(){
       });
 
       request(app.listen())
-      .get('/')
-      .end(function(){});
+        .get('/')
+        .end(function(){});
     });
 
     describe('with an .expose property', function(){
@@ -711,9 +713,9 @@ describe('app.respond', function(){
         });
 
         request(app.listen())
-        .get('/')
-        .expect(403, 'sorry!')
-        .end(done);
+          .get('/')
+          .expect(403, 'sorry!')
+          .end(done);
       });
     });
 
@@ -728,9 +730,9 @@ describe('app.respond', function(){
         });
 
         request(app.listen())
-        .get('/')
-        .expect(403, 'Forbidden')
-        .end(done);
+          .get('/')
+          .expect(403, 'Forbidden')
+          .end(done);
       });
     });
 
@@ -744,9 +746,9 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .get('/')
-      .expect(500, 'Internal Server Error')
-      .end(done);
+        .get('/')
+        .expect(500, 'Internal Server Error')
+        .end(done);
     });
 
     it('should be catchable', function(done){
@@ -767,9 +769,9 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .get('/')
-      .expect(200, 'Got error')
-      .end(done);
+        .get('/')
+        .expect(200, 'Got error')
+        .end(done);
     });
   });
 
@@ -786,9 +788,9 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .get('/')
-      .expect(200)
-      .expect('hello', done);
+        .get('/')
+        .expect(200)
+        .expect('hello', done);
     });
 
     it('should 204', function(done){
@@ -804,12 +806,12 @@ describe('app.respond', function(){
       const server = app.listen();
 
       request(server)
-      .get('/')
-      .expect(204)
-      .end(function(err, res){
-        res.should.not.have.header('content-type');
-        done(err);
-      });
+        .get('/')
+        .expect(204)
+        .end(function(err, res){
+          res.should.not.have.header('content-type');
+          done(err);
+        });
     });
   });
 });

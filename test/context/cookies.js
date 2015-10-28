@@ -16,16 +16,16 @@ describe('ctx.cookies.set()', function(){
     const server = app.listen();
 
     request(server)
-    .get('/')
-    .expect(204)
-    .end(function(err, res){
-      if (err) return done(err);
+      .get('/')
+      .expect(204)
+      .end(function(err, res){
+        if (err) return done(err);
 
-      res.headers['set-cookie'].some(cookie => /^name=/.test(cookie))
-      .should.be.ok;
+        res.headers['set-cookie'].some(cookie => /^name=/.test(cookie))
+          .should.be.ok;
 
-      done();
-    });
+        done();
+      });
   });
 
   describe('with .signed', function(){
@@ -42,8 +42,8 @@ describe('ctx.cookies.set()', function(){
         });
 
         request(app.listen())
-        .get('/')
-        .expect('.keys required for signed cookies', done);
+          .get('/')
+          .expect('.keys required for signed cookies', done);
       });
     });
 
@@ -60,19 +60,19 @@ describe('ctx.cookies.set()', function(){
       const server = app.listen();
 
       request(server)
-      .get('/')
-      .expect(204)
-      .end(function(err, res){
-        if (err) return done(err);
+        .get('/')
+        .expect(204)
+        .end(function(err, res){
+          if (err) return done(err);
 
-        const cookies = res.headers['set-cookie'];
+          const cookies = res.headers['set-cookie'];
 
-        cookies.some(cookie => /^name=/.test(cookie)).should.be.ok;
+          cookies.some(cookie => /^name=/.test(cookie)).should.be.ok;
 
-        cookies.some(cookie => /^name\.sig=/.test(cookie)).should.be.ok;
+          cookies.some(cookie => /^name\.sig=/.test(cookie)).should.be.ok;
 
-        done();
-      });
+          done();
+        });
     });
   });
 });

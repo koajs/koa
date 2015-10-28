@@ -6,8 +6,10 @@ const Koa = require('../..');
 
 module.exports = function(req, res){
   const socket = new Stream.Duplex();
-  req = req || { headers: {}, socket: socket, __proto__: Stream.Readable.prototype };
-  res = res || { _headers: {}, socket: socket, __proto__: Stream.Writable.prototype };
+  req = req ||
+    { headers: {}, socket: socket, __proto__: Stream.Readable.prototype };
+  res = res ||
+    { _headers: {}, socket: socket, __proto__: Stream.Writable.prototype };
   res.getHeader = k => res._headers[k.toLowerCase()];
   res.setHeader = (k, v) => res._headers[k.toLowerCase()] = v;
   res.removeHeader = (k, v) => delete res._headers[k.toLowerCase()];
