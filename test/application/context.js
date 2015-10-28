@@ -17,8 +17,8 @@ describe('app.context', function(){
     });
 
     request(app1.listen())
-    .get('/')
-    .expect(204, done);
+      .get('/')
+      .expect(204, done);
   });
 
   it('should not affect the original prototype', function(done){
@@ -28,7 +28,7 @@ describe('app.context', function(){
     });
 
     request(app2.listen())
-    .get('/')
-    .expect(204, done);
+      .get('/')
+      .expect(204, done);
   });
 });

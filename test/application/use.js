@@ -33,13 +33,13 @@ describe('app.use(fn)', function(){
     const server = app.listen();
 
     request(server)
-    .get('/')
-    .expect(404)
-    .end(function(err){
-      if (err) return done(err);
-      calls.should.eql([1, 2, 3, 4, 5, 6]);
-      done();
-    });
+      .get('/')
+      .expect(404)
+      .end(function(err){
+        if (err) return done(err);
+        calls.should.eql([1, 2, 3, 4, 5, 6]);
+        done();
+      });
   });
 
   // https://github.com/koajs/koa/pull/530#issuecomment-148138051
@@ -51,9 +51,9 @@ describe('app.use(fn)', function(){
     });
 
     request(app.listen())
-    .get('/')
-    .expect(404)
-    .end(done);
+      .get('/')
+      .expect(404)
+      .end(done);
   });
 
   it('should throw error for non function', function(done){

@@ -16,8 +16,8 @@ describe('ctx.state', function(){
     const server = app.listen();
 
     request(server)
-    .get('/')
-    .expect(404)
-    .end(done);
+      .get('/')
+      .expect(404)
+      .end(done);
   });
 });
