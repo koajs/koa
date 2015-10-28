@@ -5,8 +5,8 @@
   "main": "lib/application.js",
   "scripts": {
     "lint": "eslint lib test",
-    "test": "NODE_ENV=test mocha --require should --require should-http --recursive",
-    "test-cov": "NODE_ENV=test istanbul cover _mocha -- --require should --require should-http --recursive --bail",
+    "test": "mocha --require should --require should-http --recursive",
+    "test-cov": "istanbul cover _mocha -- --require should --require should-http --recursive --bail",
     "test-travis": "npm run lint && npm run test-cov"
   },
   "repository": "koajs/koa",
