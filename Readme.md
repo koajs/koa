@@ -116,25 +116,28 @@ app.use(ctx => {
 app.listen(3000);
 ```
 
-## Example with old version, Koa < 2
+## Example with old signature
+
+If you want to use old signature or be compatible with old middleware, you must use [koa-convert](https://github.com/gyson/koa-convert) to convert legacy generator middleware to promise middleware.
 
 ```js
 const Koa = require('koa');
 const app = new Koa();
+const convert = require('koa-convert')
 
 // logger
 
-app.use(function *(next){
+app.use(convert(function *(next){
   const start = new Date;
   yield next;
   const ms = new Date - start;
   console.log(`${this.method} ${this.url} - ${ms}`);
-});
+}));
 
 // response
 
-app.use(function *(){
-  this.body = 'Hello World';
+app.use(ctx => {
+  ctx.body = 'Hello World';
 });
 
 app.listen(3000);
