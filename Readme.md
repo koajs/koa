@@ -146,7 +146,7 @@ app.listen(3000);
 ## Running tests
 
 ```
-$ make test
+$ npm test
 ```
 
 ## Authors

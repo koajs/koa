@@ -4,7 +4,10 @@
   "description": "Koa web app framework",
   "main": "lib/application.js",
   "scripts": {
-    "test": "make test"
+    "lint": "eslint lib test",
+    "test": "mocha --require should --require should-http --recursive",
+    "test-cov": "istanbul cover _mocha -- --require should --require should-http --recursive --bail",
+    "test-travis": "npm run lint && npm run test-cov"
   },
   "repository": "koajs/koa",
   "keywords": [
