@@ -67,6 +67,7 @@ describe('app.toJSON()', function(){
 
     obj.should.eql({
       subdomainOffset: 2,
+      proxy: false,
       env: 'test'
     });
   })
@@ -77,6 +78,7 @@ describe('app.inspect()', function(){
     var app = koa();
     var util = require('util');
     var str = util.inspect(app);
+    assert.equal("{ subdomainOffset: 2, proxy: false, env: 'test' }", str);
   })
 })
 
