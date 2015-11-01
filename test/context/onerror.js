@@ -8,7 +8,7 @@ describe('ctx.onerror(err)', () => {
   it('should respond', done => {
     const app = new Koa();
 
-    app.use(function(ctx, next){
+    app.use((ctx, next) => {
       ctx.body = 'something else';
 
       ctx.throw(418, 'boom');
@@ -27,7 +27,7 @@ describe('ctx.onerror(err)', () => {
   it('should unset all headers', done => {
     const app = new Koa();
 
-    app.use(function(ctx, next){
+    app.use((ctx, next) => {
       ctx.set('Vary', 'Accept-Encoding');
       ctx.set('X-CSRF-Token', 'asdf');
       ctx.body = 'response';
@@ -57,7 +57,7 @@ describe('ctx.onerror(err)', () => {
       it('should respond 500', done => {
         const app = new Koa();
 
-        app.use(function(ctx, next){
+        app.use((ctx, next) => {
           ctx.body = 'something else';
           const err = new Error('some error');
           err.status = 'notnumber';
@@ -78,7 +78,7 @@ describe('ctx.onerror(err)', () => {
       it('should respond 500', done => {
         const app = new Koa();
 
-        app.use(function(ctx, next){
+        app.use((ctx, next) => {
           ctx.body = 'something else';
           const err = new Error('some error');
           err.status = 9999;
@@ -100,7 +100,7 @@ describe('ctx.onerror(err)', () => {
     it('should response non-error thrown message', done => {
       const app = new Koa();
 
-      app.use(function(ctx, next){
+      app.use((ctx, next) => {
         throw 'string error'; // eslint-disable-line no-throw-literal
       });
 

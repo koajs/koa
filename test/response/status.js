@@ -56,7 +56,7 @@ describe('res.status=', () => {
     it('should strip content related header fields', done => {
       const app = new Koa();
 
-      app.use(function(ctx){
+      app.use(ctx => {
         ctx.body = { foo: 'bar' };
         ctx.set('Content-Type', 'application/json; charset=utf-8');
         ctx.set('Content-Length', '15');
@@ -82,7 +82,7 @@ describe('res.status=', () => {
     it('should strip content releated header fields after status set', done => {
       const app = new Koa();
 
-      app.use(function(ctx){
+      app.use(ctx => {
         ctx.status = status;
         ctx.body = { foo: 'bar' };
         ctx.set('Content-Type', 'application/json; charset=utf-8');

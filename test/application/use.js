@@ -9,23 +9,23 @@ describe('app.use(fn)', () => {
     const app = new Koa();
     const calls = [];
 
-    app.use(function(ctx, next){
+    app.use((ctx, next) => {
       calls.push(1);
-      return next().then(function(){
+      return next().then(() => {
         calls.push(6);
       });
     });
 
-    app.use(function(ctx, next){
+    app.use((ctx, next) => {
       calls.push(2);
-      return next().then(function(){
+      return next().then(() => {
         calls.push(5);
       });
     });
 
-    app.use(function(ctx, next){
+    app.use((ctx, next) => {
       calls.push(3);
-      return next().then(function(){
+      return next().then(() => {
         calls.push(4);
       });
     });
@@ -54,14 +54,14 @@ describe('app.use(fn)', () => {
       .end(done);
   });
 
-  it('should throw error for non function', function(done){
+  it('should throw error for non function', done => {
     const app = new Koa();
 
     (() => app.use('not a function')).should.throw('middleware must be a function!');
     done();
   });
 
-  it('should throw error for generator', function(){
+  it('should throw error for generator', () => {
     const app = new Koa();
 
     (() => app.use(function *(){})).should.throw(/.+/);

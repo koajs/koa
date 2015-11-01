@@ -9,7 +9,7 @@ describe('app', () => {
   it('should handle socket errors', done => {
     const app = new Koa();
 
-    app.use(function(ctx, next){
+    app.use((ctx, next) => {
       // triggers ctx.socket.writable == false
       ctx.socket.emit('error', new Error('boom'));
     });
@@ -27,7 +27,7 @@ describe('app', () => {
   it('should not .writeHead when !socket.writable', done => {
     const app = new Koa();
 
-    app.use(function(ctx, next){
+    app.use((ctx, next) => {
       // set .writable to false
       ctx.socket.writable = false;
       ctx.status = 204;

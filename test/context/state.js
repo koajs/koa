@@ -9,7 +9,7 @@ describe('ctx.state', () => {
   it('should provide a ctx.state namespace', done => {
     const app = new Koa();
 
-    app.use(function(ctx){
+    app.use(ctx => {
       assert.deepEqual(ctx.state, {});
     });
 
