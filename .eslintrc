@@ -12,3 +12,4 @@ rules:
   arrow-parens: [2, "as-needed"]
   arrow-spacing: 2
   dot-location: [2, "property"]
+  prefer-arrow-callback: 2
