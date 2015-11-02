@@ -73,7 +73,7 @@ const app = new Koa();
 
 // logger
 
-app.use(async (ctx, next) => {
+app.use(async function(ctx, next) {
   const start = new Date;
   await next();
   const ms = new Date - start;
