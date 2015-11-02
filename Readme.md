@@ -59,7 +59,9 @@ app.use((ctx, next) => {
 // response
 
 app.use(ctx => {
-  ctx.body = 'Hello World';
+  return someDbOperation().then(result => {
+    ctx.body = 'Hello World, here is your result: ' + result;    
+  })
 });
 
 app.listen(3000);
@@ -82,8 +84,9 @@ app.use(async (ctx, next) => {
 
 // response
 
-app.use(ctx => {
-  ctx.body = 'Hello World';
+app.use(async ctx => {
+  let result = await someDbOperation();
+  ctx.body = 'Hello World, here is your result: ' + result;
 });
 
 app.listen(3000);
@@ -109,8 +112,9 @@ app.use(co.wrap(function *(ctx, next){
 
 // response
 
-app.use(ctx => {
-  ctx.body = 'Hello World';
+app.use(co.wrap(function *(ctx) => {
+  let result = yield someDbOperation();
+  ctx.body = 'Hello World, here is your result: ' + result;
 });
 
 app.listen(3000);
