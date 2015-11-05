@@ -9,19 +9,19 @@ describe('require("babel-core/register")', () => {
       const app = new Koa();
       const calls = [];
 
-      app.use(async function (ctx, next){
+      app.use(async (ctx, next) => {
         calls.push(1);
         await next();
         calls.push(6);
       });
 
-      app.use(async function (ctx, next){
+      app.use(async (ctx, next) => {
         calls.push(2);
         await next();
         calls.push(5);
       });
 
-      app.use(async function (ctx, next){
+      app.use(async (ctx, next) => {
         calls.push(3);
         await next();
         calls.push(4);

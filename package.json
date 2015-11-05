@@ -19,6 +19,8 @@
   "license": "MIT",
   "dependencies": {
     "accepts": "^1.2.2",
+    "babel-core": "^6.1.2",
+    "babel-preset-stage-3": "^6.1.2",
     "content-disposition": "~0.5.0",
     "content-type": "^1.0.0",
     "cookies": "~0.5.0",
