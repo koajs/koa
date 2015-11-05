@@ -1,3 +1,10 @@
+
+2.0.0-alpha.3 / 2015-11-05
+==================
+
+  * ensure parseurl always working as expected. #586
+  * fix Application.inspect() – missing .proxy value. Closes #563
+
 2.0.0-alpha.2 / 2015-10-27
 ==================
 
