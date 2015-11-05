@@ -2,6 +2,7 @@
 'use strict';
 
 var context = require('../context');
+var parseurl = require('parseurl');
 
 describe('ctx.querystring', function(){
   it('should return the querystring', function(){
@@ -43,5 +44,12 @@ describe('ctx.querystring=', function(){
     ctx.url.should.equal('/store/shoes?page=2&color=blue');
     ctx.originalUrl.should.equal('/store/shoes');
     ctx.request.originalUrl.should.equal('/store/shoes');
+  })
+
+  it('should not affect parseurl', function(){
+    const ctx = context({ url: '/login?foo=bar' });
+    ctx.querystring = 'foo=bar';
+    const url = parseurl(ctx.req);
+    url.path.should.equal('/login?foo=bar');
   })
 })
