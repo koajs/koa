@@ -1,3 +1,10 @@
+
+1.1.2 / 2015-11-05
+==================
+
+  * ensure parseurl always working as expected
+  * fix Application.inspect() – missing .proxy value.
+
 1.1.1 / 2015-10-22
 ==================
 
