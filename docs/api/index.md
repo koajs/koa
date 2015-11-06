@@ -85,6 +85,29 @@ app.use(function *(){
 app.listen(3000);
 ```
 
+## Async Functions with Babel
+
+To use `async` functions in Koa, we recommend using [babel's require hook](http://babeljs.io/docs/usage/require/).
+
+```js
+require('babel-core/register');
+// require the rest of the app that needs to be transpiled after the hook
+const app = require('./app');
+```
+
+To parse and transpile async functions,
+you should at a minimum have the [transform-async-to-generator](http://babeljs.io/docs/plugins/transform-async-to-generator/)
+or [transform-async-to-module-method](http://babeljs.io/docs/plugins/transform-async-to-module-method/) plugins.
+For example, in your `.babelrc` file, you should have:
+
+```json
+{
+  "plugins": ["transform-async-to-generator"]
+}
+```
+
+Currently, you could also use the [stage-3 preset](http://babeljs.io/docs/plugins/preset-stage-3/).
+
 ## Settings
 
   Application settings are properties on the `app` instance, currently
