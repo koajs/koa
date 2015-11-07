@@ -3,13 +3,19 @@ parser: babel-eslint
 
 extends: standard
 
+plugins: [
+  "babel"
+]
+
 rules:
+  arrow-parens: 0
+  babel/arrow-parens: [2, "as-needed"]
+
   eqeqeq: 0
   no-var: 2
   semi: [2, always]
   space-before-function-paren: [2, never]
   yoda: 0
-  arrow-parens: [2, "as-needed"]
   arrow-spacing: 2
   dot-location: [2, "property"]
   prefer-arrow-callback: 2
