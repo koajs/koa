@@ -54,11 +54,11 @@ describe('app.use(fn)', () => {
       .end(done);
   });
 
-  it('should throw error for non function', done => {
+  it('should throw error for non function', () => {
     const app = new Koa();
 
-    (() => app.use('not a function')).should.throw('middleware must be a function!');
-    done();
+    (() => app.use()).should.throw('middleware must be a function!');
+    [null, undefined, 0, false, 'not a function'].forEach(v => (() => app.use(v)).should.throw('middleware must be a function!'));
   });
 
   it('should throw error for generator', () => {
@@ -67,10 +67,9 @@ describe('app.use(fn)', () => {
     (() => app.use(function *(){})).should.throw(/.+/);
   });
 
-  it('should throw error for non function', done => {
+  it('should throw error for non function', () => {
     const app = new Koa();
 
     (() => app.use('not a function')).should.throw('middleware must be a function!');
-    done();
   });
 });
