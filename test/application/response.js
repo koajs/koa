@@ -7,7 +7,7 @@ const Koa = require('../..');
 
 describe('app.response', () => {
   const app1 = new Koa();
-  app1.response.msg = 'hello';
+  app1.Response.prototype.msg = 'hello';
   const app2 = new Koa();
 
   it('should merge properties', done => {
