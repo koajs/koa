@@ -29,6 +29,7 @@ $ npm install koa
  - [Wiki](https://github.com/koajs/koa/wiki)
  - [G+ Community](https://plus.google.com/communities/101845768320796750641)
  - [Reddit Community](http://reddit.com/r/koajs)
+ - [Telegram Channel](https://telegram.me/koajs)
  - [Mailing list](https://groups.google.com/forum/#!forum/koajs)
  - [Guide](docs/guide.md)
  - [FAQ](docs/faq.md)
