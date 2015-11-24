@@ -41,6 +41,9 @@
     "type-is": "^1.5.5",
     "vary": "^1.0.0"
   },
+  "publishConfig": {
+    "tag": "next"
+  },
   "devDependencies": {
     "babel-core": "^6.1.2",
     "babel-eslint": "^4.1.3",
