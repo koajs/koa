@@ -95,7 +95,7 @@ app.use(co.wrap(function *(ctx, next){
 
 ```
 
-### old signature middleware (v1.0)
+### old signature middleware (v1.x)
 
 If you want to use old signature or be compatible with old middleware, you must use [koa-convert](https://github.com/gyson/koa-convert) to convert legacy generator middleware to promise middleware.
 
