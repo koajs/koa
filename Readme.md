@@ -41,18 +41,19 @@ app.listen(3000);
 
 
 ## Middleware
-Koa is an middleware framework, it take different kind function as middleware:
+Koa is an middleware framework, it can take 3 different kind function as middleware:
 
   * common function
   * async function
   * generatorFunction
 
-Middleware normally take two parameters (ctx, next), ctx is the context for one request, next is an function, invoke it will run the downstream middleware and get an promise, you can run some code with it's then callback.
-
 Here we write an logger middleware with different function.
 
 ###  common function
 ```js
+
+// Middleware normally take two parameters (ctx, next), ctx is the context for one request, 
+// next is an function, invoke it will run the downstream middleware and get an promise, you can run some code in it's then callback. 
 
 app.use((ctx, next) => {
   const start = new Date;
@@ -64,7 +65,7 @@ app.use((ctx, next) => {
 
 ```
 
-Note: only code in `next().then`'s callback will run after downstream finished
+Note: only code in `next().then`'s callback will run after downstream middleware
 
 ### ___async___ functions (Babel required)
 
@@ -77,19 +78,6 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 
-```
-
-For node 4.0 and babel 6.0 you can setup like this
-```
-// install babel and required presets
-$ npm install babel-core --save
-$ npm install babel-preset-es2015-node5 --save
-$ npm install babel-preset-stage-3 --save
-
-// set babel in entry file
-require("babel-core/register")({
-     presets: ['es2015-node5', 'stage-3']
-});
 ```
 
 ### generatorFunction
@@ -122,6 +110,23 @@ app.use(convert(function *(next){
 }));
 
 ```
+
+
+## Babel setup
+For node 4.0 and babel 6.0 you can setup like this
+
+```
+// install babel and required presets
+$ npm install babel-core --save
+$ npm install babel-preset-es2015-node5 --save
+$ npm install babel-preset-stage-3 --save
+
+// set babel in entry file
+require("babel-core/register")({
+     presets: ['es2015-node5', 'stage-3']
+});
+```
+
 
 ## Running tests
 
