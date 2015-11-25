@@ -1,51 +1,39 @@
 
 # Guide
 
-  This guide covers Koa topics are not directly API related, such as best practices for writing middleware,
-  application structure suggestions.
+  This guide covers Koa topics are not directly API related, such as best practices for writing middleware, application structure suggestions, here we use async function as middleware you can also you commonFunction or generatorFunction which will be a little different.
 
 ## Writing Middleware
 
-  Koa middleware are simple functions which return a `GeneratorFunction`, and accept another. When
-  the middleware is run by an "upstream" middleware, it must manually `yield` to the "downstream" middleware.
+  Koa middleware are simple functions which return a `MiddlewareFunction` with signature (ctx, next). When
+  the middleware is run by an "upstream" middleware, it must manually invoke `next()` to run the "downstream" middleware.
 
   For example if you wanted to track how long it takes for a request to propagate through Koa by adding an
   `X-Response-Time` header field the middleware would look like the following:
 
 ```js
-function *responseTime(next) {
+async function responseTime(ctx, next) {
   const start = new Date;
-  yield next;
+  await next();
   const ms = new Date - start;
-  this.set('X-Response-Time', `${ms}ms`);
+  ctx.set('X-Response-Time', `${ms}ms`);
 }
 
 app.use(responseTime);
 ```
 
-  Here's another way to write the same thing, inline:
-
-```js
-app.use(function *(next){
-  const start = new Date;
-  yield next;
-  const ms = new Date - start;
-  this.set('X-Response-Time', `${ms}ms`);
-});
-```
-
-  If you're a front-end developer you can think any code before `yield next;` as the "capture" phase,
-  while any code after is the "bubble" phase. This crude gif illustrates how ES6 generators allow us
+  If you're a front-end developer you can think any code before `next();` as the "capture" phase,
+  while any code after is the "bubble" phase. This crude gif illustrates how async function allow us
   to properly utilize stack flow to implement request and response flows:
 
 ![koa middleware](/docs/middleware.gif)
 
    1. Create a date to track duration
-   2. Yield control to the next middleware
+   2. Await control to the next middleware
    3. Create another date to track response time
-   4. Yield control to the next middleware
-   5. Yield immediately since `contentLength` only works with responses
-   6. Yield upstream to Koa's noop middleware
+   4. Await control to the next middleware
+   5. Await immediately since `contentLength` only works with responses
+   6. Await upstream to Koa's noop middleware
    7. Ignore setting the body unless the path is "/"
    8. Set the response to "Hello World"
    9. Ignore setting `Content-Length` when no body is present
@@ -55,18 +43,18 @@ app.use(function *(next){
    13. Hand off to Koa to handle the response
 
 
-Note that the final middleware (step __6__) yields to what looks to be nothing - it's actually
-yielding to a no-op generator within Koa. This is so that every middleware can conform with the
-same API, and may be placed before or after others. If you removed `yield next;` from the furthest
+Note that the final middleware (step __6__) await to what looks to be nothing - it's actually
+yielding to a no-op promise within Koa. This is so that every middleware can conform with the
+same API, and may be placed before or after others. If you removed `next();` from the furthest
 "downstream" middleware everything would function appropriately, however it would no longer conform
 to this behaviour.
 
  For example this would be fine:
 
 ```js
-app.use(function *response(){
+app.use(async function response(ctx, next){
   if ('/' != this.url) return;
-  this.body = 'Hello World';
+  ctx.body = 'Hello World';
 });
 ```
 
@@ -91,14 +79,14 @@ app.use(function *response(){
 function logger(format) {
   format = format || ':method ":url"';
 
-  return function *(next){
+  return async function (ctx, next){
     const str = format
-      .replace(':method', this.method)
-      .replace(':url', this.url);
+      .replace(':method', ctx.method)
+      .replace(':url', ctx.url);
 
     console.log(str);
 
-    yield next;
+    await next();
   }
 }
 
@@ -112,121 +100,121 @@ app.use(logger(':method :url'));
 
 ```js
 function logger(format) {
-  return function *logger(next){
+  return async function logger(ctx, next){
 
   }
 }
 ```
 
-### Combining multiple middleware
+### Combining multiple middleware with koa-compose
 
-  Sometimes you want to "compose" multiple middleware into a single middleware for easy re-use or exporting. To do so, you may chain them together with `.call(this, next)`s, then return another function that yields the chain.
+  Sometimes you want to "compose" multiple middleware into a single middleware for easy re-use or exporting. You can use [koa-compose](https://github.com/koajs/compose)
 
 ```js
-function *random(next) {
+const compose = require('koa-compose');
+
+async function random(ctx, next) {
   if ('/random' == this.path) {
-    this.body = Math.floor(Math.random()*10);
+    ctx.body = Math.floor(Math.random()*10);
   } else {
-    yield next;
+    await next();
   }
 };
 
-function *backwards(next) {
+async function backwards(ctx, next) {
   if ('/backwards' == this.path) {
-    this.body = 'sdrawkcab';
+    ctx.body = 'sdrawkcab';
   } else {
-    yield next;
+    await next();
   }
 }
 
-function *pi(next) {
+async function pi(ctx, next) {
   if ('/pi' == this.path) {
-    this.body = String(Math.PI);
+    ctx.body = String(Math.PI);
   } else {
-    yield next;
+    await next();
   }
 }
 
-function *all(next) {
-  yield random.call(this, backwards.call(this, pi.call(this, next)));
-}
+const all = compose([random, backwards, pi])
 
 app.use(all);
 ```
 
-  This is exactly what [koa-compose](https://github.com/koajs/compose) does, which Koa internally uses to create and dispatch the middleware stack.
+  
 
 ### Response Middleware
 
   Middleware that decide to respond to a request and wish to bypass downstream middleware may
-  simply omit `yield next`. Typically this will be in routing middleware, but this can be performed by
+  simply omit `next()`. Typically this will be in routing middleware, but this can be performed by
   any. For example the following will respond with "two", however all three are executed, giving the
   downstream "three" middleware a chance to manipulate the response.
 
 ```js
-app.use(function *(next){
+app.use(async function (ctx, next){
   console.log('>> one');
-  yield next;
-  console.log('<< one');
+  await next();
+  console.log('<< one');  
 });
 
-app.use(function *(next){
+app.use(async function (ctx, next){
   console.log('>> two');
-  this.body = 'two';
-  yield next;
+  ctx.body = 'two';
+  await next();
   console.log('<< two');
 });
 
-app.use(function *(next){
+app.use(async function (ctx, next){
   console.log('>> three');
-  yield next;
+  await next();
   console.log('<< three');
 });
 ```
 
-  The following configuration omits `yield next` in the second middleware, and will still respond
+  The following configuration omits `next()` in the second middleware, and will still respond
   with "two", however the third (and any other downstream middleware) will be ignored:
 
 ```js
-app.use(function *(next){
+app.use(async function (ctx, next){
   console.log('>> one');
-  yield next;
-  console.log('<< one');
+  await next();
+  console.log('<< one');  
 });
 
-app.use(function *(next){
+app.use(async function (ctx, next){
   console.log('>> two');
-  this.body = 'two';
+  ctx.body = 'two';
   console.log('<< two');
 });
 
-app.use(function *(next){
+app.use(async function (ctx, next){
   console.log('>> three');
-  yield next;
+  await next();
   console.log('<< three');
 });
 ```
 
-  When the furthest downstream middleware executes `yield next;` it's really yielding to a noop
+  When the furthest downstream middleware executes `next();` it's really yielding to a noop
   function, allowing the middleware to compose correctly anywhere in the stack.
 
 ## Async operations
 
-  The [Co](https://github.com/visionmedia/co) forms Koa's foundation for generator delegation, allowing
+  Async function and promise forms Koa's foundation, allowing
   you to write non-blocking sequential code. For example this middleware reads the filenames from `./docs`,
   and then reads the contents of each markdown file in parallel before assigning the body to the joint result.
 
 
 ```js
-const fs = require('co-fs');
+const fs = require('fs-promise');
 
-app.use(function *(){
-  const paths = yield fs.readdir('docs');
+app.use(async function (ctx, next){
+  const paths = await fs.readdir('docs');
+  // TO CHECK
+  const files = await Promise.all(paths.map(path => fs.readFile(`docs/${path}`, 'utf8')));
 
-  const files = yield paths.map(path => fs.readFile(`docs/${path}`, 'utf8'));
-
-  this.type = 'markdown';
-  this.body = files.join('');
+  ctx.type = 'markdown';
+  ctx.body = files.join('');
 });
 ```
 
