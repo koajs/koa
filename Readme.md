@@ -5,7 +5,7 @@
   [![build status][travis-image]][travis-url]
   [![Test coverage][coveralls-image]][coveralls-url]
 
-  Expressive HTTP middleware for node.js to make web applications and APIs more enjoyable to write. Koa's middleware stack flows in a stack-like manner, allowing you to perform actions downstream then filter and manipulate the response upstream. Koa's use of generators also greatly increases the readability and robustness of your application.
+  Expressive HTTP middleware framework for node.js to make web applications and APIs more enjoyable to write. Koa's middleware stack flows in a stack-like manner, allowing you to perform actions downstream then filter and manipulate the response upstream.
 
   Only methods that are common to nearly all HTTP servers are integrated directly into Koa's small ~570 SLOC codebase. This
   includes things like content negotiation, normalization of node inconsistencies, redirection, and a few others.
@@ -13,12 +13,130 @@
   Koa is not bundled with any middleware.
 
 ## Installation
+Koa requires __node v4.0.0__ or higher for (partial) ES2015 support.
 
 ```
-$ npm install koa
+$ npm install koa@next
 ```
 
-  Koa requires __node v4.0.0__ or higher for (partial) ES2015 support.
+## Hello koa
+
+```js
+const Koa = require('koa');
+const app = new Koa();
+
+// response
+app.use(ctx => {
+  ctx.body = 'Hello Koa';
+});
+
+app.listen(3000);
+```
+
+## Getting started
+
+ - [Kick-Off-Koa](https://github.com/koajs/kick-off-koa) - An intro to koa via a set of self-guided workshops.
+ - [Workshop](https://github.com/koajs/workshop) - A workshop to learn the basics of koa, Express' spiritual successor.
+ - [Introduction Screencast](http://knowthen.com/episode-3-koajs-quickstart-guide/) - An introduction to installing and getting started with Koa
+
+
+## Middleware
+Koa is an middleware framework, it can take 3 different kind function as middleware:
+
+  * common function
+  * async function
+  * generatorFunction
+
+Here we write an logger middleware with different function.
+
+### Common function
+```js
+
+// Middleware normally take two parameters (ctx, next), ctx is the context for one request, 
+// next is an function that is invoked to execute the downstream middleware. It returns a Promise with a then function for running code after completion.
+
+app.use((ctx, next) => {
+  const start = new Date;
+  return next().then(() => {
+    const ms = new Date - start;
+    console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
+  });
+});
+
+```
+
+### ___async___ functions (Babel required)
+
+```js
+
+app.use(async (ctx, next) => {
+  const start = new Date;
+  await next();
+  const ms = new Date - start;
+  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
+});
+
+```
+
+### GeneratorFunction
+
+To use generator functions, you must use a wrapper such as [co](https://github.com/tj/co) that is no longer supplied with Koa.
+
+```js
+
+app.use(co.wrap(function *(ctx, next){
+  const start = new Date;
+  yield next();
+  const ms = new Date - start;
+  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
+}));
+
+```
+
+### Old signature middleware (v1.x)
+
+If you want to use old signature or be compatible with old middleware, you must use [koa-convert](https://github.com/gyson/koa-convert) to convert legacy generator middleware to promise middleware.
+
+```js
+const convert = require('koa-convert')
+
+app.use(convert(function *(next){
+  const start = new Date;
+  yield next;
+  const ms = new Date - start;
+  console.log(`${this.method} ${this.url} - ${ms}ms`);
+}));
+
+```
+
+
+## Babel setup
+For Node 4.0 and Babel 6.0 you can setup like this
+
+```bash
+// install babel and required presets
+$ npm install babel-core --save
+$ npm install babel-preset-es2015-node5 --save
+$ npm install babel-preset-stage-3 --save
+```
+
+```js
+// set babel in entry file
+require("babel-core/register")({
+     presets: ['es2015-node5', 'stage-3']
+});
+```
+
+
+## Running tests
+
+```
+$ make test
+```
+
+## Authors
+
+See [AUTHORS](AUTHORS).
 
 ## Community
 
@@ -35,123 +153,6 @@ $ npm install koa
  - [中文文档](https://github.com/turingou/koa-guide)
  - __[#koajs]__ on freenode
 
-## Getting started
-
- - [Kick-Off-Koa](https://github.com/koajs/kick-off-koa) - An intro to koa via a set of self-guided workshops.
- - [Workshop](https://github.com/koajs/workshop) - A workshop to learn the basics of koa, Express' spiritual successor.
- - [Introduction Screencast](http://knowthen.com/episode-3-koajs-quickstart-guide/) - An introduction to installing and getting started with Koa
-
-## Example
-```js
-const Koa = require('koa');
-const app = new Koa();
-
-// logger
-
-app.use((ctx, next) => {
-  const start = new Date;
-  return next().then(() => {
-    const ms = new Date - start;
-    console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
-  });
-});
-
-// response
-
-app.use(ctx => {
-  ctx.body = 'Hello World';
-});
-
-app.listen(3000);
-```
-
-## Example with ___async___ functions (Babel required)
-
-```js
-const Koa = require('koa');
-const app = new Koa();
-
-// logger
-
-app.use(async (ctx, next) => {
-  const start = new Date;
-  await next();
-  const ms = new Date - start;
-  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
-});
-
-// response
-
-app.use(ctx => {
-  ctx.body = 'Hello World';
-});
-
-app.listen(3000);
-```
-
-## Example with generator
-
-To use generator functions, you must use a wrapper such as [co](https://github.com/tj/co) that is no longer supplied with Koa.
-
-```js
-const Koa = require('koa');
-const app = new Koa();
-const co = require('co');
-
-// logger
-
-app.use(co.wrap(function *(ctx, next){
-  const start = new Date;
-  yield next();
-  const ms = new Date - start;
-  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
-}));
-
-// response
-
-app.use(ctx => {
-  ctx.body = 'Hello World';
-});
-
-app.listen(3000);
-```
-
-## Example with old signature
-
-If you want to use old signature or be compatible with old middleware, you must use [koa-convert](https://github.com/gyson/koa-convert) to convert legacy generator middleware to promise middleware.
-
-```js
-const Koa = require('koa');
-const app = new Koa();
-const convert = require('koa-convert')
-
-// logger
-
-app.use(convert(function *(next){
-  const start = new Date;
-  yield next;
-  const ms = new Date - start;
-  console.log(`${this.method} ${this.url} - ${ms}ms`);
-}));
-
-// response
-
-app.use(ctx => {
-  ctx.body = 'Hello World';
-});
-
-app.listen(3000);
-```
-
-## Running tests
-
-```
-$ make test
-```
-
-## Authors
-
-See [AUTHORS](AUTHORS).
 
 # License
 
