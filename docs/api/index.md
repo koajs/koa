@@ -1,88 +1,13 @@
 # Installation
 
-  Koa is supported in all versions of [iojs](https://iojs.org) without any flags.
+  Koa requires __node v4.0.0__ or higher for (partial) ES2015 support.
 
-  To use Koa with node, you must be running __node 0.11.16__ or higher for generator and promise support, and must run node(1)
-  with the `--harmony-generators` or `--harmony` flag.
-
-  You can quickly install a supposed version of node/iojs with your favorite version manager:
+  You can quickly install a supposed version of node with your favorite version manager:
 
 ```bash
-$ nvm install iojs
+$ nvm install v4.0.0
 $ npm i koa
 $ node my-koa-app.js
-```
-
-# Application
-
-  A Koa application is an object containing an array of middleware generator functions
-  which are composed and executed in a stack-like manner upon request. Koa is similar to many
-  other middleware systems that you may have encountered such as Ruby's Rack, Connect, and so on -
-  however a key design decision was made to provide high level "sugar" at the otherwise low-level
-  middleware layer. This improves interoperability, robustness, and makes writing middleware much
-  more enjoyable.
-
-  This includes methods for common tasks like content-negotiation, cache freshness, proxy support, and redirection
-  among others. Despite supplying a reasonably large number of helpful methods Koa maintains a small footprint, as
-  no middleware are bundled.
-
-  The obligatory hello world application:
-
-```js
-const Koa = require('koa');
-const app = new Koa();
-
-app.use(function *(){
-  this.body = 'Hello World';
-});
-
-app.listen(3000);
-```
-
-## Cascading
-
-  Koa middleware cascade in a more traditional way as you may be used to with similar tools -
-  this was previously difficult to make user friendly with node's use of callbacks.
-  However with generators we can achieve "true" middleware. Contrasting Connect's implementation which
-  simply passes control through series of functions until one returns, Koa yields "downstream", then
-  control flows back "upstream".
-
-  The following example responds with "Hello World", however first the request flows through
-  the `x-response-time` and `logging` middleware to mark when the request started, then continue
-  to yield control through the response middleware. When a middleware invokes `yield next`
-  the function suspends and passes control to the next middleware defined. After there are no more
-  middleware to execute downstream, the stack will unwind and each middleware is resumed to perform
-  its upstream behaviour.
-
-```js
-const Koa = require('koa');
-const app = new Koa();
-
-// x-response-time
-
-app.use(function *(next){
-  const start = new Date;
-  yield next;
-  const ms = new Date - start;
-  this.set('X-Response-Time', `${ms}ms`);
-});
-
-// logger
-
-app.use(function *(next){
-  const start = new Date;
-  yield next;
-  const ms = new Date - start;
-  console.log(`${this.method} ${this.url} - ${ms}`);
-});
-
-// response
-
-app.use(function *(){
-  this.body = 'Hello World';
-});
-
-app.listen(3000);
 ```
 
 ## Async Functions with Babel
@@ -107,6 +32,78 @@ For example, in your `.babelrc` file, you should have:
 ```
 
 Currently, you could also use the [stage-3 preset](http://babeljs.io/docs/plugins/preset-stage-3/).
+
+# Application
+
+  A Koa application is an object containing an array of middleware functions
+  which are composed and executed in a stack-like manner upon request. Koa is similar to many
+  other middleware systems that you may have encountered such as Ruby's Rack, Connect, and so on -
+  however a key design decision was made to provide high level "sugar" at the otherwise low-level
+  middleware layer. This improves interoperability, robustness, and makes writing middleware much
+  more enjoyable.
+
+  This includes methods for common tasks like content-negotiation, cache freshness, proxy support, and redirection
+  among others. Despite supplying a reasonably large number of helpful methods Koa maintains a small footprint, as
+  no middleware are bundled.
+
+  The obligatory hello world application:
+
+```js
+const Koa = require('koa');
+const app = new Koa();
+
+app.use(ctx => {
+  ctx.body = 'Hello World';
+});
+
+app.listen(3000);
+```
+
+## Cascading
+
+  Koa middleware cascade in a more traditional way as you may be used to with similar tools -
+  this was previously difficult to make user friendly with node's use of callbacks.
+  However with async functions we can achieve "true" middleware. Contrasting Connect's implementation which
+  simply passes control through series of functions until one returns, Koa invoke "downstream", then
+  control flows back "upstream".
+
+  The following example responds with "Hello World", however first the request flows through
+  the `x-response-time` and `logging` middleware to mark when the request started, then continue
+  to yield control through the response middleware. When a middleware invokes `next()`
+  the function suspends and passes control to the next middleware defined. After there are no more
+  middleware to execute downstream, the stack will unwind and each middleware is resumed to perform
+  its upstream behaviour.
+
+```js
+const Koa = require('koa');
+const app = new Koa();
+
+// x-response-time
+
+app.use(async function (ctx, next){
+  const start = new Date;
+  await next();
+  const ms = new Date - start;
+  ctx.set('X-Response-Time', `${ms}ms`);
+});
+
+// logger
+
+app.use(async function (ctx, next){
+  const start = new Date;
+  await next();
+  const ms = new Date - start;
+  console.log(`${ctx.method} ${ctx.url} - ${ms}`);
+});
+
+// response
+
+app.use((ctx) => {
+  ctx.body = 'Hello World';
+});
+
+app.listen(3000);
+```
 
 ## Settings
 
