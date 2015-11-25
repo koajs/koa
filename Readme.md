@@ -21,8 +21,7 @@ $ npm install koa@next
 
 ## Hello koa
 
-```
-js
+```js
 const Koa = require('koa');
 const app = new Koa();
 
