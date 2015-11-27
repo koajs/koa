@@ -53,7 +53,7 @@ Here we write an logger middleware with different function.
 ```js
 
 // Middleware normally take two parameters (ctx, next), ctx is the context for one request, 
-// next is an function, invoke it will run the downstream middleware and get an promise, you can run some code in it's then callback. 
+// next is an function that is invoked to execute the downstream middleware. It returns a Promise with a then function for running code after completion.
 
 app.use((ctx, next) => {
   const start = new Date;
@@ -64,8 +64,6 @@ app.use((ctx, next) => {
 });
 
 ```
-
-Note: only code in `next().then`'s callback will run after downstream middleware
 
 ### ___async___ functions (Babel required)
 
