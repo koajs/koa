@@ -49,7 +49,7 @@ Koa is an middleware framework, it can take 3 different kind function as middlew
 
 Here we write an logger middleware with different function.
 
-###  common function
+### Common function
 ```js
 
 // Middleware normally take two parameters (ctx, next), ctx is the context for one request, 
@@ -80,7 +80,7 @@ app.use(async (ctx, next) => {
 
 ```
 
-### generatorFunction
+### GeneratorFunction
 
 To use generator functions, you must use a wrapper such as [co](https://github.com/tj/co) that is no longer supplied with Koa.
 
@@ -95,7 +95,7 @@ app.use(co.wrap(function *(ctx, next){
 
 ```
 
-### old signature middleware (v1.x)
+### Old signature middleware (v1.x)
 
 If you want to use old signature or be compatible with old middleware, you must use [koa-convert](https://github.com/gyson/koa-convert) to convert legacy generator middleware to promise middleware.
 
