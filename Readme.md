@@ -113,7 +113,7 @@ app.use(convert(function *(next){
 
 
 ## Babel setup
-For node 4.0 and babel 6.0 you can setup like this
+For Node 4.0 and Babel 6.0 you can setup like this
 
 ```bash
 // install babel and required presets

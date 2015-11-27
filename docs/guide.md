@@ -1,7 +1,7 @@
 
 # Guide
 
-  This guide covers Koa topics are not directly API related, such as best practices for writing middleware, application structure suggestions, here we use async function as middleware you can also you commonFunction or generatorFunction which will be a little different.
+  This guide covers Koa topics that are not directly API related, such as best practices for writing middleware, application structure suggestions, here we use async function as middleware you can also you commonFunction or generatorFunction which will be a little different.
 
 ## Writing Middleware
 
@@ -195,7 +195,7 @@ app.use(async function (ctx, next){
 });
 ```
 
-  When the furthest downstream middleware executes `next();` it's really yielding to a noop
+  When the furthest downstream middleware executes `next();`, it's really yielding to a noop
   function, allowing the middleware to compose correctly anywhere in the stack.
 
 ## Async operations
@@ -210,7 +210,6 @@ const fs = require('fs-promise');
 
 app.use(async function (ctx, next){
   const paths = await fs.readdir('docs');
-  // TO CHECK
   const files = await Promise.all(paths.map(path => fs.readFile(`docs/${path}`, 'utf8')));
 
   ctx.type = 'markdown';

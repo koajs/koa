@@ -31,7 +31,7 @@ For example, in your `.babelrc` file, you should have:
 }
 ```
 
-Currently, you could also use the [stage-3 preset](http://babeljs.io/docs/plugins/preset-stage-3/).
+You can also use the [stage-3 preset](http://babeljs.io/docs/plugins/preset-stage-3/) instead.
 
 # Application
 
