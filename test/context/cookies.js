@@ -74,4 +74,37 @@ describe('ctx.cookies.set()', () => {
         });
     });
   });
+
+  describe('with secure', () => {
+    it('should get secure from request', done => {
+      const app = new Koa();
+
+      app.proxy = true;
+      app.keys = ['a', 'b'];
+
+      app.use(ctx => {
+        ctx.cookies.set('name', 'jon', { signed: true });
+        ctx.status = 204;
+      });
+
+      const server = app.listen();
+
+      request(server)
+      .get('/')
+      .set('x-forwarded-proto', 'https') // mock secure
+      .expect(204)
+      .end((err, res) => {
+        if (err) return done(err);
+
+        const cookies = res.headers['set-cookie'];
+        cookies.some(cookie => /^name=/.test(cookie)).should.be.ok;
+
+        cookies.some(cookie => /^name\.sig=/.test(cookie)).should.be.ok;
+
+        cookies.every(cookie => /secure/.test(cookie)).should.be.ok;
+
+        done();
+      });
+    });
+  });
 });
