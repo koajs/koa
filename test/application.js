@@ -2,9 +2,13 @@
 'use strict';
 
 var stderr = require('test-console').stderr;
+var Agent = require('agentkeepalive');
 var request = require('supertest');
 var statuses = require('statuses');
+var freeport = require('freeport');
+var pedding = require('pedding');
 var assert = require('assert');
+var urllib = require('urllib');
 var http = require('http');
 var koa = require('..');
 var fs = require('fs');
@@ -871,6 +875,69 @@ describe('app.respond', function(){
       request(server)
       .get('/')
       .expect(404, done);
+    })
+
+    it('should ensure stream do not leak', function(done){
+      done = pedding(3, done);
+      var app = koa();
+      let stream1 = fs.createReadStream(__filename);
+      let stream2 = fs.createReadStream(__filename);
+      stream1.once('close', done);
+      stream2.once('close', done);
+
+      app.use(function *(){
+        this.body = stream1;
+        this.body = stream2;
+      });
+
+      var server = app.listen();
+
+      request(server)
+      .head('/')
+      .expect(200, done);
+    })
+  })
+
+  describe('when .body is a http keepalive IncomingMessage', function(){
+    var target;
+    var port;
+    before(function(done){
+      var app = koa();
+      app.use(function *(){
+        this.body = fs.createReadStream(__filename);
+      });
+
+      freeport(function(err, p){
+        port = p || 12384;
+        target = app.listen(port, done);
+      });
+    })
+
+    after(function(){
+      target.close();
+    })
+
+    it('should not destroy keepalive connection', function(done){
+      done = pedding(2, done);
+      var app = koa();
+      app.use(function *(){
+        var remote = yield urllib.request('http://127.0.0.1:' + port, {
+          streaming: true,
+          agent: new Agent()
+        });
+        var res = remote.res;
+        this.body = res;
+        res.once('end', function(){
+          assert.equal(res.readable, false);
+          assert.equal(res.socket.destroyed, false);
+          done();
+        });
+      });
+
+      var server = app.listen();
+      request(server)
+      .head('/')
+      .expect(200, done);
     })
   })
 
