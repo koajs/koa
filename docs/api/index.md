@@ -1,16 +1,10 @@
 # Installation
 
-  Koa is supported in all versions of [iojs](https://iojs.org) without any flags.
-
-  To use Koa with node, you must be running __node 0.11.16__ or higher for generator and promise support, and must run node(1)
-  with the `--harmony-generators` or `--harmony` flag.
-
-  You can quickly install a supposed version of node/iojs with your favorite version manager:
+Koa works out of the box with recent versions of Node. To use Koa with 0.11.x you must use the `--harmony` or `--harmony-generators` flag.
 
 ```bash
-$ nvm install iojs
-$ npm i koa
-$ node my-koa-app.js
+$ npm install koa
+$ node app.js
 ```
 
 # Application
