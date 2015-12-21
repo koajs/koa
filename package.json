@@ -25,7 +25,7 @@
     "content-type": "^1.0.0",
     "cookies": "~0.5.0",
     "debug": "*",
-    "delegates": "0.1.0",
+    "delegates": "1.0.0",
     "destroy": "^1.0.3",
     "error-inject": "~1.0.0",
     "escape-html": "~1.0.1",
@@ -43,14 +43,14 @@
     "vary": "^1.0.0"
   },
   "devDependencies": {
-    "babel": "^5.0.0",
+    "babel": "^6.3.13",
     "istanbul": "^0.4.0",
     "make-lint": "^1.0.1",
     "mocha": "^2.0.1",
-    "should": "^6.0.3",
-    "should-http": "0.0.3",
+    "should": "^8.0.2",
+    "should-http": "0.0.4",
     "supertest": "^1.0.1",
-    "test-console": "^0.7.1"
+    "test-console": "^1.0.0"
   },
   "engines": {
     "node": ">= 0.12.0",
