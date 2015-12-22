@@ -1,11 +1,13 @@
 # Installation
 
-Koa works out of the box with recent versions of Node. To use Koa with 0.11.x you must use the `--harmony` or `--harmony-generators` flag.
+Koa works out of the box with recent versions of Node.
 
 ```bash
 $ npm install koa
 $ node app.js
 ```
+
+To use Koa with 0.12.x you must use the `--harmony` or `--harmony-generators` flag.
 
 # Application
 
