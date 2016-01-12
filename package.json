@@ -47,7 +47,7 @@
     "istanbul": "^0.4.0",
     "make-lint": "^1.0.1",
     "mocha": "^2.0.1",
-    "should": "^8.1.1",
+    "should": "^6.0.3",
     "should-http": "0.0.3",
     "supertest": "^1.0.1",
     "test-console": "^0.7.1"
