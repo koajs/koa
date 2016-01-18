@@ -27,7 +27,7 @@ test-cov:
 		$(TESTS) \
 		--bail
 
-test-travis: lint
+test-ci: lint
 	@NODE_ENV=test node \
 		./node_modules/.bin/istanbul cover \
 		./node_modules/.bin/_mocha \
