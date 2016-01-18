@@ -18,10 +18,30 @@
 $ npm install koa
 ```
 
-  Koa is supported in all versions of [iojs](https://iojs.org) without any flags.
+  Koa is supported in node v4+ and node v0.12 with the `--harmony-generators` or `--harmony` flag.
 
-  To use Koa with node, you must be running __node 0.12.0__ or higher for generator and promise support, and must run node(1)
-  with the `--harmony-generators` or `--harmony` flag.
+## v2 Alpha
+
+  Koa v2 is currently in alpha. In this new version, the middleware function signature completely changes in favor of ES6 syntax:
+
+```js
+// uses async arrow functions
+app.use(async (ctx, next) => {
+  try {
+    await next() // next is now a function
+  } catch (err) {
+    ctx.body = { message: err.message }
+    ctx.status = err.status || 500
+  }
+})
+
+app.use(async ctx => {
+  const user = await User.getById(this.session.userid) // await instead of yield
+  ctx.body = user // ctx instead of this
+})
+```
+  To learn more about Koa v2, follow this issue: https://github.com/koajs/koa/issues/533.
+  To try Koa v2, `npm install koa@2.0.0-alpha.3`.
 
 ## Community
 
