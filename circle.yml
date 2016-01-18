@@ -1,0 +1,9 @@
+machine:
+  node:
+    version: 5
+test:
+  override:
+    - make test-ci
+  post:
+    - npm install coveralls@2
+    - cat ./coverage/lcov.info | coveralls
