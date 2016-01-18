@@ -1,10 +1,11 @@
 language: node_js
 node_js:
-  - "0.12"
-  - "1"
-  - "2"
-  - "3"
-  - "4"
+  - stable
+  - 4
+  - 3
+  - 2
+  - 1
+  - 0.12
 sudo: false
 script: "make test-travis"
 after_script: "npm install coveralls@2 && cat ./coverage/lcov.info | coveralls"
