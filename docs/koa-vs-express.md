@@ -21,7 +21,7 @@ THIS DOCUMENT IS IN PROGRESS. THIS PARAGRAPH SHALL BE REMOVED WHEN THIS DOCUMENT
 
 
   Thus, if you'd like to be closer to node.js and traditional node.js-style coding, you probably want to stick to Connect/Express or similar frameworks.
-  If you want to dive into the land of generators, use Koa.
+  If you want to get rid of callbacks, use Koa.
 
   As result of this different philosophy is that traditional node.js "middleware", i.e. functions of the form `(req, res, next)`, are incompatible with Koa. Your application will essentially have to be rewritten from the ground, up.
 

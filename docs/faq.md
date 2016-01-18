@@ -16,15 +16,9 @@
 ## Does Koa replace Connect?
 
   No, just a different take on similar functionality
-  now that generators allow us to write code with less
+  now that async functions allow us to write code with less
   callbacks. Connect is equally capable, and some may still prefer it,
   it's up to what you prefer.
-
-## Do generators decrease performance?
-
-  Barely - check out the benchmarks in our readme, the numbers
-  are more than fine, and there's no substitute for proper
-  horizontal scaling.
 
 ## Does Koa include routing?
 
@@ -41,15 +35,15 @@
 
 ## What custom properties do the Koa objects have?
 
-  Koa uses its own custom objects: `this`, `this.request`, and `this.response`.
+  Koa uses its own custom objects: `ctx`, `ctx.request`, and `ctx.response`.
   These objects abstract node's `req` and `res` objects with convenience methods and getters/setters.
   Generally, properties added to these objects must obey the following rules:
 
   - They must be either very commonly used and/or must do something useful
   - If a property exists as a setter, then it will also exist as a getter, but not vice versa
 
-Many of `this.request` and `this.response`'s properties are delegated to `this`.
+Many of `ctx.request` and `ctx.response`'s properties are delegated to `ctx`.
 If it's a getter/setter, then both the getter and the setter will strictly
-correspond to either `this.request` or `this.response`.
+correspond to either `ctx.request` or `ctx.response`.
 
 Please think about these rules before suggesting additional properties.
