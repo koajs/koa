@@ -40,8 +40,8 @@ app.use(async ctx => {
   ctx.body = user // ctx instead of this
 })
 ```
-  To learn more about Koa v2, follow this issue: https://github.com/koajs/koa/issues/533.
-  To try Koa v2, `npm install koa@2.0.0-alpha.3`.
+  To learn more about Koa v2, follow [this issue](https://github.com/koajs/koa/issues/533).
+  To try Koa v2, `npm install koa@next`.
 
 ## Community
 
