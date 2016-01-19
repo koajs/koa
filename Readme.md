@@ -22,7 +22,7 @@ $ npm install koa
 
 ## v2 Alpha
 
-  Koa v2 is currently in alpha. In this new version, the middleware function signature completely changes in favor of ES6 syntax:
+  Koa v2 is currently in alpha. In this new version, the middleware function signature completely changes in favor of ES2015-2016 syntax:
 
 ```js
 // uses async arrow functions
