@@ -22,7 +22,7 @@ $ npm install koa
 
 ## v2 Alpha
 
-  Koa v2 is currently in alpha. In this new version, the middleware function signature completely changes in favor of ES2015-2016 syntax:
+  Koa v2 is currently in alpha. In this new version, the middleware function signature completely changes in favor of ES6 syntax:
 
 ```js
 // uses async arrow functions
@@ -40,8 +40,8 @@ app.use(async ctx => {
   ctx.body = user // ctx instead of this
 })
 ```
-  To learn more about Koa v2, follow [this issue](https://github.com/koajs/koa/issues/533).
-  To try Koa v2, `npm install koa@next`.
+  To learn more about Koa v2, follow this issue: https://github.com/koajs/koa/issues/533.
+  To try Koa v2, `npm install koa@2.0.0-alpha.3`.
 
 ## Community
 
@@ -51,11 +51,11 @@ app.use(async ctx => {
  - [Middleware](https://github.com/koajs/koa/wiki) list
  - [Wiki](https://github.com/koajs/koa/wiki)
  - [G+ Community](https://plus.google.com/communities/101845768320796750641)
- - [Reddit Community](http://reddit.com/r/koajs)
+ - [Reddit Community](https://www.reddit.com/r/koajs)
  - [Mailing list](https://groups.google.com/forum/#!forum/koajs)
  - [Guide](docs/guide.md)
  - [FAQ](docs/faq.md)
- - [中文文档](https://github.com/turingou/koa-guide)
+ - [中文文档](https://github.com/guo-yu/koa-guide)
  - __[#koajs]__ on freenode
 
 ## Getting started
@@ -106,7 +106,7 @@ $ make test
   MIT
 
 [npm-image]: https://img.shields.io/npm/v/koa.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/koa
+[npm-url]: https://www.npmjs.com/package/koa
 [travis-image]: https://img.shields.io/travis/koajs/koa/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/koajs/koa
 [coveralls-image]: https://img.shields.io/coveralls/koajs/koa/master.svg?style=flat-square
