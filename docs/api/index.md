@@ -169,8 +169,9 @@ app.context.db = db();
 
 ## Error Handling
 
-  By default outputs all errors to stderr unless __NODE_ENV__ is "test". To perform custom error-handling logic such as centralized logging you
-  can add an "error" event listener:
+  By default outputs all errors to stderr unless __NODE_ENV__ is "test" or `app.silent` is `true`.
+  The default error handler also won't outputs errors when `err.status` is `404` or `err.expose` is `true`.
+  To perform custom error-handling logic such as centralized logging you can add an "error" event listener:
 
 ```js
 app.on('error', function(err){
