@@ -22,9 +22,12 @@ $ npm install koa
 
 ## v2 Alpha
 
-  Koa v2 is currently in alpha. In this new version, the middleware function signature completely changes in favor of ES6 syntax:
+  Koa v2 is currently in alpha. In this new version, the middleware function signature completely changes in favor of ES2015-2016 syntax:
 
 ```js
+// Koa application is now a class and requires the new operator.
+const app = new Koa()
+
 // uses async arrow functions
 app.use(async (ctx, next) => {
   try {
@@ -40,8 +43,8 @@ app.use(async ctx => {
   ctx.body = user // ctx instead of this
 })
 ```
-  To learn more about Koa v2, follow this issue: https://github.com/koajs/koa/issues/533.
-  To try Koa v2, `npm install koa@2.0.0-alpha.3`.
+  To learn more about Koa v2, follow [this issue](https://github.com/koajs/koa/issues/533).
+  To try Koa v2, `npm install koa@next`.
 
 ## Community
 
