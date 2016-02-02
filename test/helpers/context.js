@@ -3,7 +3,7 @@
 
 const Stream = require('stream');
 const Koa = require('../..');
-const Context = require('../../lib/context')
+const Context = require('../../lib/context');
 
 module.exports = (req, res) => {
   const socket = new Stream.Duplex();
