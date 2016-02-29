@@ -136,6 +136,23 @@ If `response.status` has not been set, Koa will automatically set the status to 
 
   The Content-Type is defaulted to application/octet-stream.
 
+  Whenever a stream is set as the response body, `.onerror` is automatically added as a listener to the `error` event to catch any errors.
+  In addition, whenever the request is closed (even prematurely), the stream is destroyed.
+  If you do not want these two features, do not set the stream as the body directly.
+  For example, you may not want this when setting the body as an HTTP stream in a proxy as it would destroy the underlying connection.
+
+  See: https://github.com/koajs/koa/pull/612 for more information.
+
+  Here's an example of stream error handling without automatically destroying the stream:
+
+```js
+const PassThrough = require('stream').PassThrough
+
+app.use(function * (next) {
+  this.body = someHTTPStream.on('error', this.onerror).pipe(PassThrough())
+})
+```
+
 #### Object
 
   The Content-Type is defaulted to application/json.
