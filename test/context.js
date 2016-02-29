@@ -6,8 +6,9 @@ var koa = require('..');
 
 exports = module.exports = function(req, res){
   var socket = new Stream.Duplex();
-  req = req || { headers: {}, socket: socket, __proto__: Stream.Readable.prototype };
-  res = res || { _headers: {}, socket: socket, __proto__: Stream.Writable.prototype };
+  socket.remoteAddress = '127.0.0.1';
+  req = req || { headers: {}, socket: socket, connection: socket, __proto__: Stream.Readable.prototype };
+  res = res || { _headers: {}, socket: socket, connection: socket, __proto__: Stream.Writable.prototype };
   res.getHeader = function(k){ return res._headers[k.toLowerCase()] };
   res.setHeader = function(k, v){ res._headers[k.toLowerCase()] = v };
   res.removeHeader = function(k, v){ delete res._headers[k.toLowerCase()] };
