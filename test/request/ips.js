@@ -9,7 +9,7 @@ describe('req.ips', function(){
       it('should be ignored', function(){
         var req = request();
         req.app.proxy = false;
-        req.header['x-forwarded-for'] = '127.0.0.1,127.0.0.2';
+        req.header['x-forwarded-for'] = '127.0.0.2';
         req.ips.should.eql([]);
       })
     })
@@ -18,7 +18,7 @@ describe('req.ips', function(){
       it('should be used', function(){
         var req = request();
         req.app.proxy = true;
-        req.header['x-forwarded-for'] = '127.0.0.1,127.0.0.2';
+        req.header['x-forwarded-for'] = '127.0.0.2';
         req.ips.should.eql(['127.0.0.1', '127.0.0.2']);
       })
     })
