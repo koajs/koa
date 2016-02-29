@@ -25,7 +25,7 @@
     "content-type": "^1.0.0",
     "cookies": "~0.5.0",
     "debug": "*",
-    "delegates": "0.1.0",
+    "delegates": "^1.0.0",
     "destroy": "^1.0.3",
     "error-inject": "~1.0.0",
     "escape-html": "~1.0.1",
