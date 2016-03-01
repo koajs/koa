@@ -55,7 +55,7 @@ describe('ctx.type', function(){
   describe('with no Content-Type', function(){
     it('should return ""', function(){
       var ctx = context();
-      // TODO: this is lame
+      // this is lame
       assert('' === ctx.type);
     })
   })
