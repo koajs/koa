@@ -23,7 +23,7 @@
     "composition": "^2.1.1",
     "content-disposition": "~0.5.0",
     "content-type": "^1.0.0",
-    "cookies": "~0.5.0",
+    "cookies": "~0.6.1",
     "debug": "*",
     "delegates": "^1.0.0",
     "destroy": "^1.0.3",
