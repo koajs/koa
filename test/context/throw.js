@@ -15,8 +15,8 @@ describe('ctx.throw(msg)', function(){
       assert(!err.expose);
       done();
     }
-  })
-})
+  });
+});
 
 describe('ctx.throw(err)', function(){
   it('should set .status to 500', function(done){
@@ -31,8 +31,8 @@ describe('ctx.throw(err)', function(){
       assert(!err.expose);
       done();
     }
-  })
-})
+  });
+});
 
 describe('ctx.throw(err, status)', function(){
   it('should throw the error and set .status', function(done){
@@ -47,8 +47,8 @@ describe('ctx.throw(err, status)', function(){
       assert(true === err.expose);
       done();
     }
-  })
-})
+  });
+});
 
 describe('ctx.throw(status, err)', function(){
   it('should throw the error and set .status', function(done){
@@ -63,8 +63,8 @@ describe('ctx.throw(status, err)', function(){
       assert(true === err.expose);
       done();
     }
-  })
-})
+  });
+});
 
 describe('ctx.throw(msg, status)', function(){
   it('should throw an error', function(done){
@@ -78,8 +78,8 @@ describe('ctx.throw(msg, status)', function(){
       assert(true === err.expose);
       done();
     }
-  })
-})
+  });
+});
 
 describe('ctx.throw(status, msg)', function(){
   it('should throw an error', function(done){
@@ -93,8 +93,8 @@ describe('ctx.throw(status, msg)', function(){
       assert(true === err.expose);
       done();
     }
-  })
-})
+  });
+});
 
 describe('ctx.throw(status)', function(){
   it('should throw an error', function(done){
@@ -108,7 +108,7 @@ describe('ctx.throw(status)', function(){
       assert(true === err.expose);
       done();
     }
-  })
+  });
 
   describe('when not valid status', function(){
     it('should not expose', function(done){
@@ -118,14 +118,14 @@ describe('ctx.throw(status)', function(){
         var err = new Error('some error');
         err.status = -1;
         ctx.throw(err);
-      } catch(err) {
+      } catch (err) {
         assert('some error' == err.message);
         assert(!err.expose);
         done();
       }
-    })
-  })
-})
+    });
+  });
+});
 
 describe('ctx.throw(status, msg, props)', function(){
   it('should mixin props', function(done){
@@ -140,7 +140,7 @@ describe('ctx.throw(status, msg, props)', function(){
       assert(true === err.prop);
       done();
     }
-  })
+  });
 
   describe('when props include status', function(){
     it('should be ignored', function(done){
@@ -158,9 +158,9 @@ describe('ctx.throw(status, msg, props)', function(){
         assert(true === err.prop);
         done();
       }
-    })
-  })
-})
+    });
+  });
+});
 
 describe('ctx.throw(msg, props)', function(){
   it('should mixin props', function(done){
@@ -175,8 +175,8 @@ describe('ctx.throw(msg, props)', function(){
       assert(true === err.prop);
       done();
     }
-  })
-})
+  });
+});
 
 describe('ctx.throw(status, props)', function(){
   it('should mixin props', function(done){
@@ -191,8 +191,8 @@ describe('ctx.throw(status, props)', function(){
       assert(true === err.prop);
       done();
     }
-  })
-})
+  });
+});
 
 describe('ctx.throw(err, props)', function(){
   it('should mixin props', function(done){
@@ -207,5 +207,5 @@ describe('ctx.throw(err, props)', function(){
       assert(true === err.prop);
       done();
     }
-  })
-})
+  });
+});

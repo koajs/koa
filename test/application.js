@@ -5,7 +5,6 @@ var stderr = require('test-console').stderr;
 var request = require('supertest');
 var statuses = require('statuses');
 var assert = require('assert');
-var http = require('http');
 var koa = require('..');
 var fs = require('fs');
 var AssertionError = assert.AssertionError;
@@ -27,7 +26,7 @@ describe('app', function(){
     request(app.listen())
     .get('/')
     .end(function(){});
-  })
+  });
 
   it('should not .writeHead when !socket.writable', function(done){
     var app = koa();
@@ -41,7 +40,7 @@ describe('app', function(){
       this.res.end = function(){
         throw new Error('response sent');
       };
-    })
+    });
 
     // hackish, but the response should occur in a single tick
     setImmediate(done);
@@ -49,7 +48,7 @@ describe('app', function(){
     request(app.listen())
     .get('/')
     .end(function(){});
-  })
+  });
 
   it('should set development env when NODE_ENV missing', function(){
     var NODE_ENV = process.env.NODE_ENV;
@@ -57,8 +56,8 @@ describe('app', function(){
     var app = koa();
     process.env.NODE_ENV = NODE_ENV;
     assert.equal(app.env, 'development');
-  })
-})
+  });
+});
 
 describe('app.toJSON()', function(){
   it('should work', function(){
@@ -70,8 +69,8 @@ describe('app.toJSON()', function(){
       proxy: false,
       env: 'test'
     });
-  })
-})
+  });
+});
 
 describe('app.inspect()', function(){
   it('should work', function(){
@@ -79,8 +78,8 @@ describe('app.inspect()', function(){
     var util = require('util');
     var str = util.inspect(app);
     assert.equal("{ subdomainOffset: 2, proxy: false, env: 'test' }", str);
-  })
-})
+  });
+});
 
 describe('app.use(fn)', function(){
   it('should compose middleware', function(done){
@@ -112,10 +111,10 @@ describe('app.use(fn)', function(){
     .expect(404)
     .end(function(err){
       if (err) return done(err);
-      calls.should.eql([1,2,3,4,5,6]);
+      calls.should.eql([1, 2, 3, 4, 5, 6]);
       done();
     });
-  })
+  });
 
   it('should error when a non-generator function is passed', function(){
     var app = koa();
@@ -125,14 +124,14 @@ describe('app.use(fn)', function(){
     } catch (err) {
       err.message.should.equal('app.use() requires a generator function');
     }
-  })
+  });
 
   it('should not error when a non-generator function is passed when .experimental=true', function(){
     var app = koa();
     app.experimental = true;
     app.use(function(){});
-  })
-})
+  });
+});
 
 describe('app.onerror(err)', function(){
   it('should throw an error if a non-error is given', function(done){
@@ -148,7 +147,7 @@ describe('app.onerror(err)', function(){
     }
 
     done();
-  })
+  });
 
   it('should do nothing if status is 404', function(done){
     var app = koa();
@@ -156,28 +155,28 @@ describe('app.onerror(err)', function(){
 
     err.status = 404;
 
-    var output = stderr.inspectSync(function() {
+    var output = stderr.inspectSync(function(){
       app.onerror(err);
     });
 
     output.should.eql([]);
 
     done();
-  })
+  });
 
   it('should do nothing if .silent', function(done){
     var app = koa();
     app.silent = true;
     var err = new Error();
 
-    var output = stderr.inspectSync(function() {
+    var output = stderr.inspectSync(function(){
       app.onerror(err);
     });
 
     output.should.eql([]);
 
     done();
-  })
+  });
 
   it('should log the error to stderr', function(done){
     var app = koa();
@@ -186,14 +185,14 @@ describe('app.onerror(err)', function(){
     var err = new Error();
     err.stack = 'Foo';
 
-    var output = stderr.inspectSync(function() {
+    var output = stderr.inspectSync(function(){
       app.onerror(err);
     });
 
-    output.should.eql(["\n", "  Foo\n", "\n"]);
+    output.should.eql(['\n', '  Foo\n', '\n']);
 
     done();
-  })
+  });
 
   it('should use err.toString() instad of err.stack', function(done){
     var app = koa();
@@ -202,15 +201,15 @@ describe('app.onerror(err)', function(){
     var err = new Error('mock stack null');
     err.stack = null;
 
-    var output = stderr.inspectSync(function() {
+    var output = stderr.inspectSync(function(){
       app.onerror(err);
     });
 
-    output.should.eql(["\n", "  Error: mock stack null\n", "\n"]);
+    output.should.eql(['\n', '  Error: mock stack null\n', '\n']);
 
     done();
-  })
-})
+  });
+});
 
 describe('app.respond', function(){
   describe('when this.respond === false', function(){
@@ -226,8 +225,8 @@ describe('app.respond', function(){
         setImmediate(function(){
           res.setHeader('Content-Type', 'text/plain');
           res.end('lol');
-        })
-      })
+        });
+      });
 
       var server = app.listen();
 
@@ -236,8 +235,8 @@ describe('app.respond', function(){
       .expect(200)
       .expect('lol')
       .end(done);
-    })
-  })
+    });
+  });
 
   describe('when this.type === null', function(){
     it('should not send Content-Type header', function(done){
@@ -281,7 +280,7 @@ describe('app.respond', function(){
         assert(0 == res.text.length);
         done();
       });
-    })
+    });
 
     it('should keep json headers', function(done){
       var app = koa();
@@ -302,7 +301,7 @@ describe('app.respond', function(){
         assert(0 == res.text.length);
         done();
       });
-    })
+    });
 
     it('should keep string headers', function(done){
       var app = koa();
@@ -323,7 +322,7 @@ describe('app.respond', function(){
         assert(0 == res.text.length);
         done();
       });
-    })
+    });
 
     it('should keep buffer headers', function(done){
       var app = koa();
@@ -344,35 +343,35 @@ describe('app.respond', function(){
         assert(0 == res.text.length);
         done();
       });
-    })
+    });
 
     it('should respond with a 404 if no body was set', function(done){
       var app = koa();
 
       app.use(function *(){
 
-      })
+      });
 
       var server = app.listen();
 
       request(server)
       .head('/')
       .expect(404, done);
-    })
+    });
 
     it('should respond with a 200 if body = ""', function(done){
       var app = koa();
 
       app.use(function *(){
         this.body = '';
-      })
+      });
 
       var server = app.listen();
 
       request(server)
       .head('/')
       .expect(200, done);
-    })
+    });
 
     it('should not overwrite the content-type', function(done){
       var app = koa();
@@ -380,7 +379,7 @@ describe('app.respond', function(){
       app.use(function *(){
         this.status = 200;
         this.type = 'application/javascript';
-      })
+      });
 
       var server = app.listen();
 
@@ -388,8 +387,8 @@ describe('app.respond', function(){
       .head('/')
       .expect('content-type', /application\/javascript/)
       .expect(200, done);
-    })
-  })
+    });
+  });
 
   describe('when no middleware are present', function(){
     it('should 404', function(done){
@@ -400,8 +399,8 @@ describe('app.respond', function(){
       request(server)
       .get('/')
       .expect(404, done);
-    })
-  })
+    });
+  });
 
   describe('when res has already been written to', function(){
     it('should not cause an app error', function(done){
@@ -410,10 +409,10 @@ describe('app.respond', function(){
       app.use(function *(next){
         var res = this.res;
         this.status = 200;
-        res.setHeader("Content-Type", "text/html")
+        res.setHeader('Content-Type', 'text/html');
         res.write('Hello');
         setTimeout(function(){
-          res.end("Goodbye")
+          res.end('Goodbye');
         }, 0);
       });
 
@@ -433,7 +432,7 @@ describe('app.respond', function(){
         if (errorCaught) return done(errorCaught);
         done();
       });
-    })
+    });
 
     it('should send the right body', function(done){
       var app = koa();
@@ -441,10 +440,10 @@ describe('app.respond', function(){
       app.use(function *(next){
         var res = this.res;
         this.status = 200;
-        res.setHeader("Content-Type", "text/html")
+        res.setHeader('Content-Type', 'text/html');
         res.write('Hello');
         setTimeout(function(){
-          res.end("Goodbye");
+          res.end('Goodbye');
         }, 0);
       });
 
@@ -454,8 +453,8 @@ describe('app.respond', function(){
       .get('/')
       .expect(200)
       .expect('HelloGoodbye', done);
-    })
-  })
+    });
+  });
 
   describe('when .body is missing', function(){
     describe('with status=400', function(){
@@ -473,8 +472,8 @@ describe('app.respond', function(){
         .expect(400)
         .expect('Content-Length', 11)
         .expect('Bad Request', done);
-      })
-    })
+      });
+    });
 
     describe('with status=204', function(){
       it('should respond without a body', function(done){
@@ -482,7 +481,7 @@ describe('app.respond', function(){
 
         app.use(function *(){
           this.status = 204;
-        })
+        });
 
         var server = app.listen();
 
@@ -495,9 +494,9 @@ describe('app.respond', function(){
 
           res.header.should.not.have.property('content-type');
           done();
-        })
-      })
-    })
+        });
+      });
+    });
 
     describe('with status=205', function(){
       it('should respond without a body', function(done){
@@ -505,7 +504,7 @@ describe('app.respond', function(){
 
         app.use(function *(){
           this.status = 205;
-        })
+        });
 
         var server = app.listen();
 
@@ -518,9 +517,9 @@ describe('app.respond', function(){
 
           res.header.should.not.have.property('content-type');
           done();
-        })
-      })
-    })
+        });
+      });
+    });
 
     describe('with status=304', function(){
       it('should respond without a body', function(done){
@@ -528,7 +527,7 @@ describe('app.respond', function(){
 
         app.use(function *(){
           this.status = 304;
-        })
+        });
 
         var server = app.listen();
 
@@ -541,18 +540,18 @@ describe('app.respond', function(){
 
           res.header.should.not.have.property('content-type');
           done();
-        })
-      })
-    })
+        });
+      });
+    });
 
     describe('with custom status=700', function(){
-      it('should respond with the associated status message', function (done){
+      it('should respond with the associated status message', function(done){
         var app = koa();
         statuses['700'] = 'custom status';
 
         app.use(function *(){
           this.status = 700;
-        })
+        });
 
         var server = app.listen();
 
@@ -564,18 +563,18 @@ describe('app.respond', function(){
           if (err) return done(err);
           res.res.statusMessage.should.equal('custom status');
           done();
-        })
-      })
-    })
+        });
+      });
+    });
 
     describe('with custom statusMessage=ok', function(){
-      it('should respond with the custom status message', function (done){
+      it('should respond with the custom status message', function(done){
         var app = koa();
 
         app.use(function *(){
           this.status = 200;
           this.message = 'ok';
-        })
+        });
 
         var server = app.listen();
 
@@ -587,17 +586,17 @@ describe('app.respond', function(){
           if (err) return done(err);
           res.res.statusMessage.should.equal('ok');
           done();
-        })
-      })
-    })
+        });
+      });
+    });
 
-    describe('with custom status without message', function (){
-      it('should respond with the status code number', function (done){
+    describe('with custom status without message', function(){
+      it('should respond with the status code number', function(done){
         var app = koa();
 
         app.use(function *(){
           this.res.statusCode = 701;
-        })
+        });
 
         var server = app.listen();
 
@@ -605,9 +604,9 @@ describe('app.respond', function(){
         .get('/')
         .expect(701)
         .expect('701', done);
-      })
-    })
-  })
+      });
+    });
+  });
 
   describe('when .body is a null', function(){
     it('should respond 204 by default', function(done){
@@ -615,7 +614,7 @@ describe('app.respond', function(){
 
       app.use(function *(){
         this.body = null;
-      })
+      });
 
       var server = app.listen();
 
@@ -628,8 +627,8 @@ describe('app.respond', function(){
 
         res.header.should.not.have.property('content-type');
         done();
-      })
-    })
+      });
+    });
 
     it('should respond 204 with status=200', function(done){
       var app = koa();
@@ -637,7 +636,7 @@ describe('app.respond', function(){
       app.use(function *(){
         this.status = 200;
         this.body = null;
-      })
+      });
 
       var server = app.listen();
 
@@ -650,8 +649,8 @@ describe('app.respond', function(){
 
         res.header.should.not.have.property('content-type');
         done();
-      })
-    })
+      });
+    });
 
     it('should respond 205 with status=205', function(done){
       var app = koa();
@@ -659,7 +658,7 @@ describe('app.respond', function(){
       app.use(function *(){
         this.status = 205;
         this.body = null;
-      })
+      });
 
       var server = app.listen();
 
@@ -672,8 +671,8 @@ describe('app.respond', function(){
 
         res.header.should.not.have.property('content-type');
         done();
-      })
-    })
+      });
+    });
 
     it('should respond 304 with status=304', function(done){
       var app = koa();
@@ -681,7 +680,7 @@ describe('app.respond', function(){
       app.use(function *(){
         this.status = 304;
         this.body = null;
-      })
+      });
 
       var server = app.listen();
 
@@ -694,9 +693,9 @@ describe('app.respond', function(){
 
         res.header.should.not.have.property('content-type');
         done();
-      })
-    })
-  })
+      });
+    });
+  });
 
   describe('when .body is a string', function(){
     it('should respond', function(done){
@@ -711,8 +710,8 @@ describe('app.respond', function(){
       request(server)
       .get('/')
       .expect('Hello', done);
-    })
-  })
+    });
+  });
 
   describe('when .body is a Buffer', function(){
     it('should respond', function(done){
@@ -727,8 +726,8 @@ describe('app.respond', function(){
       request(server)
       .get('/')
       .expect('Hello', done);
-    })
-  })
+    });
+  });
 
   describe('when .body is a Stream', function(){
     it('should respond', function(done){
@@ -751,7 +750,7 @@ describe('app.respond', function(){
         res.body.should.eql(pkg);
         done();
       });
-    })
+    });
 
     it('should strip content-length when overwriting', function(done){
       var app = koa();
@@ -773,8 +772,8 @@ describe('app.respond', function(){
         res.should.not.have.header('Content-Length');
         res.body.should.eql(pkg);
         done();
-      })
-    })
+      });
+    });
 
     it('should keep content-length if not overwritten', function(done){
       var app = koa();
@@ -796,8 +795,8 @@ describe('app.respond', function(){
         res.should.have.header('Content-Length');
         res.body.should.eql(pkg);
         done();
-      })
-    })
+      });
+    });
 
     it('should keep content-length if overwritten with the same stream', function(done){
       var app = koa();
@@ -821,8 +820,8 @@ describe('app.respond', function(){
         res.should.have.header('Content-Length');
         res.body.should.eql(pkg);
         done();
-      })
-    })
+      });
+    });
 
     it('should handle errors', function(done){
       var app = koa();
@@ -839,7 +838,7 @@ describe('app.respond', function(){
       .expect('Content-Type', 'text/plain; charset=utf-8')
       .expect(404)
       .end(done);
-    })
+    });
 
     it('should handle errors when no content status', function(done){
       var app = koa();
@@ -854,8 +853,7 @@ describe('app.respond', function(){
       request(server)
       .get('/')
       .expect(204, done);
-    })
-
+    });
 
     it('should handle all intermediate stream body errors', function(done){
       var app = koa();
@@ -871,8 +869,8 @@ describe('app.respond', function(){
       request(server)
       .get('/')
       .expect(404, done);
-    })
-  })
+    });
+  });
 
   describe('when .body is an Object', function(){
     it('should respond with json', function(done){
@@ -888,8 +886,8 @@ describe('app.respond', function(){
       .get('/')
       .expect('Content-Type', 'application/json; charset=utf-8')
       .expect('{"hello":"world"}', done);
-    })
-  })
+    });
+  });
 
   describe('when an error occurs', function(){
     it('should emit "error" on the app', function(done){
@@ -907,7 +905,7 @@ describe('app.respond', function(){
       request(app.listen())
       .get('/')
       .end(function(){});
-    })
+    });
 
     describe('with an .expose property', function(){
       it('should expose the message', function(done){
@@ -924,8 +922,8 @@ describe('app.respond', function(){
         .get('/')
         .expect(403, 'sorry!')
         .end(done);
-      })
-    })
+      });
+    });
 
     describe('with a .status property', function(){
       it('should respond with .status', function(done){
@@ -941,8 +939,8 @@ describe('app.respond', function(){
         .get('/')
         .expect(403, 'Forbidden')
         .end(done);
-      })
-    })
+      });
+    });
 
     it('should respond with 500', function(done){
       var app = koa();
@@ -957,7 +955,7 @@ describe('app.respond', function(){
       .get('/')
       .expect(500, 'Internal Server Error')
       .end(done);
-    })
+    });
 
     it('should be catchable', function(done){
       var app = koa();
@@ -973,7 +971,6 @@ describe('app.respond', function(){
 
       app.use(function *(next){
         throw new Error('boom!');
-        this.body = 'Oh no';
       });
 
       var server = app.listen();
@@ -982,8 +979,8 @@ describe('app.respond', function(){
       .get('/')
       .expect(200, 'Got error')
       .end(done);
-    })
-  })
+    });
+  });
 
   describe('when status and body property', function(){
     it('should 200', function(done){
@@ -1001,9 +998,9 @@ describe('app.respond', function(){
       .get('/')
       .expect(200)
       .expect('hello', done);
-    })
+    });
 
-    it('should 204', function(done) {
+    it('should 204', function(done){
       var app = koa();
 
       app.use(function *(){
@@ -1018,13 +1015,13 @@ describe('app.respond', function(){
       request(server)
       .get('/')
       .expect(204)
-      .end(function (err, res) {
+      .end(function(err, res){
         res.should.not.have.header('content-type');
         done(err);
       });
     });
-  })
-})
+  });
+});
 
 describe('app.context', function(){
   var app1 = koa();
@@ -1033,26 +1030,26 @@ describe('app.context', function(){
 
   it('should merge properties', function(done){
     app1.use(function *(next){
-      assert.equal(this.msg, 'hello')
-      this.status = 204
+      assert.equal(this.msg, 'hello');
+      this.status = 204;
     });
 
     request(app1.listen())
     .get('/')
     .expect(204, done);
-  })
+  });
 
   it('should not affect the original prototype', function(done){
     app2.use(function *(next){
-      assert.equal(this.msg, undefined)
+      assert.equal(this.msg, undefined);
       this.status = 204;
     });
 
     request(app2.listen())
     .get('/')
     .expect(204, done);
-  })
-})
+  });
+});
 
 describe('app.request', function(){
   var app1 = koa();
@@ -1061,26 +1058,26 @@ describe('app.request', function(){
 
   it('should merge properties', function(done){
     app1.use(function *(next){
-      assert.equal(this.request.message, 'hello')
-      this.status = 204
+      assert.equal(this.request.message, 'hello');
+      this.status = 204;
     });
 
     request(app1.listen())
     .get('/')
     .expect(204, done);
-  })
+  });
 
   it('should not affect the original prototype', function(done){
     app2.use(function *(next){
-      assert.equal(this.request.message, undefined)
+      assert.equal(this.request.message, undefined);
       this.status = 204;
     });
 
     request(app2.listen())
     .get('/')
     .expect(204, done);
-  })
-})
+  });
+});
 
 describe('app.response', function(){
   var app1 = koa();
@@ -1089,23 +1086,23 @@ describe('app.response', function(){
 
   it('should merge properties', function(done){
     app1.use(function *(next){
-      assert.equal(this.response.msg, 'hello')
-      this.status = 204
+      assert.equal(this.response.msg, 'hello');
+      this.status = 204;
     });
 
     request(app1.listen())
     .get('/')
     .expect(204, done);
-  })
+  });
 
   it('should not affect the original prototype', function(done){
     app2.use(function *(next){
-      assert.equal(this.response.msg, undefined)
+      assert.equal(this.response.msg, undefined);
       this.status = 204;
     });
 
     request(app2.listen())
     .get('/')
     .expect(204, done);
-  })
-})
+  });
+});

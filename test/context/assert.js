@@ -15,5 +15,5 @@ describe('ctx.assert(value, status)', function(){
       assert(404 == err.status);
       assert(err.expose);
     }
-  })
-})
+  });
+});
