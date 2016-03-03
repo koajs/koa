@@ -11,8 +11,8 @@ describe('res.inspect()', function(){
       res.body = 'hello';
       delete res.res;
       assert(null == res.inspect());
-    })
-  })
+    });
+  });
 
   it('should return a json representation', function(){
     var res = response();
@@ -27,5 +27,5 @@ describe('res.inspect()', function(){
         'content-type': 'text/plain; charset=utf-8'
       }
     });
-  })
-})
+  });
+});

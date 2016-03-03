@@ -33,5 +33,5 @@ describe('ctx.toJSON()', function(){
         'content-length': '10'
       }
     });
-  })
-})
+  });
+});

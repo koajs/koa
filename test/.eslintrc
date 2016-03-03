@@ -1,0 +1,8 @@
+env:
+  mocha: true
+
+globals:
+  should: true
+
+rules:
+  space-before-blocks: [2, {functions: never, keywords: always}]

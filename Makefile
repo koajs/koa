@@ -1,7 +1,4 @@
 SRC = lib/*.js
-
-include node_modules/make-lint/index.mk
-
 BIN = iojs
 
 ifeq ($(findstring io.js, $(shell which node)),)
@@ -19,6 +16,9 @@ TESTS = test/application \
 	test/request/* \
 	test/response/* \
 	test/experimental/index.js
+
+lint:
+	@./node_modules/.bin/eslint lib test
 
 test:
 	@NODE_ENV=test $(BIN) $(FLAGS) \
@@ -49,4 +49,4 @@ test-travis:
 bench:
 	@$(MAKE) -C benchmarks
 
-.PHONY: test bench
+.PHONY: lint test bench

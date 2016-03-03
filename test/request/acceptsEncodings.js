@@ -11,17 +11,17 @@ describe('ctx.acceptsEncodings()', function(){
         ctx.req.headers['accept-encoding'] = 'gzip, compress;q=0.2';
         ctx.acceptsEncodings().should.eql(['gzip', 'compress', 'identity']);
         ctx.acceptsEncodings('gzip', 'compress').should.equal('gzip');
-      })
-    })
+      });
+    });
 
     describe('when Accept-Encoding is not populated', function(){
       it('should return identity', function(){
         var ctx = context();
         ctx.acceptsEncodings().should.eql(['identity']);
         ctx.acceptsEncodings('gzip', 'deflate', 'identity').should.equal('identity');
-      })
-    })
-  })
+      });
+    });
+  });
 
   describe('with multiple arguments', function(){
     it('should return the best fit', function(){
@@ -29,14 +29,14 @@ describe('ctx.acceptsEncodings()', function(){
       ctx.req.headers['accept-encoding'] = 'gzip, compress;q=0.2';
       ctx.acceptsEncodings('compress', 'gzip').should.eql('gzip');
       ctx.acceptsEncodings('gzip', 'compress').should.eql('gzip');
-    })
-  })
+    });
+  });
 
   describe('with an array', function(){
     it('should return the best fit', function(){
       var ctx = context();
       ctx.req.headers['accept-encoding'] = 'gzip, compress;q=0.2';
       ctx.acceptsEncodings(['compress', 'gzip']).should.eql('gzip');
-    })
-  })
-})
+    });
+  });
+});
