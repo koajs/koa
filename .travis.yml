@@ -4,4 +4,6 @@ node_js:
   - "5"
 sudo: false
 script: "make test-travis"
-after_script: "npm install coveralls@2 && cat ./coverage/lcov.info | coveralls"
+after_script:
+  - npm install codecov
+  - ./node_modules/.bin/codecov
