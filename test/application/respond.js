@@ -234,7 +234,12 @@ describe('app.respond', () => {
         ctx.status = 200;
         res.setHeader('Content-Type', 'text/html');
         res.write('Hello');
-        setTimeout(() => res.end('Goodbye'), 0);
+        return new Promise(resolve => {
+          setTimeout(() => {
+            res.end('Goodbye');
+            resolve();
+          }, 0);
+        });
       });
 
       const server = app.listen();
