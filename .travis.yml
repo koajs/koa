@@ -7,7 +7,9 @@ node_js:
   - 1
   - 0.12
 sudo: false
-script: "make test-travis"
+script:
+  - make lint
+  - make test-travis
 after_script:
   - npm install codecov
   - ./node_modules/.bin/codecov

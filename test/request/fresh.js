@@ -4,13 +4,13 @@
 var context = require('../context');
 
 describe('ctx.fresh', function(){
-  describe('the request method is not GET and HEAD', function (){
-    it('should return false', function (){
+  describe('the request method is not GET and HEAD', function(){
+    it('should return false', function(){
       var ctx = context();
       ctx.req.method = 'POST';
       ctx.fresh.should.be.false;
-    })
-  })
+    });
+  });
 
   describe('the response is non-2xx', function(){
     it('should return false', function(){
@@ -20,7 +20,7 @@ describe('ctx.fresh', function(){
       ctx.req.headers['if-none-match'] = '123';
       ctx.set('ETag', '123');
       ctx.fresh.should.be.false;
-    })
+    });
   });
 
   describe('the response is 2xx', function(){
@@ -32,8 +32,8 @@ describe('ctx.fresh', function(){
         ctx.req.headers['if-none-match'] = '123';
         ctx.set('ETag', '123');
         ctx.fresh.should.be.true;
-      })
-    })
+      });
+    });
 
     describe('and etag do not match', function(){
       it('should return false', function(){
@@ -43,7 +43,7 @@ describe('ctx.fresh', function(){
         ctx.req.headers['if-none-match'] = '123';
         ctx.set('ETag', 'hey');
         ctx.fresh.should.be.false;
-      })
-    })
-  })
-})
+      });
+    });
+  });
+});

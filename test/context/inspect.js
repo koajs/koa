@@ -9,5 +9,5 @@ describe('ctx.inspect()', function(){
     var toJSON = ctx.toJSON(ctx);
 
     toJSON.should.eql(ctx.inspect());
-  })
-})
+  });
+});

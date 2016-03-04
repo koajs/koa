@@ -9,7 +9,7 @@ describe('ctx.search=', function(){
     ctx.search = '?page=2&color=blue';
     ctx.url.should.equal('/store/shoes?page=2&color=blue');
     ctx.search.should.equal('?page=2&color=blue');
-  })
+  });
 
   it('should update ctx.querystring and ctx.query', function(){
     var ctx = context({ url: '/store/shoes' });
@@ -20,7 +20,7 @@ describe('ctx.search=', function(){
       page: '2',
       color: 'blue'
     });
-  })
+  });
 
   it('should change .url but not .originalUrl', function(){
     var ctx = context({ url: '/store/shoes' });
@@ -28,12 +28,12 @@ describe('ctx.search=', function(){
     ctx.url.should.equal('/store/shoes?page=2&color=blue');
     ctx.originalUrl.should.equal('/store/shoes');
     ctx.request.originalUrl.should.equal('/store/shoes');
-  })
+  });
 
   describe('when missing', function(){
     it('should return ""', function(){
       var ctx = context({ url: '/store/shoes' });
       ctx.search.should.equal('');
-    })
-  })
-})
+    });
+  });
+});

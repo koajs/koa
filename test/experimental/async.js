@@ -8,11 +8,11 @@
 var request = require('supertest');
 var koa = require('../..');
 
-describe('.experimental=true', function () {
-  it('should support async functions', function (done) {
+describe('.experimental=true', function(){
+  it('should support async functions', function(done){
     var app = koa();
     app.experimental = true;
-    app.use(async function (next) {
+    app.use(async function (next){
       var string = await Promise.resolve('asdf');
       this.body = string;
     });
@@ -21,5 +21,5 @@ describe('.experimental=true', function () {
     .get('/')
     .expect('asdf')
     .expect(200, done);
-  })
-})
+  });
+});
