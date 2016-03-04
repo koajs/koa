@@ -3,7 +3,9 @@ node_js:
   - "4"
   - "5"
 sudo: false
-script: "make test-travis"
+script:
+  - make test-travis
+  - make bench
 after_script:
   - npm install codecov
   - ./node_modules/.bin/codecov
