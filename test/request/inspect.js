@@ -11,8 +11,8 @@ describe('req.inspect()', function(){
       req.method = 'GET';
       delete req.req;
       assert(null == req.inspect());
-    })
-  })
+    });
+  });
 
   it('should return a json representation', function(){
     var req = request();
@@ -27,5 +27,5 @@ describe('req.inspect()', function(){
         host: 'example.com'
       }
     });
-  })
-})
+  });
+});

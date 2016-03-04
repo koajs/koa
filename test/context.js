@@ -10,16 +10,16 @@ exports = module.exports = function(req, res){
   res = res || { _headers: {}, socket: socket, __proto__: Stream.Writable.prototype };
   req.socket = req.socket || socket;
   res.socket = res.socket || socket;
-  res.getHeader = function(k){ return res._headers[k.toLowerCase()] };
-  res.setHeader = function(k, v){ res._headers[k.toLowerCase()] = v };
-  res.removeHeader = function(k, v){ delete res._headers[k.toLowerCase()] };
+  res.getHeader = function(k){ return res._headers[k.toLowerCase()]; };
+  res.setHeader = function(k, v){ res._headers[k.toLowerCase()] = v; };
+  res.removeHeader = function(k, v){ delete res._headers[k.toLowerCase()]; };
   return koa().createContext(req, res);
-}
+};
 
 exports.request = function(req, res){
   return exports(req, res).request;
-}
+};
 
 exports.response = function(req, res){
   return exports(req, res).response;
-}
+};

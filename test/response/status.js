@@ -14,51 +14,51 @@ describe('res.status=', function(){
         var res = response();
         res.status = 403;
         res.status.should.equal(403);
-      })
+      });
 
       it('should not throw', function(){
-        assert.doesNotThrow(function() {
+        assert.doesNotThrow(function(){
           response().status = 403;
         });
-      })
-    })
+      });
+    });
 
     describe('and invalid', function(){
       it('should throw', function(){
-        assert.throws(function() {
+        assert.throws(function(){
           response().status = 999;
         }, 'invalid status code: 999');
-      })
-    })
+      });
+    });
 
-    describe('and custom status', function (){
-      before(function () {
+    describe('and custom status', function(){
+      before(function(){
         statuses['700'] = 'custom status';
-      })
+      });
 
-      it('should set the status', function (){
+      it('should set the status', function(){
         var res = response();
         res.status = 700;
         res.status.should.equal(700);
-      })
+      });
 
       it('should not throw', function(){
-        assert.doesNotThrow(function() {
+        assert.doesNotThrow(function(){
           response().status = 700;
         });
-      })
-    })
-  })
+      });
+    });
+  });
 
   describe('when a status string', function(){
     it('should throw', function(){
-      assert.throws(function() {
+      assert.throws(function(){
         response().status = 'forbidden';
       }, 'status code must be a number');
-    })
-  })
+    });
+  });
 
-  function strip(status) {
+  function strip(status){
     it('should strip content related header fields', function(done){
       var app = koa();
 
@@ -76,16 +76,16 @@ describe('res.status=', function(){
       request(app.listen())
         .get('/')
         .expect(status)
-        .end(function(err, res) {
+        .end(function(err, res){
           res.should.not.have.header('content-type');
           res.should.not.have.header('content-length');
           res.should.not.have.header('content-encoding');
           res.text.should.have.length(0);
           done(err);
         });
-    })
+    });
 
-    it('should strip content releated header fields after status set', function(done) {
+    it('should strip content releated header fields after status set', function(done){
       var app = koa();
 
       app.use(function *(){
@@ -99,25 +99,25 @@ describe('res.status=', function(){
       request(app.listen())
         .get('/')
         .expect(status)
-        .end(function(err, res) {
+        .end(function(err, res){
           res.should.not.have.header('content-type');
           res.should.not.have.header('content-length');
           res.should.not.have.header('content-encoding');
           res.text.should.have.length(0);
           done(err);
         });
-    })
+    });
   }
 
   describe('when 204', function(){
     strip(204);
-  })
+  });
 
   describe('when 205', function(){
     strip(205);
-  })
+  });
 
   describe('when 304', function(){
     strip(304);
-  })
-})
+  });
+});

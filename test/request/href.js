@@ -22,29 +22,29 @@ describe('ctx.href', function(){
     // change it also work
     ctx.url = '/foo/users/1?next=/dashboard';
     ctx.href.should.equal('http://localhost/users/1?next=/dashboard');
-  })
+  });
 
   it('should work with `GET http://example.com/foo`', function(done){
-    var app = koa()
-    app.use(function* (){
-      this.body = this.href
-    })
+    var app = koa();
+    app.use(function * (){
+      this.body = this.href;
+    });
     app.listen(function(){
-      var address = this.address()
+      var address = this.address();
       http.get({
         host: 'localhost',
         path: 'http://example.com/foo',
         port: address.port
       }, function(res){
-        res.statusCode.should.equal(200)
-        var buf = ''
-        res.setEncoding('utf8')
-        res.on('data', function(s){ buf += s })
+        res.statusCode.should.equal(200);
+        var buf = '';
+        res.setEncoding('utf8');
+        res.on('data', function(s){ buf += s; });
         res.on('end', function(){
-          buf.should.equal('http://example.com/foo')
-          done()
-        })
-      })
-    })
-  })
-})
+          buf.should.equal('http://example.com/foo');
+          done();
+        });
+      });
+    });
+  });
+});

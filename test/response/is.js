@@ -2,7 +2,6 @@
 'use strict';
 
 var context = require('../context');
-var should = require('should');
 var assert = require('assert');
 
 describe('response.is(type)', function(){
@@ -11,7 +10,7 @@ describe('response.is(type)', function(){
     res.type = 'text/html; charset=utf-8';
 
     res.is('text/*').should.equal('text/html');
-  })
+  });
 
   describe('when no type is set', function(){
     it('should return false', function(){
@@ -19,8 +18,8 @@ describe('response.is(type)', function(){
 
       assert(false === res.is());
       assert(false === res.is('html'));
-    })
-  })
+    });
+  });
 
   describe('when given no types', function(){
     it('should return the type', function(){
@@ -28,8 +27,8 @@ describe('response.is(type)', function(){
       res.type = 'text/html; charset=utf-8';
 
       res.is().should.equal('text/html');
-    })
-  })
+    });
+  });
 
   describe('given one type', function(){
     it('should return the type or false', function(){
@@ -47,8 +46,8 @@ describe('response.is(type)', function(){
       res.is('image/jpeg').should.be.false;
       res.is('text/*').should.be.false;
       res.is('*/jpeg').should.be.false;
-    })
-  })
+    });
+  });
 
   describe('given multiple types', function(){
     it('should return the first match or false', function(){
@@ -71,8 +70,8 @@ describe('response.is(type)', function(){
       res.is('.jpeg').should.be.false;
       res.is('text/*', 'application/*').should.be.false;
       res.is('text/html', 'text/plain', 'application/json; charset=utf-8').should.be.false;
-    })
-  })
+    });
+  });
 
   describe('when Content-Type: application/x-www-form-urlencoded', function(){
     it('should match "urlencoded"', function(){
@@ -82,6 +81,6 @@ describe('response.is(type)', function(){
       res.is('urlencoded').should.equal('urlencoded');
       res.is('json', 'urlencoded').should.equal('urlencoded');
       res.is('urlencoded', 'json').should.equal('urlencoded');
-    })
-  })
-})
+    });
+  });
+});

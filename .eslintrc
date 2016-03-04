@@ -1,0 +1,13 @@
+# Support ES2016 features
+parser: babel-eslint
+
+extends: standard
+
+rules:
+  arrow-spacing: 2
+  comma-dangle: 0
+  dot-location: [2, "property"]
+  eqeqeq: 0
+  semi: [2, always]
+  space-before-function-paren: [2, never]
+  yoda: 0
