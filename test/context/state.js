@@ -38,22 +38,4 @@ describe('ctx.state', function() {
     .end(done);
 
   })
-
-  it('should not inherit app.state when the latter is not an object', function(done) {
-    var app = koa();
-
-    app.state = 1;
-
-    app.use(function *() {
-      assert.notEqual(this.state, 1);
-    });
-
-    var server = app.listen();
-
-    request(server)
-    .get('/')
-    .expect(404)
-    .end(done);
-
-  })
 })
