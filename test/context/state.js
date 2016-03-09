@@ -21,10 +21,10 @@ describe('ctx.state', function() {
     .end(done);
   })
 
-  it('should inherit app.context.state object', function(done) {
+  it('should inherit app.state object', function(done) {
     var app = koa();
 
-    app.context.state = { foo: 'bar' };
+    app.state.foo = 'bar';
 
     app.use(function *() {
       assert.equal(this.state.foo, 'bar');
@@ -39,10 +39,10 @@ describe('ctx.state', function() {
 
   })
 
-  it('should not inherit app.context.state when the latter is not object', function(done) {
+  it('should not inherit app.state when the latter is not an object', function(done) {
     var app = koa();
 
-    app.context.state = 1;
+    app.state = 1;
 
     app.use(function *() {
       assert.notEqual(this.state, 1);
