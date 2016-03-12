@@ -12,6 +12,7 @@ rules:
   babel/arrow-parens: [2, "as-needed"]
 
   eqeqeq: 0
+  no-return-assign: 0 # fails for arrow functions
   no-var: 2
   semi: [2, always]
   space-before-function-paren: [2, never]
