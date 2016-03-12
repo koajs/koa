@@ -289,3 +289,7 @@ this.response.etag = crypto.createHash('md5').update(this.body).digest('hex');
 ### response.vary(field)
 
   Vary on `field`.
+
+### response.flushHeaders()
+
+  Flush any set headers, and begin the body.
