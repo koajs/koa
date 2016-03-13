@@ -1,7 +1,6 @@
 
 'use strict';
 
-const http = require('http');
 const Koa = require('..');
 const app = new Koa();
 
