@@ -52,6 +52,40 @@ describe('ctx.onerror(err)', () => {
       });
   });
 
+  it('should set headers specified in the error', done => {
+    const app = new Koa();
+
+    app.use((ctx, next) => {
+      ctx.set('Vary', 'Accept-Encoding');
+      ctx.set('X-CSRF-Token', 'asdf');
+      ctx.body = 'response';
+
+      throw Object.assign(new Error('boom'), {
+        status: 418,
+        expose: true,
+        headers: {
+          'X-New-Header': 'Value'
+        }
+      });
+    });
+
+    const server = app.listen();
+
+    request(server)
+    .get('/')
+    .expect(418)
+    .expect('Content-Type', 'text/plain; charset=utf-8')
+    .expect('X-New-Header', 'Value')
+    .end((err, res) => {
+      if (err) return done(err);
+
+      res.headers.should.not.have.property('vary');
+      res.headers.should.not.have.property('x-csrf-token');
+
+      done();
+    });
+  });
+
   describe('when invalid err.status', () => {
     describe('not number', () => {
       it('should respond 500', done => {
