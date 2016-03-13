@@ -9,7 +9,7 @@ TESTS = test/application/* \
 	test/babel/index.js
 
 lint:
-	@./node_modules/.bin/eslint lib test
+	@./node_modules/.bin/eslint benchmarks lib test
 
 test:
 	@NODE_ENV=test node \
