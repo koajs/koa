@@ -7,6 +7,7 @@ before_script:
   - git clone https://github.com/wg/wrk.git
   - cd wrk && make && sudo cp wrk /usr/local/bin && cd ..
 script:
+  - make lint
   - make test-travis
   - make bench
 after_script:
