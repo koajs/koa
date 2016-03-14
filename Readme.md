@@ -26,22 +26,22 @@ $ npm install koa
 
 ```js
 // Koa application is now a class and requires the new operator.
-const app = new Koa()
+const app = new Koa();
 
 // uses async arrow functions
 app.use(async (ctx, next) => {
   try {
-    await next() // next is now a function
+    await next(); // next is now a function
   } catch (err) {
-    ctx.body = { message: err.message }
-    ctx.status = err.status || 500
+    ctx.body = { message: err.message };
+    ctx.status = err.status || 500;
   }
-})
+});
 
 app.use(async ctx => {
-  const user = await User.getById(ctx.session.userid) // await instead of yield
-  ctx.body = user // ctx instead of this
-})
+  const user = await User.getById(ctx.session.userid); // await instead of yield
+  ctx.body = user; // ctx instead of this
+});
 ```
   To learn more about Koa v2, follow [this issue](https://github.com/koajs/koa/issues/533).
   To try Koa v2, `npm install koa@next`.
