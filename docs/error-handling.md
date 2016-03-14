@@ -6,9 +6,9 @@
   this example prepends all error messages with "Error: "
 
   ```js
-  app.use(function*(next){
+  app.use(async (ctx, next) => {
     try {
-      yield next;
+      await next();
     } catch (error) {
       error.message = 'Error: ' + error.message;
       throw error;
