@@ -4,7 +4,7 @@
   "description": "Koa web app framework",
   "main": "lib/application.js",
   "scripts": {
-    "test": "make test"
+    "test": "make lint test"
   },
   "repository": "koajs/koa",
   "keywords": [
