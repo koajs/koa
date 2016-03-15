@@ -52,7 +52,7 @@ Here we write an logger middleware with different function.
 ### Common function
 ```js
 
-// Middleware normally take two parameters (ctx, next), ctx is the context for one request, 
+// Middleware normally take two parameters (ctx, next), ctx is the context for one request,
 // next is an function that is invoked to execute the downstream middleware. It returns a Promise with a then function for running code after completion.
 
 app.use((ctx, next) => {
@@ -146,11 +146,11 @@ See [AUTHORS](AUTHORS).
  - [Middleware](https://github.com/koajs/koa/wiki) list
  - [Wiki](https://github.com/koajs/koa/wiki)
  - [G+ Community](https://plus.google.com/communities/101845768320796750641)
- - [Reddit Community](http://reddit.com/r/koajs)
+ - [Reddit Community](https://www.reddit.com/r/koajs)
  - [Mailing list](https://groups.google.com/forum/#!forum/koajs)
  - [Guide](docs/guide.md)
  - [FAQ](docs/faq.md)
- - [中文文档](https://github.com/turingou/koa-guide)
+ - [中文文档](https://github.com/guo-yu/koa-guide)
  - __[#koajs]__ on freenode
 
 
@@ -159,7 +159,7 @@ See [AUTHORS](AUTHORS).
   MIT
 
 [npm-image]: https://img.shields.io/npm/v/koa.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/koa
+[npm-url]: https://www.npmjs.com/package/koa
 [travis-image]: https://img.shields.io/travis/koajs/koa/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/koajs/koa
 [coveralls-image]: https://codecov.io/github/koajs/koa/coverage.svg?branch=master
