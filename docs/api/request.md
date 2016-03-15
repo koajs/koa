@@ -96,7 +96,7 @@ this.request.href
   Get request `Content-Type` void of parameters such as "charset".
 
 ```js
-const ct = this.request.type;
+const ct = this.request.type
 // => "image/png"
 ```
 
@@ -130,7 +130,7 @@ this.request.charset
   setter does _not_ support nested objects.
 
 ```js
-this.query = { next: '/login' };
+this.query = { next: '/login' }
 ```
 
 ### request.fresh

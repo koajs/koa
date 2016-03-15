@@ -13,9 +13,9 @@
 
 ```js
 async function responseTime(ctx, next) {
-  const start = new Date;
+  const start = new Date();
   await next();
-  const ms = new Date - start;
+  const ms = new Date() - start;
   ctx.set('X-Response-Time', `${ms}ms`);
 }
 
@@ -52,7 +52,7 @@ to this behaviour.
  For example this would be fine:
 
 ```js
-app.use(async function response(ctx, next){
+app.use(async function response(ctx, next) {
   if ('/' != this.url) return;
   ctx.body = 'Hello World';
 });
@@ -79,7 +79,7 @@ app.use(async function response(ctx, next){
 function logger(format) {
   format = format || ':method ":url"';
 
-  return async function (ctx, next){
+  return async function (ctx, next) {
     const str = format
       .replace(':method', ctx.method)
       .replace(':url', ctx.url);
@@ -87,7 +87,7 @@ function logger(format) {
     console.log(str);
 
     await next();
-  }
+  };
 }
 
 app.use(logger());
@@ -100,9 +100,9 @@ app.use(logger(':method :url'));
 
 ```js
 function logger(format) {
-  return async function logger(ctx, next){
+  return async function logger(ctx, next) {
 
-  }
+  };
 }
 ```
 
@@ -115,7 +115,7 @@ const compose = require('koa-compose');
 
 async function random(ctx, next) {
   if ('/random' == this.path) {
-    ctx.body = Math.floor(Math.random()*10);
+    ctx.body = Math.floor(Math.random() * 10);
   } else {
     await next();
   }
@@ -137,7 +137,7 @@ async function pi(ctx, next) {
   }
 }
 
-const all = compose([random, backwards, pi])
+const all = compose([random, backwards, pi]);
 
 app.use(all);
 ```
@@ -152,20 +152,20 @@ app.use(all);
   downstream "three" middleware a chance to manipulate the response.
 
 ```js
-app.use(async function (ctx, next){
+app.use(async function (ctx, next) {
   console.log('>> one');
   await next();
-  console.log('<< one');  
+  console.log('<< one');
 });
 
-app.use(async function (ctx, next){
+app.use(async function (ctx, next) {
   console.log('>> two');
   ctx.body = 'two';
   await next();
   console.log('<< two');
 });
 
-app.use(async function (ctx, next){
+app.use(async function (ctx, next) {
   console.log('>> three');
   await next();
   console.log('<< three');
@@ -176,19 +176,19 @@ app.use(async function (ctx, next){
   with "two", however the third (and any other downstream middleware) will be ignored:
 
 ```js
-app.use(async function (ctx, next){
+app.use(async function (ctx, next) {
   console.log('>> one');
   await next();
-  console.log('<< one');  
+  console.log('<< one');
 });
 
-app.use(async function (ctx, next){
+app.use(async function (ctx, next) {
   console.log('>> two');
   ctx.body = 'two';
   console.log('<< two');
 });
 
-app.use(async function (ctx, next){
+app.use(async function (ctx, next) {
   console.log('>> three');
   await next();
   console.log('<< three');
@@ -208,7 +208,7 @@ app.use(async function (ctx, next){
 ```js
 const fs = require('fs-promise');
 
-app.use(async function (ctx, next){
+app.use(async function (ctx, next) {
   const paths = await fs.readdir('docs');
   const files = await Promise.all(paths.map(path => fs.readFile(`docs/${path}`, 'utf8')));
 
@@ -241,15 +241,15 @@ $ DEBUG=koa* node --harmony examples/simple
 
 ```js
 const path = require('path');
-const static = require('koa-static');
+const serve = require('koa-static');
 
-const publicFiles = static(path.join(__dirname, 'public'));
+const publicFiles = serve(path.join(__dirname, 'public'));
 publicFiles._name = 'static /public';
 
 app.use(publicFiles);
 ```
 
-  Now, instead of just seeing "static" when debugging, you will see:
+  Now, instead of just seeing "serve" when debugging, you will see:
 
 ```
   koa:application use static /public +0ms
