@@ -80,25 +80,25 @@ const app = new Koa();
 
 // x-response-time
 
-app.use(async function (ctx, next){
-  const start = new Date;
+app.use(async function (ctx, next) {
+  const start = new Date();
   await next();
-  const ms = new Date - start;
+  const ms = new Date() - start;
   ctx.set('X-Response-Time', `${ms}ms`);
 });
 
 // logger
 
-app.use(async function (ctx, next){
-  const start = new Date;
+app.use(async function (ctx, next) {
+  const start = new Date();
   await next();
-  const ms = new Date - start;
+  const ms = new Date() - start;
   console.log(`${ctx.method} ${ctx.url} - ${ms}`);
 });
 
 // response
 
-app.use((ctx) => {
+app.use(ctx => {
   ctx.body = 'Hello World';
 });
 
@@ -198,17 +198,17 @@ app.context.db = db();
   To perform custom error-handling logic such as centralized logging you can add an "error" event listener:
 
 ```js
-app.on('error', function(err){
-  log.error('server error', err);
-});
+app.on('error', err =>
+  log.error('server error', err)
+);
 ```
 
   If an error is in the req/res cycle and it is _not_ possible to respond to the client, the `Context` instance is also passed:
 
 ```js
-app.on('error', function(err, ctx){
-  log.error('server error', err, ctx);
-});
+app.on('error', (err, ctx) =>
+  log.error('server error', err, ctx)
+);
 ```
 
   When an error occurs _and_ it is still possible to respond to the client, aka no data has been written to the socket, Koa will respond

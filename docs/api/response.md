@@ -146,11 +146,11 @@ If `response.status` has not been set, Koa will automatically set the status to 
   Here's an example of stream error handling without automatically destroying the stream:
 
 ```js
-const PassThrough = require('stream').PassThrough
+const PassThrough = require('stream').PassThrough;
 
 app.use(function * (next) {
-  this.body = someHTTPStream.on('error', this.onerror).pipe(PassThrough())
-})
+  this.body = someHTTPStream.on('error', this.onerror).pipe(PassThrough());
+});
 ```
 
 #### Object
@@ -233,12 +233,12 @@ this.type = 'png';
 ```js
 const minify = require('html-minifier');
 
-app.use(function *minifyHTML(next){
+app.use(function * minifyHTML(next) {
   yield next;
 
   if (!this.response.is('html')) return;
 
-  const body = this.body;
+  let body = this.body;
   if (!body || body.pipe) return;
 
   if (Buffer.isBuffer(body)) body = body.toString();

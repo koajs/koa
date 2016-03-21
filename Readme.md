@@ -50,32 +50,29 @@ Koa is an middleware framework, it can take 3 different kind function as middlew
 Here we write an logger middleware with different function.
 
 ### Common function
-```js
 
+```js
 // Middleware normally take two parameters (ctx, next), ctx is the context for one request,
 // next is an function that is invoked to execute the downstream middleware. It returns a Promise with a then function for running code after completion.
 
 app.use((ctx, next) => {
-  const start = new Date;
+  const start = new Date();
   return next().then(() => {
-    const ms = new Date - start;
+    const ms = new Date() - start;
     console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
   });
 });
-
 ```
 
 ### ___async___ functions (Babel required)
 
 ```js
-
 app.use(async (ctx, next) => {
-  const start = new Date;
+  const start = new Date();
   await next();
-  const ms = new Date - start;
+  const ms = new Date() - start;
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
-
 ```
 
 ### GeneratorFunction
@@ -83,14 +80,12 @@ app.use(async (ctx, next) => {
 To use generator functions, you must use a wrapper such as [co](https://github.com/tj/co) that is no longer supplied with Koa.
 
 ```js
-
-app.use(co.wrap(function *(ctx, next){
-  const start = new Date;
+app.use(co.wrap(function *(ctx, next) {
+  const start = new Date();
   yield next();
-  const ms = new Date - start;
+  const ms = new Date() - start;
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 }));
-
 ```
 
 ### Old signature middleware (v1.x)
@@ -98,15 +93,14 @@ app.use(co.wrap(function *(ctx, next){
 If you want to use old signature or be compatible with old middleware, you must use [koa-convert](https://github.com/gyson/koa-convert) to convert legacy generator middleware to promise middleware.
 
 ```js
-const convert = require('koa-convert')
+const convert = require('koa-convert');
 
-app.use(convert(function *(next){
-  const start = new Date;
+app.use(convert(function *(next) {
+  const start = new Date();
   yield next;
-  const ms = new Date - start;
+  const ms = new Date() - start;
   console.log(`${this.method} ${this.url} - ${ms}ms`);
 }));
-
 ```
 
 
@@ -122,8 +116,8 @@ $ npm install babel-preset-stage-3 --save
 
 ```js
 // set babel in entry file
-require("babel-core/register")({
-     presets: ['es2015-node5', 'stage-3']
+require('babel-core/register')({
+  presets: ['es2015-node5', 'stage-3']
 });
 ```
 
