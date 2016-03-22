@@ -88,9 +88,24 @@ app.use(co.wrap(function *(ctx, next) {
 }));
 ```
 
-### Old signature middleware (v1.x)
+### Old signature middleware (v1.x) - Deprecated
 
-If you want to use old signature or be compatible with old middleware, you must use [koa-convert](https://github.com/gyson/koa-convert) to convert legacy generator middleware to promise middleware.
+**Old signature middleware (v1.x) support will be removed in v3**
+
+Koa v2.x will try to convert legacy signature, generator middleware on `app.use`, using [koa-convert](https://github.com/koajs/convert).
+It is however recommended that you choose to migrate all v1.x middleware as soon as possible.
+
+```js
+// Koa will convert
+app.use(function *(next) {
+  const start = new Date();
+  yield next;
+  const ms = new Date() - start;
+  console.log(`${this.method} ${this.url} - ${ms}ms`);
+});
+```
+
+You could do it manually as well, in which case Koa will not convert.
 
 ```js
 const convert = require('koa-convert');
@@ -102,7 +117,6 @@ app.use(convert(function *(next) {
   console.log(`${this.method} ${this.url} - ${ms}ms`);
 }));
 ```
-
 
 ## Babel setup
 For Node 4.0 and Babel 6.0 you can setup like this
