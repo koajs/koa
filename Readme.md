@@ -20,9 +20,16 @@ $ npm install koa
 
   Koa is supported in node v4+ and node v0.12 with the `--harmony-generators` or `--harmony` flag.
 
-## v2 Alpha
+## Koa v2
 
-  Koa v2 is currently in alpha. In this new version, the middleware function signature completely changes in favor of ES2015-2016 syntax:
+  Koa v2 is currently released with the `next` tag (meaning it will not be marked as latest).
+  You can install it with semver:
+
+```bash
+npm install koa@2
+```
+
+  In this new version, the middleware function signature completely changes in favor of ES2015-2016 syntax:
 
 ```js
 // Koa application is now a class and requires the new operator.
@@ -43,8 +50,10 @@ app.use(async ctx => {
   ctx.body = user; // ctx instead of this
 });
 ```
-  To learn more about Koa v2, follow [this issue](https://github.com/koajs/koa/issues/533).
-  To try Koa v2, `npm install koa@next`.
+
+  Although deprecated, the older, generator-based middleware signature will still work in v2 via [koa-convert](https://github.com/koajs/convert) and will be removed in v3.
+
+  To learn more about Koa v2, follow [this issue](https://github.com/koajs/koa/issues/533) or read the docs here: https://github.com/koajs/koa/tree/v2.x/docs.
 
 ## Community
 
