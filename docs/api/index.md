@@ -159,8 +159,7 @@ http.createServer(app.callback()).listen(3001);
 
 ## app.use(function)
 
-  Add the given middleware function to this application. See [Middleware](https://github.com/koajs/koa/wiki#middleware) for
-  more information.
+  Add the given middleware function to this application.
 
 ## app.keys=
 
