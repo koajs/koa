@@ -8,14 +8,14 @@
   which would force middleware to re-implement this common functionality.
 
   A `Context` is created _per_ request, and is referenced in middleware
-  as the receiver, or the `this` identifier, as shown in the following
+  as the receiver, or the `ctx` identifier, as shown in the following
   snippet:
 
 ```js
-app.use(function * () {
-  this; // is the Context
-  this.request; // is a koa Request
-  this.response; // is a koa Response
+app.use(async (ctx, next) => {
+  ctx; // is the Context
+  ctx.request; // is a koa Request
+  ctx.response; // is a koa Response
 });
 ```
 
@@ -55,7 +55,7 @@ app.use(function * () {
   The recommended namespace for passing information through middleware and to your frontend views.
 
 ```js
-this.state.user = yield User.find(id);
+ctx.state.user = yield User.find(id);
 ```
 
 ### ctx.app
@@ -90,13 +90,13 @@ koa uses the [cookies](https://github.com/jed/cookies) module where options are 
   The following combinations are allowed:
 
 ```js
-this.throw(403);
-this.throw('name required', 400);
-this.throw(400, 'name required');
-this.throw('something exploded');
+ctx.throw(403);
+ctx.throw('name required', 400);
+ctx.throw(400, 'name required');
+ctx.throw('something exploded');
 ```
 
-  For example `this.throw('name required', 400)` is equivalent to:
+  For example `ctx.throw('name required', 400)` is equivalent to:
 
 ```js
 const err = new Error('name required');
@@ -113,8 +113,8 @@ throw err;
   You may optionally pass a `properties` object which is merged into the error as-is, useful for decorating machine-friendly errors which are reported to the requester upstream.
 
 ```js
-this.throw(401, 'access_denied', { user: user });
-this.throw('access_denied', { user: user });
+ctx.throw(401, 'access_denied', { user: user });
+ctx.throw('access_denied', { user: user });
 ```
 
 koa uses [http-errors](https://github.com/jshttp/http-errors) to create errors.
@@ -126,14 +126,14 @@ koa uses [http-errors](https://github.com/jshttp/http-errors) to create errors.
   method.
 
 ```js
-this.assert(this.state.user, 401, 'User not found. Please login!');
+ctx.assert(ctx.state.user, 401, 'User not found. Please login!');
 ```
 
 koa uses [http-assert](https://github.com/jshttp/http-assert) for assertions.
 
 ### ctx.respond
 
-  To bypass Koa's built-in response handling, you may explicitly set `this.respond = false;`. Use this if you want to write to the raw `res` object instead of letting Koa handle the response for you.
+  To bypass Koa's built-in response handling, you may explicitly set `ctx.respond = false;`. Use this if you want to write to the raw `res` object instead of letting Koa handle the response for you.
 
   Note that using this is __not__ supported by Koa. This may break intended functionality of Koa middleware and Koa itself. Using this property is considered a hack and is only a convenience to those wishing to use traditional `fn(req, res)` functions and middleware within Koa.
 

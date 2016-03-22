@@ -44,7 +44,7 @@
   Get origin of URL, include `protocol` and `host`.
 
 ```js
-this.request.origin
+ctx.request.origin
 // => http://example.com
 ```
 
@@ -53,7 +53,7 @@ this.request.origin
   Get full request URL, include `protocol`, `host` and `url`.
 
 ```js
-this.request.href
+ctx.request.href
 // => http://example.com/foo/bar?q=1
 ```
 
@@ -96,7 +96,7 @@ this.request.href
   Get request `Content-Type` void of parameters such as "charset".
 
 ```js
-const ct = this.request.type
+const ct = ctx.request.type
 // => "image/png"
 ```
 
@@ -105,7 +105,7 @@ const ct = this.request.type
   Get request charset when present, or `undefined`:
 
 ```js
-this.request.charset
+ctx.request.charset
 // => "utf-8"
 ```
 
@@ -130,7 +130,7 @@ this.request.charset
   setter does _not_ support nested objects.
 
 ```js
-this.query = { next: '/login' }
+ctx.query = { next: '/login' }
 ```
 
 ### request.fresh
@@ -140,18 +140,18 @@ this.query = { next: '/login' }
 
 ```js
 // freshness check requires status 20x or 304
-this.status = 200;
-this.set('ETag', '123');
+ctx.status = 200;
+ctx.set('ETag', '123');
 
 // cache is ok
-if (this.fresh) {
-  this.status = 304;
+if (ctx.fresh) {
+  ctx.status = 304;
   return;
 }
 
 // cache is stale
 // fetch new data
-this.body = yield db.find('something');
+ctx.body = yield db.find('something');
 ```
 
 ### request.stale
@@ -165,7 +165,7 @@ this.body = yield db.find('something');
 
 ### request.secure
 
-  Shorthand for `this.protocol == "https"` to check if a request was
+  Shorthand for `ctx.protocol == "https"` to check if a request was
   issued via TLS.
 
 ### request.ip
@@ -188,8 +188,8 @@ this.body = yield db.find('something');
   parts of the host. This can be changed by setting `app.subdomainOffset`.
 
   For example, if the domain is "tobi.ferrets.example.com":
-  If `app.subdomainOffset` is not set, this.subdomains is `["ferrets", "tobi"]`.
-  If `app.subdomainOffset` is 3, this.subdomains is `["tobi"]`.
+  If `app.subdomainOffset` is not set, `ctx.subdomains` is `["ferrets", "tobi"]`.
+  If `app.subdomainOffset` is 3, `ctx.subdomains` is `["tobi"]`.
 
 ### request.is(types...)
 
@@ -201,26 +201,26 @@ this.body = yield db.find('something');
 
 ```js
 // With Content-Type: text/html; charset=utf-8
-this.is('html'); // => 'html'
-this.is('text/html'); // => 'text/html'
-this.is('text/*', 'text/html'); // => 'text/html'
+ctx.is('html'); // => 'html'
+ctx.is('text/html'); // => 'text/html'
+ctx.is('text/*', 'text/html'); // => 'text/html'
 
 // When Content-Type is application/json
-this.is('json', 'urlencoded'); // => 'json'
-this.is('application/json'); // => 'application/json'
-this.is('html', 'application/*'); // => 'application/json'
+ctx.is('json', 'urlencoded'); // => 'json'
+ctx.is('application/json'); // => 'application/json'
+ctx.is('html', 'application/*'); // => 'application/json'
 
-this.is('html'); // => false
+ctx.is('html'); // => false
 ```
 
   For example if you want to ensure that
   only images are sent to a given route:
 
 ```js
-if (this.is('image/*')) {
+if (ctx.is('image/*')) {
   // process
 } else {
-  this.throw(415, 'images only!');
+  ctx.throw(415, 'images only!');
 }
 ```
 
@@ -247,45 +247,45 @@ In the case of missing accept headers where any type is acceptable, the first ty
 
 ```js
 // Accept: text/html
-this.accepts('html');
+ctx.accepts('html');
 // => "html"
 
 // Accept: text/*, application/json
-this.accepts('html');
+ctx.accepts('html');
 // => "html"
-this.accepts('text/html');
+ctx.accepts('text/html');
 // => "text/html"
-this.accepts('json', 'text');
+ctx.accepts('json', 'text');
 // => "json"
-this.accepts('application/json');
+ctx.accepts('application/json');
 // => "application/json"
 
 // Accept: text/*, application/json
-this.accepts('image/png');
-this.accepts('png');
+ctx.accepts('image/png');
+ctx.accepts('png');
 // => false
 
 // Accept: text/*;q=.5, application/json
-this.accepts(['html', 'json']);
-this.accepts('html', 'json');
+ctx.accepts(['html', 'json']);
+ctx.accepts('html', 'json');
 // => "json"
 
 // No Accept header
-this.accepts('html', 'json');
+ctx.accepts('html', 'json');
 // => "html"
-this.accepts('json', 'html');
+ctx.accepts('json', 'html');
 // => "json"
 ```
 
-  You may call `this.accepts()` as many times as you like,
+  You may call `ctx.accepts()` as many times as you like,
   or use a switch:
 
 ```js
-switch (this.accepts('json', 'html', 'text')) {
+switch (ctx.accepts('json', 'html', 'text')) {
   case 'json': break;
   case 'html': break;
   case 'text': break;
-  default: this.throw(406, 'json, html, or text only');
+  default: ctx.throw(406, 'json, html, or text only');
 }
 ```
 
@@ -295,10 +295,10 @@ switch (this.accepts('json', 'html', 'text')) {
 
 ```js
 // Accept-Encoding: gzip
-this.acceptsEncodings('gzip', 'deflate', 'identity');
+ctx.acceptsEncodings('gzip', 'deflate', 'identity');
 // => "gzip"
 
-this.acceptsEncodings(['gzip', 'deflate', 'identity']);
+ctx.acceptsEncodings(['gzip', 'deflate', 'identity']);
 // => "gzip"
 ```
 
@@ -307,7 +307,7 @@ this.acceptsEncodings(['gzip', 'deflate', 'identity']);
 
 ```js
 // Accept-Encoding: gzip, deflate
-this.acceptsEncodings();
+ctx.acceptsEncodings();
 // => ["gzip", "deflate", "identity"]
 ```
 
@@ -320,10 +320,10 @@ this.acceptsEncodings();
 
 ```js
 // Accept-Charset: utf-8, iso-8859-1;q=0.2, utf-7;q=0.5
-this.acceptsCharsets('utf-8', 'utf-7');
+ctx.acceptsCharsets('utf-8', 'utf-7');
 // => "utf-8"
 
-this.acceptsCharsets(['utf-7', 'utf-8']);
+ctx.acceptsCharsets(['utf-7', 'utf-8']);
 // => "utf-8"
 ```
 
@@ -332,7 +332,7 @@ this.acceptsCharsets(['utf-7', 'utf-8']);
 
 ```js
 // Accept-Charset: utf-8, iso-8859-1;q=0.2, utf-7;q=0.5
-this.acceptsCharsets();
+ctx.acceptsCharsets();
 // => ["utf-8", "utf-7", "iso-8859-1"]
 ```
 
@@ -343,10 +343,10 @@ this.acceptsCharsets();
 
 ```js
 // Accept-Language: en;q=0.8, es, pt
-this.acceptsLanguages('es', 'en');
+ctx.acceptsLanguages('es', 'en');
 // => "es"
 
-this.acceptsLanguages(['en', 'es']);
+ctx.acceptsLanguages(['en', 'es']);
 // => "es"
 ```
 
@@ -355,7 +355,7 @@ this.acceptsLanguages(['en', 'es']);
 
 ```js
 // Accept-Language: en;q=0.8, es, pt
-this.acceptsLanguages();
+ctx.acceptsLanguages();
 // => ["es", "pt", "en"]
 ```
 

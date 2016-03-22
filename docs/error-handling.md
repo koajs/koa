@@ -2,16 +2,16 @@
 
 ## Try-Catch
 
-  Using generators means that you can try-catch `next`. For example,
-  this example prepends all error messages with "Error: "
+  Using async functions means that you can try-catch `next`.
+  This example adds a `.status` to all errors:
 
   ```js
   app.use(async (ctx, next) => {
     try {
       await next();
-    } catch (error) {
-      error.message = 'Error: ' + error.message;
-      throw error;
+    } catch (err) {
+      err.status = err.statusCode || err.status || 500;
+      throw err;
     }
   });
   ```
@@ -32,13 +32,29 @@
   will then be set. You can use a try-catch, as specified
   above, to add a header to this list.
 
+  Here is an example of creating your own error handler:
+
+```js
+app.use(async (ctx, next) => {
+  try {
+    await next();
+  } catch (err) {
+    // will only respond with JSON
+    this.status = err.statusCode || err.status || 500;
+    this.body = {
+      message: err.message
+    };
+  }
+})
+```
+
 ## The Error Event
 
-  Error handlers can be specified with `app.on('error')`.
-  If no error handler is specified, a default error handler
-  is used. Error handlers recieve all errors that make their
+  Error event listeners can be specified with `app.on('error')`.
+  If no error listener is specified, a default error listener
+  is used. Error listener receive all errors that make their
   way back through the middleware chain, if an error is caught
-  and not thrown again, it will not be handled by the error
-  handler. If not error event handler is specified, then
+  and not thrown again, it will not be passed to the error
+  listener. If no error event listener is specified, then
   `app.onerror` will be used, which simply log the error if
   `error.expose` is true and `app.silent` is false.

@@ -1,4 +1,33 @@
 
+2.0.0 /
+==================
+
+ * merge v1.1.2 and v1.2.0 changes
+ * include `koa-convert` so that generator functions still work
+   * NOTE: generator functions are deprecated in v2 and will be removed in v3
+ * improve linting
+ * improve docs
+
+1.2.0 / 2016-03-03
+==================
+
+  * add support for `err.headers` in `ctx.onerror()`
+    - see: https://github.com/koajs/koa/pull/668
+    - note: you should set these headers in your custom error handlers as well
+    - docs: https://github.com/koajs/koa/blob/master/docs/error-handling.md
+  * fix `cookies`' detection of http/https
+    - see: https://github.com/koajs/koa/pull/614
+  * deprecate `app.experimental = true`. Koa v2 does not use this signature.
+  * add a code of conduct
+  * test against the latest version of node
+  * add a lot of docs
+
+1.1.2 / 2015-11-05
+==================
+
+  * ensure parseurl always working as expected
+  * fix Application.inspect() – missing .proxy value.
+
 2.0.0-alpha.3 / 2015-11-05
 ==================
 

@@ -104,7 +104,7 @@ so you can make a correction.
 ### response.length
 
   Return response Content-Length as a number when present, or deduce
-  from `this.body` when possible, or `undefined`.
+  from `ctx.body` when possible, or `undefined`.
 
 ### response.body
 
@@ -149,7 +149,7 @@ If `response.status` has not been set, Koa will automatically set the status to 
 const PassThrough = require('stream').PassThrough;
 
 app.use(function * (next) {
-  this.body = someHTTPStream.on('error', this.onerror).pipe(PassThrough());
+  ctx.body = someHTTPStream.on('error', ctx.onerror).pipe(PassThrough());
 });
 ```
 
@@ -162,7 +162,7 @@ app.use(function * (next) {
   Get a response header field value with case-insensitive `field`.
 
 ```js
-const etag = this.get('ETag');
+const etag = ctx.get('ETag');
 ```
 
 ### response.set(field, value)
@@ -170,14 +170,14 @@ const etag = this.get('ETag');
   Set response header `field` to `value`:
 
 ```js
-this.set('Cache-Control', 'no-cache');
+ctx.set('Cache-Control', 'no-cache');
 ```
 
 ### response.append(field, value)
   Append additional header `field` with value `val`.
 
 ```js
-this.append('Link', '<http://127.0.0.1/>');
+ctx.append('Link', '<http://127.0.0.1/>');
 ```
 
 ### response.set(fields)
@@ -185,7 +185,7 @@ this.append('Link', '<http://127.0.0.1/>');
   Set several response header `fields` with an object:
 
 ```js
-this.set({
+ctx.set({
   'Etag': '1234',
   'Last-Modified': date
 });
@@ -200,7 +200,7 @@ this.set({
   Get response `Content-Type` void of parameters such as "charset".
 
 ```js
-const ct = this.type;
+const ct = ctx.type;
 // => "image/png"
 ```
 
@@ -209,10 +209,10 @@ const ct = this.type;
   Set response `Content-Type` via mime string or file extension.
 
 ```js
-this.type = 'text/plain; charset=utf-8';
-this.type = 'image/png';
-this.type = '.png';
-this.type = 'png';
+ctx.type = 'text/plain; charset=utf-8';
+ctx.type = 'image/png';
+ctx.type = '.png';
+ctx.type = 'png';
 ```
 
   Note: when appropriate a `charset` is selected for you, for
@@ -222,7 +222,7 @@ this.type = 'png';
 
 ### response.is(types...)
 
-  Very similar to `this.request.is()`.
+  Very similar to `ctx.request.is()`.
   Check whether the response type is one of the supplied types.
   This is particularly useful for creating middleware that
   manipulate responses.
@@ -236,13 +236,13 @@ const minify = require('html-minifier');
 app.use(function * minifyHTML(next) {
   yield next;
 
-  if (!this.response.is('html')) return;
+  if (!ctx.response.is('html')) return;
 
-  let body = this.body;
+  let body = ctx.body;
   if (!body || body.pipe) return;
 
   if (Buffer.isBuffer(body)) body = body.toString();
-  this.body = minify(body);
+  ctx.body = minify(body);
 });
 ```
 
@@ -255,19 +255,19 @@ app.use(function * minifyHTML(next) {
   is not present `alt` or "/" is used.
 
 ```js
-this.redirect('back');
-this.redirect('back', '/index.html');
-this.redirect('/login');
-this.redirect('http://google.com');
+ctx.redirect('back');
+ctx.redirect('back', '/index.html');
+ctx.redirect('/login');
+ctx.redirect('http://google.com');
 ```
 
   To alter the default status of `302`, simply assign the status
   before or after this call. To alter the body, assign it after this call:
 
 ```js
-this.status = 301;
-this.redirect('/cart');
-this.body = 'Redirecting to shopping cart';
+ctx.status = 301;
+ctx.redirect('/cart');
+ctx.body = 'Redirecting to shopping cart';
 ```
 
 ### response.attachment([filename])
@@ -291,7 +291,7 @@ this.body = 'Redirecting to shopping cart';
   You can either set it as a `Date` or date string.
 
 ```js
-this.response.lastModified = new Date();
+ctx.response.lastModified = new Date();
 ```
 
 ### response.etag=
@@ -300,7 +300,7 @@ this.response.lastModified = new Date();
   Note that there is no corresponding `response.etag` getter.
 
 ```js
-this.response.etag = crypto.createHash('md5').update(this.body).digest('hex');
+ctx.response.etag = crypto.createHash('md5').update(ctx.body).digest('hex');
 ```
 
 ### response.vary(field)

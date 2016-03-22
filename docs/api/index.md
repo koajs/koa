@@ -179,7 +179,7 @@ app.keys = new KeyGrip(['im a newer secret', 'i like turtle'], 'sha256');
   with the `{ signed: true }` option:
 
 ```js
-this.cookies.set('name', 'tobi', { signed: true });
+ctx.cookies.set('name', 'tobi', { signed: true });
 ```
 
 ## app.context
