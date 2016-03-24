@@ -58,6 +58,15 @@ app.use(async (ctx, next) => {
 ctx.state.user = await User.find(id);
 ```
 
+### ctx.wrappers
+
+  Stores functions to wrap middleware (e.g. co.wrap could be used).
+  Note that koa itself does not implement the use of these wrappers, they are implemented by utilities such as koa-compose.
+
+```js
+ctx.wrappers.push(co.wrap);
+```
+
 ### ctx.app
 
   Application instance reference.
