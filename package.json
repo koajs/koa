@@ -48,9 +48,9 @@
   },
   "devDependencies": {
     "babel-core": "^6.1.2",
-    "babel-eslint": "^5.0.0",
+    "babel-eslint": "^6.0.0",
     "babel-plugin-transform-async-to-generator": "^6.0.14",
-    "eslint": "~2.2.0",
+    "eslint": "^2.5.3",
     "eslint-config-standard": "^5.1.0",
     "eslint-plugin-babel": "^3.1.0",
     "eslint-plugin-promise": "^1.1.0",

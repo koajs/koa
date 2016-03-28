@@ -55,7 +55,7 @@ describe('app.use(fn)', () => {
       });
     });
 
-    app.use(function *(next){
+    app.use(function * (next){
       calls.push(2);
       yield next;
       calls.push(5);
@@ -97,7 +97,7 @@ describe('app.use(fn)', () => {
     const app = new Koa();
 
     app.use((ctx, next) => { return next(); });
-    app.use(function *(next){ this.body = 'generator'; });
+    app.use(function * (next){ this.body = 'generator'; });
 
     request(app.listen())
       .get('/')
@@ -118,7 +118,7 @@ describe('app.use(fn)', () => {
     });
 
     const app = new Koa();
-    app.use(function *(){});
+    app.use(function * (){});
   });
 
   it('should throw error for non function', () => {
