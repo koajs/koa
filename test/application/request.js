@@ -1,7 +1,7 @@
 
 'use strict';
 
-const request = require('supertest');
+const AssertRequest = require('assert-request');
 const assert = require('assert');
 const Koa = require('../..');
 
@@ -10,25 +10,27 @@ describe('app.request', () => {
   app1.request.message = 'hello';
   const app2 = new Koa();
 
-  it('should merge properties', done => {
+  it('should merge properties', () => {
     app1.use((ctx, next) => {
       assert.equal(ctx.request.message, 'hello');
       ctx.status = 204;
     });
 
-    request(app1.listen())
-      .get('/')
-      .expect(204, done);
+    const request = AssertRequest(app1);
+
+    return request('/')
+      .status(204);
   });
 
-  it('should not affect the original prototype', done => {
+  it('should not affect the original prototype', () => {
     app2.use((ctx, next) => {
       assert.equal(ctx.request.message, undefined);
       ctx.status = 204;
     });
 
-    request(app2.listen())
-      .get('/')
-      .expect(204, done);
+    const request = AssertRequest(app2);
+
+    return request('/')
+      .status(204);
   });
 });

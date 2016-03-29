@@ -1,12 +1,12 @@
 
 'use strict';
 
-const request = require('supertest');
+const AssertRequest = require('assert-request');
 const assert = require('assert');
 const Koa = require('../..');
 
 describe('ctx.flushHeaders()', () => {
-  it('should set headersSent', done => {
+  it('should set headersSent', () => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -16,15 +16,14 @@ describe('ctx.flushHeaders()', () => {
       assert(ctx.res.headersSent);
     });
 
-    const server = app.listen();
+    const request = AssertRequest(app);
 
-    request(server)
-      .get('/')
-      .expect(200)
-      .expect('Body', done);
+    return request('/')
+      .status(200)
+      .body('Body');
   });
 
-  it('should allow a response afterwards', done => {
+  it('should allow a response afterwards', () => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -34,15 +33,15 @@ describe('ctx.flushHeaders()', () => {
       ctx.body = 'Body';
     });
 
-    const server = app.listen();
-    request(server)
-      .get('/')
-      .expect(200)
-      .expect('Content-Type', 'text/plain')
-      .expect('Body', done);
+    const request = AssertRequest(app);
+
+    return request('/')
+      .status(200)
+      .header('Content-Type', 'text/plain')
+      .body('Body');
   });
 
-  it('should send the correct status code', done => {
+  it('should send the correct status code', () => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -52,15 +51,15 @@ describe('ctx.flushHeaders()', () => {
       ctx.body = 'Body';
     });
 
-    const server = app.listen();
-    request(server)
-      .get('/')
-      .expect(401)
-      .expect('Content-Type', 'text/plain')
-      .expect('Body', done);
+    const request = AssertRequest(app);
+
+    return request('/')
+      .status(401)
+      .header('Content-Type', 'text/plain')
+      .body('Body');
   });
 
-  it('should fail to set the headers after flushHeaders', done => {
+  it('should fail to set the headers after flushHeaders', () => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -85,14 +84,11 @@ describe('ctx.flushHeaders()', () => {
       }
     });
 
-    const server = app.listen();
-    request(server)
-      .get('/')
-      .expect(401)
-      .expect('Content-Type', 'text/plain')
-      .expect('ctx.set fail ctx.status fail ctx.length fail', (err, res) => {
-        assert(res.headers['x-shouldnt-work'] === undefined, 'header set after flushHeaders');
-        done(err);
-      });
+    const request = AssertRequest(app);
+
+    return request('/')
+      .status(401)
+      .header('Content-Type', 'text/plain')
+      .header('X-Shouldnt-Work', null);
   });
 });

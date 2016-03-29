@@ -1,15 +1,14 @@
 
 'use strict';
 
-const request = require('supertest');
+const AssertRequest = require('assert-request');
 const statuses = require('statuses');
-const assert = require('assert');
 const Koa = require('../..');
 const fs = require('fs');
 
 describe('app.respond', () => {
   describe('when ctx.respond === false', () => {
-    it('should function (ctx)', done => {
+    it('should function (ctx)', () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -24,18 +23,16 @@ describe('app.respond', () => {
         });
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect(200)
-        .expect('lol')
-        .end(done);
+      return request('/')
+        .okay()
+        .body('lol');
     });
   });
 
   describe('when this.type === null', () => {
-    it('should not send Content-Type header', done => {
+    it('should not send Content-Type header', () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -43,133 +40,106 @@ describe('app.respond', () => {
         ctx.type = null;
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect(200)
-        .end((err, res) => {
-          if (err) return done(err);
-          res.should.not.have.header('content-type');
-          done();
-        });
+      return request('/')
+        .okay()
+        .header('Content-Type', null);
     });
   });
 
   describe('when HEAD is used', () => {
-    it('should not respond with the body', done => {
+    it('should not respond with the body', () => {
       const app = new Koa();
 
       app.use(ctx => {
         ctx.body = 'Hello';
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .head('/')
-        .expect(200)
-        .end((err, res) => {
-          if (err) return done(err);
-          res.should.have.header('Content-Type', 'text/plain; charset=utf-8');
-          res.should.have.header('Content-Length', '5');
-          assert(0 == res.text.length);
-          done();
-        });
+      return request.head('/')
+        .okay()
+        .type('text/plain; charset=utf-8')
+        .header('Content-Length', 5)
+        .body('');
     });
 
-    it('should keep json headers', done => {
+    it('should keep json headers', () => {
       const app = new Koa();
 
       app.use(ctx => {
         ctx.body = { hello: 'world' };
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .head('/')
-        .expect(200)
-        .end((err, res) => {
-          if (err) return done(err);
-          res.should.have.header('Content-Type', 'application/json; charset=utf-8');
-          res.should.have.header('Content-Length', '17');
-          assert(0 == res.text.length);
-          done();
-        });
+      return request.head('/')
+        .okay()
+        .type('application/json; charset=utf-8')
+        .header('Content-Length', '17')
+        .body('');
     });
 
-    it('should keep string headers', done => {
+    it('should keep string headers', () => {
       const app = new Koa();
 
       app.use(ctx => {
         ctx.body = 'hello world';
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .head('/')
-        .expect(200)
-        .end((err, res) => {
-          if (err) return done(err);
-          res.should.have.header('Content-Type', 'text/plain; charset=utf-8');
-          res.should.have.header('Content-Length', '11');
-          assert(0 == res.text.length);
-          done();
-        });
+      return request.head('/')
+        .okay()
+        .type('text/plain; charset=utf-8')
+        .header('Content-Length', '11')
+        .body('');
     });
 
-    it('should keep buffer headers', done => {
+    it('should keep buffer headers', () => {
       const app = new Koa();
 
       app.use(ctx => {
         ctx.body = new Buffer('hello world');
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .head('/')
-        .expect(200)
-        .end((err, res) => {
-          if (err) return done(err);
-          res.should.have.header('Content-Type', 'application/octet-stream');
-          res.should.have.header('Content-Length', '11');
-          assert(0 == res.text.length);
-          done();
-        });
+      return request.head('/')
+        .okay()
+        .type('application/octet-stream')
+        .header('Content-Length', '11')
+        .body('');
     });
 
-    it('should respond with a 404 if no body was set', done => {
+    it('should respond with a 404 if no body was set', () => {
       const app = new Koa();
 
       app.use(ctx => {
 
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .head('/')
-        .expect(404, done);
+      return request.head('/')
+        .status(404);
     });
 
-    it('should respond with a 200 if body = ""', done => {
+    it('should respond with a 200 if body = ""', () => {
       const app = new Koa();
 
       app.use(ctx => {
         ctx.body = '';
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .head('/')
-        .expect(200, done);
+      return request.head('/')
+        .okay();
     });
 
-    it('should not overwrite the content-type', done => {
+    it('should not overwrite the content-type', () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -177,29 +147,27 @@ describe('app.respond', () => {
         ctx.type = 'application/javascript';
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .head('/')
-        .expect('content-type', /application\/javascript/)
-        .expect(200, done);
+      return request.head('/')
+        .type('application/javascript')
+        .okay();
     });
   });
 
   describe('when no middleware are present', () => {
-    it('should 404', done => {
+    it('should 404', () => {
       const app = new Koa();
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect(404, done);
+      return request('/')
+        .status(404);
     });
   });
 
   describe('when res has already been written to', () => {
-    it('should not cause an app error', done => {
+    it('should not cause an app error', () => {
       const app = new Koa();
 
       app.use((ctx, next) => {
@@ -214,19 +182,14 @@ describe('app.respond', () => {
 
       app.on('error', err => errorCaught = err);
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect(200)
-        .end((err, res) => {
-          if (err) return done(err);
-          if (errorCaught) return done(errorCaught);
-          done();
-        });
+      return request('/')
+        .okay()
+        .assert(() => !errorCaught);
     });
 
-    it('should send the right body', done => {
+    it('should send the right body', () => {
       const app = new Koa();
 
       app.use((ctx, next) => {
@@ -242,105 +205,85 @@ describe('app.respond', () => {
         });
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect(200)
-        .expect('HelloGoodbye', done);
+      return request('/')
+        .status(200)
+        .body('HelloGoodbye');
     });
   });
 
   describe('when .body is missing', () => {
     describe('with status=400', () => {
-      it('should respond with the associated status message', done => {
+      it('should respond with the associated status message', () => {
         const app = new Koa();
 
         app.use(ctx => {
           ctx.status = 400;
         });
 
-        const server = app.listen();
+        const request = AssertRequest(app);
 
-        request(server)
-          .get('/')
-          .expect(400)
-          .expect('Content-Length', 11)
-          .expect('Bad Request', done);
+        return request('/')
+          .status(400)
+          .header('Content-Length', 11)
+          .body('Bad Request');
       });
     });
 
     describe('with status=204', () => {
-      it('should respond without a body', done => {
+      it('should respond without a body', () => {
         const app = new Koa();
 
         app.use(ctx => {
           ctx.status = 204;
         });
 
-        const server = app.listen();
+        const request = AssertRequest(app);
 
-        request(server)
-          .get('/')
-          .expect(204)
-          .expect('')
-          .end((err, res) => {
-            if (err) return done(err);
-
-            res.header.should.not.have.property('content-type');
-            done();
-          });
+        return request('/')
+          .status(204)
+          .body('')
+          .header('Content-Type', null);
       });
     });
 
     describe('with status=205', () => {
-      it('should respond without a body', done => {
+      it('should respond without a body', () => {
         const app = new Koa();
 
         app.use(ctx => {
           ctx.status = 205;
         });
 
-        const server = app.listen();
+        const request = AssertRequest(app);
 
-        request(server)
-          .get('/')
-          .expect(205)
-          .expect('')
-          .end((err, res) => {
-            if (err) return done(err);
-
-            res.header.should.not.have.property('content-type');
-            done();
-          });
+        return request('/')
+          .status(205)
+          .body('')
+          .header('Content-Type', null);
       });
     });
 
     describe('with status=304', () => {
-      it('should respond without a body', done => {
+      it('should respond without a body', () => {
         const app = new Koa();
 
         app.use(ctx => {
           ctx.status = 304;
         });
 
-        const server = app.listen();
+        const request = AssertRequest(app);
 
-        request(server)
-          .get('/')
-          .expect(304)
-          .expect('')
-          .end((err, res) => {
-            if (err) return done(err);
-
-            res.header.should.not.have.property('content-type');
-            done();
-          });
+        return request('/')
+          .status(304)
+          .body('')
+          .header('Content-Type', null);
       });
     });
 
     describe('with custom status=700', () => {
-      it('should respond with the associated status message', done => {
+      it('should respond with the associated status message', () => {
         const app = new Koa();
         statuses['700'] = 'custom status';
 
@@ -348,22 +291,17 @@ describe('app.respond', () => {
           ctx.status = 700;
         });
 
-        const server = app.listen();
+        const request = AssertRequest(app);
 
-        request(server)
-          .get('/')
-          .expect(700)
-          .expect('custom status')
-          .end((err, res) => {
-            if (err) return done(err);
-            res.res.statusMessage.should.equal('custom status');
-            done();
-          });
+        return request('/')
+          .status(700)
+          .body('custom status')
+          .assert(res => res.statusMessage === 'custom status');
       });
     });
 
     describe('with custom statusMessage=ok', () => {
-      it('should respond with the custom status message', done => {
+      it('should respond with the custom status message', () => {
         const app = new Koa();
 
         app.use(ctx => {
@@ -371,61 +309,49 @@ describe('app.respond', () => {
           ctx.message = 'ok';
         });
 
-        const server = app.listen();
+        const request = AssertRequest(app);
 
-        request(server)
-          .get('/')
-          .expect(200)
-          .expect('ok')
-          .end((err, res) => {
-            if (err) return done(err);
-            res.res.statusMessage.should.equal('ok');
-            done();
-          });
+        return request('/')
+          .okay()
+          .body('ok')
+          .assert(res => res.statusMessage === 'ok');
       });
     });
 
     describe('with custom status without message', () => {
-      it('should respond with the status code number', done => {
+      it('should respond with the status code number', () => {
         const app = new Koa();
 
         app.use(ctx => {
           ctx.res.statusCode = 701;
         });
 
-        const server = app.listen();
+        const request = AssertRequest(app);
 
-        request(server)
-          .get('/')
-          .expect(701)
-          .expect('701', done);
+        return request('/')
+          .status(701)
+          .body('701');
       });
     });
   });
 
   describe('when .body is a null', () => {
-    it('should respond 204 by default', done => {
+    it('should respond 204 by default', () => {
       const app = new Koa();
 
       app.use(ctx => {
         ctx.body = null;
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect(204)
-        .expect('')
-        .end((err, res) => {
-          if (err) return done(err);
-
-          res.header.should.not.have.property('content-type');
-          done();
-        });
+      return request('/')
+        .status(204)
+        .body('')
+        .header('Content-Type', null);
     });
 
-    it('should respond 204 with status=200', done => {
+    it('should respond 204 with status=200', () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -433,21 +359,15 @@ describe('app.respond', () => {
         ctx.body = null;
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect(204)
-        .expect('')
-        .end((err, res) => {
-          if (err) return done(err);
-
-          res.header.should.not.have.property('content-type');
-          done();
-        });
+      return request('/')
+        .status(204)
+        .body('')
+        .header('Content-Type', null);
     });
 
-    it('should respond 205 with status=205', done => {
+    it('should respond 205 with status=205', () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -455,21 +375,15 @@ describe('app.respond', () => {
         ctx.body = null;
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect(205)
-        .expect('')
-        .end((err, res) => {
-          if (err) return done(err);
-
-          res.header.should.not.have.property('content-type');
-          done();
-        });
+      return request('/')
+        .status(205)
+        .body('')
+        .header('Content-Type', null);
     });
 
-    it('should respond 304 with status=304', done => {
+    it('should respond 304 with status=304', () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -477,55 +391,47 @@ describe('app.respond', () => {
         ctx.body = null;
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect(304)
-        .expect('')
-        .end((err, res) => {
-          if (err) return done(err);
-
-          res.header.should.not.have.property('content-type');
-          done();
-        });
+      return request('/')
+        .status(304)
+        .body('')
+        .header('Content-Type', null);
     });
   });
 
   describe('when .body is a string', () => {
-    it('should respond', done => {
+    it('should respond', () => {
       const app = new Koa();
 
       app.use(ctx => {
         ctx.body = 'Hello';
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect('Hello', done);
+      return request('/')
+        .body('Hello');
     });
   });
 
   describe('when .body is a Buffer', () => {
-    it('should respond', done => {
+    it('should respond', () => {
       const app = new Koa();
 
       app.use(ctx => {
         ctx.body = new Buffer('Hello');
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect('Hello', done);
+      return request('/')
+        .body('Hello');
     });
   });
 
   describe('when .body is a Stream', () => {
-    it('should respond', done => {
+    it('should respond', () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -533,21 +439,15 @@ describe('app.respond', () => {
         ctx.set('Content-Type', 'application/json; charset=utf-8');
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect('Content-Type', 'application/json; charset=utf-8')
-        .end((err, res) => {
-          if (err) return done(err);
-          const pkg = require('../../package');
-          res.should.not.have.header('Content-Length');
-          res.body.should.eql(pkg);
-          done();
-        });
+      return request('/')
+        .type('application/json; charset=utf-8')
+        .header('Content-Length', null)
+        .body(body => body !== JSON.stringify(require('../../package')));
     });
 
-    it('should strip content-length when overwriting', done => {
+    it('should strip content-length when overwriting', () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -556,21 +456,15 @@ describe('app.respond', () => {
         ctx.set('Content-Type', 'application/json; charset=utf-8');
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect('Content-Type', 'application/json; charset=utf-8')
-        .end((err, res) => {
-          if (err) return done(err);
-          const pkg = require('../../package');
-          res.should.not.have.header('Content-Length');
-          res.body.should.eql(pkg);
-          done();
-        });
+      return request('/')
+        .type('application/json; charset=utf-8')
+        .header('Content-Length', null)
+        .body(body => body !== JSON.stringify(require('../../package')));
     });
 
-    it('should keep content-length if not overwritten', done => {
+    it('should keep content-length if not overwritten', () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -579,22 +473,16 @@ describe('app.respond', () => {
         ctx.set('Content-Type', 'application/json; charset=utf-8');
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect('Content-Type', 'application/json; charset=utf-8')
-        .end((err, res) => {
-          if (err) return done(err);
-          const pkg = require('../../package');
-          res.should.have.header('Content-Length');
-          res.body.should.eql(pkg);
-          done();
-        });
+      return request('/')
+        .type('application/json; charset=utf-8')
+        .header('Content-Length')
+        .json(require('../../package'));
     });
 
     it('should keep content-length if overwritten with the same stream',
-      done => {
+      () => {
         const app = new Koa();
 
         app.use(ctx => {
@@ -605,21 +493,15 @@ describe('app.respond', () => {
           ctx.set('Content-Type', 'application/json; charset=utf-8');
         });
 
-        const server = app.listen();
+        const request = AssertRequest(app);
 
-        request(server)
-          .get('/')
-          .expect('Content-Type', 'application/json; charset=utf-8')
-          .end((err, res) => {
-            if (err) return done(err);
-            const pkg = require('../../package');
-            res.should.have.header('Content-Length');
-            res.body.should.eql(pkg);
-            done();
-          });
+        return request('/')
+          .type('application/json; charset=utf-8')
+          .header('Content-Length')
+          .json(require('../../package'));
       });
 
-    it('should handle errors', done => {
+    it('should handle errors', () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -627,16 +509,14 @@ describe('app.respond', () => {
         ctx.body = fs.createReadStream('does not exist');
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect('Content-Type', 'text/plain; charset=utf-8')
-        .expect(404)
-        .end(done);
+      return request('/')
+        .type('text/plain; charset=utf-8')
+        .status(404);
     });
 
-    it('should handle errors when no content status', done => {
+    it('should handle errors when no content status', () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -644,14 +524,13 @@ describe('app.respond', () => {
         ctx.body = fs.createReadStream('does not exist');
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect(204, done);
+      return request('/')
+        .status(204);
     });
 
-    it('should handle all intermediate stream body errors', done => {
+    it('should handle all intermediate stream body errors', () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -660,28 +539,26 @@ describe('app.respond', () => {
         ctx.body = fs.createReadStream('does not exist');
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect(404, done);
+      return request('/')
+        .status(404);
     });
   });
 
   describe('when .body is an Object', () => {
-    it('should respond with json', done => {
+    it('should respond with json', () => {
       const app = new Koa();
 
       app.use(ctx => {
         ctx.body = { hello: 'world' };
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect('Content-Type', 'application/json; charset=utf-8')
-        .expect('{"hello":"world"}', done);
+      return request('/')
+        .type('application/json; charset=utf-8')
+        .json({ hello: 'world' });
     });
   });
 
@@ -698,13 +575,13 @@ describe('app.respond', () => {
         done();
       });
 
-      request(app.listen())
-        .get('/')
-        .end(() => {});
+      const request = AssertRequest(app);
+
+      request('/').catch(err => err);
     });
 
     describe('with an .expose property', () => {
-      it('should expose the message', done => {
+      it('should expose the message', () => {
         const app = new Koa();
 
         app.use(ctx => {
@@ -714,15 +591,16 @@ describe('app.respond', () => {
           throw err;
         });
 
-        request(app.listen())
-          .get('/')
-          .expect(403, 'sorry!')
-          .end(done);
+        const request = AssertRequest(app);
+
+        return request('/')
+          .status(403)
+          .body('sorry!');
       });
     });
 
     describe('with a .status property', () => {
-      it('should respond with .status', done => {
+      it('should respond with .status', () => {
         const app = new Koa();
 
         app.use(ctx => {
@@ -731,29 +609,29 @@ describe('app.respond', () => {
           throw err;
         });
 
-        request(app.listen())
-          .get('/')
-          .expect(403, 'Forbidden')
-          .end(done);
+        const request = AssertRequest(app);
+
+        return request('/')
+          .status(403)
+          .body('Forbidden');
       });
     });
 
-    it('should respond with 500', done => {
+    it('should respond with 500', () => {
       const app = new Koa();
 
       app.use(ctx => {
         throw new Error('boom!');
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect(500, 'Internal Server Error')
-        .end(done);
+      return request('/')
+        .status(500)
+        .body('Internal Server Error');
     });
 
-    it('should be catchable', done => {
+    it('should be catchable', () => {
       const app = new Koa();
 
       app.use((ctx, next) => {
@@ -768,17 +646,16 @@ describe('app.respond', () => {
         throw new Error('boom!');
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect(200, 'Got error')
-        .end(done);
+      return request('/')
+        .okay()
+        .body('Got error');
     });
   });
 
   describe('when status and body property', () => {
-    it('should 200', done => {
+    it('should 200', () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -787,15 +664,14 @@ describe('app.respond', () => {
         ctx.status = 200;
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect(200)
-        .expect('hello', done);
+      return request('/')
+        .okay()
+        .body('hello');
     });
 
-    it('should 204', done => {
+    it('should 204', () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -805,15 +681,11 @@ describe('app.respond', () => {
         ctx.status = 204;
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect(204)
-        .end((err, res) => {
-          res.should.not.have.header('content-type');
-          done(err);
-        });
+      return request('/')
+        .status(204)
+        .header('Content-Type', null);
     });
   });
 });

@@ -47,6 +47,7 @@
     "tag": "next"
   },
   "devDependencies": {
+    "assert-request": "^1.0.4",
     "babel-core": "^6.1.2",
     "babel-eslint": "^6.0.0",
     "babel-plugin-transform-async-to-generator": "^6.0.14",
@@ -59,7 +60,6 @@
     "mocha": "^2.0.1",
     "should": "^6.0.3",
     "should-http": "0.0.3",
-    "supertest": "^1.0.1",
     "test-console": "^0.7.1"
   },
   "engines": {

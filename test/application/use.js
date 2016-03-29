@@ -1,12 +1,12 @@
 
 'use strict';
 
-const request = require('supertest');
+const AssertRequest = require('assert-request');
 const assert = require('assert');
 const Koa = require('../..');
 
 describe('app.use(fn)', () => {
-  it('should compose middleware', done => {
+  it('should compose middleware', () => {
     const app = new Koa();
     const calls = [];
 
@@ -31,19 +31,14 @@ describe('app.use(fn)', () => {
       });
     });
 
-    const server = app.listen();
+    const request = AssertRequest(app);
 
-    request(server)
-      .get('/')
-      .expect(404)
-      .end(err => {
-        if (err) return done(err);
-        calls.should.eql([1, 2, 3, 4, 5, 6]);
-        done();
-      });
+    return request('/')
+      .status(404)
+      .assert(() => calls.should.eql([1, 2, 3, 4, 5, 6]));
   });
 
-  it('should compose mixed middleware', done => {
+  it('should compose mixed middleware', () => {
     process.once('deprecation', () => {}); // silence deprecation message
     const app = new Koa();
     const calls = [];
@@ -68,41 +63,37 @@ describe('app.use(fn)', () => {
       });
     });
 
-    const server = app.listen();
+    const request = AssertRequest(app);
 
-    request(server)
-      .get('/')
-      .expect(404)
-      .end(err => {
-        if (err) return done(err);
-        calls.should.eql([1, 2, 3, 4, 5, 6]);
-        done();
-      });
+    return request('/')
+      .status(404)
+      .assert(() => calls.should.eql([1, 2, 3, 4, 5, 6]));
   });
 
   // https://github.com/koajs/koa/pull/530#issuecomment-148138051
-  it('should catch thrown errors in non-async functions', done => {
+  it('should catch thrown errors in non-async functions', () => {
     const app = new Koa();
 
     app.use(ctx => ctx.throw('Not Found', 404));
 
-    request(app.listen())
-      .get('/')
-      .expect(404)
-      .end(done);
+    const request = AssertRequest(app);
+
+    return request('/')
+      .status(404);
   });
 
-  it('should accept both generator and function middleware', done => {
+  it('should accept both generator and function middleware', () => {
     process.once('deprecation', () => {}); // silence deprecation message
     const app = new Koa();
 
     app.use((ctx, next) => { return next(); });
     app.use(function * (next){ this.body = 'generator'; });
 
-    request(app.listen())
-      .get('/')
-      .expect(200)
-      .expect('generator', done);
+    const request = AssertRequest(app);
+
+    return request('/')
+      .okay()
+      .body('generator');
   });
 
   it('should throw error for non function', () => {
