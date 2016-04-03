@@ -1,7 +1,7 @@
 
 # Guide
 
-  This guide covers Koa topics that are not directly API related, such as best practices for writing middleware, application structure suggestions, here we use async function as middleware you can also you commonFunction or generatorFunction which will be a little different.
+  This guide covers Koa topics that are not directly API related, such as best practices for writing middleware, application structure suggestions, here we use async function as middleware you can also use commonFunction or generatorFunction which will be a little different.
 
 ## Writing Middleware
 
@@ -43,7 +43,7 @@ app.use(responseTime);
    13. Hand off to Koa to handle the response
 
 
-Note that the final middleware (step __6__) await to what looks to be nothing - it's actually
+Note that the final middleware (step __6__) await to what looks to be nothing — it's actually
 yielding to a no-op promise within Koa. This is so that every middleware can conform with the
 same API, and may be placed before or after others. If you removed `next();` from the furthest
 "downstream" middleware everything would function appropriately, however it would no longer conform
