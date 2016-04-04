@@ -4,18 +4,18 @@
 const Stream = require('stream');
 const Koa = require('../..');
 
-module.exports = (req, res) => {
+module.exports = (req, res, app) => {
   const socket = new Stream.Duplex();
-  req = req || { headers: {}, socket: socket, __proto__: Stream.Readable.prototype };
-  res = res || { _headers: {}, socket: socket, __proto__: Stream.Writable.prototype };
-  req.socket = req.socket || socket;
-  res.socket = res.socket || socket;
+  req = Object.assign({ headers: {}, socket }, Stream.Readable.prototype, req);
+  res = Object.assign({ _headers: {}, socket }, Stream.Writable.prototype, res);
+  req.socket.remoteAddress = req.socket.remoteAddress || '127.0.0.1';
+  app = app || new Koa();
   res.getHeader = k => res._headers[k.toLowerCase()];
   res.setHeader = (k, v) => res._headers[k.toLowerCase()] = v;
   res.removeHeader = (k, v) => delete res._headers[k.toLowerCase()];
-  return (new Koa()).createContext(req, res);
+  return app.createContext(req, res);
 };
 
-module.exports.request = (req, res) => module.exports(req, res).request;
+module.exports.request = (req, res, app) => module.exports(req, res, app).request;
 
-module.exports.response = (req, res) => module.exports(req, res).response;
+module.exports.response = (req, res, app) => module.exports(req, res, app).response;
