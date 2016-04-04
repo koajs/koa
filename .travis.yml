@@ -1,11 +1,14 @@
+sudo: false
 language: node_js
 node_js:
   - "4"
   - "5"
+cache:
+  directories:
+    - wrk/bin
 before_script:
-  - sudo apt-get install build-essential libssl-dev git
-  - git clone https://github.com/wg/wrk.git
-  - cd wrk && make && sudo cp wrk /usr/local/bin && cd ..
+  - "[ ! -f wrk/bin/wrk ] && rm -rf wrk && git clone https://github.com/wg/wrk.git && make -C wrk && mkdir wrk/bin && mv wrk/wrk wrk/bin || true"
+  - export PATH=$PATH:$PWD/wrk/bin/
 script:
   - make lint
   - make test-travis
