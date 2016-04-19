@@ -40,8 +40,8 @@ app.use(async (ctx, next) => {
     await next();
   } catch (err) {
     // will only respond with JSON
-    this.status = err.statusCode || err.status || 500;
-    this.body = {
+    ctx.status = err.statusCode || err.status || 500;
+    ctx.body = {
       message: err.message
     };
   }
