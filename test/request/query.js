@@ -2,12 +2,13 @@
 'use strict';
 
 const context = require('../helpers/context');
+const should = require('should');
 
 describe('ctx.query', () => {
   describe('when missing', () => {
     it('should return an empty object', () => {
       const ctx = context({ url: '/' });
-      ctx.query.should.eql({});
+      should(ctx.query).empty;
     });
 
     it('should return the same object each time it\'s accessed', done => {
