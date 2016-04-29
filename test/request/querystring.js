@@ -33,8 +33,8 @@ describe('ctx.querystring=', () => {
     ctx.querystring = 'page=2&color=blue';
     ctx.url.should.equal('/store/shoes?page=2&color=blue');
     ctx.search.should.equal('?page=2&color=blue');
-    should(ctx.query).have.property('page','2');
-    should(ctx.query).have.property('color','blue');
+    should(ctx.query).have.property('page', '2');
+    should(ctx.query).have.property('color', 'blue');
   });
 
   it('should change .url but not .originalUrl', () => {
