@@ -41,19 +41,19 @@ app.listen(3000);
 
 
 ## Middleware
-Koa is an middleware framework, it can take 3 different kind function as middleware:
+Koa is a middleware framework that can take 3 different kinds of functions as middleware:
 
   * common function
   * async function
   * generatorFunction
 
-Here we write an logger middleware with different function.
+Here is an example of logger middleware with each of the different functions:
 
 ### Common function
 
 ```js
-// Middleware normally take two parameters (ctx, next), ctx is the context for one request,
-// next is an function that is invoked to execute the downstream middleware. It returns a Promise with a then function for running code after completion.
+// Middleware normally takes two parameters (ctx, next), ctx is the context for one request,
+// next is a function that is invoked to execute the downstream middleware. It returns a Promise with a then function for running code after completion.
 
 app.use((ctx, next) => {
   const start = new Date();
