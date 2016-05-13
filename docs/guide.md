@@ -1,7 +1,7 @@
 
 # Guide
 
-  This guide covers Koa topics that are not directly API related, such as best practices for writing middleware, application structure suggestions, here we use async function as middleware you can also use commonFunction or generatorFunction which will be a little different.
+  This guide covers Koa topics that are not directly API related, such as best practices for writing middleware and application structure suggestions. In these examples we use async functions as middleware - you can also use commonFunction or generatorFunction which will be a little different.
 
 ## Writing Middleware
 
