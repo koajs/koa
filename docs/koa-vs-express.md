@@ -55,7 +55,7 @@ THIS DOCUMENT IS IN PROGRESS. THIS PARAGRAPH SHALL BE REMOVED WHEN THIS DOCUMENT
 
 ## How is Koa different than Connect/Express?
 
-### Generated-based control flow
+### Generator-based control flow
 
   Thanks to co.
 
