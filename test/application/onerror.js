@@ -48,7 +48,7 @@ describe('app.onerror(err)', () => {
 
     const output = stderr.inspectSync(() => app.onerror(err));
 
-    output.should.eql(['\n', '  Foo\n', '\n']);
+    output.should.eql(['\n  Foo\n\n']);
 
     done();
   });
@@ -62,7 +62,7 @@ describe('app.onerror(err)', () => {
 
     const output = stderr.inspectSync(() => app.onerror(err));
 
-    output.should.eql(['\n', '  Error: mock stack null\n', '\n']);
+    output.should.eql(['\n  Error: mock stack null\n\n']);
 
     done();
   });
