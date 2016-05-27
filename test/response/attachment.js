@@ -2,7 +2,7 @@
 'use strict';
 
 const context = require('../helpers/context');
-const request = require('supertest');
+const AssertRequest = require('assert-request');
 const Koa = require('../..');
 
 describe('ctx.attachment([filename])', () => {
@@ -31,7 +31,7 @@ describe('ctx.attachment([filename])', () => {
       ctx.response.header['content-disposition'].should.equal(str);
     });
 
-    it('should work with http client', done => {
+    it('should work with http client', () => {
       const app = new Koa();
 
       app.use((ctx, next) => {
@@ -39,11 +39,12 @@ describe('ctx.attachment([filename])', () => {
         ctx.body = {foo: 'bar'};
       });
 
-      request(app.listen())
-        .get('/')
-        .expect('content-disposition', 'attachment; filename="include-no-ascii-char-???-ok.json"; filename*=UTF-8\'\'include-no-ascii-char-%E4%B8%AD%E6%96%87%E5%90%8D-ok.json')
-        .expect({foo: 'bar'})
-        .expect(200, done);
+      const request = AssertRequest(app);
+
+      return request('/')
+        .header('content-disposition', 'attachment; filename="include-no-ascii-char-???-ok.json"; filename*=UTF-8\'\'include-no-ascii-char-%E4%B8%AD%E6%96%87%E5%90%8D-ok.json')
+        .json({foo: 'bar'})
+        .okay();
     });
   });
 });

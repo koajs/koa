@@ -1,7 +1,7 @@
 
 'use strict';
 
-const request = require('supertest');
+const AssertRequest = require('assert-request');
 const assert = require('assert');
 const Koa = require('../..');
 
@@ -19,9 +19,9 @@ describe('app', () => {
       done();
     });
 
-    request(app.listen())
-      .get('/')
-      .end(() => {});
+    const request = AssertRequest(app);
+
+    request('/').catch(err => err);
   });
 
   it('should not .writeHead when !socket.writable', done => {
@@ -41,9 +41,9 @@ describe('app', () => {
     // hackish, but the response should occur in a single tick
     setImmediate(done);
 
-    request(app.listen())
-      .get('/')
-      .end(() => {});
+    const request = AssertRequest(app);
+
+    request('/');
   });
 
   it('should set development env when NODE_ENV missing', () => {

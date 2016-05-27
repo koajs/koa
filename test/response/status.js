@@ -1,8 +1,8 @@
 
 'use strict';
 
+const AssertRequest = require('assert-request');
 const response = require('../helpers/context').response;
-const request = require('supertest');
 const statuses = require('statuses');
 const assert = require('assert');
 const Koa = require('../..');
@@ -53,7 +53,7 @@ describe('res.status=', () => {
   });
 
   function strip(status){
-    it('should strip content related header fields', done => {
+    it('should strip content related header fields', () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -67,19 +67,17 @@ describe('res.status=', () => {
         assert(null == ctx.response.header['transfer-encoding']);
       });
 
-      request(app.listen())
-        .get('/')
-        .expect(status)
-        .end((err, res) => {
-          res.should.not.have.header('content-type');
-          res.should.not.have.header('content-length');
-          res.should.not.have.header('content-encoding');
-          res.text.should.have.length(0);
-          done(err);
-        });
+      const request = AssertRequest(app);
+
+      return request('/')
+        .status(status)
+        .header('Content-Type', null)
+        .header('Content-Length', null)
+        .header('Content-Encoding', null)
+        .body(body => body.should.have.length(0));
     });
 
-    it('should strip content releated header fields after status set', done => {
+    it('should strip content releated header fields after status set', () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -90,16 +88,14 @@ describe('res.status=', () => {
         ctx.set('Transfer-Encoding', 'chunked');
       });
 
-      request(app.listen())
-        .get('/')
-        .expect(status)
-        .end((err, res) => {
-          res.should.not.have.header('content-type');
-          res.should.not.have.header('content-length');
-          res.should.not.have.header('content-encoding');
-          res.text.should.have.length(0);
-          done(err);
-        });
+      const request = AssertRequest(app);
+
+      return request('/')
+        .status(status)
+        .header('Content-Type', null)
+        .header('Content-Length', null)
+        .header('Content-Encoding', null)
+        .body(body => body.should.have.length(0));
     });
   }
 

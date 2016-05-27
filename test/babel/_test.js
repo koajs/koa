@@ -1,11 +1,11 @@
 'use strict';
 
-const request = require('supertest');
+const AssertRequest = require('assert-request');
 const Koa = require('../..');
 
 describe('require("babel-core/register")', () => {
   describe('app.use(fn)', () => {
-    it('should compose middleware w/ async functions', done => {
+    it('should compose middleware w/ async functions', () => {
       const app = new Koa();
       const calls = [];
 
@@ -27,16 +27,11 @@ describe('require("babel-core/register")', () => {
         calls.push(4);
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect(404)
-        .end(err => {
-          if (err) return done(err);
-          calls.should.eql([1, 2, 3, 4, 5, 6]);
-          done();
-        });
+      return request('/')
+        .status(404)
+        .assert(() => calls.should.eql([1, 2, 3, 4, 5, 6]));
     });
   });
 });

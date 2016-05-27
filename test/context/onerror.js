@@ -1,11 +1,11 @@
 
 'use strict';
 
-const request = require('supertest');
+const AssertRequest = require('assert-request');
 const Koa = require('../..');
 
 describe('ctx.onerror(err)', () => {
-  it('should respond', done => {
+  it('should respond', () => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -14,17 +14,15 @@ describe('ctx.onerror(err)', () => {
       ctx.throw(418, 'boom');
     });
 
-    const server = app.listen();
+    const request = AssertRequest(app);
 
-    request(server)
-      .get('/')
-      .expect(418)
-      .expect('Content-Type', 'text/plain; charset=utf-8')
-      .expect('Content-Length', '4')
-      .end(done);
+    return request('/')
+      .status(418)
+      .header('Content-Type', 'text/plain; charset=utf-8')
+      .header('Content-Length', '4');
   });
 
-  it('should unset all headers', done => {
+  it('should unset all headers', () => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -35,24 +33,17 @@ describe('ctx.onerror(err)', () => {
       ctx.throw(418, 'boom');
     });
 
-    const server = app.listen();
+    const request = AssertRequest(app);
 
-    request(server)
-      .get('/')
-      .expect(418)
-      .expect('Content-Type', 'text/plain; charset=utf-8')
-      .expect('Content-Length', '4')
-      .end((err, res) => {
-        if (err) return done(err);
-
-        res.headers.should.not.have.property('vary');
-        res.headers.should.not.have.property('x-csrf-token');
-
-        done();
-      });
+    return request('/')
+      .status(418)
+      .header('Content-Type', 'text/plain; charset=utf-8')
+      .header('Content-Length', '4')
+      .header('Vary', null)
+      .header('X-CSRF-Token', null);
   });
 
-  it('should set headers specified in the error', done => {
+  it('should set headers specified in the error', () => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -69,26 +60,19 @@ describe('ctx.onerror(err)', () => {
       });
     });
 
-    const server = app.listen();
+    const request = AssertRequest(app);
 
-    request(server)
-    .get('/')
-    .expect(418)
-    .expect('Content-Type', 'text/plain; charset=utf-8')
-    .expect('X-New-Header', 'Value')
-    .end((err, res) => {
-      if (err) return done(err);
-
-      res.headers.should.not.have.property('vary');
-      res.headers.should.not.have.property('x-csrf-token');
-
-      done();
-    });
+    return request('/')
+      .status(418)
+      .header('Content-Type', 'text/plain; charset=utf-8')
+      .header('X-New-Header', 'Value')
+      .header('Vary', null)
+      .header('X-CSRF-Token', null);
   });
 
   describe('when invalid err.status', () => {
     describe('not number', () => {
-      it('should respond 500', done => {
+      it('should respond 500', () => {
         const app = new Koa();
 
         app.use((ctx, next) => {
@@ -98,18 +82,17 @@ describe('ctx.onerror(err)', () => {
           throw err;
         });
 
-        const server = app.listen();
+        const request = AssertRequest(app);
 
-        request(server)
-          .get('/')
-          .expect(500)
-          .expect('Content-Type', 'text/plain; charset=utf-8')
-          .expect('Internal Server Error', done);
+        return request('/')
+          .status(500)
+          .header('Content-Type', 'text/plain; charset=utf-8')
+          .body('Internal Server Error');
       });
     });
 
     describe('not http status code', () => {
-      it('should respond 500', done => {
+      it('should respond 500', () => {
         const app = new Koa();
 
         app.use((ctx, next) => {
@@ -119,32 +102,30 @@ describe('ctx.onerror(err)', () => {
           throw err;
         });
 
-        const server = app.listen();
+        const request = AssertRequest(app);
 
-        request(server)
-          .get('/')
-          .expect(500)
-          .expect('Content-Type', 'text/plain; charset=utf-8')
-          .expect('Internal Server Error', done);
+        return request('/')
+          .status(500)
+          .header('Content-Type', 'text/plain; charset=utf-8')
+          .body('Internal Server Error');
       });
     });
   });
 
   describe('when non-error thrown', () => {
-    it('should response non-error thrown message', done => {
+    it('should response non-error thrown message', () => {
       const app = new Koa();
 
       app.use((ctx, next) => {
         throw 'string error'; // eslint-disable-line no-throw-literal
       });
 
-      const server = app.listen();
+      const request = AssertRequest(app);
 
-      request(server)
-        .get('/')
-        .expect(500)
-        .expect('Content-Type', 'text/plain; charset=utf-8')
-        .expect('Internal Server Error', done);
+      return request('/')
+        .status(500)
+        .header('Content-Type', 'text/plain; charset=utf-8')
+        .body('Internal Server Error');
     });
   });
 });
