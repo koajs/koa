@@ -123,8 +123,10 @@ var http = require('http');
 var koa = require('koa');
 var app = koa();
 http.createServer(app.callback()).listen(3000);
-http.createServer(app.callback()).listen(3001);
+https.createServer(options, app.callback()).listen(3001);
 ```
+
+Here, `options` is a required argument for Node `https.createServer` containing certificate information. See the [Node documentation](https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener) for more details.
 
 ## app.callback()
 
