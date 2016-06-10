@@ -179,7 +179,7 @@ app.on('error', function(err){
 });
 ```
 
-  If an error in the req/res cycle and it is _not_ possible to respond to the client, the `Context` instance is also passed:
+  If an error is in the req/res cycle and it is _not_ possible to respond to the client, the `Context` instance is also passed:
 
 ```js
 app.on('error', function(err, ctx){
