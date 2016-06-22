@@ -114,7 +114,7 @@ function logger(format) {
 const compose = require('koa-compose');
 
 async function random(ctx, next) {
-  if ('/random' == this.path) {
+  if ('/random' == ctx.path) {
     ctx.body = Math.floor(Math.random() * 10);
   } else {
     await next();
@@ -122,7 +122,7 @@ async function random(ctx, next) {
 };
 
 async function backwards(ctx, next) {
-  if ('/backwards' == this.path) {
+  if ('/backwards' == ctx.path) {
     ctx.body = 'sdrawkcab';
   } else {
     await next();
@@ -130,7 +130,7 @@ async function backwards(ctx, next) {
 }
 
 async function pi(ctx, next) {
-  if ('/pi' == this.path) {
+  if ('/pi' == ctx.path) {
     ctx.body = String(Math.PI);
   } else {
     await next();
