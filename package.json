@@ -4,7 +4,8 @@
   "description": "Koa web app framework",
   "main": "lib/application.js",
   "scripts": {
-    "test": "make test"
+    "test": "make test",
+    "update-authors": "git log --format='%aN <%aE>' | sort -u > AUTHORS"
   },
   "repository": "koajs/koa",
   "keywords": [
