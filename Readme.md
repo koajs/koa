@@ -4,7 +4,8 @@
   [![NPM version][npm-image]][npm-url]
   [![build status][travis-image]][travis-url]
   [![Test coverage][coveralls-image]][coveralls-url]
-  [![OpenCollective Backers](https://opencollective.com/koajs/backers/badge.svg)](#backers) [![OpenCollective Sponsors](https://opencollective.com/koajs/sponsors/badge.svg)](#sponsors)
+  [![OpenCollective Backers][backers-image]](#backers)
+  [![OpenCollective Sponsors][sponsors-image]](#sponsors)
 
   Expressive HTTP middleware for node.js to make web applications and APIs more enjoyable to write. Koa's middleware stack flows in a stack-like manner, allowing you to perform actions downstream then filter and manipulate the response upstream. Koa's use of generators also greatly increases the readability and robustness of your application.
 
@@ -196,6 +197,8 @@ Become a sponsor and get your logo on our README on Github with a link to your s
 [travis-url]: https://travis-ci.org/koajs/koa
 [coveralls-image]: https://img.shields.io/codecov/c/github/koajs/koa.svg?style=flat-square
 [coveralls-url]: https://codecov.io/github/koajs/koa?branch=master
+[backers-image]: https://opencollective.com/koajs/backers/badge.svg?style=flat-square
+[sponsors-image]: https://opencollective.com/koajs/sponsors/badge.svg?style=flat-square
 [gitter-image]: https://img.shields.io/gitter/room/koajs/koa.svg?style=flat-square
 [gitter-url]: https://gitter.im/koajs/koa?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 [#koajs]: https://webchat.freenode.net/?channels=#koajs
