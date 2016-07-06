@@ -7,12 +7,12 @@
   [![OpenCollective Backers][backers-image]](#backers)
   [![OpenCollective Sponsors][sponsors-image]](#sponsors)
 
-  Expressive HTTP middleware for node.js to make web applications and APIs more enjoyable to write. Koa requests flow through middleware in a stack-like manner, allowing you to perform actions downstream then filter and manipulate the response upstream. Koa's use of generators also greatly increases the readability and robustness of your application.
+  Expressive, light-weight HTTP framework for node.js to make web applications and APIs more enjoyable to write. Koa requests flow through middleware in a stack-like manner, allowing you to perform actions downstream then filter and manipulate the response upstream. Koa's use of generators also greatly increases the readability and robustness of your application.
 
   Only methods that are common to nearly all HTTP servers are integrated directly into Koa's small ~550 SLOC codebase. This
   includes things like content negotiation, normalization of node inconsistencies, redirection, and a few others.
 
-  Koa is not bundled with any middleware.
+  Koa is not bundled with any middleware, but there is a [large collection](https://github.com/koajs/koa/wiki) of community middleware to choose from.
 
 ## Installation
 
