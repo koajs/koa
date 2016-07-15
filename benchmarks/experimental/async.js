@@ -2,6 +2,7 @@
 'use strict';
 
 var http = require('http');
+var Promise = require('bluebird');
 var koa = require('../..');
 var app = koa();
 

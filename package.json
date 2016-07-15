@@ -1,5 +1,5 @@
 {
-  "name": "koa",
+  "name": "koa-bluebird-co",
   "version": "1.2.0",
   "description": "Koa web app framework",
   "main": "lib/application.js",
@@ -7,7 +7,7 @@
     "test": "make test",
     "update-authors": "git log --format='%aN <%aE>' | sort -u > AUTHORS"
   },
-  "repository": "koajs/koa",
+  "repository": "andyhu/koa",
   "keywords": [
     "web",
     "app",
@@ -20,8 +20,9 @@
   "license": "MIT",
   "dependencies": {
     "accepts": "^1.2.2",
-    "co": "^4.4.0",
-    "composition": "^2.1.1",
+    "bluebird": "^3.4.1",
+    "bluebird-co": "^2.1.2",
+    "composition": "^2.3.0",
     "content-disposition": "~0.5.0",
     "content-type": "^1.0.0",
     "cookies": "~0.6.1",
@@ -33,7 +34,7 @@
     "fresh": "^0.3.0",
     "http-assert": "^1.1.0",
     "http-errors": "^1.2.8",
-    "koa-compose": "^2.3.0",
+    "koa-compose": "^2.4.0",
     "koa-is-json": "^1.0.0",
     "mime-types": "^2.0.7",
     "on-finished": "^2.1.0",
@@ -44,14 +45,16 @@
     "vary": "^1.0.0"
   },
   "devDependencies": {
-    "babel": "^5.0.0",
+    "babel-core": "^6.10.4",
+    "babel-plugin-bluebird-async-functions": "^1.2.0",
+    "babel-plugin-syntax-async-functions": "^6.8.0",
     "istanbul": "^0.4.0",
     "make-lint": "^1.0.1",
     "mocha": "^2.0.1",
-    "should": "^6.0.3",
-    "should-http": "0.0.3",
+    "should": "^9.0.2",
+    "should-http": "0.0.4",
     "supertest": "^1.0.1",
-    "test-console": "^0.7.1"
+    "test-console": "^1.0.0"
   },
   "engines": {
     "node": ">= 0.12.0",
