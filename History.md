@@ -1,4 +1,10 @@
 
+1.2.1 / 2016-07-22
+==================
+
+  * fix(response): correct response.writable logic (#781)
+  * fix some docs
+
 1.2.0 / 2016-03-03
 ==================
 
