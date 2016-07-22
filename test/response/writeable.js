@@ -8,7 +8,7 @@ var net = require('net');
 describe('res.writable', function(){
   describe('when continuous requests in one persistent connection', function() {
     function requestTwice(server, done) {
-      let port = server.address().port;
+      var port = server.address().port;
       var buf = new Buffer('GET / HTTP/1.1\r\nHost: localhost:' + port + '\r\nConnection: keep-alive\r\n\r\n');
       var client = net.connect(port);
       var datas = [];
@@ -51,7 +51,7 @@ describe('res.writable', function(){
 
   describe('when socket closed before response sent', function() {
     function requsetClosed(server) {
-      let port = server.address().port;
+      var port = server.address().port;
       var buf = new Buffer('GET / HTTP/1.1\r\nHost: localhost:' + port + '\r\nConnection: keep-alive\r\n\r\n');
       var client = net.connect(port);
       setImmediate(function() {
@@ -72,9 +72,9 @@ describe('res.writable', function(){
     })
   })
 
-  describe('when resposne finished', function() {
+  describe('when response finished', function() {
     function request(server) {
-      let port = server.address().port;
+      var port = server.address().port;
       var buf = new Buffer('GET / HTTP/1.1\r\nHost: localhost:' + port + '\r\nConnection: keep-alive\r\n\r\n');
       var client = net.connect(port);
       setImmediate(function() {
