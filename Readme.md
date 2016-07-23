@@ -123,14 +123,12 @@ For Node 4.0 and Babel 6.0 you can setup like this
 
 ```bash
 // install babel and required presets
-$ npm install babel-core --save
-$ npm install babel-preset-es2015-node5 --save
-$ npm install babel-preset-stage-3 --save
+$ npm install babel-core babel-register babel-preset-es2015-node5 babel-preset-stage-3 --save
 ```
 
 ```js
 // set babel in entry file
-require('babel-core/register')({
+require('babel-register')({
   presets: ['es2015-node5', 'stage-3']
 });
 ```
