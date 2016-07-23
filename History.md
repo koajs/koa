@@ -2,6 +2,7 @@
 2.0.0 /
 ==================
 
+ * fix(response): correct response.writable logic (#782)
  * merge v1.1.2 and v1.2.0 changes
  * include `koa-convert` so that generator functions still work
    * NOTE: generator functions are deprecated in v2 and will be removed in v3
