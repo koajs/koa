@@ -119,22 +119,21 @@ app.use(convert(function *(next) {
 ```
 
 ## Babel setup
-For Node 4.0 and Babel 6.0 you can setup like this
+
+For Node 4.0 and Babel 6.0 you can setup like this:
 
 ```bash
-// install babel and required presets
-$ npm install babel-core --save
-$ npm install babel-preset-es2015-node5 --save
-$ npm install babel-preset-stage-3 --save
+$ npm install babel-register transform-async-to-generator --save
 ```
 
 ```js
 // set babel in entry file
-require('babel-core/register')({
-  presets: ['es2015-node5', 'stage-3']
+require('babel-register')({
+  plugins: ['transform-async-to-generator']
 });
 ```
 
+Check out an example in koa's [test](test/babel/index.js).
 
 ## Running tests
 
