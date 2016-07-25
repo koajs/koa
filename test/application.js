@@ -6,6 +6,7 @@ var request = require('supertest');
 var statuses = require('statuses');
 var assert = require('assert');
 var http = require('http');
+var net = require('net');
 var koa = require('..');
 var fs = require('fs');
 var AssertionError = assert.AssertionError;
