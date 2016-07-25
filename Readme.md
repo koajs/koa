@@ -31,7 +31,7 @@ $ npm install koa
 npm install koa@2
 ```
 
-  In this new version, the middleware function signature completely changes in favor of ES2015-2016 syntax:
+  In this new version, the middleware function signature changes to adopt async/await:
 
 ```js
 // Koa application is now a class and requires the new operator.
@@ -53,7 +53,7 @@ app.use(async ctx => {
 });
 ```
 
-  Although deprecated, the older, generator-based middleware signature will still work in v2 via [koa-convert](https://github.com/koajs/convert) and will be removed in v3.
+  Until async/await is natively supported in Node Koa 1.x is the official release, however you may wish to adopt 2.x early by using Babel to compile. Koa 1.x generator-based middleware may be "upgraded" to the 2.x flavour using [koa-convert](https://github.com/koajs/convert).
 
   To learn more about Koa v2, follow [this issue](https://github.com/koajs/koa/issues/533) or read the docs here: https://github.com/koajs/koa/tree/v2.x/docs.
 
