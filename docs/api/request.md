@@ -1,3 +1,6 @@
+Viewing docs for **v1.x** (stable). [View for v2.x](https://github.com/koajs/koa/blob/v2.x/docs/api/request.md) (recommended).
+
+
 # Request
 
   A Koa `Request` object is an abstraction on top of node's vanilla request object,

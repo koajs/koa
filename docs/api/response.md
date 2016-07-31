@@ -1,3 +1,6 @@
+Viewing docs for **v1.x** (stable). [View for v2.x](https://github.com/koajs/koa/blob/v2.x/docs/api/response.md) (recommended).
+
+
 # Response
 
   A Koa `Response` object is an abstraction on top of node's vanilla response object,

@@ -1,3 +1,6 @@
+Viewing docs for **v1.x** (stable). [View for v2.x](https://github.com/koajs/koa/blob/v2.x/docs/api/context.md) (recommended).
+
+
 # Context
 
   A Koa Context encapsulates node's `request` and `response` objects
