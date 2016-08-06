@@ -123,7 +123,7 @@ app.use(convert(function *(next) {
 For Node 4.0 and Babel 6.0 you can setup like this:
 
 ```bash
-$ npm install babel-register transform-async-to-generator --save
+$ npm install babel-register babel-plugin-transform-async-to-generator --save
 ```
 
 ```js
