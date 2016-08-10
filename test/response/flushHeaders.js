@@ -4,6 +4,7 @@
 const request = require('supertest');
 const assert = require('assert');
 const Koa = require('../..');
+const http = require('http');
 
 describe('ctx.flushHeaders()', () => {
   it('should set headersSent', done => {
@@ -94,5 +95,44 @@ describe('ctx.flushHeaders()', () => {
         assert(res.headers['x-shouldnt-work'] === undefined, 'header set after flushHeaders');
         done(err);
       });
+  });
+
+  it('should flush headers first and delay to send data', done => {
+    const PassThrough = require('stream').PassThrough;
+    const app = new Koa();
+
+    app.use(ctx => {
+      ctx.type = 'json';
+      ctx.status = 200;
+      ctx.headers['Link'] = '</css/mycss.css>; as=style; rel=preload, <https://img.craftflair.com>; rel=preconnect; crossorigin';
+      const stream = ctx.body = new PassThrough();
+      ctx.flushHeaders();
+
+      setTimeout(() => {
+        stream.end(JSON.stringify({ message: 'hello!' }));
+      }, 10000);
+    });
+
+    app.listen(function(err){
+      if (err) return done(err);
+
+      const port = this.address().port;
+
+      http.request({
+        port
+      })
+      .on('response', res => {
+        const onData = () => done(new Error('boom'));
+        res.on('data', onData);
+
+        // shouldn't receive any data for a while
+        setTimeout(() => {
+          res.removeListener('data', onData);
+          done();
+        }, 1000);
+      })
+      .on('error', done)
+      .end();
+    });
   });
 });
