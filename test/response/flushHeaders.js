@@ -98,7 +98,7 @@ describe('ctx.flushHeaders()', () => {
   });
 
   it('should flush headers first and delay to send data', done => {
-    const { PassThrough } = require('stream');
+    const PassThrough = require('stream').PassThrough;
     const app = new Koa();
 
     app.use(ctx => {
@@ -116,7 +116,7 @@ describe('ctx.flushHeaders()', () => {
     app.listen(function(err){
       if (err) return done(err);
 
-      const { port } = this.address();
+      const port = this.address().port;
 
       http.request({
         port
