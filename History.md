@@ -9,6 +9,16 @@
  * improve linting
  * improve docs
 
+2.0.0-alpha.5 / 2016-08-10
+==================
+
+ * fix `ctx.flushHeaders()` to use `res.flushHeaders()` instead of `res.writeHead()`
+
+2.0.0-alpha.4 / 2016-07-23
+==================
+
+ * fix `response.writeable` during pipelined requests
+
 1.2.0 / 2016-03-03
 ==================
 
