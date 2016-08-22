@@ -55,7 +55,7 @@ app.use(async (ctx, next) => {
   The recommended namespace for passing information through middleware and to your frontend views.
 
 ```js
-ctx.state.user = yield User.find(id);
+ctx.state.user = await User.find(id);
 ```
 
 ### ctx.app
