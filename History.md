@@ -2,12 +2,19 @@
 2.0.0 /
 ==================
 
+ * don't pre-bound onerror [breaking change] (#800)
+ * fix `ctx.flushHeaders()` to use `res.flushHeaders()` instead of `res.writeHead()` (#795)
  * fix(response): correct response.writable logic (#782)
  * merge v1.1.2 and v1.2.0 changes
  * include `koa-convert` so that generator functions still work
    * NOTE: generator functions are deprecated in v2 and will be removed in v3
  * improve linting
  * improve docs
+
+ 2.0.0-alpha.6 / 2016-08-29
+ ==================
+
+  * don't pre-bound onerror [breaking change]
 
 2.0.0-alpha.5 / 2016-08-10
 ==================
