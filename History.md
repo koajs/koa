@@ -1,4 +1,10 @@
 
+1.2.2 / 2016-08-31
+==================
+
+  * fix: add named function for request and response handlers (#804)
+  * Fixes typo in error handling section of API readme (#786)
+
 1.2.1 / 2016-07-22
 ==================
 
