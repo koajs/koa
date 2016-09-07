@@ -1,4 +1,9 @@
 
+1.2.4 / 2016-09-07
+==================
+
+  * fix: should get subdomains from hostname instead (#809)
+
 1.2.3 / 2016-09-07
 ==================
 
