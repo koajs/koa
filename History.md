@@ -2,6 +2,7 @@
 2.0.0 /
 ==================
 
+ * fix: subdomains should be [] if the host is an ip (#808)
  * don't pre-bound onerror [breaking change] (#800)
  * fix `ctx.flushHeaders()` to use `res.flushHeaders()` instead of `res.writeHead()` (#795)
  * fix(response): correct response.writable logic (#782)
@@ -11,8 +12,13 @@
  * improve linting
  * improve docs
 
- 2.0.0-alpha.6 / 2016-08-29
- ==================
+2.0.0-alpha.7 / 2016-09-07
+==================
+
+ * fix: subdomains should be [] if the host is an ip (#808)
+
+2.0.0-alpha.6 / 2016-08-29
+==================
 
   * don't pre-bound onerror [breaking change]
 
