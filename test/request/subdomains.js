@@ -14,8 +14,14 @@ describe('req.subdomains', () => {
     req.subdomains.should.eql(['tobi']);
   });
 
-  describe('with no host present', () => {
+  it('should work with no host present', () => {
     const req = request();
+    req.subdomains.should.eql([]);
+  });
+
+  it('should check if the host is an ip address, even with a port', () => {
+    const req = request();
+    req.header.host = '127.0.0.1:3000';
     req.subdomains.should.eql([]);
   });
 });
