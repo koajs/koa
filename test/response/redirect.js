@@ -1,109 +1,238 @@
 
 'use strict';
 
-const context = require('../helpers/context');
+const request = require('supertest');
+const Koa = require('../..');
 
 describe('ctx.redirect(url)', () => {
-  it('should redirect to the given url', () => {
-    const ctx = context();
-    ctx.redirect('http://google.com');
-    ctx.response.header.location.should.equal('http://google.com');
-    ctx.status.should.equal(302);
+  it('should redirect to the given url', done => {
+    const app = new Koa();
+
+    app.use(ctx => {
+      ctx.redirect('http://google.com')
+    });
+
+    const server = app.listen();
+
+    request(server)
+      .get('/')
+      .expect(302)
+      .end((err, res) => {
+        res.should.have.header('Location', 'http://google.com');
+        done();
+      });
   });
 
   describe('with "back"', () => {
-    it('should redirect to Referrer', () => {
-      const ctx = context();
-      ctx.req.headers.referrer = '/login';
-      ctx.redirect('back');
-      ctx.response.header.location.should.equal('/login');
+    it('should redirect to Referrer', done => {
+      const app = new Koa();
+
+      app.use(ctx => {
+        ctx.req.headers.referrer = '/login';
+        ctx.redirect('back');
+      });
+
+      const server = app.listen();
+
+      request(server)
+        .get('/')
+        .expect(302)
+        .end((err, res) => {
+          res.should.have.header('Location', '/login');
+          done();
+        });
     });
 
-    it('should redirect to Referer', () => {
-      const ctx = context();
-      ctx.req.headers.referer = '/login';
-      ctx.redirect('back');
-      ctx.response.header.location.should.equal('/login');
+    it('should redirect to Referer', done => {
+      const app = new Koa();
+
+      app.use(ctx => {
+        ctx.req.headers.referer = '/login';
+        ctx.redirect('back');
+      });
+
+      const server = app.listen();
+
+      request(server)
+        .get('/')
+        .expect(302)
+        .end((err, res) => {
+          res.should.have.header('Location', '/login');
+          done();
+        });
     });
 
-    it('should default to alt', () => {
-      const ctx = context();
-      ctx.redirect('back', '/index.html');
-      ctx.response.header.location.should.equal('/index.html');
+    it('should default to alt', done => {
+      const app = new Koa();
+
+      app.use(ctx => {
+        ctx.redirect('back', '/index.html');
+      });
+
+      const server = app.listen();
+
+      request(server)
+        .get('/')
+        .expect(302)
+        .end((err, res) => {
+          res.should.have.header('Location', '/index.html');
+          done();
+        });
     });
 
-    it('should default redirect to /', () => {
-      const ctx = context();
-      ctx.redirect('back');
-      ctx.response.header.location.should.equal('/');
+    it('should default redirect to /', done => {
+      const app = new Koa();
+
+      app.use(ctx => {
+        ctx.redirect('back');
+      });
+
+      const server = app.listen();
+
+      request(server)
+        .get('/')
+        .expect(302)
+        .end((err, res) => {
+          res.should.have.header('Location', '/');
+          done();
+        });
     });
   });
 
   describe('when html is accepted', () => {
-    it('should respond with html', () => {
-      const ctx = context();
+    it('should respond with html', done => {
       const url = 'http://google.com';
-      ctx.header.accept = 'text/html';
-      ctx.redirect(url);
-      ctx.response.header['content-type'].should.equal('text/html; charset=utf-8');
-      ctx.body.should.equal(`Redirecting to <a href="${url}">${url}</a>.`);
+      const app = new Koa();
+
+      app.use(ctx => {
+        ctx.header.accept = 'text/html';
+        ctx.redirect(url);
+      });
+
+      const server = app.listen();
+
+      request(server)
+        .get('/')
+        .expect(302)
+        .end((err, res) => {
+          res.should.have.header('Content-Type', 'text/html; charset=utf-8');
+          res.text.should.equal(`Redirecting to <a href="${url}">${url}</a>.`);
+          done();
+        });
     });
 
-    it('should escape the url', () => {
-      const ctx = context();
+    it('should escape the url', done => {
       let url = '<script>';
-      ctx.header.accept = 'text/html';
-      ctx.redirect(url);
-      url = escape(url);
-      ctx.response.header['content-type'].should.equal('text/html; charset=utf-8');
-      ctx.body.should.equal(`Redirecting to <a href="${url}">${url}</a>.`);
+      const app = new Koa();
+
+      app.use(ctx => {
+        ctx.header.accept = 'text/html';
+        ctx.redirect(url);
+        url = escape(url);
+      });
+
+      const server = app.listen();
+
+      request(server)
+        .get('/')
+        .expect(302)
+        .end((err, res) => {
+          res.should.have.header('Content-Type', 'text/html; charset=utf-8');
+          res.text.should.equal(`Redirecting to <a href="${url}">${url}</a>.`);
+          done();
+        });
     });
   });
 
   describe('when text is accepted', () => {
-    it('should respond with text', () => {
-      const ctx = context();
+    it('should respond with text', done => {
       const url = 'http://google.com';
-      ctx.header.accept = 'text/plain';
-      ctx.redirect(url);
-      ctx.body.should.equal(`Redirecting to ${url}.`);
+      const app = new Koa();
+
+      app.use(ctx => {
+        ctx.header.accept = 'text/plain';
+        ctx.redirect(url);
+      });
+
+      const server = app.listen();
+
+      request(server)
+        .get('/')
+        .expect(302)
+        .end((err, res) => {
+          res.text.should.equal(`Redirecting to ${url}.`);
+          done();
+        });
     });
   });
 
   describe('when status is 301', () => {
-    it('should not change the status code', () => {
-      const ctx = context();
+    it('should not change the status code', done => {
       const url = 'http://google.com';
-      ctx.status = 301;
-      ctx.header.accept = 'text/plain';
-      ctx.redirect('http://google.com');
-      ctx.status.should.equal(301);
-      ctx.body.should.equal(`Redirecting to ${url}.`);
+      const app = new Koa();
+
+      app.use(ctx => {
+        ctx.status = 301;
+        ctx.header.accept = 'text/plain';
+        ctx.redirect('http://google.com');
+      });
+
+      const server = app.listen();
+
+      request(server)
+        .get('/')
+        .expect(301)
+        .end((err, res) => {
+          res.text.should.equal(`Redirecting to ${url}.`);
+          done();
+        });
     });
   });
 
   describe('when status is 304', () => {
-    it('should change the status code', () => {
-      const ctx = context();
+    it('should change the status code', done => {
       const url = 'http://google.com';
-      ctx.status = 304;
-      ctx.header.accept = 'text/plain';
-      ctx.redirect('http://google.com');
-      ctx.status.should.equal(302);
-      ctx.body.should.equal(`Redirecting to ${url}.`);
+      const app = new Koa();
+
+      app.use(ctx => {
+        ctx.status = 304;
+        ctx.header.accept = 'text/plain';
+        ctx.redirect('http://google.com');
+      });
+
+      const server = app.listen();
+
+      request(server)
+        .get('/')
+        .expect(302)
+        .end((err, res) => {
+          res.text.should.equal(`Redirecting to ${url}.`);
+          done();
+        });
     });
   });
 
   describe('when content-type was present', () => {
-    it('should overwrite content-type', () => {
-      const ctx = context();
-      ctx.body = {};
+    it('should overwrite content-type', done => {
       const url = 'http://google.com';
-      ctx.header.accept = 'text/plain';
-      ctx.redirect('http://google.com');
-      ctx.status.should.equal(302);
-      ctx.body.should.equal(`Redirecting to ${url}.`);
-      ctx.type.should.equal('text/plain');
+      const app = new Koa();
+
+      app.use(ctx => {
+        ctx.body = {};
+        ctx.header.accept = 'text/plain';
+        ctx.redirect('http://google.com');
+      });
+
+      const server = app.listen();
+
+      request(server)
+        .get('/')
+        .expect(302)
+        .end((err, res) => {
+          res.text.should.equal(`Redirecting to ${url}.`);
+          res.should.have.header('Content-Type', 'text/plain; charset=utf-8');
+          done();
+        });
     });
   });
 });
