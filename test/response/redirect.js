@@ -9,7 +9,7 @@ describe('ctx.redirect(url)', () => {
     const app = new Koa();
 
     app.use(ctx => {
-      ctx.redirect('http://google.com')
+      ctx.redirect('http://google.com');
     });
 
     const server = app.listen();
@@ -18,6 +18,7 @@ describe('ctx.redirect(url)', () => {
       .get('/')
       .expect(302)
       .end((err, res) => {
+        if (err) return done(err);
         res.should.have.header('Location', 'http://google.com');
         done();
       });
@@ -38,6 +39,7 @@ describe('ctx.redirect(url)', () => {
         .get('/')
         .expect(302)
         .end((err, res) => {
+          if (err) return done(err);
           res.should.have.header('Location', '/login');
           done();
         });
@@ -57,6 +59,7 @@ describe('ctx.redirect(url)', () => {
         .get('/')
         .expect(302)
         .end((err, res) => {
+          if (err) return done(err);
           res.should.have.header('Location', '/login');
           done();
         });
@@ -75,6 +78,7 @@ describe('ctx.redirect(url)', () => {
         .get('/')
         .expect(302)
         .end((err, res) => {
+          if (err) return done(err);
           res.should.have.header('Location', '/index.html');
           done();
         });
@@ -93,6 +97,7 @@ describe('ctx.redirect(url)', () => {
         .get('/')
         .expect(302)
         .end((err, res) => {
+          if (err) return done(err);
           res.should.have.header('Location', '/');
           done();
         });
@@ -115,6 +120,7 @@ describe('ctx.redirect(url)', () => {
         .get('/')
         .expect(302)
         .end((err, res) => {
+          if (err) return done(err);
           res.should.have.header('Content-Type', 'text/html; charset=utf-8');
           res.text.should.equal(`Redirecting to <a href="${url}">${url}</a>.`);
           done();
@@ -137,6 +143,7 @@ describe('ctx.redirect(url)', () => {
         .get('/')
         .expect(302)
         .end((err, res) => {
+          if (err) return done(err);
           res.should.have.header('Content-Type', 'text/html; charset=utf-8');
           res.text.should.equal(`Redirecting to <a href="${url}">${url}</a>.`);
           done();
@@ -160,6 +167,7 @@ describe('ctx.redirect(url)', () => {
         .get('/')
         .expect(302)
         .end((err, res) => {
+          if (err) return done(err);
           res.text.should.equal(`Redirecting to ${url}.`);
           done();
         });
@@ -183,6 +191,7 @@ describe('ctx.redirect(url)', () => {
         .get('/')
         .expect(301)
         .end((err, res) => {
+          if (err) return done(err);
           res.text.should.equal(`Redirecting to ${url}.`);
           done();
         });
@@ -206,6 +215,7 @@ describe('ctx.redirect(url)', () => {
         .get('/')
         .expect(302)
         .end((err, res) => {
+          if (err) return done(err);
           res.text.should.equal(`Redirecting to ${url}.`);
           done();
         });
@@ -229,6 +239,7 @@ describe('ctx.redirect(url)', () => {
         .get('/')
         .expect(302)
         .end((err, res) => {
+          if (err) return done(err);
           res.text.should.equal(`Redirecting to ${url}.`);
           res.should.have.header('Content-Type', 'text/plain; charset=utf-8');
           done();
