@@ -256,16 +256,16 @@ $ DEBUG=koa* node --harmony examples/simple
 
 ```js
 var path = require('path');
-var static = require('koa-static');
+var serve = require('koa-static');
 
-var publicFiles = static(path.join(__dirname, 'public'));
-publicFiles._name = 'static /public';
+var publicFiles = serve(path.join(__dirname, 'public'));
+publicFiles._name = 'serve /public';
 
 app.use(publicFiles);
 ```
 
-  Now, instead of just seeing "static" when debugging, you will see:
+  Now, instead of just seeing "serve" when debugging, you will see:
 
 ```
-  koa:application use static /public +0ms
+  koa:application use serve /public +0ms
 ```
