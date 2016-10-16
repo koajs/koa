@@ -4,7 +4,11 @@
   "description": "Koa web app framework",
   "main": "lib/application.js",
   "scripts": {
-    "test": "make test"
+    "make-test": "make test",
+    "test": "cross-env NODE_ENV=test node ./node_modules/mocha/bin/_mocha --require should --require should-http test/application/* test/context/* test/request/* test/response/* test/babel/index.js --bail",
+    "test-cov": "cross-env NODE_ENV=test istanbul cover ./node_modules/mocha/bin/_mocha -- -u exports --require should --require should-http test/application/* test/context/* test/request/* test/response/* test/babel/index.js --bail",
+    "test-travis": "cross-env NODE_ENV=test istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -u exports --require should --require should-http test/application/* test/context/* test/request/* test/response/* test/babel/index.js --bail",
+    "lint": "eslint benchmarks lib test"
   },
   "repository": "koajs/koa",
   "keywords": [
@@ -50,6 +54,7 @@
     "babel-eslint": "^6.0.0",
     "babel-plugin-transform-async-to-generator": "^6.0.14",
     "babel-register": "^6.9.0",
+    "cross-env": "^3.1.3",
     "eslint": "^2.5.3",
     "eslint-config-standard": "^5.1.0",
     "eslint-plugin-babel": "^3.1.0",
