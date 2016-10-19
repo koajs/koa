@@ -113,7 +113,7 @@ describe('app.use(fn)', () => {
 
   it('should output deprecation message for generator functions', done => {
     process.once('deprecation', message => {
-      assert(/Support for generators will been removed/.test(message));
+      assert(/Support for generators will be removed/.test(message));
       done();
     });
 
