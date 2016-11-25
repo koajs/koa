@@ -103,6 +103,7 @@ ctx.throw('something exploded');
 ```js
 const err = new Error('name required');
 err.status = 400;
+err.expose = true;
 throw err;
 ```
 
