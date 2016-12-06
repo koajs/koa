@@ -87,6 +87,7 @@ describe('ctx.accepts(types)', () => {
       ctx.accepts('text/html').should.equal('text/html');
       ctx.accepts('text/plain').should.equal('text/plain');
       ctx.accepts('image/png').should.be.false;
+      ctx.accepts('png').should.be.false;
     });
   });
 });
