@@ -17,9 +17,9 @@ describe('ctx.is(type)', () => {
     it('should return null', () => {
       const ctx = context();
 
-      assert(null == ctx.is());
-      assert(null == ctx.is('image/*'));
-      assert(null == ctx.is('image/*', 'text/*'));
+      assert(null === ctx.is());
+      assert(null === ctx.is('image/*'));
+      assert(null === ctx.is('image/*', 'text/*'));
     });
   });
 
