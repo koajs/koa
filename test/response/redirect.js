@@ -2,6 +2,9 @@
 'use strict';
 
 var context = require('../context');
+var request = require('supertest');
+var mount = require('koa-mount');
+var koa = require('../..');
 
 describe('ctx.redirect(url)', function(){
   it('should redirect to the given url', function(){
@@ -104,6 +107,105 @@ describe('ctx.redirect(url)', function(){
       ctx.status.should.equal(302);
       ctx.body.should.equal('Redirecting to ' + url + '.');
       ctx.type.should.equal('text/plain');
+    })
+  })
+
+  describe('with koa-mount', function(){
+    var app = koa();
+    var a = koa();
+    var b = koa();
+
+    function* handler(next) {
+      yield next;
+
+      if (/(^\/a\/)|(^\/b\/)/.test(this.path)) {
+        return;
+      }
+
+      if (this.path == '/url') {
+        this.redirect('http://google.com');
+      } else if (this.path == '/path') {
+        this.redirect('/newpath');
+      } else if (this.path == '/back') {
+        this.redirect('back');
+      } else if (this.path == '/alt') {
+        this.redirect('back', '/alt');
+      }
+    }
+
+    app.use(handler);
+    a.use(handler);
+    b.use(handler);
+
+    app.use(mount('/a', a));
+    app.use(mount('/b', b));
+
+    it('should redirect to the given url', function(done){
+      request(app.listen())
+      .get('/url')
+      .expect(302)
+      .expect('Location', 'http://google.com')
+      .end(done);
+    })
+
+    it('should redirect to path', function(done){
+      request(app.listen())
+      .get('/path')
+      .expect(302)
+      .expect('Location', '/newpath')
+      .end(done);
+    })
+
+    it('should redirect to path with prefix "/a"', function(done){
+      request(app.listen())
+      .get('/a/path')
+      .expect(302)
+      .expect('Location', '/a/newpath')
+      .end(done);
+    })
+
+    it('should redirect to path with prefix "/b', function(done){
+      request(app.listen())
+      .get('/b/path')
+      .expect(302)
+      .expect('Location', '/b/newpath')
+      .end(done);
+    })
+
+    describe('with "back"', function() {
+      it('should redirect to Referer', function(done){
+        request(app.listen())
+        .get('/back')
+        .set('Referrer', 'http://google.com')
+        .expect(302)
+        .expect('Location', 'http://google.com')
+        .end(done);
+      })
+
+      it('should redirect to Referer', function(done){
+        request(app.listen())
+        .get('/a/back')
+        .set('Referrer', 'http://google.com')
+        .expect(302)
+        .expect('Location', 'http://google.com')
+        .end(done);
+      })
+
+      it('should back to alt', function(done){
+        request(app.listen())
+        .get('/alt')
+        .expect(302)
+        .expect('Location', '/alt')
+        .end(done);
+      })
+
+      it('should back to alt with prefix', function(done){
+        request(app.listen())
+        .get('/a/alt')
+        .expect(302)
+        .expect('Location', '/a/alt')
+        .end(done);
+      })
     })
   })
 })
