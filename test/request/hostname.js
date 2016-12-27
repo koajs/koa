@@ -11,6 +11,12 @@ describe('req.hostname', function(){
     req.hostname.should.equal('foo.com');
   })
 
+  it('should work with IPv6 Host', function(){
+    var req = request();
+    req.header.host = '[::1]:3000';
+    assert.equal(req.hostname, '[::1]');
+  })
+
   describe('with no host present', function(){
     it('should return ""', function(){
       var req = request();
