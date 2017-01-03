@@ -53,7 +53,7 @@ app.use(async ctx => {
 });
 ```
 
-  Until async/await is natively supported in Node Koa 1.x is the official release, however you may wish to adopt 2.x early by using Babel to compile. Koa 1.x generator-based middleware may be "upgraded" to the 2.x flavour using [koa-convert](https://github.com/koajs/convert).
+  Until async/await is natively supported in Node Koa 1.x is the official release, however you may wish to adopt 2.x early either by using [Babel](https://github.com/babel/babel) to compile or by enabling the `--harmony-async-await` flag in Node v7 and up. Koa 1.x generator-based middleware may be "upgraded" to the 2.x flavour using [koa-convert](https://github.com/koajs/convert).
 
   To learn more about Koa v2, follow [this issue](https://github.com/koajs/koa/issues/533) or read the docs here: https://github.com/koajs/koa/tree/v2.x/docs.
 
