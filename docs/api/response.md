@@ -21,7 +21,7 @@
 
 ### response.status
 
-  Get response status. By default, `response.status` is not set unlike node's `res.statusCode` which defaults to `200`.
+  Get response status. By default, `response.status` is set to `404` unlike node's `res.statusCode` which defaults to `200`.
 
 ### response.status=
 
