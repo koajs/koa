@@ -157,9 +157,9 @@ http.createServer(app.callback()).listen(3001);
   You may also use this callback function to mount your koa app in a
   Connect/Express app.
 
-## app.use(function)
+## app.use(function,[index])
 
-  Add the given middleware function to this application. See [Middleware](https://github.com/koajs/koa/wiki#middleware) for
+  Add the given middleware `function` to the application middleware stack or insert middleware `function` at desired `index` in stack. See [Middleware](https://github.com/koajs/koa/wiki#middleware) for
   more information.
 
 ## app.keys=
@@ -184,7 +184,7 @@ ctx.cookies.set('name', 'tobi', { signed: true });
 
 ## app.context
 
-  `app.context` is the prototype from which `ctx` is created from. 
+  `app.context` is the prototype from which `ctx` is created from.
   You may add additional properties to `ctx` by editing `app.context`.
   This is useful for adding properties or methods to `ctx` to be used across your entire app,
   which may be more performant (no middleware) and/or easier (fewer `require()`s)

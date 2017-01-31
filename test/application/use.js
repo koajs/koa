@@ -126,4 +126,14 @@ describe('app.use(fn)', () => {
 
     (() => app.use('not a function')).should.throw('middleware must be a function!');
   });
+
+  it('should insert middlware at desired index in middlware stack', done => {
+    const app = new Koa();
+    app.use(ctx => { ctx.body = 'first'; });
+    app.use(ctx => { ctx.body = 'second'; }, 0);
+
+    request(app.listen())
+      .get('/')
+      .expect(200, 'second', done);
+  });
 });
