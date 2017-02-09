@@ -26,5 +26,11 @@ describe('req.charset', function(){
       req.header['content-type'] = 'text/plain; charset=utf-8';
       req.charset.should.equal('utf-8');
     })
+
+    it('should return "" if content-type is invalid', function(){
+      var req = request();
+      req.header['content-type'] = 'application/json; application/text; charset=utf-8';
+      req.charset.should.equal('');
+    })
   })
 })
