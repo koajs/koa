@@ -1,4 +1,10 @@
 
+1.2.5 / 2017-02-12
+==================
+
+  * Fix malformed content-type header causing exception on charset get (#897)
+  * this.is() returns null when no body is passed (#850)
+
 1.2.4 / 2016-09-07
 ==================
 
