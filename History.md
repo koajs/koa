@@ -2,6 +2,7 @@
 2.0.0 /
 ==================
 
+ * Fix malformed content-type header causing exception on charset get (#898)
  * fix: subdomains should be [] if the host is an ip (#808)
  * don't pre-bound onerror [breaking change] (#800)
  * fix `ctx.flushHeaders()` to use `res.flushHeaders()` instead of `res.writeHead()` (#795)
@@ -11,6 +12,11 @@
    * NOTE: generator functions are deprecated in v2 and will be removed in v3
  * improve linting
  * improve docs
+
+2.0.0-alpha.8 / 2017-02-13
+==================
+
+ * Fix malformed content-type header causing exception on charset get (#898)
 
 2.0.0-alpha.7 / 2016-09-07
 ==================
