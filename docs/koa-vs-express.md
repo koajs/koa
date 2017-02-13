@@ -4,7 +4,7 @@ THIS DOCUMENT IS IN PROGRESS. THIS PARAGRAPH SHALL BE REMOVED WHEN THIS DOCUMENT
 
   Philosophically, Koa aims to "fix and replace node", whereas Express "augments node".
   Koa uses async functions to rid apps of callback hell and simplify error handling.
-  It exposes its own `this.request` and `this.response` objects instead of node's `req` and `res` objects.
+  It exposes its own `this.req` and `this.res` objects instead of node's `req` and `res` objects.
 
   Express, on the other hand, augments node's `req` and `res` objects with additional properties and methods
   and includes many other "framework" features, such as routing and templating, which Koa does not.
