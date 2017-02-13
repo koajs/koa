@@ -110,7 +110,6 @@ app.listen(3000);
   Application settings are properties on the `app` instance, currently
   the following are supported:
 
-  - `app.name` optionally give your application a name
   - `app.env` defaulting to the __NODE_ENV__ or "development"
   - `app.proxy` when true proxy header fields will be trusted
   - `app.subdomainOffset` offset of `.subdomains` to ignore [2]
