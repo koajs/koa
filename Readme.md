@@ -28,7 +28,7 @@ $ npm install koa
   You can install it with semver:
 
 ```bash
-npm install koa@2
+npm install koa@next
 ```
 
   In this new version, the middleware function signature changes to adopt async/await:
