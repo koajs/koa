@@ -20,4 +20,22 @@ describe('ctx.state', function() {
     .expect(404)
     .end(done);
   })
+
+  it('should inherit app.state object', function(done) {
+    var app = koa();
+
+    app.state.foo = 'bar';
+
+    app.use(function *() {
+      assert.equal(this.state.foo, 'bar');
+    });
+
+    var server = app.listen();
+
+    request(server)
+    .get('/')
+    .expect(404)
+    .end(done);
+
+  })
 })
