@@ -44,7 +44,7 @@
     "vary": "^1.0.0"
   },
   "devDependencies": {
-    "babel": "^5.0.0",
+    "babel": "^6.3.26",
     "istanbul": "^0.4.0",
     "make-lint": "^1.0.1",
     "mocha": "^2.0.1",
