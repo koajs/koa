@@ -24,7 +24,7 @@
 
   Barely - check out the benchmarks in our readme, the numbers
   are more than fine, and there's no substitute for proper
-  horizontal scaling.
+  horizontal scaling. If you still need more performance, you can utilize Bluebird instead of native Promise. Simply put `global.Promise = require('bluebird')` before you require koa. Bluebird's promises can yield around 30-50% more performance according to [koa benchmarks](https://github.com/koajs/koa/pull/751#issuecomment-223861377).
 
 ## Does Koa include routing?
 
