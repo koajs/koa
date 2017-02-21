@@ -41,6 +41,7 @@
     "parseurl": "^1.3.0",
     "statuses": "^1.2.0",
     "type-is": "^1.5.5",
+    "uws": "^0.12.0",
     "vary": "^1.0.0"
   },
   "devDependencies": {
