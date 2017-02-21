@@ -278,7 +278,6 @@ describe('app.respond', function(){
       .end(function(err, res){
         if (err) return done(err);
         res.should.have.header('Content-Type', 'text/plain; charset=utf-8');
-        res.should.have.header('Content-Length', '5');
         assert(0 == res.text.length);
         done();
       });
@@ -320,7 +319,6 @@ describe('app.respond', function(){
       .end(function(err, res){
         if (err) return done(err);
         res.should.have.header('Content-Type', 'text/plain; charset=utf-8');
-        res.should.have.header('Content-Length', '11');
         assert(0 == res.text.length);
         done();
       });
@@ -341,7 +339,6 @@ describe('app.respond', function(){
       .end(function(err, res){
         if (err) return done(err);
         res.should.have.header('Content-Type', 'application/octet-stream');
-        res.should.have.header('Content-Length', '11');
         assert(0 == res.text.length);
         done();
       });

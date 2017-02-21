@@ -41,12 +41,6 @@ describe('res.body=', function(){
       assert('text/plain; charset=utf-8' == res.header['content-type']);
     })
 
-    it('should set length', function(){
-      var res = response();
-      res.body = 'Tobi';
-      assert('4' == res.header['content-length']);
-    })
-
     describe('and contains a non-leading <', function(){
       it('should default to text', function(){
         var res = response();
@@ -115,12 +109,6 @@ describe('res.body=', function(){
       var res = response();
       res.body = new Buffer('hey');
       assert('application/octet-stream' == res.header['content-type']);
-    })
-
-    it('should set length', function(){
-      var res = response();
-      res.body = new Buffer('Tobi');
-      assert('4' == res.header['content-length']);
     })
   })
 

@@ -30,7 +30,6 @@ describe('ctx.toJSON()', function(){
       message: 'OK',
       header: {
         'content-type': 'text/html; charset=utf-8',
-        'content-length': '10'
       }
     });
   })

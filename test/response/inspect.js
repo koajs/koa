@@ -23,7 +23,6 @@ describe('res.inspect()', function(){
       status: 200,
       message: 'OK',
       header: {
-        'content-length': '5',
         'content-type': 'text/plain; charset=utf-8'
       }
     });
