@@ -20,7 +20,8 @@
   "license": "MIT",
   "dependencies": {
     "accepts": "^1.2.2",
-    "co": "^4.4.0",
+    "bluebird": "^3.4.0",
+    "bluebird-co": "^2.1.2",
     "composition": "^2.1.1",
     "content-disposition": "~0.5.0",
     "content-type": "^1.0.0",
