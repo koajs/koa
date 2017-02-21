@@ -1,3 +1,5 @@
+Viewing docs for **v1.x** (stable). [View for v2.x](https://github.com/koajs/koa/blob/v2.x/docs/guide.md) (recommended).
+
 
 # Guide
 
