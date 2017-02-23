@@ -46,7 +46,7 @@ describe('ctx.redirect(url)', function(){
       ctx.header.accept = 'text/html';
       ctx.redirect(url);
       ctx.response.header['content-type'].should.equal('text/html; charset=utf-8');
-      ctx.body.should.equal('Redirecting to <a href="' + url + '">' + url + '</a>.');
+      ctx.body.should.equal(`Redirecting to <a href="${url}">${url}</a>.`);
     })
 
     it('should escape the url', function(){
@@ -56,7 +56,7 @@ describe('ctx.redirect(url)', function(){
       ctx.redirect(url);
       url = escape(url);
       ctx.response.header['content-type'].should.equal('text/html; charset=utf-8');
-      ctx.body.should.equal('Redirecting to <a href="' + url + '">' + url + '</a>.');
+      ctx.body.should.equal(`Redirecting to <a href="${url}">${url}</a>.`);
     })
   })
 
@@ -66,7 +66,7 @@ describe('ctx.redirect(url)', function(){
       var url = 'http://google.com';
       ctx.header.accept = 'text/plain';
       ctx.redirect(url);
-      ctx.body.should.equal('Redirecting to ' + url + '.');
+      ctx.body.should.equal(`Redirecting to ${url}.`);
     })
   })
 
@@ -78,7 +78,7 @@ describe('ctx.redirect(url)', function(){
       ctx.header.accept = 'text/plain';
       ctx.redirect('http://google.com');
       ctx.status.should.equal(301);
-      ctx.body.should.equal('Redirecting to ' + url + '.');
+      ctx.body.should.equal(`Redirecting to ${url}.`);
     })
   })
 
@@ -90,7 +90,7 @@ describe('ctx.redirect(url)', function(){
       ctx.header.accept = 'text/plain';
       ctx.redirect('http://google.com');
       ctx.status.should.equal(302);
-      ctx.body.should.equal('Redirecting to ' + url + '.');
+      ctx.body.should.equal(`Redirecting to ${url}.`);
     })
   })
 
@@ -102,7 +102,7 @@ describe('ctx.redirect(url)', function(){
       ctx.header.accept = 'text/plain';
       ctx.redirect('http://google.com');
       ctx.status.should.equal(302);
-      ctx.body.should.equal('Redirecting to ' + url + '.');
+      ctx.body.should.equal(`Redirecting to ${url}.`);
       ctx.type.should.equal('text/plain');
     })
   })
