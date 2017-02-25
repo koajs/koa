@@ -118,7 +118,7 @@ $ make test
 
 ## Backers
 
-Support us with a monthly donation and help us continue our activities. 
+Support us with a monthly donation and help us continue our activities.
 
 <a href="https://opencollective.com/koajs/backer/0/website" target="_blank"><img src="https://opencollective.com/koajs/backer/0/avatar.svg"></a>
 <a href="https://opencollective.com/koajs/backer/1/website" target="_blank"><img src="https://opencollective.com/koajs/backer/1/avatar.svg"></a>
@@ -154,7 +154,7 @@ Support us with a monthly donation and help us continue our activities.
 
 ## Sponsors
 
-Become a sponsor and get your logo on our README on Github with a link to your site. 
+Become a sponsor and get your logo on our README on Github with a link to your site.
 
 <a href="https://opencollective.com/koajs/sponsor/0/website" target="_blank"><img src="https://opencollective.com/koajs/sponsor/0/avatar.svg"></a>
 <a href="https://opencollective.com/koajs/sponsor/1/website" target="_blank"><img src="https://opencollective.com/koajs/sponsor/1/avatar.svg"></a>
@@ -193,10 +193,10 @@ Become a sponsor and get your logo on our README on Github with a link to your s
 
 [npm-image]: https://img.shields.io/npm/v/koa.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/koa
-[travis-image]: https://img.shields.io/travis/koajs/koa/master.svg?style=flat-square
+[travis-image]: https://img.shields.io/travis/koajs/koa/v1.x.svg?style=flat-square
 [travis-url]: https://travis-ci.org/koajs/koa
 [coveralls-image]: https://img.shields.io/codecov/c/github/koajs/koa.svg?style=flat-square
-[coveralls-url]: https://codecov.io/github/koajs/koa?branch=master
+[coveralls-url]: https://codecov.io/github/koajs/koa?branch=v1.x
 [backers-image]: https://opencollective.com/koajs/backers/badge.svg?style=flat-square
 [sponsors-image]: https://opencollective.com/koajs/sponsors/badge.svg?style=flat-square
 [gitter-image]: https://img.shields.io/gitter/room/koajs/koa.svg?style=flat-square
