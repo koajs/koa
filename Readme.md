@@ -138,7 +138,7 @@ Check out an example in koa's [test](test/babel/index.js).
 ## Running tests
 
 ```
-$ make test
+$ npm test
 ```
 
 ## Authors
