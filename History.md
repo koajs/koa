@@ -1,5 +1,16 @@
 
-2.0.0 /
+2.0.1 / 2017-02-25
+==================
+
+NOTE: we hit a versioning snafu. `v2.0.0` was previously released,
+so `v2.0.1` is released as the first `v2.x` with a `latest` tag.
+
+ * upgrade mocha #900
+ * add names to `application`'s request and response handlers #805
+ * breaking: remove unused `app.name` #899
+ * breaking: drop official support for node < 7.6
+
+2.0.0 / ??????????
 ==================
 
  * Fix malformed content-type header causing exception on charset get (#898)
