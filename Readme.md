@@ -13,10 +13,11 @@
   Koa is not bundled with any middleware.
 
 ## Installation
-Koa requires __node v4.0.0__ or higher for (partial) ES2015 support.
+
+Koa requires __node v7.6.0__ or higher for ES2015 and async function support.
 
 ```
-$ npm install koa@next
+$ npm install koa
 ```
 
 ## Hello koa
@@ -49,6 +50,17 @@ Koa is a middleware framework that can take 3 different kinds of functions as mi
 
 Here is an example of logger middleware with each of the different functions:
 
+### ___async___ functions (node v7.6+)
+
+```js
+app.use(async (ctx, next) => {
+  const start = new Date();
+  await next();
+  const ms = new Date() - start;
+  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
+});
+```
+
 ### Common function
 
 ```js
@@ -61,17 +73,6 @@ app.use((ctx, next) => {
     const ms = new Date() - start;
     console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
   });
-});
-```
-
-### ___async___ functions (Babel required)
-
-```js
-app.use(async (ctx, next) => {
-  const start = new Date();
-  await next();
-  const ms = new Date() - start;
-  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 ```
 
@@ -120,7 +121,7 @@ app.use(convert(function *(next) {
 
 ## Babel setup
 
-For Node 4.0 and Babel 6.0 you can setup like this:
+For Node 4.0+ and Babel 6.0 you can setup like this:
 
 ```bash
 $ npm install babel-register babel-plugin-transform-async-to-generator --save

@@ -1,18 +1,18 @@
 # Installation
 
-  Koa requires __node v4.0.0__ or higher for (partial) ES2015 support.
+  Koa requires __node v7.6.0__ or higher for ES2015 and async function support.
 
   You can quickly install a supposed version of node with your favorite version manager:
 
 ```bash
-$ nvm install v4.0.0
+$ nvm install 7
 $ npm i koa
 $ node my-koa-app.js
 ```
 
 ## Async Functions with Babel
 
-To use `async` functions in Koa, we recommend using [babel's require hook](http://babeljs.io/docs/usage/require/).
+To use `async` functions in Koa in versions of node < 7.6, we recommend using [babel's require hook](http://babeljs.io/docs/usage/require/).
 
 ```js
 require('babel-core/register');
@@ -183,7 +183,7 @@ ctx.cookies.set('name', 'tobi', { signed: true });
 
 ## app.context
 
-  `app.context` is the prototype from which `ctx` is created from. 
+  `app.context` is the prototype from which `ctx` is created from.
   You may add additional properties to `ctx` by editing `app.context`.
   This is useful for adding properties or methods to `ctx` to be used across your entire app,
   which may be more performant (no middleware) and/or easier (fewer `require()`s)
