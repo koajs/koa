@@ -94,6 +94,18 @@ describe('ctx.redirect(url)', () => {
     });
   });
 
+  describe('when custom status is set', () => {
+    it('should change the status code to 401', () => {
+      const ctx = context();
+      const url = 'http://google.com';
+      ctx.status = 401;
+      ctx.header.accept = 'text/plain';
+      ctx.redirect('http://google.com');
+      ctx.status.should.equal(401);
+      ctx.body.should.equal(`Redirecting to ${url}.`);
+    });
+  });
+
   describe('when content-type was present', () => {
     it('should overwrite content-type', () => {
       const ctx = context();
