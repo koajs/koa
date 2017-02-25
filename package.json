@@ -47,6 +47,7 @@
     "tag": "next"
   },
   "devDependencies": {
+    "babel-eslint": "^7.1.1",
     "eslint": "^2.5.3",
     "eslint-config-standard": "^5.1.0",
     "eslint-plugin-babel": "^3.1.0",
