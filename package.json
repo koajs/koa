@@ -47,9 +47,6 @@
     "tag": "next"
   },
   "devDependencies": {
-    "babel-eslint": "^6.0.0",
-    "babel-plugin-transform-async-to-generator": "^6.0.14",
-    "babel-register": "^6.9.0",
     "eslint": "^2.5.3",
     "eslint-config-standard": "^5.1.0",
     "eslint-plugin-babel": "^3.1.0",
