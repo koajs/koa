@@ -32,7 +32,7 @@
     "http-assert": "^1.1.0",
     "http-errors": "^1.2.8",
     "is-generator-function": "^1.0.3",
-    "koa-compose": "^3.0.0",
+    "koa-compose": "fl0w/compose#next",
     "koa-convert": "^1.2.0",
     "koa-is-json": "^1.0.0",
     "mime-types": "^2.0.7",
