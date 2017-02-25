@@ -9,6 +9,13 @@ node_js:
   - 2
   - 1
   - 0.12
+matrix:
+  include:
+    - node_js: "8.0"
+      env: "NVM_NODEJS_ORG_MIRROR=https://nodejs.org/download/nightly"
+  allow_failures:
+    # Allow the nightly installs to fail
+    - env: "NVM_NODEJS_ORG_MIRROR=https://nodejs.org/download/nightly"
 before_script:
   - sudo apt-get install build-essential libssl-dev git
   - git clone https://github.com/wg/wrk.git
