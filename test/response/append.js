@@ -19,6 +19,22 @@ describe('ctx.append(name, val)', () => {
     ctx.response.header['set-cookie'].should.eql(['foo=bar', 'fizz=buzz', 'hi=again']);
   });
 
+  it('should return * when already has a *', () => {
+    const ctx = context();
+
+    ctx.append('x-foo', '*');
+    ctx.append('x-foo', 'bar');
+    ctx.response.header['x-foo'].should.eql('*');
+  });
+
+  it('should ignore duplicate case values', () => {
+    const ctx = context();
+
+    ctx.append('x-foo', ['Foo']);
+    ctx.append('x-foo', ['foo', 'bar']);
+    ctx.response.header['x-foo'].should.eql(['foo', 'bar']);
+  });
+
   it('should get reset by res.set(field, val)', () => {
     const ctx = context();
 
