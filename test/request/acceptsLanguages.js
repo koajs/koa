@@ -21,6 +21,9 @@ describe('ctx.acceptsLanguages(langs)', () => {
           const ctx = context();
           ctx.req.headers['accept-language'] = 'en;q=0.8, es, pt';
           ctx.acceptsLanguages('es', 'en').should.equal('es');
+
+          ctx.req.headers['accept-language'] = 'en,en-US;q=0.8';
+          ctx.acceptsLanguages('en-GB', 'en-US').should.equal('en-US');
         });
       });
 
@@ -46,6 +49,9 @@ describe('ctx.acceptsLanguages(langs)', () => {
       const ctx = context();
       ctx.req.headers['accept-language'] = 'en;q=0.8, es, pt';
       ctx.acceptsLanguages(['es', 'en']).should.equal('es');
+
+      ctx.req.headers['accept-language'] = 'en,en-US;q=0.8';
+      ctx.acceptsLanguages(['en-GB', 'en-US']).should.equal('en-US');
     });
   });
 });
