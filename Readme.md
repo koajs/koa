@@ -47,7 +47,7 @@ Koa is a middleware framework that can take 3 different kinds of functions as mi
 
   * common function
   * async function
-  * generatorFunction
+  * generator function
 
 Here is an example of logger middleware with each of the different functions:
 
