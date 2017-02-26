@@ -2,7 +2,7 @@
 
   Koa requires __node v7.6.0__ or higher for ES2015 and async function support.
 
-  You can quickly install a supposed version of node with your favorite version manager:
+  You can quickly install a supported version of node with your favorite version manager:
 
 ```bash
 $ nvm install 7
