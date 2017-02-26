@@ -4,7 +4,8 @@
   [![NPM version][npm-image]][npm-url]
   [![build status][travis-image]][travis-url]
   [![Test coverage][coveralls-image]][coveralls-url]
-  [![OpenCollective Backers](https://opencollective.com/koajs/backers/badge.svg)](#backers) [![OpenCollective Sponsors](https://opencollective.com/koajs/sponsors/badge.svg)](#sponsors)
+  [![OpenCollective Backers][backers-image]](#backers)
+  [![OpenCollective Sponsors][sponsors-image]](#sponsors)
 
   Expressive HTTP middleware framework for node.js to make web applications and APIs more enjoyable to write. Koa's middleware stack flows in a stack-like manner, allowing you to perform actions downstream then filter and manipulate the response upstream.
 
@@ -166,7 +167,7 @@ See [AUTHORS](AUTHORS).
 
 ## Backers
 
-Support us with a monthly donation and help us continue our activities. 
+Support us with a monthly donation and help us continue our activities.
 
 <a href="https://opencollective.com/koajs/backer/0/website" target="_blank"><img src="https://opencollective.com/koajs/backer/0/avatar.svg"></a>
 <a href="https://opencollective.com/koajs/backer/1/website" target="_blank"><img src="https://opencollective.com/koajs/backer/1/avatar.svg"></a>
@@ -202,7 +203,7 @@ Support us with a monthly donation and help us continue our activities.
 
 ## Sponsors
 
-Become a sponsor and get your logo on our README on Github with a link to your site. 
+Become a sponsor and get your logo on our README on Github with a link to your site.
 
 <a href="https://opencollective.com/koajs/sponsor/0/website" target="_blank"><img src="https://opencollective.com/koajs/sponsor/0/avatar.svg"></a>
 <a href="https://opencollective.com/koajs/sponsor/1/website" target="_blank"><img src="https://opencollective.com/koajs/sponsor/1/avatar.svg"></a>
@@ -243,8 +244,10 @@ Become a sponsor and get your logo on our README on Github with a link to your s
 [npm-url]: https://www.npmjs.com/package/koa
 [travis-image]: https://img.shields.io/travis/koajs/koa/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/koajs/koa
-[coveralls-image]: https://codecov.io/github/koajs/koa/coverage.svg?branch=master
+[coveralls-image]: https://img.shields.io/codecov/c/github/koajs/koa.svg?style=flat-square
 [coveralls-url]: https://codecov.io/github/koajs/koa?branch=master
-[gitter-image]: https://badges.gitter.im/Join%20Chat.svg
+[backers-image]: https://opencollective.com/koajs/backers/badge.svg?style=flat-square
+[sponsors-image]: https://opencollective.com/koajs/sponsors/badge.svg?style=flat-square
+[gitter-image]: https://img.shields.io/gitter/room/koajs/koa.svg?style=flat-square
 [gitter-url]: https://gitter.im/koajs/koa?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 [#koajs]: https://webchat.freenode.net/?channels=#koajs
