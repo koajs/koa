@@ -31,7 +31,7 @@ For example, in your `.babelrc` file, you should have:
 }
 ```
 
-You can also use the [stage-3 preset](http://babeljs.io/docs/plugins/preset-stage-3/) instead.
+You can also use the [env preset](http://babeljs.io/docs/plugins/preset-env/) with a target option `"node": "current"` instead.
 
 # Application
 
