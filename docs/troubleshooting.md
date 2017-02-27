@@ -4,6 +4,8 @@
 - [My response or context changes have no effect](#my-response-or-context-changes-have-no-effect)
 - [My middleware is not called](#my-middleware-is-not-called)
 
+See also [debugging Koa](guide.md##debugging-koa).
+
 If you encounter a problem and later learn how to fix it, and think others might also encounter that problem, please 
 consider contributing to this documentation.
 
