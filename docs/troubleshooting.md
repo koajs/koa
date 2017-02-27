@@ -1,6 +1,7 @@
 # Troubleshooting
 
 - [Whenever I try to access my route, it sends back a 404](#Whenever-I-try-to-access-my-route-it-sends-back-a-404)
+- [My response or context changes have no effect](#My-response-or-context-changes-have-no-effect)
 - [My middleware is not called](#My-middleware-is-not-called)
 
 If you encounter a problem and later learn how to fix it, and think others might also encounter that problem, please 
@@ -12,11 +13,15 @@ This is a common but troublesome problem when working with Koa middleware. First
 
 Even though we now understand the basis of a 404, it might not be as clear why a 404 is generated in a specific case. This can be especially troublesome when it seems that `ctx.status` or `ctx.body` are set. Here are some common examples with solutions:
 
-### Late `ctx.body` or `ctx.status` setter
+- [My response or context changes have no effect](#My-response-or-context-changes-have-no-effect)
+- [My middleware is not called](#My-middleware-is-not-called)
 
+## My response or context changes have no effect
+
+This can be caused by a Late `ctx.body` or `ctx.status` setter.
 This is by far the most common cause of these problems.
 
-#### Problematic code
+### Problematic code
 
 ```js
 router.get('/fetch', function (ctx, next) {
@@ -28,11 +33,11 @@ router.get('/fetch', function (ctx, next) {
 
 When used, this route will always send back a 404, even though `ctx.body` is set.
 
-#### Cause
+### Cause
 
 `ctx.body` is not set until *after* the response has been sent. The code doesn't tell Koa to wait for the database to return the record. Koa sends the response after the middleware has been run, but not after the callback inside the middleware has been run. In the gap there, `ctx.body` has not yet been set, so Koa responds with a 404.
 
-#### Identifying this as the issue
+### Identifying this as the issue
 
 Adding another piece of middleware and some logging can be extremely helpful in identifying this issue.
 
@@ -60,7 +65,7 @@ Body set
 
 It means that the body is being set after the middleware is done, and after the response has been sent. If you see only one or none of these logs, proceed to [middleware flow interrupted](#middleware-flow-interrupted). If they are in the right order, make sure you haven't explicitly set the status to 404, make sure that it actually is a 404, and if that fails feel free to ask for help.
 
-#### Solution
+### Solution
 
 ```js
 router.get('/fetch', function (ctx, next) {
@@ -72,12 +77,12 @@ router.get('/fetch', function (ctx, next) {
 
 Returning the promise given by the database interface tells Koa to wait for the promise to finish before responding. At that time, the body will have been set. This results in Koa sending back a 200 with a proper response.
 
-### My middleware is not called
+## My middleware is not called
 
 This can be due to an interrupted chain of middleware calls.  Even though this is less common than a 
 late `ctx.body` or `ctx.status` setter, it can be a much bigger pain to troubleshoot.
 
-#### Problematic code
+### Problematic code
 
 ```js
 router.use(function (ctx, next) {
@@ -94,11 +99,11 @@ router.get('/fetch', function (ctx, next) {
 });
 ```
 
-#### Cause
+### Cause
 
 In the code above, the book is never fetched from the database, and in fact our route was never called. Look closely at our helper middleware. We forgot to `return next()`! This causes the middleware flow to never reach our route, ending our "helper" middleware.
 
-#### Identifying this as the issue
+### Identifying this as the issue
 
 Identifying this problem is easier than most, add a log at the beginning of the route. If it doesn't trigger, your route was never reached in the middleware chain.
 
@@ -120,7 +125,7 @@ router.get('/fetch', function (ctx, next) {
 
 To find the middleware causing the problem, try adding logging at various points in the middleware chain.
 
-#### Solution
+### Solution
 
 The solution for this is rather easy, simply add `return next()` to the end of your helper middleware.
 
