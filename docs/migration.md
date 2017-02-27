@@ -95,11 +95,6 @@ You could also refactor your logic outside of Koa middleware functions. Create f
 `const result = yield someLogic(this)`.
 Not using `this` will help migrations to the new middleware signature, which does not use `this`.
 
-## Dependency Changes
-
-- [co](https://github.com/tj/co) is no longer bundled with Koa.  Require or import it directly.
-- [composition](https://github.com/thenables/composition) is no longer used and deprecated
-
 ## ENV specific logging behavior removed
 
 An explicit check for the `test` environment was removed from error handling. 
