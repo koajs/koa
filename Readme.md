@@ -121,6 +121,41 @@ app.use(convert(function *(next) {
 }));
 ```
 
+## Context, Request and Response
+
+Each middleware receives a Koa Context object that encapsulates node's request and response objects
+and provides many helpful methods for writing web applications and APIs.
+
+Koa provides a Request object as the `request` property of the Context.  Koa's Request object
+provides a clean abstraction that delegates to, rather than extends node's request object.  This
+helps provide a cleaner interface and reduces conflicts between middleware and with node
+as well as providing better stream handling.  For more
+information, see the [Request API Reference](docs/api/request.md)
+
+Koa provides a Response object as the `response` property of the Context.  Koa's Response object
+follows the same abstraction and delegation pattern as the Request object.  For more information,
+see the [Response API Reference](docs/api/response.md)
+
+For more information on the Context object, see the [Context API Reference](docs/api/context.md).
+
+## Koa Application
+
+The object created when executing `new Koa()` is known as the Koa application object.
+
+The application object is Koa's interface with node's http server and handles the registration
+of middleware, dispatching to the middleware from http, default error handling, as well as
+configuration of the context, request and response objects.
+
+Learn more about the application object in the [Application API Reference](docs/api/index.md).
+
+## Documentation
+
+ - [Usage Guide](docs/guide.md)
+ - [Error Handling](docs/error-handling.md)
+ - [Koa for Express Users](docs/koa-vs-express.md)
+ - [FAQ](docs/faq.md)
+ - [API documentation](docs/api/index.md)
+
 ## Babel setup
 
 For Node 4.0+ and Babel 6.0 you can setup like this:
@@ -150,7 +185,6 @@ See [AUTHORS](AUTHORS).
 
 ## Community
 
- - [API](docs/api/index.md) documentation
  - [Badgeboard](https://koajs.github.io/badgeboard) and list of official modules
  - [Examples](https://github.com/koajs/examples)
  - [Middleware](https://github.com/koajs/koa/wiki) list
@@ -158,8 +192,6 @@ See [AUTHORS](AUTHORS).
  - [G+ Community](https://plus.google.com/communities/101845768320796750641)
  - [Reddit Community](https://www.reddit.com/r/koajs)
  - [Mailing list](https://groups.google.com/forum/#!forum/koajs)
- - [Guide](docs/guide.md)
- - [FAQ](docs/faq.md)
  - [中文文档](https://github.com/guo-yu/koa-guide)
  - __[#koajs]__ on freenode
 
