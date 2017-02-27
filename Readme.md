@@ -140,7 +140,7 @@ Check out an example in koa's [test](test/babel/index.js).
 
 ## Troubleshooting
 
-Check the [Troubleshooting Guide](docs/troubleshooting.md) or [Debugging Koa](docs/guide.md##debugging-koa) in 
+Check the [Troubleshooting Guide](docs/troubleshooting.md) or [Debugging Koa](docs/guide.md#debugging-koa) in 
 the general Koa guide.
 
 ## Running tests
