@@ -87,34 +87,69 @@ The middleware signature changed between v1.x and v2.x.  The older signature is 
 Please see the [Migration Guide](docs/migration.md) for more information on upgrading from v1.x and
 using v1.x middleware with v2.x.
 
-## Babel setup
+## Context, Request and Response
 
-If you're not using `node v7.6+`, we recommend setting up `babel` with [`babel-preset-env`](https://github.com/babel/babel-preset-env):
+Each middleware receives a Koa Context object that encapsulates node's request and response objects
+and provides many helpful methods for writing web applications and APIs.
 
-```bash
-$ npm install babel-register babel-preset-env --save
-```
+Koa provides a Request object as the `request` property of the Context.  Koa's Request object
+provides a clean abstraction that delegates to, rather than extends node's request object.  This
+helps provide a cleaner interface and reduces conflicts between middleware and with node
+as well as providing better stream handling.  For more
+information, see the [Request API Reference](docs/api/request.md)
 
-Setup `babel-register` in your entry file:
+Koa provides a Response object as the `response` property of the Context.  Koa's Response object
+follows the same abstraction and delegation pattern as the Request object.  For more information,
+see the [Response API Reference](docs/api/response.md)
 
-```js
-require('babel-register');
-```
+For more information on the Context object, see the [Context API Reference](docs/api/context.md).
 
-And have your `.babelrc` setup:
+## Koa Application
 
-```json
-{
-  "presets": [
-    ["env", {
-      "targets": {
-        "node": true
-      }
-    }]
-  ]
-}
-```
+The object created when executing `new Koa()` is known as the Koa application object.
 
+The application object is Koa's interface with node's http server and handles the registration
+of middleware, dispatching to the middleware from http, default error handling, as well as
+configuration of the context, request and response objects.
+
+Learn more about the application object in the [Application API Reference](docs/api/index.md).
+
+## Documentation
+
+ - [Usage Guide](docs/guide.md)
+ - [Error Handling](docs/error-handling.md)
+ - [Koa for Express Users](docs/koa-vs-express.md)
+ - [FAQ](docs/faq.md)
+ - [API documentation](docs/api/index.md)
+
+ ## Babel setup
+
+ If you're not using `node v7.6+`, we recommend setting up `babel` with [`babel-preset-env`](https://github.com/babel/babel-preset-env):
+
+ ```bash
+ $ npm install babel-register babel-preset-env --save
+ ```
+
+ Setup `babel-register` in your entry file:
+
+ ```js
+ require('babel-register');
+ ```
+
+ And have your `.babelrc` setup:
+
+ ```json
+ {
+   "presets": [
+     ["env", {
+       "targets": {
+         "node": true
+       }
+     }]
+   ]
+ }
+ ```
+ 
 ## Troubleshooting
 
 Check the [Troubleshooting Guide](docs/troubleshooting.md) or [Debugging Koa](docs/guide.md#debugging-koa) in
@@ -132,7 +167,6 @@ See [AUTHORS](AUTHORS).
 
 ## Community
 
- - [API](docs/api/index.md) documentation
  - [Badgeboard](https://koajs.github.io/badgeboard) and list of official modules
  - [Examples](https://github.com/koajs/examples)
  - [Middleware](https://github.com/koajs/koa/wiki) list
@@ -140,12 +174,8 @@ See [AUTHORS](AUTHORS).
  - [G+ Community](https://plus.google.com/communities/101845768320796750641)
  - [Reddit Community](https://www.reddit.com/r/koajs)
  - [Mailing list](https://groups.google.com/forum/#!forum/koajs)
- - [Guide](docs/guide.md)
- - [FAQ](docs/faq.md)
  - [中文文档](https://github.com/guo-yu/koa-guide)
  - __[#koajs]__ on freenode
-
-
 
 ## Backers
 
