@@ -91,7 +91,7 @@ app.use(co.wrap(function *(ctx, next) {
 }));
 ```
 
-### KOA v1.x Middleware Signature
+### Koa v1.x Middleware Signature
 
 The middleware signature changed between v1.x and v2.x.  The older signature is deprecated.
 
