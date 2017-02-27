@@ -1,8 +1,8 @@
 # Troubleshooting
 
-- [Whenever I try to access my route, it sends back a 404](#Whenever-I-try-to-access-my-route-it-sends-back-a-404)
-- [My response or context changes have no effect](#My-response-or-context-changes-have-no-effect)
-- [My middleware is not called](#My-middleware-is-not-called)
+- [Whenever I try to access my route, it sends back a 404](#whenever-i-try-to-access-my-route-it-sends-back-a-404)
+- [My response or context changes have no effect](#my-response-or-context-changes-have-no-effect)
+- [My middleware is not called](#my-middleware-is-not-called)
 
 If you encounter a problem and later learn how to fix it, and think others might also encounter that problem, please 
 consider contributing to this documentation.
@@ -13,8 +13,8 @@ This is a common but troublesome problem when working with Koa middleware. First
 
 Even though we now understand the basis of a 404, it might not be as clear why a 404 is generated in a specific case. This can be especially troublesome when it seems that `ctx.status` or `ctx.body` are set. Here are some common examples with solutions:
 
-- [My response or context changes have no effect](#My-response-or-context-changes-have-no-effect)
-- [My middleware is not called](#My-middleware-is-not-called)
+- [My response or context changes have no effect](#my-response-or-context-changes-have-no-effect)
+- [My middleware is not called](#my-middleware-is-not-called)
 
 ## My response or context changes have no effect
 
