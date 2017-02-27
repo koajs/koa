@@ -80,7 +80,7 @@ app.use((ctx, next) => {
 
 ### GeneratorFunction
 
-To use generator functions, you must use a wrapper such as [co](https://github.com/tj/co) that is no longer supplied with Koa.
+To use generator functions, you must use a wrapper such as [co](https://github.com/tj/co).
 
 ```js
 app.use(co.wrap(function *(ctx, next) {
@@ -91,35 +91,13 @@ app.use(co.wrap(function *(ctx, next) {
 }));
 ```
 
-### Old signature middleware (v1.x) - Deprecated
+### KOA v1.x Middleware Signature
 
-**Old signature middleware (v1.x) support will be removed in v3**
+The middleware signature changed between v1.x and v2.x.  The older signature is deprecated.
 
-Koa v2.x will try to convert legacy signature, generator middleware on `app.use`, using [koa-convert](https://github.com/koajs/convert).
-It is however recommended that you choose to migrate all v1.x middleware as soon as possible.
+**Old signature middleware support will be removed in v3**
 
-```js
-// Koa will convert
-app.use(function *(next) {
-  const start = new Date();
-  yield next;
-  const ms = new Date() - start;
-  console.log(`${this.method} ${this.url} - ${ms}ms`);
-});
-```
-
-You could do it manually as well, in which case Koa will not convert.
-
-```js
-const convert = require('koa-convert');
-
-app.use(convert(function *(next) {
-  const start = new Date();
-  yield next;
-  const ms = new Date() - start;
-  console.log(`${this.method} ${this.url} - ${ms}ms`);
-}));
-```
+Please see the [Migration Guide](docs/migration.md) for more information on upgrading from v1.x.
 
 ## Babel setup
 
