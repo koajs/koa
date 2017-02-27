@@ -33,6 +33,16 @@ router.get('/fetch', function (ctx, next) {
 
 When used, this route will always send back a 404, even though `ctx.body` is set.
 
+The same issue would occur in this `async` version:
+
+```js
+router.get('/fetch', async (ctx, next) => {
+  models.Book.findById(parseInt(ctx.query.id)).then(function (book) {
+    ctx.body = book;
+  });
+});
+```
+
 ### Cause
 
 `ctx.body` is not set until *after* the response has been sent. The code doesn't tell Koa to wait for the database to return the record. Koa sends the response after the middleware has been run, but not after the callback inside the middleware has been run. In the gap there, `ctx.body` has not yet been set, so Koa responds with a 404.
@@ -76,6 +86,16 @@ router.get('/fetch', function (ctx, next) {
 ```
 
 Returning the promise given by the database interface tells Koa to wait for the promise to finish before responding. At that time, the body will have been set. This results in Koa sending back a 200 with a proper response.
+
+The fix in the `async` version is to add an await statement:
+
+```js
+router.get('/fetch', async (ctx, next) => {
+  await models.Book.findById(parseInt(ctx.query.id)).then(function (book) {
+    ctx.body = book;
+  });
+});
+```
 
 ## My middleware is not called
 
