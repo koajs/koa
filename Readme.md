@@ -97,7 +97,8 @@ The middleware signature changed between v1.x and v2.x.  The older signature is 
 
 **Old signature middleware support will be removed in v3**
 
-Please see the [Migration Guide](docs/migration.md) for more information on upgrading from v1.x.
+Please see the [Migration Guide](docs/migration.md) for more information on upgrading from v1.x and
+using v1.x middleware with v2.x.
 
 ## Babel setup
 
