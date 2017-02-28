@@ -86,6 +86,29 @@ describe('ctx.onerror(err)', () => {
     });
   });
 
+  it('should ignore error after headerSent', done => {
+    const app = new Koa();
+
+    app.on('error', err => {
+      err.message.should.equal('mock error');
+      err.headerSent.should.equal(true);
+      done();
+    });
+
+    app.use(async ctx => {
+      ctx.status = 200;
+      ctx.set('X-Foo', 'Bar');
+      ctx.flushHeaders();
+      await Promise.reject(new Error('mock error'));
+      ctx.body = 'response';
+    });
+
+    request(app.listen())
+    .get('/')
+    .expect('X-Foo', 'Bar')
+    .expect(200, () => {});
+  });
+
   describe('when invalid err.status', () => {
     describe('not number', () => {
       it('should respond 500', done => {
