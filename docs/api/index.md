@@ -2,7 +2,7 @@
 
   Koa requires __node v7.6.0__ or higher for ES2015 and async function support.
 
-  You can quickly install a supposed version of node with your favorite version manager:
+  You can quickly install a supported version of node with your favorite version manager:
 
 ```bash
 $ nvm install 7
@@ -31,7 +31,7 @@ For example, in your `.babelrc` file, you should have:
 }
 ```
 
-You can also use the [stage-3 preset](http://babeljs.io/docs/plugins/preset-stage-3/) instead.
+You can also use the [env preset](http://babeljs.io/docs/plugins/preset-env/) with a target option `"node": "current"` instead.
 
 # Application
 
