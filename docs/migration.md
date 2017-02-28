@@ -105,7 +105,7 @@ var koa = require('koa');
 var app = module.exports = koa();
 ```
 
-es6 class constructors require the `new` keyword to be used.
+v2.x uses es6 classes which require the `new` keyword to be used.
 
 ```js
 var koa = require('koa');
