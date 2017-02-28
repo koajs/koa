@@ -95,6 +95,23 @@ You could also refactor your logic outside of Koa middleware functions. Create f
 `const result = yield someLogic(this)`.
 Not using `this` will help migrations to the new middleware signature, which does not use `this`.
 
+## Application object constructor requires new 
+
+In v1.x, the Application constructor function could be called directly, without `new` to 
+instantiate an instance of an application.  For example:
+
+```js
+var koa = require('koa');
+var app = module.exports = koa();
+```
+
+es6 class constructors require the `new` keyword to be used.
+
+```js
+var koa = require('koa');
+var app = module.exports = new koa();
+```
+
 ## ENV specific logging behavior removed
 
 An explicit check for the `test` environment was removed from error handling. 
