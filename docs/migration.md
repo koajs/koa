@@ -1,6 +1,6 @@
 # Migrating from Koa v1.x to v2.x
 
-## New Middleware Signature 
+## New middleware signature 
 
 Koa v2 introduces a new signature for middleware.
 
@@ -59,7 +59,7 @@ app.use(convert(function *(next) {
 }));
 ```
 
-## Upgrading Middleware
+## Upgrading middleware
 
 You will have to convert your generators to async functions with the new middleware signature:
 
@@ -80,7 +80,7 @@ Upgrading your middleware may require some work. One migration path is to update
 6. Repeat steps 3-5 until you're done
 
 
-## Updating Your Code
+## Updating your code
 
 You should start refactoring your code now to ease migrating to Koa v2:
 
@@ -116,12 +116,12 @@ var app = module.exports = new koa();
 
 An explicit check for the `test` environment was removed from error handling. 
 
-## V1 Support
+## v1.x support
 
 The v1.x branch is still supported and may also receive feature updates.  Except for this migration
-guide, Documentation will target the latest version.
+guide, documentation will target the latest version.
 
-## Help Out
+## Help out
 
 If you encounter migration related issues not covered by this migration guide, please consider 
 submitting a documentation pull request.
