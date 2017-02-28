@@ -116,6 +116,11 @@ var app = module.exports = new koa();
 
 An explicit check for the `test` environment was removed from error handling. 
 
+## Dependency changes
+
+- [co](https://github.com/tj/co) is no longer bundled with Koa.  Require or import it directly.
+- [composition](https://github.com/thenables/composition) is no longer used and deprecated.
+
 ## v1.x support
 
 The v1.x branch is still supported and may also receive feature updates.  Except for this migration
