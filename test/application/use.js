@@ -1,7 +1,7 @@
 'use strict';
 
 const eventToPromise = require('event-to-promise');
-const request = require('../helpers/request.js');
+const request = require('../helpers/request');
 const Koa = require('../..');
 
 describe('app.use(fn)', () => {

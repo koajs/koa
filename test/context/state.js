@@ -1,6 +1,6 @@
 'use strict';
 
-const request = require('../helpers/request.js');
+const request = require('../helpers/request');
 const Koa = require('../..');
 
 describe('ctx.state', () => {

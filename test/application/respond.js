@@ -1,6 +1,6 @@
 'use strict';
 
-const request = require('../helpers/request.js');
+const request = require('../helpers/request');
 const eventToPromise = require('event-to-promise');
 const statuses = require('statuses');
 const Koa = require('../..');
