@@ -123,7 +123,7 @@ An explicit check for the `test` environment was removed from error handling.
 
 ## v1.x support
 
-The v1.x branch is still supported and may also receive feature updates.  Except for this migration
+The v1.x branch is still supported but should not receive feature updates.  Except for this migration
 guide, documentation will target the latest version.
 
 ## Help out
