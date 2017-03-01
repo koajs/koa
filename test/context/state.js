@@ -4,7 +4,7 @@ const request = require('../helpers/request.js');
 const Koa = require('../..');
 
 describe('ctx.state', () => {
-  it('should provide a ctx.state namespace', done => {
+  it('should provide a ctx.state namespace', async () => {
     const app = new Koa();
 
     app.use(ctx => {

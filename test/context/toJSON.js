@@ -1,4 +1,3 @@
-
 'use strict';
 
 const context = require('../helpers/context');
@@ -17,7 +16,7 @@ describe('ctx.toJSON()', () => {
     const req = obj.request;
     const res = obj.response;
 
-    req.should.eql({
+    expect(req).toEqual({
       method: 'POST',
       url: '/items',
       header: {
@@ -25,7 +24,7 @@ describe('ctx.toJSON()', () => {
       }
     });
 
-    res.should.eql({
+    expect(res).toEqual({
       status: 200,
       message: 'OK',
       header: {
