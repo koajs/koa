@@ -4,7 +4,8 @@
   "description": "Koa web app framework",
   "main": "lib/application.js",
   "scripts": {
-    "test": "make test"
+    "test": "jest",
+    "lint": "./node_modules/.bin/eslint benchmarks lib test"
   },
   "repository": "koajs/koa",
   "keywords": [
@@ -50,11 +51,13 @@
     "eslint-plugin-babel": "^3.1.0",
     "eslint-plugin-promise": "^1.1.0",
     "eslint-plugin-standard": "^1.3.1",
+    "event-to-promise": "^0.7.0",
     "istanbul": "^0.4.0",
+    "jest": "^19.0.2",
     "mocha": "^3.2.0",
+    "node-fetch": "^1.6.3",
     "should": "^6.0.3",
     "should-http": "0.0.3",
-    "supertest": "^1.0.1",
     "test-console": "^0.7.1"
   },
   "engines": {
@@ -62,5 +65,17 @@
   },
   "files": [
     "lib"
-  ]
+  ],
+  "jest": {
+    "testMatch": [
+      "**/test/application/*.js"
+    ],
+    "coverageReporters": [
+      "text-summary",
+      "lcov"
+    ],
+    "coverageDirectory": "coverage",
+    "bail": true,
+    "testEnvironment": "node"
+  }
 }

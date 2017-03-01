@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 echo
-MW=$1 node $2 &
+defaultServerPath="$(dirname "$0")/middleware.js"
+MW=${1:-20} node ${2:-$defaultServerPath} &
 pid=$!
 
 sleep 2
