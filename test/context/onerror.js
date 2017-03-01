@@ -1,8 +1,10 @@
 
 'use strict';
 
+const assert = require('assert');
 const request = require('supertest');
 const Koa = require('../..');
+const context = require('../helpers/context');
 
 describe('ctx.onerror(err)', () => {
   it('should respond', done => {
@@ -169,5 +171,23 @@ describe('ctx.onerror(err)', () => {
         .expect('Content-Type', 'text/plain; charset=utf-8')
         .expect('Internal Server Error', done);
     });
+
+    it('should use res.getHeaderNames() accessor when available', () => {
+      let removed = 0;
+      const ctx = context();
+
+      ctx.app.emit = () => {};
+      ctx.res = {
+        getHeaderNames: () => ['content-type', 'content-length'],
+        removeHeader: () => removed++,
+        end: () => {},
+        emit: () => {}
+      };
+
+      ctx.onerror(new Error('error'));
+
+      assert.equal(removed, 2);
+    });
   });
 });
+
