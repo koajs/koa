@@ -1,4 +1,3 @@
-
 'use strict';
 
 const context = require('../helpers/context');
@@ -10,7 +9,7 @@ describe('req.stale', () => {
     ctx.method = 'GET';
     ctx.req.headers['if-none-match'] = '"123"';
     ctx.set('ETag', '"123"');
-    ctx.fresh.should.be.true;
-    ctx.stale.should.be.false;
+    expect(ctx.fresh).toBe(true);
+    expect(ctx.stale).toBe(false);
   });
 });

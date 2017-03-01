@@ -1,4 +1,3 @@
-
 'use strict';
 
 const context = require('../helpers/context');
@@ -9,7 +8,7 @@ describe('ctx.accepts(types)', () => {
       it('should return all accepted types', () => {
         const ctx = context();
         ctx.req.headers.accept = 'application/*;q=0.2, image/jpeg;q=0.8, text/html, text/plain';
-        ctx.accepts().should.eql(['text/html', 'text/plain', 'image/jpeg', 'application/*']);
+        expect(ctx.accepts()).toEqual(['text/html', 'text/plain', 'image/jpeg', 'application/*']);
       });
     });
   });
@@ -19,14 +18,14 @@ describe('ctx.accepts(types)', () => {
       it('should return false', () => {
         const ctx = context();
         ctx.req.headers.accept = 'application/*;q=0.2, image/jpeg;q=0.8, text/html, text/plain';
-        ctx.accepts('image/png', 'image/tiff').should.be.false;
+        expect(ctx.accepts('image/png', 'image/tiff')).toBe(false);
       });
     });
 
     describe('when Accept is not populated', () => {
       it('should return the first type', () => {
         const ctx = context();
-        ctx.accepts('text/html', 'text/plain', 'image/jpeg', 'application/*').should.equal('text/html');
+        expect(ctx.accepts('text/html', 'text/plain', 'image/jpeg', 'application/*')).toBe('text/html');
       });
     });
   });
@@ -35,11 +34,11 @@ describe('ctx.accepts(types)', () => {
     it('should convert to mime types', () => {
       const ctx = context();
       ctx.req.headers.accept = 'text/plain, text/html';
-      ctx.accepts('html').should.equal('html');
-      ctx.accepts('.html').should.equal('.html');
-      ctx.accepts('txt').should.equal('txt');
-      ctx.accepts('.txt').should.equal('.txt');
-      ctx.accepts('png').should.be.false;
+      expect(ctx.accepts('html')).toBe('html');
+      expect(ctx.accepts('.html')).toBe('.html');
+      expect(ctx.accepts('txt')).toBe('txt');
+      expect(ctx.accepts('.txt')).toBe('.txt');
+      expect(ctx.accepts('png')).toBe(false);
     });
   });
 
@@ -47,8 +46,8 @@ describe('ctx.accepts(types)', () => {
     it('should return the first match', () => {
       const ctx = context();
       ctx.req.headers.accept = 'text/plain, text/html';
-      ctx.accepts(['png', 'text', 'html']).should.equal('text');
-      ctx.accepts(['png', 'html']).should.equal('html');
+      expect(ctx.accepts(['png', 'text', 'html'])).toBe('text');
+      expect(ctx.accepts(['png', 'html'])).toBe('html');
     });
   });
 
@@ -56,8 +55,8 @@ describe('ctx.accepts(types)', () => {
     it('should return the first match', () => {
       const ctx = context();
       ctx.req.headers.accept = 'text/plain, text/html';
-      ctx.accepts('png', 'text', 'html').should.equal('text');
-      ctx.accepts('png', 'html').should.equal('html');
+      expect(ctx.accepts('png', 'text', 'html')).toBe('text');
+      expect(ctx.accepts('png', 'html')).toBe('html');
     });
   });
 
@@ -65,8 +64,8 @@ describe('ctx.accepts(types)', () => {
     it('should return the type', () => {
       const ctx = context();
       ctx.req.headers.accept = 'text/plain, text/html';
-      ctx.accepts('text/html').should.equal('text/html');
-      ctx.accepts('text/plain').should.equal('text/plain');
+      expect(ctx.accepts('text/html')).toBe('text/html');
+      expect(ctx.accepts('text/plain')).toBe('text/plain');
     });
   });
 
@@ -74,9 +73,9 @@ describe('ctx.accepts(types)', () => {
     it('should return the type', () => {
       const ctx = context();
       ctx.req.headers.accept = 'application/json, */*';
-      ctx.accepts('text/html').should.equal('text/html');
-      ctx.accepts('text/plain').should.equal('text/plain');
-      ctx.accepts('image/png').should.equal('image/png');
+      expect(ctx.accepts('text/html')).toBe('text/html');
+      expect(ctx.accepts('text/plain')).toBe('text/plain');
+      expect(ctx.accepts('image/png')).toBe('image/png');
     });
   });
 
@@ -84,10 +83,10 @@ describe('ctx.accepts(types)', () => {
     it('should return the type', () => {
       const ctx = context();
       ctx.req.headers.accept = 'application/json, text/*';
-      ctx.accepts('text/html').should.equal('text/html');
-      ctx.accepts('text/plain').should.equal('text/plain');
-      ctx.accepts('image/png').should.be.false;
-      ctx.accepts('png').should.be.false;
+      expect(ctx.accepts('text/html')).toBe('text/html');
+      expect(ctx.accepts('text/plain')).toBe('text/plain');
+      expect(ctx.accepts('image/png')).toBe(false);
+      expect(ctx.accepts('png')).toBe(false);
     });
   });
 });

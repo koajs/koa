@@ -1,7 +1,5 @@
-
 'use strict';
 
-const assert = require('assert');
 const Stream = require('stream');
 const Koa = require('../..');
 const Request = require('../helpers/context').request;
@@ -15,7 +13,7 @@ describe('req.ip', () => {
       req.headers['x-forwarded-for'] = '127.0.0.1';
       req.socket.remoteAddress = '127.0.0.2';
       const request = Request(req, undefined, app);
-      request.ip.should.equal('127.0.0.1');
+      expect(request.ip).toBe('127.0.0.1');
     });
   });
 
@@ -24,7 +22,7 @@ describe('req.ip', () => {
       const req = { socket: new Stream.Duplex() };
       req.socket.remoteAddress = '127.0.0.2';
       const request = Request(req);
-      request.ip.should.equal('127.0.0.2');
+      expect(request.ip).toBe('127.0.0.2');
     });
 
     describe('with req.socket.remoteAddress not present', () => {
@@ -34,7 +32,7 @@ describe('req.ip', () => {
           get: () => undefined, // So that the helper doesn't override it with a reasonable value
           set: () => {}
         });
-        assert.equal(Request({ socket }).ip, '');
+        expect(Request({ socket }).ip).toBe('');
       });
     });
   });
@@ -44,6 +42,6 @@ describe('req.ip', () => {
     req.socket.remoteAddress = '127.0.0.2';
     const request = Request(req);
     req.socket.remoteAddress = '127.0.0.1';
-    request.ip.should.equal('127.0.0.2');
+    expect(request.ip).toBe('127.0.0.2');
   });
 });

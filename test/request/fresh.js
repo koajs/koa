@@ -1,4 +1,3 @@
-
 'use strict';
 
 const context = require('../helpers/context');
@@ -8,7 +7,7 @@ describe('ctx.fresh', () => {
     it('should return false', () => {
       const ctx = context();
       ctx.req.method = 'POST';
-      ctx.fresh.should.be.false;
+      expect(ctx.fresh).toBe(false);
     });
   });
 
@@ -19,7 +18,7 @@ describe('ctx.fresh', () => {
       ctx.req.method = 'GET';
       ctx.req.headers['if-none-match'] = '123';
       ctx.set('ETag', '123');
-      ctx.fresh.should.be.false;
+      expect(ctx.fresh).toBe(false);
     });
   });
 
@@ -31,7 +30,7 @@ describe('ctx.fresh', () => {
         ctx.req.method = 'GET';
         ctx.req.headers['if-none-match'] = '123';
         ctx.set('ETag', '123');
-        ctx.fresh.should.be.true;
+        expect(ctx.fresh).toBe(true);
       });
     });
 
@@ -42,7 +41,7 @@ describe('ctx.fresh', () => {
         ctx.req.method = 'GET';
         ctx.req.headers['if-none-match'] = '123';
         ctx.set('ETag', 'hey');
-        ctx.fresh.should.be.false;
+        expect(ctx.fresh).toBe(false);
       });
     });
   });
