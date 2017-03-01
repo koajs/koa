@@ -55,7 +55,7 @@
     "istanbul": "^0.4.0",
     "jest": "^19.0.2",
     "mocha": "^3.2.0",
-    "node-fetch": "^1.6.3",
+    "node-fetch": "^2.0.0-alpha.3",
     "should": "^6.0.3",
     "should-http": "0.0.3",
     "test-console": "^0.7.1"

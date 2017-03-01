@@ -1,10 +1,7 @@
-
 'use strict';
 
 const request = require('../helpers/request.js');
 const Koa = require('../..');
-
-// TODO: fix multi-value headers (e.g. set-cookies) node-fetch logic with jest and `instanceof Array`
 
 describe('ctx.cookies.set()', () => {
   it('should set an unsigned cookie', async () => {
@@ -17,7 +14,7 @@ describe('ctx.cookies.set()', () => {
 
     const res = await request(app, '/');
     expect(res.status).toBe(204);
-    expect(res.headers.get('set-cookie')).toBe(expect.stringMatching(/^name=/));
+    expect(res.headers.get('set-cookie')).toEqual(expect.stringMatching(/^name=/));
   });
 
   describe('with .signed', () => {
@@ -50,7 +47,7 @@ describe('ctx.cookies.set()', () => {
 
       const res = await request(app, '/');
       expect(res.status).toBe(204);
-      expect(res.headers.get('set-cookie')).toBe(expect.stringMatching(/^name=.*,name\.sig=/));
+      expect(res.headers.get('set-cookie')).toEqual(expect.stringMatching(/^name=.*,name\.sig=/));
     });
   });
 
@@ -70,7 +67,7 @@ describe('ctx.cookies.set()', () => {
         headers: { 'x-forwarded-proto': 'https' }
       });
       expect(res.status).toBe(204);
-      expect(res.headers.get('set-cookie')).toBe(expect.stringMatching(/^name=.*,name\.sig=/));
+      expect(res.headers.get('set-cookie')).toEqual(expect.stringMatching(/^name=.*,name\.sig=/));
     });
   });
 });

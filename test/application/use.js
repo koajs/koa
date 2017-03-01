@@ -99,7 +99,7 @@ describe('app.use(fn)', () => {
 
   it('should output deprecation message for generator functions', () => {
     const warningPromise = eventToPromise(process, 'deprecation')
-      .then(err => expect(err.message.indexOf('generators will be removed')).not.toBe(-1));
+      .then(err => expect(err.message).toEqual(expect.stringContaining('generators will be removed')));
     const app = new Koa();
     app.use(function * (){});
     return warningPromise;

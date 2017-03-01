@@ -1,4 +1,3 @@
-
 'use strict';
 
 const context = require('../helpers/context');
@@ -8,6 +7,6 @@ describe('ctx.inspect()', () => {
     const ctx = context();
     const toJSON = ctx.toJSON(ctx);
 
-    toJSON.should.eql(ctx.inspect());
+    expect(toJSON).toEqual(ctx.inspect());
   });
 });
