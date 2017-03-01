@@ -4,9 +4,9 @@ const path = require('path');
 const fetch = require('node-fetch');
 const onFinished = require('on-finished');
 
-module.exports = (koa, url, options) => {
+module.exports = (app, url, options) => {
   return new Promise((resolve, reject) => {
-    const server = koa.listen(0, () => {
+    const server = app.listen(0, () => {
       resolve(server);
     });
   }).then(server => {
