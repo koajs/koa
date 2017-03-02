@@ -65,17 +65,18 @@ You will have to convert your generators to async functions with the new middlew
 
 ```js
 app.use(async ctx => {
-  const user = await Users.getById(this.session.user_id)
-  ctx.body = { message: 'some message' }
+  const user = await Users.getById(this.session.user_id);
+  await next();
+  ctx.body = { message: 'some message' };
 })
 ```
 
 Upgrading your middleware may require some work. One migration path is to update them one-by-one.
 
-1. Wrap all your current middleware in koa-convert
+1. Wrap all your current middleware in `koa-convert`
 2. Test
-3. npm outdated to see which koa middleware is outdated
-4. Update one outdated middleware, remove using koa-convert
+3. `npm outdated` to see which koa middleware is outdated
+4. Update one outdated middleware, remove using `koa-convert`
 5. Test
 6. Repeat steps 3-5 until you're done
 
