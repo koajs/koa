@@ -19,7 +19,10 @@ before_script:
 script:
   - npm run lint
   - jest --coverage
-  - benchmarks/run
+  - benchmarks/run 10
+  - benchmarks/run 20
+  - benchmarks/run 50
+  - benchmarks/run 100
 after_script:
   - npm install codecov
   - ./node_modules/.bin/codecov
