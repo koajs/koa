@@ -88,6 +88,29 @@ describe('ctx.onerror(err)', function(){
     })
   })
 
+  it('should ignore error after headerSent', function(done){
+    var app = koa();
+
+    app.on('error', function(err){
+      err.message.should.equal('mock error');
+      err.headerSent.should.equal(true);
+      done();
+    });
+
+    app.use(function*() {
+      this.status = 200;
+      this.set('X-Foo', 'Bar');
+      this.res.flushHeaders();
+      yield Promise.reject(new Error('mock error'));
+      this.body = 'response';
+    });
+
+    request(app.listen())
+    .get('/')
+    .expect('X-Foo', 'Bar')
+    .expect(200, function() {});
+  })
+
   describe('when invalid err.status', function(){
     describe('not number', function(){
       it('should respond 500', function(done){
