@@ -2,6 +2,7 @@
 'use strict';
 
 const request = require('../helpers/request');
+const eventToPromise = require('event-to-promise');
 const Koa = require('../..');
 const context = require('../helpers/context');
 
@@ -66,14 +67,10 @@ describe('ctx.onerror(err)', () => {
     expect(res.headers.has('x-csrf-token')).toBe(false);
   });
 
-  it('should ignore error after headerSent', done => {
+  it('should ignore error after headerSent', async () => {
     const app = new Koa();
 
-    app.on('error', err => {
-      err.message.should.equal('mock error');
-      err.headerSent.should.equal(true);
-      done();
-    });
+    const errorPromise = eventToPromise(app, 'error');
 
     app.use(async ctx => {
       ctx.status = 200;
@@ -83,10 +80,13 @@ describe('ctx.onerror(err)', () => {
       ctx.body = 'response';
     });
 
-    request(app.listen())
-    .get('/')
-    .expect('X-Foo', 'Bar')
-    .expect(200, () => {});
+    const res = await request(app, '/');
+    expect(res.status).toBe(200);
+    expect(res.headers.get('x-foo')).toBe('Bar');
+
+    const err = await errorPromise;
+    expect(err.message).toBe('mock error');
+    expect(err.headerSent).toBe(true);
   });
 
   describe('when invalid err.status', () => {
