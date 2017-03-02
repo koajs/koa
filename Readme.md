@@ -89,20 +89,55 @@ using v1.x middleware with v2.x.
 
 ## Context, Request and Response
 
-Each middleware receives a Koa Context object that encapsulates node's request and response objects
-and provides many helpful methods for writing web applications and APIs.
+Each middleware receives a Koa `Context` object that encapsulates an incoming 
+http message and the corresponding response to that message.  `ctx` is often used
+as the parameter name for the context object.
 
-Koa provides a Request object as the `request` property of the Context.  Koa's Request object
-provides a clean abstraction that delegates to, rather than extends node's request object.  This
-helps provide a cleaner interface and reduces conflicts between middleware and with node
-as well as providing better stream handling.  For more
-information, see the [Request API Reference](docs/api/request.md)
+```js
+app.use(async (ctx, next) => { await next(); });
+```
 
-Koa provides a Response object as the `response` property of the Context.  Koa's Response object
-follows the same abstraction and delegation pattern as the Request object.  For more information,
-see the [Response API Reference](docs/api/response.md)
+Koa provides a `Request` object as the `request` property of the `Context`.  
+Koa's `Request` object provides helpful methods for working with
+http requests which delegate to an [IncomingMessage](https://nodejs.org/api/http.html#http_class_http_incomingmessage)
+from the node `http` module.
 
-For more information on the Context object, see the [Context API Reference](docs/api/context.md).
+Here is an example of checking that a requesting client supports xml.
+
+```js
+app.use(async (ctx, next) => {
+  if (!ctx.request.accepts('xml')) ctx.throw(406);
+  await next();
+});
+```
+
+Koa provides a `Response` object as the `response` property of the `Context`.  
+Koa's `Response` object provides helpful methods for working with
+http responses which delegate to a [ServerResponse](https://nodejs.org/api/http.html#http_class_http_serverresponse)
+.  
+
+Koa's pattern of delegating to Node's request and response objects rather than extending them
+provides a cleaner interface and reduces conflicts between different middleware and with Node
+itself as well as providing better support for stream handling.  The `IncomingMessage` can still be
+directly accessed as the `req` property on the `Context` and `ServerResponse` can be directly 
+accessed as the `res` property on the `Context`.
+
+Here is an example using Koa's `Response` object to stream a file as the response body.
+
+```js
+app.use(async (ctx, next) => {
+  await next();
+  ctx.response.type = 'xml';
+  ctx.response.body = fs.createReadStream('really_large.xml');
+});
+```
+
+The `Context` object also provides shortcuts for methods on its `request` and `response`.  In the prior
+examples,  `ctx.type` can be used instead of `ctx.request.type` and `ctx.accepts` can be used 
+instead of `ctx.request.accepts`.
+
+For more information on `Request`, `Response` and `Context`, see the [Request API Reference](docs/api/request.md), 
+[Response API Reference](docs/api/response.md) and [Context API Reference](docs/api/context.md).
 
 ## Koa Application
 
