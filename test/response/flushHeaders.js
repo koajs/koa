@@ -1,31 +1,26 @@
-
 'use strict';
 
-const request = require('supertest');
-const assert = require('assert');
+const request = require('../helpers/request');
 const Koa = require('../..');
 const http = require('http');
 
 describe('ctx.flushHeaders()', () => {
-  it('should set headersSent', done => {
+  it('should set headersSent', async () => {
     const app = new Koa();
 
     app.use((ctx, next) => {
       ctx.body = 'Body';
       ctx.status = 200;
       ctx.flushHeaders();
-      assert(ctx.res.headersSent);
+      expect(ctx.res.headersSent).toBe(true);
     });
 
-    const server = app.listen();
-
-    request(server)
-      .get('/')
-      .expect(200)
-      .expect('Body', done);
+    const res = await request(app, '/');
+    expect(res.status).toBe(200);
+    expect(await res.text()).toBe('Body');
   });
 
-  it('should allow a response afterwards', done => {
+  it('should allow a response afterwards', async () => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -35,15 +30,13 @@ describe('ctx.flushHeaders()', () => {
       ctx.body = 'Body';
     });
 
-    const server = app.listen();
-    request(server)
-      .get('/')
-      .expect(200)
-      .expect('Content-Type', 'text/plain')
-      .expect('Body', done);
+    const res = await request(app, '/');
+    expect(res.status).toBe(200);
+    expect(res.headers.get('content-type')).toBe('text/plain');
+    expect(await res.text()).toBe('Body');
   });
 
-  it('should send the correct status code', done => {
+  it('should send the correct status code', async () => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -53,15 +46,13 @@ describe('ctx.flushHeaders()', () => {
       ctx.body = 'Body';
     });
 
-    const server = app.listen();
-    request(server)
-      .get('/')
-      .expect(401)
-      .expect('Content-Type', 'text/plain')
-      .expect('Body', done);
+    const res = await request(app, '/');
+    expect(res.status).toBe(401);
+    expect(res.headers.get('content-type')).toBe('text/plain');
+    expect(await res.text()).toBe('Body');
   });
 
-  it('should fail to set the headers after flushHeaders', done => {
+  it('should fail to set the headers after flushHeaders', async () => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -86,15 +77,11 @@ describe('ctx.flushHeaders()', () => {
       }
     });
 
-    const server = app.listen();
-    request(server)
-      .get('/')
-      .expect(401)
-      .expect('Content-Type', 'text/plain')
-      .expect('ctx.set fail ctx.status fail ctx.length fail', (err, res) => {
-        assert(res.headers['x-shouldnt-work'] === undefined, 'header set after flushHeaders');
-        done(err);
-      });
+    const res = await request(app, '/');
+    expect(res.status).toBe(401);
+    expect(res.headers.get('content-type')).toBe('text/plain');
+    expect(res.headers.has('x-shouldnt-work')).toBe(false);
+    expect(await res.text()).toBe('ctx.set fail ctx.status fail ctx.length fail');
   });
 
   it('should flush headers first and delay to send data', done => {

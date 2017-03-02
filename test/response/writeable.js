@@ -1,4 +1,3 @@
-
 'use strict';
 
 const Koa = require('../../');
@@ -31,8 +30,8 @@ describe('res.writable', () => {
       const server = app.listen();
       requestTwice(server, (_, datas) => {
         const responses = Buffer.concat(datas).toString();
-        responses.should.match(/request 1, writable: true/);
-        responses.should.match(/request 2, writable: true/);
+        expect(responses).toEqual(expect.stringMatching(/request 1, writable: true/));
+        expect(responses).toEqual(expect.stringMatching(/request 2, writable: true/));
         done();
       });
     });

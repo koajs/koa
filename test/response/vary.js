@@ -1,4 +1,3 @@
-
 'use strict';
 
 const context = require('../helpers/context');
@@ -8,7 +7,7 @@ describe('ctx.vary(field)', () => {
     it('should set it', () => {
       const ctx = context();
       ctx.vary('Accept');
-      ctx.response.header.vary.should.equal('Accept');
+      expect(ctx.response.header.vary).toBe('Accept');
     });
   });
 
@@ -17,7 +16,7 @@ describe('ctx.vary(field)', () => {
       const ctx = context();
       ctx.vary('Accept');
       ctx.vary('Accept-Encoding');
-      ctx.response.header.vary.should.equal('Accept, Accept-Encoding');
+      expect(ctx.response.header.vary).toBe('Accept, Accept-Encoding');
     });
   });
 
@@ -28,7 +27,7 @@ describe('ctx.vary(field)', () => {
       ctx.vary('Accept-Encoding');
       ctx.vary('Accept');
       ctx.vary('Accept-Encoding');
-      ctx.response.header.vary.should.equal('Accept, Accept-Encoding');
+      expect(ctx.response.header.vary).toBe('Accept, Accept-Encoding');
     });
   });
 });

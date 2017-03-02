@@ -1,4 +1,3 @@
-
 'use strict';
 
 const request = require('supertest');
@@ -9,7 +8,7 @@ describe('res.header', () => {
   it('should return the response header object', () => {
     const res = response();
     res.set('X-Foo', 'bar');
-    res.header.should.eql({ 'x-foo': 'bar' });
+    expect(res.header).toEqual({ 'x-foo': 'bar' });
   });
 
   it('should use res.getHeaders() accessor when available', () => {
@@ -38,7 +37,7 @@ describe('res.header', () => {
     it('should return empty object', () => {
       const res = response();
       res.res._headers = null;
-      res.header.should.eql({});
+      expect(res.header).toEqual({});
     });
   });
 });

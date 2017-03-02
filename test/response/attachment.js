@@ -30,7 +30,7 @@ describe('ctx.attachment([filename])', () => {
       expect(ctx.response.header['content-disposition']).toBe(str);
     });
 
-    it('should work with http client', done => {
+    it('should work with http client', async () => {
       const app = new Koa();
 
       app.use((ctx, next) => {
