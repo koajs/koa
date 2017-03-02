@@ -39,7 +39,10 @@ describe('app', () => {
 
     request({
       callback: (req, res) => {
-        app.callback(req, res).then(done);
+        app.callback(req, res)
+          .then(() => expect(failure).toBe(false))
+          .then(done)
+          .catch(done);
       }
     }, '/');
   });

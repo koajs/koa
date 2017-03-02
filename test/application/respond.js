@@ -431,10 +431,10 @@ describe('app.respond', () => {
   });
 
   describe('when .body is a Stream', () => {
-    function create404Stream() {
+    function create404Stream(){
       const stream = fs.createReadStream('does not exist');
       const oldOn = stream.on;
-      stream.on = function (eventName, callback) {
+      stream.on = function(eventName, callback){
         if (eventName === 'error') {
           oldOn.call(stream, 'error', err => {
             const newErr = new Error(err);
@@ -449,7 +449,6 @@ describe('app.respond', () => {
       };
       return stream;
     }
-
 
     it('should respond', async () => {
       const app = new Koa();

@@ -3,7 +3,7 @@
 const Koa = require('../..');
 const AssertionError = require('assert').AssertionError;
 
-function captureStderr(fn) {
+function captureStderr(fn){
   const oldErr = console.error;
   const stderr = [];
   console.error = msg => stderr.push(msg);
