@@ -18,7 +18,7 @@ before_script:
   - export PATH=$PATH:$PWD/wrk/bin/
 script:
   - npm run lint
-  - jest --coverage
+  - npm run test-cov
   - benchmarks/run 10
   - benchmarks/run 20
   - benchmarks/run 50
