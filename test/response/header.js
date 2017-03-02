@@ -19,6 +19,23 @@ describe('res.header', () => {
     res.header.should.eql({ 'x-foo': 'baz' });
   });
 
+  it('should return the response header object when no mocks are in use', done => {
+    const app = new Koa();
+    let header;
+
+    app.use(ctx => {
+      ctx.set('x-foo', '42');
+      header = Object.assign({}, ctx.response.header);
+    });
+
+    request(app.listen())
+      .get('/')
+      .end(() => {
+        header.should.eql({ 'x-foo': '42' });
+        done();
+      });
+  });
+
   describe('when res._headers not present', () => {
     it('should return empty object', () => {
       const res = response();
