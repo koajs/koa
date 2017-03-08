@@ -1,7 +1,7 @@
 
 'use strict';
 
-const request = require('supertest');
+const request = require('../helpers/request.js');
 const response = require('../helpers/context').response;
 const Koa = require('../..');
 
@@ -16,7 +16,7 @@ describe('res.header', () => {
     const res = response();
     res.res._headers = null;
     res.res.getHeaders = () => ({ 'x-foo': 'baz' });
-    res.header.should.eql({ 'x-foo': 'baz' });
+    expect(res.header).toEqual({ 'x-foo': 'baz' });
   });
 
   it('should return the response header object when no mocks are in use', async () => {
@@ -28,10 +28,9 @@ describe('res.header', () => {
       header = Object.assign({}, ctx.response.header);
     });
 
-    await request(app.listen())
-      .get('/');
+    await request(app, '/');
 
-    header.should.eql({ 'x-foo': '42' });
+    expect(header).toEqual({ 'x-foo': '42' });
   });
 
   describe('when res._headers not present', () => {
