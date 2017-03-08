@@ -19,7 +19,7 @@ describe('res.header', () => {
     res.header.should.eql({ 'x-foo': 'baz' });
   });
 
-  it('should return the response header object when no mocks are in use', done => {
+  it('should return the response header object when no mocks are in use', async () => {
     const app = new Koa();
     let header;
 
@@ -28,12 +28,10 @@ describe('res.header', () => {
       header = Object.assign({}, ctx.response.header);
     });
 
-    request(app.listen())
-      .get('/')
-      .end(() => {
-        header.should.eql({ 'x-foo': '42' });
-        done();
-      });
+    await request(app.listen())
+      .get('/');
+
+    header.should.eql({ 'x-foo': '42' });
   });
 
   describe('when res._headers not present', () => {
