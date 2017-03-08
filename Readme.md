@@ -177,13 +177,13 @@ And have your `.babelrc` setup:
 
 ```json
 {
- "presets": [
-   ["env", {
-     "targets": {
-       "node": true
-     }
-   }]
- ]
+  "presets": [
+    ["env", {
+      "targets": {
+        "node": true
+      }
+    }]
+  ]
 }
 ```
 
