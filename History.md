@@ -1,4 +1,12 @@
 
+2.1.0 / 2017-03-07
+==================
+
+ * added: return middleware chain promise from `callback()` #848
+ * added: node v7.7+ `res.getHeaderNames()` support #930
+ * added: `err.headerSent` in error handling #919
+ * added: lots of docs!
+
 2.0.1 / 2017-02-25
 ==================
 
