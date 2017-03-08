@@ -44,11 +44,11 @@ app.listen(3000);
 
 
 ## Middleware
+
 Koa is a middleware framework that can take 3 different kinds of functions as middleware:
 
   * common function
   * async function
-  * generator function
 
 Here is an example of logger middleware with each of the different functions:
 
@@ -78,69 +78,46 @@ app.use((ctx, next) => {
 });
 ```
 
-### GeneratorFunction
+### Koa v1.x Middleware Signature
 
-To use generator functions, you must use a wrapper such as [co](https://github.com/tj/co) that is no longer supplied with Koa.
+The middleware signature changed between v1.x and v2.x.  The older signature is deprecated.
 
-```js
-app.use(co.wrap(function *(ctx, next) {
-  const start = new Date();
-  yield next();
-  const ms = new Date() - start;
-  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
-}));
-```
+**Old signature middleware support will be removed in v3**
 
-### Old signature middleware (v1.x) - Deprecated
-
-**Old signature middleware (v1.x) support will be removed in v3**
-
-Koa v2.x will try to convert legacy signature, generator middleware on `app.use`, using [koa-convert](https://github.com/koajs/convert).
-It is however recommended that you choose to migrate all v1.x middleware as soon as possible.
-
-```js
-// Koa will convert
-app.use(function *(next) {
-  const start = new Date();
-  yield next;
-  const ms = new Date() - start;
-  console.log(`${this.method} ${this.url} - ${ms}ms`);
-});
-```
-
-You could do it manually as well, in which case Koa will not convert.
-
-```js
-const convert = require('koa-convert');
-
-app.use(convert(function *(next) {
-  const start = new Date();
-  yield next;
-  const ms = new Date() - start;
-  console.log(`${this.method} ${this.url} - ${ms}ms`);
-}));
-```
+Please see the [Migration Guide](docs/migration.md) for more information on upgrading from v1.x and
+using v1.x middleware with v2.x.
 
 ## Babel setup
 
-For Node 4.0+ and Babel 6.0 you can setup like this:
+If you're not using `node v7.6+`, we recommend setting up `babel` with [`babel-preset-env`](https://github.com/babel/babel-preset-env):
 
 ```bash
-$ npm install babel-register babel-plugin-transform-async-to-generator --save
+$ npm install babel-register babel-preset-env --save
 ```
+
+Setup `babel-register` in your entry file:
 
 ```js
-// set babel in entry file
-require('babel-register')({
-  plugins: ['transform-async-to-generator']
-});
+require('babel-register');
 ```
 
-Check out an example in koa's [test](test/babel/index.js).
+And have your `.babelrc` setup:
+
+```json
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "node": true
+      }
+    }]
+  ]
+}
+```
 
 ## Troubleshooting
 
-Check the [Troubleshooting Guide](docs/troubleshooting.md) or [Debugging Koa](docs/guide.md#debugging-koa) in 
+Check the [Troubleshooting Guide](docs/troubleshooting.md) or [Debugging Koa](docs/guide.md#debugging-koa) in
 the general Koa guide.
 
 ## Running tests
