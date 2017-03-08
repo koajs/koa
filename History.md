@@ -1,4 +1,10 @@
 
+1.3.0 / 2017-03-07
+==================
+
+ * added: node v7.7+ `res.getHeaderNames()` support #913
+ * added: `err.headerSent` in error handling #923
+
 1.2.5 / 2017-02-12
 ==================
 
