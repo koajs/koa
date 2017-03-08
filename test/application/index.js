@@ -23,10 +23,10 @@ describe('app', () => {
     ]);
   });
 
-  // TODO #848
-  it.skip('should not .writeHead when !socket.writable', done => {
+  it('should not .writeHead when !socket.writable', () => {
     const app = new Koa();
     let failure = false;
+    let ran = false;
 
     app.use((ctx, next) => {
       ctx.socket.writable = false;
@@ -36,16 +36,27 @@ describe('app', () => {
       ctx.res.end = () => {
         failure = true;
       };
+      ran = true;
     });
 
-    request({
-      callback: (req, res) => {
-        app.callback(req, res)
-          .then(() => expect(failure).toBe(false))
-          .then(done)
-          .catch(done);
-      }
-    }, '/');
+    let donePromise = new Promise((resolve, reject) => {
+      const oldCallback = app.callback;
+      app.callback = function(){
+        const generatedCallback = oldCallback.apply(this, arguments);
+        return function(){
+          const promise = generatedCallback.apply(this, arguments);
+          resolve(promise);
+          return promise;
+        };
+      };
+    });
+    return Promise.race([
+      request(app, '/'),
+      donePromise.then(() => {
+        expect(ran).toBe(true);
+        expect(failure).toBe(false);
+      })
+    ]);
   });
 
   it('should set development env when NODE_ENV missing', () => {
