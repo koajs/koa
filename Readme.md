@@ -89,7 +89,7 @@ using v1.x middleware with v2.x.
 
 ## Context, Request and Response
 
-Each middleware receives a Koa `Context` object that encapsulates an incoming 
+Each middleware receives a Koa `Context` object that encapsulates an incoming
 http message and the corresponding response to that message.  `ctx` is often used
 as the parameter name for the context object.
 
@@ -106,7 +106,9 @@ Here is an example of checking that a requesting client supports xml.
 
 ```js
 app.use(async (ctx, next) => {
-  if (!ctx.request.accepts('xml')) ctx.throw(406);
+  ctx.assert(ctx.request.accepts('xml'), 406);
+  // equivalent to:
+  // if (!ctx.request.accepts('xml')) ctx.throw(406);
   await next();
 });
 ```
@@ -119,7 +121,7 @@ http responses which delegate to a [ServerResponse](https://nodejs.org/api/http.
 Koa's pattern of delegating to Node's request and response objects rather than extending them
 provides a cleaner interface and reduces conflicts between different middleware and with Node
 itself as well as providing better support for stream handling.  The `IncomingMessage` can still be
-directly accessed as the `req` property on the `Context` and `ServerResponse` can be directly 
+directly accessed as the `req` property on the `Context` and `ServerResponse` can be directly
 accessed as the `res` property on the `Context`.
 
 Here is an example using Koa's `Response` object to stream a file as the response body.
@@ -133,10 +135,10 @@ app.use(async (ctx, next) => {
 ```
 
 The `Context` object also provides shortcuts for methods on its `request` and `response`.  In the prior
-examples,  `ctx.type` can be used instead of `ctx.request.type` and `ctx.accepts` can be used 
+examples,  `ctx.type` can be used instead of `ctx.request.type` and `ctx.accepts` can be used
 instead of `ctx.request.accepts`.
 
-For more information on `Request`, `Response` and `Context`, see the [Request API Reference](docs/api/request.md), 
+For more information on `Request`, `Response` and `Context`, see the [Request API Reference](docs/api/request.md),
 [Response API Reference](docs/api/response.md) and [Context API Reference](docs/api/context.md).
 
 ## Koa Application
@@ -157,34 +159,34 @@ Learn more about the application object in the [Application API Reference](docs/
  - [FAQ](docs/faq.md)
  - [API documentation](docs/api/index.md)
 
- ## Babel setup
+## Babel setup
 
- If you're not using `node v7.6+`, we recommend setting up `babel` with [`babel-preset-env`](https://github.com/babel/babel-preset-env):
+If you're not using `node v7.6+`, we recommend setting up `babel` with [`babel-preset-env`](https://github.com/babel/babel-preset-env):
 
- ```bash
- $ npm install babel-register babel-preset-env --save
- ```
+```bash
+$ npm install babel-register babel-preset-env --save
+```
 
- Setup `babel-register` in your entry file:
+Setup `babel-register` in your entry file:
 
- ```js
- require('babel-register');
- ```
+```js
+require('babel-register');
+```
 
- And have your `.babelrc` setup:
+And have your `.babelrc` setup:
 
- ```json
- {
-   "presets": [
-     ["env", {
-       "targets": {
-         "node": true
-       }
-     }]
-   ]
- }
- ```
- 
+```json
+{
+ "presets": [
+   ["env", {
+     "targets": {
+       "node": true
+     }
+   }]
+ ]
+}
+```
+
 ## Troubleshooting
 
 Check the [Troubleshooting Guide](docs/troubleshooting.md) or [Debugging Koa](docs/guide.md#debugging-koa) in
