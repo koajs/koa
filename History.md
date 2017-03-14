@@ -1,4 +1,10 @@
 
+next
+==================
+
+ * fix: drop `package.engines.node` requirement to >= 6.0.0
+   * this fixes `yarn`, which errors when this semver range is not satisfied
+
 2.1.0 / 2017-03-07
 ==================
 
