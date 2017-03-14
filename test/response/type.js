@@ -2,15 +2,14 @@
 'use strict';
 
 const context = require('../helpers/context');
-const assert = require('assert');
 
 describe('ctx.type=', () => {
   describe('with a mime', () => {
     it('should set the Content-Type', () => {
       const ctx = context();
       ctx.type = 'text/plain';
-      ctx.type.should.equal('text/plain');
-      ctx.response.header['content-type'].should.equal('text/plain; charset=utf-8');
+      expect(ctx.type).toBe('text/plain');
+      expect(ctx.response.header['content-type']).toBe('text/plain; charset=utf-8');
     });
   });
 
@@ -18,8 +17,8 @@ describe('ctx.type=', () => {
     it('should lookup the mime', () => {
       const ctx = context();
       ctx.type = 'json';
-      ctx.type.should.equal('application/json');
-      ctx.response.header['content-type'].should.equal('application/json; charset=utf-8');
+      expect(ctx.type).toBe('application/json');
+      expect(ctx.response.header['content-type']).toBe('application/json; charset=utf-8');
     });
   });
 
@@ -27,8 +26,8 @@ describe('ctx.type=', () => {
     it('should default the charset', () => {
       const ctx = context();
       ctx.type = 'text/html';
-      ctx.type.should.equal('text/html');
-      ctx.response.header['content-type'].should.equal('text/html; charset=utf-8');
+      expect(ctx.type).toBe('text/html');
+      expect(ctx.response.header['content-type']).toBe('text/html; charset=utf-8');
     });
   });
 
@@ -36,8 +35,8 @@ describe('ctx.type=', () => {
     it('should not default the charset', () => {
       const ctx = context();
       ctx.type = 'text/html; charset=foo';
-      ctx.type.should.equal('text/html');
-      ctx.response.header['content-type'].should.equal('text/html; charset=foo');
+      expect(ctx.type).toBe('text/html');
+      expect(ctx.response.header['content-type']).toBe('text/html; charset=foo');
     });
   });
 
@@ -45,8 +44,8 @@ describe('ctx.type=', () => {
     it('should not set a content-type', () => {
       const ctx = context();
       ctx.type = 'asdf';
-      assert(!ctx.type);
-      assert(!ctx.response.header['content-type']);
+      expect(ctx.type).toBe('');
+      expect(ctx.response.header['content-type']).toBe(undefined);
     });
   });
 });
@@ -55,7 +54,7 @@ describe('ctx.type', () => {
   describe('with no Content-Type', () => {
     it('should return ""', () => {
       const ctx = context();
-      assert(!ctx.type);
+      expect(ctx.type).toBe('');
     });
   });
 
@@ -63,7 +62,7 @@ describe('ctx.type', () => {
     it('should return the mime', () => {
       const ctx = context();
       ctx.type = 'json';
-      ctx.type.should.equal('application/json');
+      expect(ctx.type).toBe('application/json');
     });
   });
 });

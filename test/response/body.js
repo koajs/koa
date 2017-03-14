@@ -2,7 +2,6 @@
 'use strict';
 
 const response = require('../helpers/context').response;
-const assert = require('assert');
 const fs = require('fs');
 
 describe('res.body=', () => {
@@ -11,7 +10,7 @@ describe('res.body=', () => {
       const res = response();
       res.type = 'png';
       res.body = new Buffer('something');
-      assert('image/png' == res.header['content-type']);
+      expect(res.header['content-type']).toBe('image/png');
     });
 
     describe('when body is an object', () => {
@@ -19,10 +18,10 @@ describe('res.body=', () => {
         const res = response();
 
         res.body = '<em>hey</em>';
-        assert('text/html; charset=utf-8' == res.header['content-type']);
+        expect(res.header['content-type']).toBe('text/html; charset=utf-8');
 
         res.body = { foo: 'bar' };
-        assert('application/json; charset=utf-8' == res.header['content-type']);
+        expect(res.header['content-type']).toBe('application/json; charset=utf-8');
       });
     });
 
@@ -30,7 +29,7 @@ describe('res.body=', () => {
       const res = response();
       res.type = 'html';
       res.body = 'something';
-      res.length.should.equal(9);
+      expect(res.length).toBe(9);
     });
   });
 
@@ -38,20 +37,20 @@ describe('res.body=', () => {
     it('should default to text', () => {
       const res = response();
       res.body = 'Tobi';
-      assert('text/plain; charset=utf-8' == res.header['content-type']);
+      expect(res.header['content-type']).toBe('text/plain; charset=utf-8');
     });
 
     it('should set length', () => {
       const res = response();
       res.body = 'Tobi';
-      assert('4' == res.header['content-length']);
+      expect(res.header['content-length']).toBe('4');
     });
 
     describe('and contains a non-leading <', () => {
       it('should default to text', () => {
         const res = response();
         res.body = 'aklsdjf < klajsdlfjasd';
-        assert('text/plain; charset=utf-8' == res.header['content-type']);
+        expect(res.header['content-type']).toBe('text/plain; charset=utf-8');
       });
     });
   });
@@ -60,14 +59,14 @@ describe('res.body=', () => {
     it('should default to html', () => {
       const res = response();
       res.body = '<h1>Tobi</h1>';
-      assert('text/html; charset=utf-8' == res.header['content-type']);
+      expect(res.header['content-type']).toBe('text/html; charset=utf-8');
     });
 
     it('should set length', () => {
       const string = '<h1>Tobi</h1>';
       const res = response();
       res.body = string;
-      assert.equal(res.length, Buffer.byteLength(string));
+      expect(Buffer.byteLength(string)).toBe(res.length);
     });
 
     it('should set length when body is overridden', () => {
@@ -75,14 +74,14 @@ describe('res.body=', () => {
       const res = response();
       res.body = string;
       res.body = string + string;
-      assert.equal(res.length, 2 * Buffer.byteLength(string));
+      expect(2 * Buffer.byteLength(string)).toBe(res.length);
     });
 
     describe('when it contains leading whitespace', () => {
       it('should default to html', () => {
         const res = response();
         res.body = '    <h1>Tobi</h1>';
-        assert('text/html; charset=utf-8' == res.header['content-type']);
+        expect(res.header['content-type']).toBe('text/html; charset=utf-8');
       });
     });
   });
@@ -98,7 +97,7 @@ describe('res.body=', () => {
 
       const res = response();
       res.body = '<?xml version="1.0" encoding="UTF-8"?>\n<俄语>данные</俄语>';
-      assert('text/html; charset=utf-8' == res.header['content-type']);
+      expect(res.header['content-type']).toBe('text/html; charset=utf-8');
     });
   });
 
@@ -106,7 +105,7 @@ describe('res.body=', () => {
     it('should default to an octet stream', () => {
       const res = response();
       res.body = fs.createReadStream('LICENSE');
-      assert('application/octet-stream' == res.header['content-type']);
+      expect(res.header['content-type']).toBe('application/octet-stream');
     });
   });
 
@@ -114,13 +113,13 @@ describe('res.body=', () => {
     it('should default to an octet stream', () => {
       const res = response();
       res.body = new Buffer('hey');
-      assert('application/octet-stream' == res.header['content-type']);
+      expect(res.header['content-type']).toBe('application/octet-stream');
     });
 
     it('should set length', () => {
       const res = response();
       res.body = new Buffer('Tobi');
-      assert('4' == res.header['content-length']);
+      expect(res.header['content-length']).toBe('4');
     });
   });
 
@@ -128,7 +127,7 @@ describe('res.body=', () => {
     it('should default to json', () => {
       const res = response();
       res.body = { foo: 'bar' };
-      assert('application/json; charset=utf-8' == res.header['content-type']);
+      expect(res.header['content-type']).toBe('application/json; charset=utf-8');
     });
   });
 });

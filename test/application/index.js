@@ -1,12 +1,12 @@
 
 'use strict';
 
-const request = require('supertest');
-const assert = require('assert');
+const request = require('../helpers/request');
+const eventToPromise = require('event-to-promise');
 const Koa = require('../..');
 
 describe('app', () => {
-  it('should handle socket errors', done => {
+  it('should handle socket errors', () => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -14,36 +14,49 @@ describe('app', () => {
       ctx.socket.emit('error', new Error('boom'));
     });
 
-    app.on('error', err => {
-      err.message.should.equal('boom');
-      done();
-    });
+    app.onerror = () => {};
 
-    request(app.listen())
-      .get('/')
-      .end(() => {});
+    return Promise.all([
+      eventToPromise(app, 'error')
+        .then(err => expect(err.message).toBe('boom')),
+      request(app, '/').catch(() => {})
+    ]);
   });
 
-  it('should not .writeHead when !socket.writable', done => {
+  it('should not .writeHead when !socket.writable', () => {
     const app = new Koa();
+    let failure = false;
+    let ran = false;
 
     app.use((ctx, next) => {
-      // set .writable to false
       ctx.socket.writable = false;
       ctx.status = 204;
-      // throw if .writeHead or .end is called
+
       ctx.res.writeHead =
       ctx.res.end = () => {
-        throw new Error('response sent');
+        failure = true;
       };
+      ran = true;
     });
 
-    // hackish, but the response should occur in a single tick
-    setImmediate(done);
-
-    request(app.listen())
-      .get('/')
-      .end(() => {});
+    let donePromise = new Promise((resolve, reject) => {
+      const oldCallback = app.callback;
+      app.callback = function(){
+        const generatedCallback = oldCallback.apply(this, arguments);
+        return function(){
+          const promise = generatedCallback.apply(this, arguments);
+          resolve(promise);
+          return promise;
+        };
+      };
+    });
+    return Promise.race([
+      request(app, '/'),
+      donePromise.then(() => {
+        expect(ran).toBe(true);
+        expect(failure).toBe(false);
+      })
+    ]);
   });
 
   it('should set development env when NODE_ENV missing', () => {
@@ -51,6 +64,6 @@ describe('app', () => {
     process.env.NODE_ENV = '';
     const app = new Koa();
     process.env.NODE_ENV = NODE_ENV;
-    assert.equal(app.env, 'development');
+    expect(app.env).toBe('development');
   });
 });

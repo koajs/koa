@@ -2,7 +2,6 @@
 'use strict';
 
 const request = require('../helpers/context').request;
-const assert = require('assert');
 
 describe('req.inspect()', () => {
   describe('with no request.req present', () => {
@@ -10,7 +9,7 @@ describe('req.inspect()', () => {
       const req = request();
       req.method = 'GET';
       delete req.req;
-      assert(null == req.inspect());
+      expect(req.inspect()).toBe(undefined);
     });
   });
 
@@ -20,7 +19,7 @@ describe('req.inspect()', () => {
     req.url = 'example.com';
     req.header.host = 'example.com';
 
-    req.inspect().should.eql({
+    expect(req.inspect()).toEqual({
       method: 'GET',
       url: 'example.com',
       header: {

@@ -2,7 +2,6 @@
 'use strict';
 
 const context = require('../helpers/context');
-const assert = require('assert');
 
 describe('ctx.throw(msg)', () => {
   it('should set .status to 500', done => {
@@ -11,8 +10,8 @@ describe('ctx.throw(msg)', () => {
     try {
       ctx.throw('boom');
     } catch (err) {
-      assert(500 == err.status);
-      assert(!err.expose);
+      expect(err.status).toBe(500);
+      expect(err.expose).toBe(false);
       done();
     }
   });
@@ -26,9 +25,9 @@ describe('ctx.throw(err)', () => {
     try {
       ctx.throw(err);
     } catch (err) {
-      assert(500 == err.status);
-      assert('test' == err.message);
-      assert(!err.expose);
+      expect(err.status).toBe(500);
+      expect(err.message).toBe('test');
+      expect(err.expose).toBe(false);
       done();
     }
   });
@@ -42,9 +41,9 @@ describe('ctx.throw(err, status)', () => {
     try {
       ctx.throw(error, 422);
     } catch (err) {
-      assert(422 == err.status);
-      assert('test' == err.message);
-      assert(true === err.expose);
+      expect(err.status).toBe(422);
+      expect(err.message).toBe('test');
+      expect(err.expose).toBe(true);
       done();
     }
   });
@@ -58,9 +57,9 @@ describe('ctx.throw(status, err)', () => {
     try {
       ctx.throw(422, error);
     } catch (err) {
-      assert(422 == err.status);
-      assert('test' == err.message);
-      assert(true === err.expose);
+      expect(err.status).toBe(422);
+      expect(err.message).toBe('test');
+      expect(err.expose).toBe(true);
       done();
     }
   });
@@ -73,9 +72,9 @@ describe('ctx.throw(msg, status)', () => {
     try {
       ctx.throw('name required', 400);
     } catch (err) {
-      assert('name required' == err.message);
-      assert(400 == err.status);
-      assert(true === err.expose);
+      expect(err.message).toBe('name required');
+      expect(err.status).toBe(400);
+      expect(err.expose).toBe(true);
       done();
     }
   });
@@ -88,9 +87,9 @@ describe('ctx.throw(status, msg)', () => {
     try {
       ctx.throw(400, 'name required');
     } catch (err) {
-      assert('name required' == err.message);
-      assert(400 == err.status);
-      assert(true === err.expose);
+      expect(err.message).toBe('name required');
+      expect(err.status).toBe(400);
+      expect(err.expose).toBe(true);
       done();
     }
   });
@@ -103,9 +102,9 @@ describe('ctx.throw(status)', () => {
     try {
       ctx.throw(400);
     } catch (err) {
-      assert('Bad Request' == err.message);
-      assert(400 == err.status);
-      assert(true === err.expose);
+      expect(err.message).toBe('Bad Request');
+      expect(err.status).toBe(400);
+      expect(err.expose).toBe(true);
       done();
     }
   });
@@ -119,8 +118,8 @@ describe('ctx.throw(status)', () => {
         err.status = -1;
         ctx.throw(err);
       } catch (err) {
-        assert('some error' == err.message);
-        assert(!err.expose);
+        expect(err.message).toBe('some error');
+        expect(err.expose).toBe(false);
         done();
       }
     });
@@ -134,10 +133,10 @@ describe('ctx.throw(status, msg, props)', () => {
     try {
       ctx.throw(400, 'msg', { prop: true });
     } catch (err) {
-      assert('msg' == err.message);
-      assert(400 == err.status);
-      assert(true === err.expose);
-      assert(true === err.prop);
+      expect(err.message).toBe('msg');
+      expect(err.status).toBe(400);
+      expect(err.expose).toBe(true);
+      expect(err.prop).toBe(true);
       done();
     }
   });
@@ -152,10 +151,10 @@ describe('ctx.throw(status, msg, props)', () => {
           status: -1
         });
       } catch (err) {
-        assert('msg' == err.message);
-        assert(400 == err.status);
-        assert(true === err.expose);
-        assert(true === err.prop);
+        expect(err.message).toBe('msg');
+        expect(err.status).toBe(400);
+        expect(err.expose).toBe(true);
+        expect(err.prop).toBe(true);
         done();
       }
     });
@@ -169,10 +168,10 @@ describe('ctx.throw(msg, props)', () => {
     try {
       ctx.throw('msg', { prop: true });
     } catch (err) {
-      assert('msg' == err.message);
-      assert(500 == err.status);
-      assert(false === err.expose);
-      assert(true === err.prop);
+      expect(err.message).toBe('msg');
+      expect(err.status).toBe(500);
+      expect(err.expose).toBe(false);
+      expect(err.prop).toBe(true);
       done();
     }
   });
@@ -185,10 +184,10 @@ describe('ctx.throw(status, props)', () => {
     try {
       ctx.throw(400, { prop: true });
     } catch (err) {
-      assert('Bad Request' == err.message);
-      assert(400 == err.status);
-      assert(true === err.expose);
-      assert(true === err.prop);
+      expect(err.message).toBe('Bad Request');
+      expect(err.status).toBe(400);
+      expect(err.expose).toBe(true);
+      expect(err.prop).toBe(true);
       done();
     }
   });
@@ -201,10 +200,10 @@ describe('ctx.throw(err, props)', () => {
     try {
       ctx.throw(new Error('test'), { prop: true });
     } catch (err) {
-      assert('test' == err.message);
-      assert(500 == err.status);
-      assert(false === err.expose);
-      assert(true === err.prop);
+      expect(err.message).toBe('test');
+      expect(err.status).toBe(500);
+      expect(err.expose).toBe(false);
+      expect(err.prop).toBe(true);
       done();
     }
   });

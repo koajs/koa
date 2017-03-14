@@ -8,14 +8,14 @@ describe('res.lastModified', () => {
     const res = response();
     const date = new Date();
     res.lastModified = date;
-    res.header['last-modified'].should.equal(date.toUTCString());
+    expect(res.header['last-modified']).toBe(date.toUTCString());
   });
 
   it('should work with date strings', () => {
     const res = response();
     const date = new Date();
     res.lastModified = date.toString();
-    res.header['last-modified'].should.equal(date.toUTCString());
+    expect(res.header['last-modified']).toBe(date.toUTCString());
   });
 
   it('should get the header as a Date', () => {
@@ -23,13 +23,13 @@ describe('res.lastModified', () => {
     const res = response();
     const date = new Date();
     res.lastModified = date;
-    (res.lastModified.getTime() / 1000).should.equal(Math.floor(date.getTime() / 1000));
+    expect((res.lastModified.getTime() / 1000)).toBe(Math.floor(date.getTime() / 1000));
   });
 
   describe('when lastModified not set', () => {
     it('should get undefined', () => {
       const res = response();
-      (res.lastModified === undefined).should.be.ok;
+      expect(res.lastModified).toBe(undefined);
     });
   });
 });

@@ -2,9 +2,8 @@
 'use strict';
 
 const response = require('../helpers/context').response;
-const request = require('supertest');
+const request = require('../helpers/request');
 const statuses = require('statuses');
-const assert = require('assert');
 const Koa = require('../..');
 
 describe('res.status=', () => {
@@ -13,47 +12,45 @@ describe('res.status=', () => {
       it('should set the status', () => {
         const res = response();
         res.status = 403;
-        res.status.should.equal(403);
+        expect(res.status).toBe(403);
       });
 
       it('should not throw', () => {
-        assert.doesNotThrow(() => {
-          response().status = 403;
-        });
+        response().status = 403;
       });
     });
 
     describe('and invalid', () => {
       it('should throw', () => {
-        assert.throws(() => {
+        expect(() => {
           response().status = 999;
-        }, 'invalid status code: 999');
+        }).toThrow('invalid status code: 999');
       });
     });
 
     describe('and custom status', () => {
-      before(() => statuses['700'] = 'custom status');
+      beforeAll(() => statuses['700'] = 'custom status');
 
       it('should set the status', () => {
         const res = response();
         res.status = 700;
-        res.status.should.equal(700);
+        expect(res.status).toBe(700);
       });
 
       it('should not throw', () => {
-        assert.doesNotThrow(() => response().status = 700);
+        response().status = 700;
       });
     });
   });
 
   describe('when a status string', () => {
     it('should throw', () => {
-      assert.throws(() => response().status = 'forbidden', 'status code must be a number');
+      expect(() => response().status = 'forbidden').toThrow('status code must be a number');
     });
   });
 
   function strip(status){
-    it('should strip content related header fields', done => {
+    it('should strip content related header fields', async () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -62,24 +59,20 @@ describe('res.status=', () => {
         ctx.set('Content-Length', '15');
         ctx.set('Transfer-Encoding', 'chunked');
         ctx.status = status;
-        assert(null == ctx.response.header['content-type']);
-        assert(null == ctx.response.header['content-length']);
-        assert(null == ctx.response.header['transfer-encoding']);
+        expect(ctx.response.header['content-type']).toBe(undefined);
+        expect(ctx.response.header['content-length']).toBe(undefined);
+        expect(ctx.response.header['transfer-encoding']).toBe(undefined);
       });
 
-      request(app.listen())
-        .get('/')
-        .expect(status)
-        .end((err, res) => {
-          res.should.not.have.header('content-type');
-          res.should.not.have.header('content-length');
-          res.should.not.have.header('content-encoding');
-          res.text.should.have.length(0);
-          done(err);
-        });
+      const res = await request(app, '/');
+      expect(res.status).toBe(status);
+      expect(res.headers.has('content-type')).toBe(false);
+      expect(res.headers.has('content-length')).toBe(false);
+      expect(res.headers.has('content-encoding')).toBe(false);
+      expect(await res.text()).toBe('');
     });
 
-    it('should strip content releated header fields after status set', done => {
+    it('should strip content releated header fields after status set', async () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -90,16 +83,12 @@ describe('res.status=', () => {
         ctx.set('Transfer-Encoding', 'chunked');
       });
 
-      request(app.listen())
-        .get('/')
-        .expect(status)
-        .end((err, res) => {
-          res.should.not.have.header('content-type');
-          res.should.not.have.header('content-length');
-          res.should.not.have.header('content-encoding');
-          res.text.should.have.length(0);
-          done(err);
-        });
+      const res = await request(app, '/');
+      expect(res.status).toBe(status);
+      expect(res.headers.has('content-type')).toBe(false);
+      expect(res.headers.has('content-length')).toBe(false);
+      expect(res.headers.has('content-encoding')).toBe(false);
+      expect(await res.text()).toBe('');
     });
   }
 

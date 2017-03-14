@@ -8,7 +8,7 @@ describe('app.toJSON()', () => {
     const app = new Koa();
     const obj = app.toJSON();
 
-    obj.should.eql({
+    expect(obj).toEqual({
       subdomainOffset: 2,
       proxy: false,
       env: 'test'

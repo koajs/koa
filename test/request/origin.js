@@ -16,9 +16,9 @@ describe('ctx.origin', () => {
       __proto__: Stream.Readable.prototype
     };
     const ctx = context(req);
-    ctx.origin.should.equal('http://localhost');
+    expect(ctx.origin).toBe('http://localhost');
     // change it also work
     ctx.url = '/foo/users/1?next=/dashboard';
-    ctx.origin.should.equal('http://localhost');
+    expect(ctx.origin).toBe('http://localhost');
   });
 });

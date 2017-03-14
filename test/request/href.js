@@ -18,10 +18,10 @@ describe('ctx.href', () => {
       __proto__: Stream.Readable.prototype
     };
     const ctx = context(req);
-    ctx.href.should.equal('http://localhost/users/1?next=/dashboard');
+    expect(ctx.href).toBe('http://localhost/users/1?next=/dashboard');
     // change it also work
     ctx.url = '/foo/users/1?next=/dashboard';
-    ctx.href.should.equal('http://localhost/users/1?next=/dashboard');
+    expect(ctx.href).toBe('http://localhost/users/1?next=/dashboard');
   });
 
   it('should work with `GET http://example.com/foo`', done => {
@@ -36,12 +36,12 @@ describe('ctx.href', () => {
         path: 'http://example.com/foo',
         port: address.port
       }, res => {
-        res.statusCode.should.equal(200);
+        expect(res.statusCode).toBe(200);
         let buf = '';
         res.setEncoding('utf8');
         res.on('data', s => buf += s);
         res.on('end', () => {
-          buf.should.equal('http://example.com/foo');
+          expect(buf).toBe('http://example.com/foo');
           done();
         });
       });

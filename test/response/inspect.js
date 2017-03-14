@@ -2,15 +2,14 @@
 'use strict';
 
 const response = require('../helpers/context').response;
-const assert = require('assert');
 
 describe('res.inspect()', () => {
   describe('with no response.res present', () => {
-    it('should return null', () => {
+    it('should return undefined', () => {
       const res = response();
       res.body = 'hello';
       delete res.res;
-      assert(null == res.inspect());
+      expect(res.inspect()).toBe(undefined);
     });
   });
 
@@ -18,7 +17,7 @@ describe('res.inspect()', () => {
     const res = response();
     res.body = 'hello';
 
-    res.inspect().should.eql({
+    expect(res.inspect()).toEqual({
       body: 'hello',
       status: 200,
       message: 'OK',

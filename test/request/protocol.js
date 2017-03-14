@@ -8,7 +8,7 @@ describe('req.protocol', () => {
     it('should return "https"', () => {
       const req = request();
       req.req.socket = { encrypted: true };
-      req.protocol.should.equal('https');
+      expect(req.protocol).toBe('https');
     });
   });
 
@@ -16,7 +16,7 @@ describe('req.protocol', () => {
     it('should return "http"', () => {
       const req = request();
       req.req.socket = {};
-      req.protocol.should.equal('http');
+      expect(req.protocol).toBe('http');
     });
   });
 
@@ -27,7 +27,7 @@ describe('req.protocol', () => {
         req.app.proxy = true;
         req.req.socket = {};
         req.header['x-forwarded-proto'] = 'https, http';
-        req.protocol.should.equal('https');
+        expect(req.protocol).toBe('https');
       });
 
       describe('and X-Forwarded-Proto is empty', () => {
@@ -36,7 +36,7 @@ describe('req.protocol', () => {
           req.app.proxy = true;
           req.req.socket = {};
           req.header['x-forwarded-proto'] = '';
-          req.protocol.should.equal('http');
+          expect(req.protocol).toBe('http');
         });
       });
     });
@@ -46,7 +46,7 @@ describe('req.protocol', () => {
         const req = request();
         req.req.socket = {};
         req.header['x-forwarded-proto'] = 'https, http';
-        req.protocol.should.equal('http');
+        expect(req.protocol).toBe('http');
       });
     });
   });

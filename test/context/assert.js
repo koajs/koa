@@ -2,7 +2,6 @@
 'use strict';
 
 const context = require('../helpers/context');
-const assert = require('assert');
 
 describe('ctx.assert(value, status)', () => {
   it('should throw an error', () => {
@@ -12,8 +11,8 @@ describe('ctx.assert(value, status)', () => {
       ctx.assert(false, 404);
       throw new Error('asdf');
     } catch (err) {
-      assert(404 == err.status);
-      assert(err.expose);
+      expect(err.status).toBe(404);
+      expect(err.expose).toBe(true);
     }
   });
 });

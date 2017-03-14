@@ -2,8 +2,6 @@
 'use strict';
 
 const response = require('../helpers/context').response;
-const should = require('should');
-const assert = require('assert');
 const fs = require('fs');
 
 describe('res.length', () => {
@@ -11,7 +9,7 @@ describe('res.length', () => {
     it('should return a number', () => {
       const res = response();
       res.header['content-length'] = '120';
-      res.length.should.equal(120);
+      expect(res.length).toBe(120);
     });
   });
 });
@@ -21,7 +19,7 @@ describe('res.length', () => {
     it('should return a number', () => {
       const res = response();
       res.set('Content-Length', '1024');
-      res.length.should.equal(1024);
+      expect(res.length).toBe(1024);
     });
   });
 
@@ -32,37 +30,37 @@ describe('res.length', () => {
 
         res.body = 'foo';
         res.remove('Content-Length');
-        res.length.should.equal(3);
+        expect(res.length).toBe(3);
 
         res.body = 'foo';
-        res.length.should.equal(3);
+        expect(res.length).toBe(3);
 
         res.body = new Buffer('foo bar');
         res.remove('Content-Length');
-        res.length.should.equal(7);
+        expect(res.length).toBe(7);
 
         res.body = new Buffer('foo bar');
-        res.length.should.equal(7);
+        expect(res.length).toBe(7);
 
         res.body = { hello: 'world' };
         res.remove('Content-Length');
-        res.length.should.equal(17);
+        expect(res.length).toBe(17);
 
         res.body = { hello: 'world' };
-        res.length.should.equal(17);
+        expect(res.length).toBe(17);
 
         res.body = fs.createReadStream('package.json');
-        should.not.exist(res.length);
+        expect(res.length).toBe(undefined);
 
         res.body = null;
-        should.not.exist(res.length);
+        expect(res.length).toBe(undefined);
       });
     });
 
     describe('and .body is not', () => {
       it('should return undefined', () => {
         const res = response();
-        assert(null == res.length);
+        expect(res.length).toBe(undefined);
       });
     });
   });

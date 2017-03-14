@@ -1,23 +1,18 @@
 
 'use strict';
 
-const request = require('supertest');
-const assert = require('assert');
+const request = require('../helpers/request');
 const Koa = require('../..');
 
 describe('ctx.state', () => {
-  it('should provide a ctx.state namespace', done => {
+  it('should provide a ctx.state namespace', async () => {
     const app = new Koa();
 
     app.use(ctx => {
-      assert.deepEqual(ctx.state, {});
+      expect(ctx.state).toEqual({});
     });
 
-    const server = app.listen();
-
-    request(server)
-      .get('/')
-      .expect(404)
-      .end(done);
+    const res = await request(app, '/');
+    expect(res.status).toBe(404);
   });
 });

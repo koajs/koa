@@ -1,69 +1,67 @@
 
 'use strict';
 
-const stderr = require('test-console').stderr;
 const Koa = require('../..');
 const AssertionError = require('assert').AssertionError;
 
+function captureStderr(fn){
+  const oldErr = console.error;
+  const stderr = [];
+  console.error = msg => stderr.push(msg);
+  fn();
+  console.error = oldErr;
+  return stderr;
+}
+
 describe('app.onerror(err)', () => {
-  it('should throw an error if a non-error is given', done => {
+  it('should throw an error if a non-error is given', () => {
     const app = new Koa();
 
-    (() => app.onerror('foo')).should.throw(AssertionError, {message: 'non-error thrown: foo'});
-
-    done();
+    expect(() => app.onerror('foo')).toThrow(AssertionError, {message: 'non-error thrown: foo'});
   });
 
-  it('should do nothing if status is 404', done => {
+  it('should do nothing if status is 404', () => {
     const app = new Koa();
     const err = new Error();
 
     err.status = 404;
 
-    const output = stderr.inspectSync(() => app.onerror(err));
+    const output = captureStderr(() => app.onerror(err));
 
-    output.should.eql([]);
-
-    done();
+    expect(output).toEqual([]);
   });
 
-  it('should do nothing if .silent', done => {
+  it('should do nothing if .silent', () => {
     const app = new Koa();
     app.silent = true;
     const err = new Error();
 
-    const output = stderr.inspectSync(() => app.onerror(err));
+    const output = captureStderr(() => app.onerror(err));
 
-    output.should.eql([]);
-
-    done();
+    expect(output).toEqual([]);
   });
 
-  it('should log the error to stderr', done => {
+  it('should log the error to stderr', () => {
     const app = new Koa();
     app.env = 'dev';
 
     const err = new Error();
     err.stack = 'Foo';
 
-    const output = stderr.inspectSync(() => app.onerror(err));
+    const output = captureStderr(() => app.onerror(err));
 
-    output.should.eql(['\n', '  Foo\n', '\n']);
-
-    done();
+    expect(output).toEqual([undefined, '  Foo', undefined]);
   });
 
-  it('should use err.toString() instad of err.stack', done => {
+  it('should use err.toString() instad of err.stack', () => {
     const app = new Koa();
     app.env = 'dev';
 
     const err = new Error('mock stack null');
     err.stack = null;
 
-    const output = stderr.inspectSync(() => app.onerror(err));
+    const output = captureStderr(() => app.onerror(err));
 
-    output.should.eql(['\n', '  Error: mock stack null\n', '\n']);
-
-    done();
+    expect(output).toEqual([undefined, '  Error: mock stack null', undefined]);
   });
 });

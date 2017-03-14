@@ -10,7 +10,7 @@ describe('req.ips', () => {
         const req = request();
         req.app.proxy = false;
         req.header['x-forwarded-for'] = '127.0.0.1,127.0.0.2';
-        req.ips.should.eql([]);
+        expect(req.ips).toEqual([]);
       });
     });
 
@@ -19,7 +19,7 @@ describe('req.ips', () => {
         const req = request();
         req.app.proxy = true;
         req.header['x-forwarded-for'] = '127.0.0.1,127.0.0.2';
-        req.ips.should.eql(['127.0.0.1', '127.0.0.2']);
+        expect(req.ips).toEqual(['127.0.0.1', '127.0.0.2']);
       });
     });
   });

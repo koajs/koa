@@ -17,9 +17,12 @@ before_script:
   - "[ ! -f wrk/bin/wrk ] && rm -rf wrk && git clone https://github.com/wg/wrk.git && make -C wrk && mkdir wrk/bin && mv wrk/wrk wrk/bin || true"
   - export PATH=$PATH:$PWD/wrk/bin/
 script:
-  - make lint
-  - make test-travis
-  - make bench
+  - npm run lint
+  - npm run test-cov
+  - benchmarks/run 10
+  - benchmarks/run 20
+  - benchmarks/run 50
+  - benchmarks/run 100
 after_script:
   - npm install codecov
   - ./node_modules/.bin/codecov
