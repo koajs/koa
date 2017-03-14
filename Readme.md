@@ -16,6 +16,8 @@
 
 ## Installation
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/koajs/koa.svg)](https://greenkeeper.io/)
+
 Koa requires __node v7.6.0__ or higher for ES2015 and async function support.
 
 ```
