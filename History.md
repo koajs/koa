@@ -1,5 +1,5 @@
 
-next
+2.2.0 / 2017-03-14
 ==================
 
  * fix: drop `package.engines.node` requirement to >= 6.0.0
