@@ -3,3 +3,4 @@ env:
 
 rules:
   space-before-blocks: [2, {functions: never, keywords: always}]
+  no-unused-expressions: 0

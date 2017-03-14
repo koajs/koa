@@ -8,7 +8,7 @@ TESTS = test/application/* \
 	test/response/*
 
 lint:
-	@./node_modules/.bin/eslint benchmarks lib test
+	@./node_modules/.bin/eslint benchmarks lib test --fix
 
 test:
 	@NODE_ENV=test node \

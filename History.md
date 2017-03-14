@@ -4,6 +4,8 @@ next
 
  * fix: drop `package.engines.node` requirement to >= 6.0.0
    * this fixes `yarn`, which errors when this semver range is not satisfied
+ * bump `cookies@~0.7.0`
+ * bump `fresh@^0.5.0`
 
 2.1.0 / 2017-03-07
 ==================

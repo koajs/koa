@@ -73,7 +73,7 @@ describe('app.respond', () => {
           if (err) return done(err);
           res.should.have.header('Content-Type', 'text/plain; charset=utf-8');
           res.should.have.header('Content-Length', '5');
-          assert(0 == res.text.length);
+          assert(!res.text);
           done();
         });
     });
@@ -94,7 +94,7 @@ describe('app.respond', () => {
           if (err) return done(err);
           res.should.have.header('Content-Type', 'application/json; charset=utf-8');
           res.should.have.header('Content-Length', '17');
-          assert(0 == res.text.length);
+          assert(!res.text);
           done();
         });
     });
@@ -115,7 +115,7 @@ describe('app.respond', () => {
           if (err) return done(err);
           res.should.have.header('Content-Type', 'text/plain; charset=utf-8');
           res.should.have.header('Content-Length', '11');
-          assert(0 == res.text.length);
+          assert(!res.text);
           done();
         });
     });
@@ -136,7 +136,7 @@ describe('app.respond', () => {
           if (err) return done(err);
           res.should.have.header('Content-Type', 'application/octet-stream');
           res.should.have.header('Content-Length', '11');
-          assert(0 == res.text.length);
+          assert(!res.text);
           done();
         });
     });
@@ -265,7 +265,7 @@ describe('app.respond', () => {
         request(server)
           .get('/')
           .expect(400)
-          .expect('Content-Length', 11)
+          .expect('Content-Length', '11')
           .expect('Bad Request', done);
       });
     });
@@ -509,7 +509,7 @@ describe('app.respond', () => {
   });
 
   describe('when .body is a Buffer', () => {
-    it('should respond', done => {
+    it('should respond', () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -518,9 +518,10 @@ describe('app.respond', () => {
 
       const server = app.listen();
 
-      request(server)
+      return request(server)
         .get('/')
-        .expect('Hello', done);
+        .expect(200)
+        .expect(new Buffer('Hello'));
     });
   });
 
