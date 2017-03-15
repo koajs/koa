@@ -64,7 +64,7 @@ app.use(convert(function *(next) {
 You will have to convert your generators to async functions with the new middleware signature:
 
 ```js
-app.use(async ctx => {
+app.use(async (ctx, next) => {
   const user = await Users.getById(this.session.user_id);
   await next();
   ctx.body = { message: 'some message' };
