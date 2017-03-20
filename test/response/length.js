@@ -37,11 +37,11 @@ describe('res.length', () => {
         res.body = 'foo';
         res.length.should.equal(3);
 
-        res.body = new Buffer('foo bar');
+        res.body = Buffer.from('foo bar');
         res.remove('Content-Length');
         res.length.should.equal(7);
 
-        res.body = new Buffer('foo bar');
+        res.body = Buffer.from('foo bar');
         res.length.should.equal(7);
 
         res.body = { hello: 'world' };

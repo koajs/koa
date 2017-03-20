@@ -124,7 +124,7 @@ describe('app.respond', () => {
       const app = new Koa();
 
       app.use(ctx => {
-        ctx.body = new Buffer('hello world');
+        ctx.body = Buffer.from('hello world');
       });
 
       const server = app.listen();
@@ -513,7 +513,7 @@ describe('app.respond', () => {
       const app = new Koa();
 
       app.use(ctx => {
-        ctx.body = new Buffer('Hello');
+        ctx.body = Buffer.from('Hello');
       });
 
       const server = app.listen();
@@ -521,7 +521,7 @@ describe('app.respond', () => {
       return request(server)
         .get('/')
         .expect(200)
-        .expect(new Buffer('Hello'));
+        .expect(Buffer.from('Hello'));
     });
   });
 
