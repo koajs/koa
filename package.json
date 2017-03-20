@@ -4,7 +4,7 @@
   "description": "Koa web app framework",
   "main": "lib/application.js",
   "scripts": {
-    "test": "make test",
+    "test": "if type 'gmake' 2> /dev/null; then gmake test; else make test; fi",
     "update-authors": "git log --format='%aN <%aE>' | sort -u > AUTHORS"
   },
   "repository": "koajs/koa",
