@@ -59,5 +59,8 @@
   },
   "files": [
     "lib"
-  ]
+  ],
+  "publishConfig": {
+    "tag": "v1"
+  }
 }
