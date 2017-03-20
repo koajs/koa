@@ -169,6 +169,12 @@ this.cookies.set('name', 'tobi', { signed: true });
 app.context.db = db();
 ```
 
+## app.usedAsMiddleware
+
+  Disables the default 404 status code and empty response.
+  This is very useful if you're using Koa as part of another framework, where Koa tries
+  to handle a request first and then falls back to the legacy framework.
+
 ## Error Handling
 
   By default outputs all errors to stderr unless __NODE_ENV__ is "test" or `app.silent` is `true`.

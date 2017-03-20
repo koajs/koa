@@ -1110,3 +1110,41 @@ describe('app.response', function(){
     .expect(204, done);
   })
 })
+
+describe('app.usedAsMiddleware', function(){
+  var app = koa()
+  app.use(function *(next) {
+    if (this.url.indexOf('/koa') == 0) {
+      this.statusCode = 200
+      this.body = 'Hello from Koa!'
+    } else {
+      yield next
+    }
+  })
+  app.usedAsMiddleware = true
+  var koaHandle = app.callback()
+  function handle(req, res){
+    koaHandle(req, res).then(function(){
+      if (!res.finished) {
+        res.end('Hello from other framework!')
+      }
+    })
+  }
+  var server = http.createServer(handle).listen(0)
+
+  it('should not touch res if middleware doesn\'t', function(done){
+    request(server)
+    .get('/')
+    .expect(200)
+    .expect('Hello from other framework!')
+    .end(done)
+  })
+
+  it('should let middleware handle res', function(done){
+    request(server)
+    .get('/koa')
+    .expect(200)
+    .expect('Hello from Koa!')
+    .end(done)
+  })
+})
