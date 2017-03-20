@@ -41,7 +41,7 @@ describe('res.writable', () => {
   describe('when socket closed before response sent', () => {
     function requsetClosed(server){
       const port = server.address().port;
-      const buf = new Buffer('GET / HTTP/1.1\r\nHost: localhost:' + port + '\r\nConnection: keep-alive\r\n\r\n');
+      const buf = Buffer.from('GET / HTTP/1.1\r\nHost: localhost:' + port + '\r\nConnection: keep-alive\r\n\r\n');
       const client = net.connect(port);
       setImmediate(() => {
         client.write(buf);
@@ -66,7 +66,7 @@ describe('res.writable', () => {
   describe('when response finished', () => {
     function request(server){
       const port = server.address().port;
-      const buf = new Buffer('GET / HTTP/1.1\r\nHost: localhost:' + port + '\r\nConnection: keep-alive\r\n\r\n');
+      const buf = Buffer.from('GET / HTTP/1.1\r\nHost: localhost:' + port + '\r\nConnection: keep-alive\r\n\r\n');
       const client = net.connect(port);
       setImmediate(() => {
         client.write(buf);

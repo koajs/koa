@@ -10,7 +10,7 @@ describe('res.body=', () => {
     it('should not override', () => {
       const res = response();
       res.type = 'png';
-      res.body = new Buffer('something');
+      res.body = Buffer.from('something');
       assert('image/png' == res.header['content-type']);
     });
 
@@ -113,13 +113,13 @@ describe('res.body=', () => {
   describe('when a buffer is given', () => {
     it('should default to an octet stream', () => {
       const res = response();
-      res.body = new Buffer('hey');
+      res.body = Buffer.from('hey');
       assert('application/octet-stream' == res.header['content-type']);
     });
 
     it('should set length', () => {
       const res = response();
-      res.body = new Buffer('Tobi');
+      res.body = Buffer.from('Tobi');
       assert('4' == res.header['content-length']);
     });
   });
