@@ -45,7 +45,7 @@ app.listen(3000);
 
 ## Middleware
 
-Koa is a middleware framework that can take 3 different kinds of functions as middleware:
+Koa is a middleware framework that can take two different kinds of functions as middleware:
 
   * common function
   * async function
