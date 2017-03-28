@@ -8,9 +8,7 @@ plugins: [
 ]
 
 rules:
-  arrow-parens: 0
-  babel/arrow-parens: [2, "as-needed"]
-
+  arrow-parens: [2, as-needed]
   eqeqeq: 0
   no-return-assign: 0 # fails for arrow functions
   no-var: 2
