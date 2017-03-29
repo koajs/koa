@@ -126,4 +126,16 @@ describe('app.use(fn)', () => {
 
     (() => app.use('not a function')).should.throw('middleware must be a function!');
   });
+
+  it('should only allow async function when forceAsync is true', () => {
+    const app = new Koa();
+    app.forceAsync = true;
+    (() => app.use(() => {})).should.throw();
+  });
+
+  it('should allow common and async function when forceAsync is false', () => {
+    const app = new Koa();
+    app.forceAsync = false;
+    [async () => {}, () => {}].forEach(v => (() => app.use(v)).should.not.throw());
+  });
 });
