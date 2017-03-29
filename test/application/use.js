@@ -120,10 +120,4 @@ describe('app.use(fn)', () => {
     const app = new Koa();
     app.use(function * (){});
   });
-
-  it('should throw error for non function', () => {
-    const app = new Koa();
-
-    (() => app.use('not a function')).should.throw('middleware must be a function!');
-  });
 });
