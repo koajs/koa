@@ -47,8 +47,8 @@ app.listen(3000);
 
 Koa is a middleware framework that can take two different kinds of functions as middleware:
 
-  * common function
   * async function
+  * common function
 
 Here is an example of logger middleware with each of the different functions:
 
