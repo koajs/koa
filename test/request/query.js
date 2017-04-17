@@ -8,7 +8,7 @@ describe('ctx.query', () => {
   describe('when missing', () => {
     it('should return an empty object', () => {
       const ctx = context({ url: '/' });
-      should(ctx.query).empty;
+      should(ctx.query).empty();
     });
 
     it('should return the same object each time it\'s accessed', done => {
