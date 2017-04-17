@@ -11,7 +11,7 @@ describe('req.type', () => {
     req.type.should.equal('text/html');
   });
 
-  describe('with no host present', () => {
+  it('with no host present', () => {
     const req = request();
     assert('' === req.type);
   });
