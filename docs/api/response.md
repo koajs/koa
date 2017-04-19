@@ -117,7 +117,7 @@ so you can make a correction.
   - `string` written
   - `Buffer` written
   - `Stream` piped
-  - `Object` json-stringified
+  - `Object` || `Array` json-stringified
   - `null` no content response
 
 If `response.status` has not been set, Koa will automatically set the status to `200` or `204`.
@@ -155,7 +155,7 @@ app.use(function * (next) {
 
 #### Object
 
-  The Content-Type is defaulted to application/json.
+  The Content-Type is defaulted to application/json. This includes plain objects `{ foo: 'bar' }` and arrays `['foo', 'bar']`.
 
 ### response.get(field)
 
