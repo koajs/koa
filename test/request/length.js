@@ -11,7 +11,7 @@ describe('ctx.length', () => {
     req.length.should.equal(10);
   });
 
-  describe('with no content-length present', () => {
+  it('with no content-length present', () => {
     const req = request();
     assert(null == req.length);
   });
