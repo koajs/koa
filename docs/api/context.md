@@ -85,20 +85,19 @@ koa uses the [cookies](https://github.com/jed/cookies) module where options are 
 
 koa uses the [cookies](https://github.com/jed/cookies) module where options are simply passed.
 
-### ctx.throw([msg], [status], [properties])
+### ctx.throw([status], [msg], [properties])
 
   Helper method to throw an error with a `.status` property
   defaulting to `500` that will allow Koa to respond appropriately.
   The following combinations are allowed:
 
 ```js
-ctx.throw(403);
-ctx.throw('name required', 400);
+ctx.throw(400);
 ctx.throw(400, 'name required');
-ctx.throw('something exploded');
+ctx.throw(400, 'name required', { user: user });
 ```
 
-  For example `ctx.throw('name required', 400)` is equivalent to:
+  For example `ctx.throw(400, 'name required')` is equivalent to:
 
 ```js
 const err = new Error('name required');
@@ -117,7 +116,6 @@ throw err;
 
 ```js
 ctx.throw(401, 'access_denied', { user: user });
-ctx.throw('access_denied', { user: user });
 ```
 
 koa uses [http-errors](https://github.com/jshttp/http-errors) to create errors.
