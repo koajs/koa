@@ -39,7 +39,7 @@ describe('res.writable', () => {
   });
 
   describe('when socket closed before response sent', () => {
-    function requsetClosed(server){
+    function requestClosed(server){
       const port = server.address().port;
       const buf = Buffer.from('GET / HTTP/1.1\r\nHost: localhost:' + port + '\r\nConnection: keep-alive\r\n\r\n');
       const client = net.connect(port);
@@ -59,7 +59,7 @@ describe('res.writable', () => {
         });
       });
       const server = app.listen();
-      requsetClosed(server);
+      requestClosed(server);
     });
   });
 
