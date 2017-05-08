@@ -198,6 +198,50 @@ app.use(async function (ctx, next) {
   When the furthest downstream middleware executes `next();`, it's really yielding to a noop
   function, allowing the middleware to compose correctly anywhere in the stack.
 
+### Streaming Responses
+
+  Many times, you would want to stream responses to the client. In Connect/Express, you would `res.write()` directly onto the response as middleware would actually overwrite `.write` or `.end` for it to work correctly. However, in Koa, you __should not__ write to `res` directly. Instead, you should use a `Stream.PassThrough` or similar instead.
+
+  For example, suppose you want to stream a body like this:
+
+```js
+app.use(function *(next){
+  this.res.writeHead(200);
+  setImmediate(function(){
+    this.res.write('hello');
+    this.res.write(' ');
+    this.res.write('world');
+    this.res.end();
+  });
+})
+```
+
+  Instead, do the following:
+
+```js
+var PassThrough = require('stream').PassThrough
+
+app.use(function *(next){
+  // make a local reference to the stream
+  // because upstream middleware such as compress
+  // may replace `this.body` with something else
+  var stream = this.body = new PassThrough();
+  setImmediate(function(){
+    stream.write('hello');
+    stream.write(' ');
+    stream.write('world');
+    stream.end();
+  });
+})
+```
+
+  This is better for many reasons:
+
+- By setting `this.body` immediately, Koa understands that the response is "handled".
+- Any upstream middleware, such as compress, will be able to handle the response.
+- There's no hackery involved or edge-cases to handle. This is how Koa expects you to send bodies.
+- Debugging is easier as you can intercept the `stream` and log its contents.
+
 ## Async operations
 
   Async function and promise forms Koa's foundation, allowing
