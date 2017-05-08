@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --forceExit",
     "test-cov": "npm run test -- --coverage",
-    "lint": "eslint benchmarks lib test --fix"
+    "lint": "eslint benchmarks lib test --fix",
+    "bench": "make -C benchmarks"
   },
   "repository": "koajs/koa",
   "keywords": [
