@@ -1,6 +1,7 @@
 
 'use strict';
 
+const assert = require('assert');
 const Koa = require('../../');
 const net = require('net');
 
@@ -31,8 +32,8 @@ describe('res.writable', () => {
       const server = app.listen();
       requestTwice(server, (_, datas) => {
         const responses = Buffer.concat(datas).toString();
-        responses.should.match(/request 1, writable: true/);
-        responses.should.match(/request 2, writable: true/);
+        assert.equal(/request 1, writable: true/.test(responses), true);
+        assert.equal(/request 2, writable: true/.test(responses), true);
         done();
       });
     });

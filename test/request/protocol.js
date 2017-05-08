@@ -1,6 +1,7 @@
 
 'use strict';
 
+const assert = require('assert');
 const request = require('../helpers/context').request;
 
 describe('req.protocol', () => {
@@ -8,7 +9,7 @@ describe('req.protocol', () => {
     it('should return "https"', () => {
       const req = request();
       req.req.socket = { encrypted: true };
-      req.protocol.should.equal('https');
+      assert.equal(req.protocol, 'https');
     });
   });
 
@@ -16,7 +17,7 @@ describe('req.protocol', () => {
     it('should return "http"', () => {
       const req = request();
       req.req.socket = {};
-      req.protocol.should.equal('http');
+      assert.equal(req.protocol, 'http');
     });
   });
 
@@ -27,7 +28,7 @@ describe('req.protocol', () => {
         req.app.proxy = true;
         req.req.socket = {};
         req.header['x-forwarded-proto'] = 'https, http';
-        req.protocol.should.equal('https');
+        assert.equal(req.protocol, 'https');
       });
 
       describe('and X-Forwarded-Proto is empty', () => {
@@ -36,7 +37,7 @@ describe('req.protocol', () => {
           req.app.proxy = true;
           req.req.socket = {};
           req.header['x-forwarded-proto'] = '';
-          req.protocol.should.equal('http');
+          assert.equal(req.protocol, 'http');
         });
       });
     });
@@ -46,7 +47,7 @@ describe('req.protocol', () => {
         const req = request();
         req.req.socket = {};
         req.header['x-forwarded-proto'] = 'https, http';
-        req.protocol.should.equal('http');
+        assert.equal(req.protocol, 'http');
       });
     });
   });

@@ -10,7 +10,7 @@ describe('res.inspect()', () => {
       const res = response();
       res.body = 'hello';
       delete res.res;
-      assert(null == res.inspect());
+      assert.equal(res.inspect(), null);
     });
   });
 
@@ -18,7 +18,7 @@ describe('res.inspect()', () => {
     const res = response();
     res.body = 'hello';
 
-    res.inspect().should.eql({
+    assert.deepEqual({
       body: 'hello',
       status: 200,
       message: 'OK',
@@ -26,6 +26,6 @@ describe('res.inspect()', () => {
         'content-length': '5',
         'content-type': 'text/plain; charset=utf-8'
       }
-    });
+    }, res.inspect());
   });
 });

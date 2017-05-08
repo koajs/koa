@@ -7,25 +7,25 @@ const Koa = require('../..');
 const http = require('http');
 
 describe('ctx.flushHeaders()', () => {
-  it('should set headersSent', done => {
+  it('should set headersSent', () => {
     const app = new Koa();
 
     app.use((ctx, next) => {
       ctx.body = 'Body';
       ctx.status = 200;
       ctx.flushHeaders();
-      assert(ctx.res.headersSent);
+      assert.equal(ctx.res.headersSent, true);
     });
 
     const server = app.listen();
 
-    request(server)
+    return request(server)
       .get('/')
       .expect(200)
-      .expect('Body', done);
+      .expect('Body');
   });
 
-  it('should allow a response afterwards', done => {
+  it('should allow a response afterwards', () => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -36,14 +36,14 @@ describe('ctx.flushHeaders()', () => {
     });
 
     const server = app.listen();
-    request(server)
+    return request(server)
       .get('/')
       .expect(200)
       .expect('Content-Type', 'text/plain')
-      .expect('Body', done);
+      .expect('Body');
   });
 
-  it('should send the correct status code', done => {
+  it('should send the correct status code', () => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -54,14 +54,14 @@ describe('ctx.flushHeaders()', () => {
     });
 
     const server = app.listen();
-    request(server)
+    return request(server)
       .get('/')
       .expect(401)
       .expect('Content-Type', 'text/plain')
-      .expect('Body', done);
+      .expect('Body');
   });
 
-  it('should fail to set the headers after flushHeaders', done => {
+  it('should fail to set the headers after flushHeaders', async () => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -87,14 +87,13 @@ describe('ctx.flushHeaders()', () => {
     });
 
     const server = app.listen();
-    request(server)
+    const res = await request(server)
       .get('/')
       .expect(401)
       .expect('Content-Type', 'text/plain')
-      .expect('ctx.set fail ctx.status fail ctx.length fail', (err, res) => {
-        assert(res.headers['x-shouldnt-work'] === undefined, 'header set after flushHeaders');
-        done(err);
-      });
+      .expect('ctx.set fail ctx.status fail ctx.length fail');
+
+    assert.equal(res.headers['x-shouldnt-work'], undefined, 'header set after flushHeaders');
   });
 
   it('should flush headers first and delay to send data', done => {

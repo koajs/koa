@@ -6,7 +6,7 @@ const assert = require('assert');
 const Koa = require('../..');
 
 describe('ctx.state', () => {
-  it('should provide a ctx.state namespace', done => {
+  it('should provide a ctx.state namespace', () => {
     const app = new Koa();
 
     app.use(ctx => {
@@ -15,9 +15,8 @@ describe('ctx.state', () => {
 
     const server = app.listen();
 
-    request(server)
+    return request(server)
       .get('/')
-      .expect(404)
-      .end(done);
+      .expect(404);
   });
 });
