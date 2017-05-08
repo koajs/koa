@@ -257,16 +257,16 @@ Otherwise, you should have no trouble upgrading.
 0.7.0 / 2014-06-07
 ==================
 
- * add `this.lastModified` and `this.etag` as both getters and setters for ubiquity #292.
+ * add `this.lastModified` and `this.etag` as both getters and setters for ubiquity [#292](https://github.com/koajs/koa/issues/292).
    See koajs/koa@4065bf7 for an explanation.
- * refactor `this.response.vary()` to use [vary](https://github.com/expressjs/vary) #291
- * remove `this.response.append()` #291
+ * refactor `this.response.vary()` to use [vary](https://github.com/expressjs/vary) [#291](https://github.com/koajs/koa/issues/291)
+ * remove `this.response.append()` [#291](https://github.com/koajs/koa/issues/291)
 
 0.6.3 / 2014-06-06
 ==================
 
  * fix res.type= when the extension is unknown
- * assert when non-error is passed to app.onerror #287
+ * assert when non-error is passed to app.onerror [#287](https://github.com/koajs/koa/issues/287)
  * bump finished
 
 0.6.2 / 2014-06-03
@@ -285,9 +285,9 @@ Otherwise, you should have no trouble upgrading.
 
  * add nicer error formatting
  * add: assert object type in ctx.onerror
- * change .status default to 404. Closes #263
- * remove .outputErrors, suppress output when handled by the dev. Closes #272
- * fix content-length when body is re-assigned. Closes #267
+ * change .status default to 404. Closes [#263](https://github.com/koajs/koa/issues/263)
+ * remove .outputErrors, suppress output when handled by the dev. Closes [#272](https://github.com/koajs/koa/issues/272)
+ * fix content-length when body is re-assigned. Closes [#267](https://github.com/koajs/koa/issues/267)
 
 0.5.5 / 2014-04-14
 ==================
@@ -303,8 +303,8 @@ Otherwise, you should have no trouble upgrading.
 0.5.3 / 2014-04-09
 ==================
 
- * change res.type= to always default charset. Closes #252
- * remove ctx.inspect() implementation. Closes #164
+ * change res.type= to always default charset. Closes [#252](https://github.com/koajs/koa/issues/252)
+ * remove ctx.inspect() implementation. Closes [#164](https://github.com/koajs/koa/issues/164)
 
 0.5.2 / 2014-03-23
 ==================
@@ -319,7 +319,7 @@ Otherwise, you should have no trouble upgrading.
 0.5.1 / 2014-03-06
 ==================
 
- * add request.hostname(getter). Closes #224
+ * add request.hostname(getter). Closes [#224](https://github.com/koajs/koa/issues/224)
  * remove response.charset and ctx.charset (too confusing in relation to ctx.type) [breaking change]
  * fix a debug() name
 
@@ -364,8 +364,8 @@ Otherwise, you should have no trouble upgrading.
 0.2.0 / 2013-12-28
 ==================
 
- * add support for .throw(status, msg). Closes #130
- * add GeneratorFunction assertion for app.use(). Closes #120
+ * add support for .throw(status, msg). Closes [#130](https://github.com/koajs/koa/issues/130)
+ * add GeneratorFunction assertion for app.use(). Closes [#120](https://github.com/koajs/koa/issues/120)
  * refactor: move `.is()` to `type-is`
  * refactor: move content negotiation to "accepts"
  * refactor: allow any streams with .pipe method
