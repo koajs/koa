@@ -15,6 +15,7 @@
   Koa is not bundled with any middleware.
 
 ## Installation
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/koajs/koa?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Koa requires __node v7.6.0__ or higher for ES2015 and async function support.
 
