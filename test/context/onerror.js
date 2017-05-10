@@ -7,7 +7,7 @@ const Koa = require('../..');
 const context = require('../helpers/context');
 
 describe('ctx.onerror(err)', () => {
-  it('should respond', done => {
+  it('should respond', () => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -18,15 +18,14 @@ describe('ctx.onerror(err)', () => {
 
     const server = app.listen();
 
-    request(server)
+    return request(server)
       .get('/')
       .expect(418)
       .expect('Content-Type', 'text/plain; charset=utf-8')
-      .expect('Content-Length', '4')
-      .end(done);
+      .expect('Content-Length', '4');
   });
 
-  it('should unset all headers', done => {
+  it('should unset all headers', () => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -39,22 +38,18 @@ describe('ctx.onerror(err)', () => {
 
     const server = app.listen();
 
-    request(server)
+    return request(server)
       .get('/')
       .expect(418)
       .expect('Content-Type', 'text/plain; charset=utf-8')
       .expect('Content-Length', '4')
-      .end((err, res) => {
-        if (err) return done(err);
-
+      .then(res => {
         res.headers.should.not.have.property('vary');
         res.headers.should.not.have.property('x-csrf-token');
-
-        done();
       });
   });
 
-  it('should set headers specified in the error', done => {
+  it('should set headers specified in the error', () => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -73,19 +68,15 @@ describe('ctx.onerror(err)', () => {
 
     const server = app.listen();
 
-    request(server)
-    .get('/')
-    .expect(418)
-    .expect('Content-Type', 'text/plain; charset=utf-8')
-    .expect('X-New-Header', 'Value')
-    .end((err, res) => {
-      if (err) return done(err);
-
-      res.headers.should.not.have.property('vary');
-      res.headers.should.not.have.property('x-csrf-token');
-
-      done();
-    });
+    return request(server)
+      .get('/')
+      .expect(418)
+      .expect('Content-Type', 'text/plain; charset=utf-8')
+      .expect('X-New-Header', 'Value')
+      .then(res => {
+        res.headers.should.not.have.property('vary');
+        res.headers.should.not.have.property('x-csrf-token');
+      });
   });
 
   it('should ignore error after headerSent', done => {
@@ -113,7 +104,7 @@ describe('ctx.onerror(err)', () => {
 
   describe('when invalid err.status', () => {
     describe('not number', () => {
-      it('should respond 500', done => {
+      it('should respond 500', () => {
         const app = new Koa();
 
         app.use((ctx, next) => {
@@ -125,16 +116,16 @@ describe('ctx.onerror(err)', () => {
 
         const server = app.listen();
 
-        request(server)
+        return request(server)
           .get('/')
           .expect(500)
           .expect('Content-Type', 'text/plain; charset=utf-8')
-          .expect('Internal Server Error', done);
+          .expect('Internal Server Error');
       });
     });
 
     describe('not http status code', () => {
-      it('should respond 500', done => {
+      it('should respond 500', () => {
         const app = new Koa();
 
         app.use((ctx, next) => {
@@ -146,17 +137,17 @@ describe('ctx.onerror(err)', () => {
 
         const server = app.listen();
 
-        request(server)
+        return request(server)
           .get('/')
           .expect(500)
           .expect('Content-Type', 'text/plain; charset=utf-8')
-          .expect('Internal Server Error', done);
+          .expect('Internal Server Error');
       });
     });
   });
 
   describe('when non-error thrown', () => {
-    it('should response non-error thrown message', done => {
+    it('should response non-error thrown message', () => {
       const app = new Koa();
 
       app.use((ctx, next) => {
@@ -165,11 +156,11 @@ describe('ctx.onerror(err)', () => {
 
       const server = app.listen();
 
-      request(server)
+      return request(server)
         .get('/')
         .expect(500)
         .expect('Content-Type', 'text/plain; charset=utf-8')
-        .expect('Internal Server Error', done);
+        .expect('Internal Server Error');
     });
 
     it('should use res.getHeaderNames() accessor when available', () => {

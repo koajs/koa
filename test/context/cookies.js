@@ -5,7 +5,7 @@ const request = require('supertest');
 const Koa = require('../..');
 
 describe('ctx.cookies.set()', () => {
-  it('should set an unsigned cookie', done => {
+  it('should set an unsigned cookie', () => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -15,21 +15,17 @@ describe('ctx.cookies.set()', () => {
 
     const server = app.listen();
 
-    request(server)
+    return request(server)
       .get('/')
       .expect(204)
-      .end((err, res) => {
-        if (err) return done(err);
-
+      .then(res => {
         res.headers['set-cookie'].some(cookie => /^name=/.test(cookie)).should.be.ok;
-
-        done();
       });
   });
 
   describe('with .signed', () => {
     describe('when no .keys are set', () => {
-      it('should error', done => {
+      it('should error', () => {
         const app = new Koa();
 
         app.use((ctx, next) => {
@@ -40,13 +36,13 @@ describe('ctx.cookies.set()', () => {
           }
         });
 
-        request(app.listen())
+        return request(app.listen())
           .get('/')
-          .expect('.keys required for signed cookies', done);
+          .expect('.keys required for signed cookies');
       });
     });
 
-    it('should send a signed cookie', done => {
+    it('should send a signed cookie', () => {
       const app = new Koa();
 
       app.keys = ['a', 'b'];
@@ -58,25 +54,21 @@ describe('ctx.cookies.set()', () => {
 
       const server = app.listen();
 
-      request(server)
+      return request(server)
         .get('/')
         .expect(204)
-        .end((err, res) => {
-          if (err) return done(err);
-
+        .then(res => {
           const cookies = res.headers['set-cookie'];
 
           cookies.some(cookie => /^name=/.test(cookie)).should.be.ok;
 
           cookies.some(cookie => /^name\.sig=/.test(cookie)).should.be.ok;
-
-          done();
         });
     });
   });
 
   describe('with secure', () => {
-    it('should get secure from request', done => {
+    it('should get secure from request', () => {
       const app = new Koa();
 
       app.proxy = true;
@@ -89,22 +81,18 @@ describe('ctx.cookies.set()', () => {
 
       const server = app.listen();
 
-      request(server)
-      .get('/')
-      .set('x-forwarded-proto', 'https') // mock secure
-      .expect(204)
-      .end((err, res) => {
-        if (err) return done(err);
+      return request(server)
+        .get('/')
+        .set('x-forwarded-proto', 'https') // mock secure
+        .expect(204)
+        .then(res => {
+          const cookies = res.headers['set-cookie'];
+          cookies.some(cookie => /^name=/.test(cookie)).should.be.ok;
 
-        const cookies = res.headers['set-cookie'];
-        cookies.some(cookie => /^name=/.test(cookie)).should.be.ok;
+          cookies.some(cookie => /^name\.sig=/.test(cookie)).should.be.ok;
 
-        cookies.some(cookie => /^name\.sig=/.test(cookie)).should.be.ok;
-
-        cookies.every(cookie => /secure/.test(cookie)).should.be.ok;
-
-        done();
-      });
+          cookies.every(cookie => /secure/.test(cookie)).should.be.ok;
+        });
     });
   });
 });
