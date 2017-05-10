@@ -53,7 +53,7 @@ describe('res.status=', () => {
   });
 
   function strip(status){
-    it('should strip content related header fields', done => {
+    it('should strip content related header fields', () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -67,19 +67,18 @@ describe('res.status=', () => {
         assert(null == ctx.response.header['transfer-encoding']);
       });
 
-      request(app.listen())
+      return request(app.listen())
         .get('/')
         .expect(status)
-        .end((err, res) => {
+        .then(res => {
           res.should.not.have.header('content-type');
           res.should.not.have.header('content-length');
           res.should.not.have.header('content-encoding');
           res.text.should.have.length(0);
-          done(err);
         });
     });
 
-    it('should strip content releated header fields after status set', done => {
+    it('should strip content releated header fields after status set', () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -90,15 +89,14 @@ describe('res.status=', () => {
         ctx.set('Transfer-Encoding', 'chunked');
       });
 
-      request(app.listen())
+      return request(app.listen())
         .get('/')
         .expect(status)
-        .end((err, res) => {
+        .then(res => {
           res.should.not.have.header('content-type');
           res.should.not.have.header('content-length');
           res.should.not.have.header('content-encoding');
           res.text.should.have.length(0);
-          done(err);
         });
     });
   }
