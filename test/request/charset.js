@@ -24,13 +24,13 @@ describe('req.charset', () => {
     it('should return the charset', () => {
       const req = request();
       req.header['content-type'] = 'text/plain; charset=utf-8';
-      req.charset.should.equal('utf-8');
+      assert.equal(req.charset, 'utf-8');
     });
 
     it('should return "" if content-type is invalid', () => {
       const req = request();
       req.header['content-type'] = 'application/json; application/text; charset=utf-8';
-      req.charset.should.equal('');
+      assert.equal(req.charset, '');
     });
   });
 });

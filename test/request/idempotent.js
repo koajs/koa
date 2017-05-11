@@ -1,6 +1,7 @@
 
 'use strict';
 
+const assert = require('assert');
 const request = require('../helpers/context').request;
 
 describe('ctx.idempotent', () => {
@@ -10,7 +11,7 @@ describe('ctx.idempotent', () => {
       function check(method){
         const req = request();
         req.method = method;
-        req.idempotent.should.equal(true);
+        assert.equal(req.idempotent, true);
       }
     });
   });
@@ -19,7 +20,7 @@ describe('ctx.idempotent', () => {
     it('should return false', () => {
       const req = request();
       req.method = 'POST';
-      req.idempotent.should.equal(false);
+      assert.equal(req.idempotent, false);
     });
   });
 });

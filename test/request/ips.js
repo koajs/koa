@@ -1,6 +1,7 @@
 
 'use strict';
 
+const assert = require('assert');
 const request = require('../helpers/context').request;
 
 describe('req.ips', () => {
@@ -10,7 +11,7 @@ describe('req.ips', () => {
         const req = request();
         req.app.proxy = false;
         req.header['x-forwarded-for'] = '127.0.0.1,127.0.0.2';
-        req.ips.should.eql([]);
+        assert.deepEqual(req.ips, []);
       });
     });
 
@@ -19,7 +20,7 @@ describe('req.ips', () => {
         const req = request();
         req.app.proxy = true;
         req.header['x-forwarded-for'] = '127.0.0.1,127.0.0.2';
-        req.ips.should.eql(['127.0.0.1', '127.0.0.2']);
+        assert.deepEqual(req.ips, ['127.0.0.1', '127.0.0.2']);
       });
     });
   });

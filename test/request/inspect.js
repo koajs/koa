@@ -20,12 +20,12 @@ describe('req.inspect()', () => {
     req.url = 'example.com';
     req.header.host = 'example.com';
 
-    req.inspect().should.eql({
+    assert.deepEqual({
       method: 'GET',
       url: 'example.com',
       header: {
         host: 'example.com'
       }
-    });
+    }, req.inspect());
   });
 });

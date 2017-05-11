@@ -15,7 +15,7 @@ describe('app', () => {
     });
 
     app.on('error', err => {
-      err.message.should.equal('boom');
+      assert.equal(err.message, 'boom');
       done();
     });
 

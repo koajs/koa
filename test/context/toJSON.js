@@ -1,6 +1,7 @@
 
 'use strict';
 
+const assert = require('assert');
 const context = require('../helpers/context');
 
 describe('ctx.toJSON()', () => {
@@ -17,21 +18,21 @@ describe('ctx.toJSON()', () => {
     const req = obj.request;
     const res = obj.response;
 
-    req.should.eql({
+    assert.deepEqual({
       method: 'POST',
       url: '/items',
       header: {
         'content-type': 'text/plain'
       }
-    });
+    }, req);
 
-    res.should.eql({
+    assert.deepEqual({
       status: 200,
       message: 'OK',
       header: {
         'content-type': 'text/html; charset=utf-8',
         'content-length': '10'
       }
-    });
+    }, res);
   });
 });
