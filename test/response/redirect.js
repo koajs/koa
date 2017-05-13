@@ -1,14 +1,15 @@
 
 'use strict';
 
+const assert = require('assert');
 const context = require('../helpers/context');
 
 describe('ctx.redirect(url)', () => {
   it('should redirect to the given url', () => {
     const ctx = context();
     ctx.redirect('http://google.com');
-    ctx.response.header.location.should.equal('http://google.com');
-    ctx.status.should.equal(302);
+    assert.equal(ctx.response.header.location, 'http://google.com');
+    assert.equal(ctx.status, 302);
   });
 
   describe('with "back"', () => {
@@ -16,26 +17,26 @@ describe('ctx.redirect(url)', () => {
       const ctx = context();
       ctx.req.headers.referrer = '/login';
       ctx.redirect('back');
-      ctx.response.header.location.should.equal('/login');
+      assert.equal(ctx.response.header.location, '/login');
     });
 
     it('should redirect to Referer', () => {
       const ctx = context();
       ctx.req.headers.referer = '/login';
       ctx.redirect('back');
-      ctx.response.header.location.should.equal('/login');
+      assert.equal(ctx.response.header.location, '/login');
     });
 
     it('should default to alt', () => {
       const ctx = context();
       ctx.redirect('back', '/index.html');
-      ctx.response.header.location.should.equal('/index.html');
+      assert.equal(ctx.response.header.location, '/index.html');
     });
 
     it('should default redirect to /', () => {
       const ctx = context();
       ctx.redirect('back');
-      ctx.response.header.location.should.equal('/');
+      assert.equal(ctx.response.header.location, '/');
     });
   });
 
@@ -45,8 +46,8 @@ describe('ctx.redirect(url)', () => {
       const url = 'http://google.com';
       ctx.header.accept = 'text/html';
       ctx.redirect(url);
-      ctx.response.header['content-type'].should.equal('text/html; charset=utf-8');
-      ctx.body.should.equal(`Redirecting to <a href="${url}">${url}</a>.`);
+      assert.equal(ctx.response.header['content-type'], 'text/html; charset=utf-8');
+      assert.equal(ctx.body, `Redirecting to <a href="${url}">${url}</a>.`);
     });
 
     it('should escape the url', () => {
@@ -55,8 +56,8 @@ describe('ctx.redirect(url)', () => {
       ctx.header.accept = 'text/html';
       ctx.redirect(url);
       url = escape(url);
-      ctx.response.header['content-type'].should.equal('text/html; charset=utf-8');
-      ctx.body.should.equal(`Redirecting to <a href="${url}">${url}</a>.`);
+      assert.equal(ctx.response.header['content-type'], 'text/html; charset=utf-8');
+      assert.equal(ctx.body, `Redirecting to <a href="${url}">${url}</a>.`);
     });
   });
 
@@ -66,7 +67,7 @@ describe('ctx.redirect(url)', () => {
       const url = 'http://google.com';
       ctx.header.accept = 'text/plain';
       ctx.redirect(url);
-      ctx.body.should.equal(`Redirecting to ${url}.`);
+      assert.equal(ctx.body, `Redirecting to ${url}.`);
     });
   });
 
@@ -77,8 +78,8 @@ describe('ctx.redirect(url)', () => {
       ctx.status = 301;
       ctx.header.accept = 'text/plain';
       ctx.redirect('http://google.com');
-      ctx.status.should.equal(301);
-      ctx.body.should.equal(`Redirecting to ${url}.`);
+      assert.equal(ctx.status, 301);
+      assert.equal(ctx.body, `Redirecting to ${url}.`);
     });
   });
 
@@ -89,8 +90,8 @@ describe('ctx.redirect(url)', () => {
       ctx.status = 304;
       ctx.header.accept = 'text/plain';
       ctx.redirect('http://google.com');
-      ctx.status.should.equal(302);
-      ctx.body.should.equal(`Redirecting to ${url}.`);
+      assert.equal(ctx.status, 302);
+      assert.equal(ctx.body, `Redirecting to ${url}.`);
     });
   });
 
@@ -101,9 +102,9 @@ describe('ctx.redirect(url)', () => {
       const url = 'http://google.com';
       ctx.header.accept = 'text/plain';
       ctx.redirect('http://google.com');
-      ctx.status.should.equal(302);
-      ctx.body.should.equal(`Redirecting to ${url}.`);
-      ctx.type.should.equal('text/plain');
+      assert.equal(ctx.status, 302);
+      assert.equal(ctx.body, `Redirecting to ${url}.`);
+      assert.equal(ctx.type, 'text/plain');
     });
   });
 });

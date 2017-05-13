@@ -10,25 +10,25 @@ describe('app.request', () => {
   app1.request.message = 'hello';
   const app2 = new Koa();
 
-  it('should merge properties', done => {
+  it('should merge properties', () => {
     app1.use((ctx, next) => {
       assert.equal(ctx.request.message, 'hello');
       ctx.status = 204;
     });
 
-    request(app1.listen())
+    return request(app1.listen())
       .get('/')
-      .expect(204, done);
+      .expect(204);
   });
 
-  it('should not affect the original prototype', done => {
+  it('should not affect the original prototype', () => {
     app2.use((ctx, next) => {
       assert.equal(ctx.request.message, undefined);
       ctx.status = 204;
     });
 
-    request(app2.listen())
+    return request(app2.listen())
       .get('/')
-      .expect(204, done);
+      .expect(204);
   });
 });

@@ -8,11 +8,11 @@ describe('req.type', () => {
   it('should return type void of parameters', () => {
     const req = request();
     req.header['content-type'] = 'text/html; charset=utf-8';
-    req.type.should.equal('text/html');
+    assert.equal(req.type, 'text/html');
   });
 
   it('with no host present', () => {
     const req = request();
-    assert('' === req.type);
+    assert.equal(req.type, '');
   });
 });

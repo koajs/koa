@@ -1,6 +1,7 @@
 
 'use strict';
 
+const assert = require('assert');
 const context = require('../helpers/context');
 
 describe('ctx.inspect()', () => {
@@ -8,6 +9,6 @@ describe('ctx.inspect()', () => {
     const ctx = context();
     const toJSON = ctx.toJSON(ctx);
 
-    toJSON.should.eql(ctx.inspect());
+    assert.deepEqual(toJSON, ctx.inspect());
   });
 });

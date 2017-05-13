@@ -15,7 +15,7 @@ describe('req.ip', () => {
       req.headers['x-forwarded-for'] = '127.0.0.1';
       req.socket.remoteAddress = '127.0.0.2';
       const request = Request(req, undefined, app);
-      request.ip.should.equal('127.0.0.1');
+      assert.equal(request.ip, '127.0.0.1');
     });
   });
 
@@ -24,7 +24,7 @@ describe('req.ip', () => {
       const req = { socket: new Stream.Duplex() };
       req.socket.remoteAddress = '127.0.0.2';
       const request = Request(req);
-      request.ip.should.equal('127.0.0.2');
+      assert.equal(request.ip, '127.0.0.2');
     });
 
     describe('with req.socket.remoteAddress not present', () => {
@@ -44,6 +44,6 @@ describe('req.ip', () => {
     req.socket.remoteAddress = '127.0.0.2';
     const request = Request(req);
     req.socket.remoteAddress = '127.0.0.1';
-    request.ip.should.equal('127.0.0.2');
+    assert.equal(request.ip, '127.0.0.2');
   });
 });
