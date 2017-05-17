@@ -56,9 +56,9 @@ Here is an example of logger middleware with each of the different functions:
 
 ```js
 app.use(async (ctx, next) => {
-  const start = new Date();
+  const start = Date.now();
   await next();
-  const ms = new Date() - start;
+  const ms = Date.now() - start;
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 ```
