@@ -70,9 +70,9 @@ app.use(async (ctx, next) => {
 // next is a function that is invoked to execute the downstream middleware. It returns a Promise with a then function for running code after completion.
 
 app.use((ctx, next) => {
-  const start = new Date();
+  const start = Date.now();
   return next().then(() => {
-    const ms = new Date() - start;
+    const ms = Date.now() - start;
     console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
   });
 });
