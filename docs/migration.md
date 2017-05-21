@@ -39,9 +39,9 @@ It is however recommended that you choose to migrate all v1.x middleware as soon
 ```js
 // Koa will convert
 app.use(function *(next) {
-  const start = new Date();
+  const start = Date.now();
   yield next;
-  const ms = new Date() - start;
+  const ms = Date.now() - start;
   console.log(`${this.method} ${this.url} - ${ms}ms`);
 });
 ```
@@ -52,9 +52,9 @@ You could do it manually as well, in which case Koa will not convert.
 const convert = require('koa-convert');
 
 app.use(convert(function *(next) {
-  const start = new Date();
+  const start = Date.now();
   yield next;
-  const ms = new Date() - start;
+  const ms = Date.now() - start;
   console.log(`${this.method} ${this.url} - ${ms}ms`);
 }));
 ```
