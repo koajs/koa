@@ -1,6 +1,7 @@
 
 'use strict';
 
+const assert = require('assert');
 const context = require('../helpers/context');
 const request = require('supertest');
 const Koa = require('../..');
@@ -11,7 +12,7 @@ describe('ctx.attachment([filename])', () => {
       const ctx = context();
       ctx.attachment('path/to/tobi.png');
       const str = 'attachment; filename="tobi.png"';
-      ctx.response.header['content-disposition'].should.equal(str);
+      assert.equal(ctx.response.header['content-disposition'], str);
     });
   });
 
@@ -19,7 +20,7 @@ describe('ctx.attachment([filename])', () => {
     it('should not set filename param', () => {
       const ctx = context();
       ctx.attachment();
-      ctx.response.header['content-disposition'].should.equal('attachment');
+      assert.equal(ctx.response.header['content-disposition'], 'attachment');
     });
   });
 
@@ -28,10 +29,10 @@ describe('ctx.attachment([filename])', () => {
       const ctx = context();
       ctx.attachment('path/to/include-no-ascii-char-中文名-ok.png');
       const str = 'attachment; filename="include-no-ascii-char-???-ok.png"; filename*=UTF-8\'\'include-no-ascii-char-%E4%B8%AD%E6%96%87%E5%90%8D-ok.png';
-      ctx.response.header['content-disposition'].should.equal(str);
+      assert.equal(ctx.response.header['content-disposition'], str);
     });
 
-    it('should work with http client', done => {
+    it('should work with http client', () => {
       const app = new Koa();
 
       app.use((ctx, next) => {
@@ -39,11 +40,11 @@ describe('ctx.attachment([filename])', () => {
         ctx.body = {foo: 'bar'};
       });
 
-      request(app.listen())
+      return request(app.listen())
         .get('/')
         .expect('content-disposition', 'attachment; filename="include-no-ascii-char-???-ok.json"; filename*=UTF-8\'\'include-no-ascii-char-%E4%B8%AD%E6%96%87%E5%90%8D-ok.json')
         .expect({foo: 'bar'})
-        .expect(200, done);
+        .expect(200);
     });
   });
 });

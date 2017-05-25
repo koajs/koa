@@ -13,9 +13,9 @@
 
 ```js
 async function responseTime(ctx, next) {
-  const start = new Date();
+  const start = Date.now();
   await next();
-  const ms = new Date() - start;
+  const ms = Date.now() - start;
   ctx.set('X-Response-Time', `${ms}ms`);
 }
 

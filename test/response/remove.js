@@ -1,6 +1,7 @@
 
 'use strict';
 
+const assert = require('assert');
 const context = require('../helpers/context');
 
 describe('ctx.remove(name)', () => {
@@ -8,6 +9,6 @@ describe('ctx.remove(name)', () => {
     const ctx = context();
     ctx.set('x-foo', 'bar');
     ctx.remove('x-foo');
-    ctx.response.header.should.eql({});
+    assert.deepEqual(ctx.response.header, {});
   });
 });

@@ -1,6 +1,7 @@
 
 'use strict';
 
+const assert = require('assert');
 const context = require('../helpers/context');
 
 describe('ctx.get(name)', () => {
@@ -8,10 +9,10 @@ describe('ctx.get(name)', () => {
     const ctx = context();
     ctx.req.headers.host = 'http://google.com';
     ctx.req.headers.referer = 'http://google.com';
-    ctx.get('HOST').should.equal('http://google.com');
-    ctx.get('Host').should.equal('http://google.com');
-    ctx.get('host').should.equal('http://google.com');
-    ctx.get('referer').should.equal('http://google.com');
-    ctx.get('referrer').should.equal('http://google.com');
+    assert.equal(ctx.get('HOST'), 'http://google.com');
+    assert.equal(ctx.get('Host'), 'http://google.com');
+    assert.equal(ctx.get('host'), 'http://google.com');
+    assert.equal(ctx.get('referer'), 'http://google.com');
+    assert.equal(ctx.get('referrer'), 'http://google.com');
   });
 });

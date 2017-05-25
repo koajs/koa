@@ -4,7 +4,10 @@
   "description": "Koa web app framework",
   "main": "lib/application.js",
   "scripts": {
-    "test": "make test"
+    "test": "jest --forceExit",
+    "test-cov": "npm run test -- --coverage",
+    "lint": "eslint benchmarks lib test --fix",
+    "bench": "make -C benchmarks"
   },
   "repository": "koajs/koa",
   "keywords": [
@@ -32,7 +35,7 @@
     "http-assert": "^1.1.0",
     "http-errors": "^1.2.8",
     "is-generator-function": "^1.0.3",
-    "koa-compose": "^3.0.0",
+    "koa-compose": "^4.0.0",
     "koa-convert": "^1.2.0",
     "koa-is-json": "^1.0.0",
     "mime-types": "^2.0.7",
@@ -47,20 +50,27 @@
     "babel-eslint": "^7.1.1",
     "eslint": "^3.17.1",
     "eslint-config-standard": "^7.0.1",
-    "eslint-plugin-babel": "^4.1.1",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^2.1.1",
     "istanbul": "^0.4.0",
-    "mocha": "^3.2.0",
-    "should": "^6.0.3",
-    "should-http": "0.0.3",
-    "supertest": "^3.0.0",
-    "test-console": "^0.7.1"
+    "jest": "^20.0.0",
+    "supertest": "^3.0.0"
   },
   "engines": {
     "node": ">= 6.0.0"
   },
   "files": [
     "lib"
-  ]
+  ],
+  "jest": {
+    "testMatch": [
+      "**/test/!(helpers)/*.js"
+    ],
+    "coverageReporters": [
+      "text-summary",
+      "lcov"
+    ],
+    "bail": true,
+    "testEnvironment": "node"
+  }
 }

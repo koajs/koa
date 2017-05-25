@@ -1,6 +1,7 @@
 
 'use strict';
 
+const assert = require('assert');
 const Stream = require('stream');
 const context = require('../helpers/context');
 
@@ -16,9 +17,9 @@ describe('ctx.origin', () => {
       __proto__: Stream.Readable.prototype
     };
     const ctx = context(req);
-    ctx.origin.should.equal('http://localhost');
+    assert.equal(ctx.origin, 'http://localhost');
     // change it also work
     ctx.url = '/foo/users/1?next=/dashboard';
-    ctx.origin.should.equal('http://localhost');
+    assert.equal(ctx.origin, 'http://localhost');
   });
 });

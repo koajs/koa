@@ -1,6 +1,7 @@
 
 'use strict';
 
+const assert = require('assert');
 const Koa = require('../..');
 
 describe('app.toJSON()', () => {
@@ -8,10 +9,10 @@ describe('app.toJSON()', () => {
     const app = new Koa();
     const obj = app.toJSON();
 
-    obj.should.eql({
+    assert.deepEqual({
       subdomainOffset: 2,
       proxy: false,
       env: 'test'
-    });
+    }, obj);
   });
 });

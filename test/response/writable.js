@@ -1,6 +1,7 @@
 
 'use strict';
 
+const assert = require('assert');
 const Koa = require('../../');
 const net = require('net');
 
@@ -31,15 +32,15 @@ describe('res.writable', () => {
       const server = app.listen();
       requestTwice(server, (_, datas) => {
         const responses = Buffer.concat(datas).toString();
-        responses.should.match(/request 1, writable: true/);
-        responses.should.match(/request 2, writable: true/);
+        assert.equal(/request 1, writable: true/.test(responses), true);
+        assert.equal(/request 2, writable: true/.test(responses), true);
         done();
       });
     });
   });
 
   describe('when socket closed before response sent', () => {
-    function requsetClosed(server){
+    function requestClosed(server){
       const port = server.address().port;
       const buf = Buffer.from('GET / HTTP/1.1\r\nHost: localhost:' + port + '\r\nConnection: keep-alive\r\n\r\n');
       const client = net.connect(port);
@@ -59,7 +60,7 @@ describe('res.writable', () => {
         });
       });
       const server = app.listen();
-      requsetClosed(server);
+      requestClosed(server);
     });
   });
 

@@ -8,7 +8,7 @@ describe('req.host', () => {
   it('should return host with port', () => {
     const req = request();
     req.header.host = 'foo.com:3000';
-    req.host.should.equal('foo.com:3000');
+    assert.equal(req.host, 'foo.com:3000');
   });
 
   describe('with no host present', () => {
@@ -24,7 +24,7 @@ describe('req.host', () => {
         const req = request();
         req.header['x-forwarded-host'] = 'bar.com';
         req.header.host = 'foo.com';
-        req.host.should.equal('foo.com');
+        assert.equal(req.host, 'foo.com');
       });
     });
 
@@ -34,7 +34,7 @@ describe('req.host', () => {
         req.app.proxy = true;
         req.header['x-forwarded-host'] = 'bar.com, baz.com';
         req.header.host = 'foo.com';
-        req.host.should.equal('bar.com');
+        assert.equal(req.host, 'bar.com');
       });
     });
   });

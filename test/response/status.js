@@ -13,7 +13,7 @@ describe('res.status=', () => {
       it('should set the status', () => {
         const res = response();
         res.status = 403;
-        res.status.should.equal(403);
+        assert.equal(res.status, 403);
       });
 
       it('should not throw', () => {
@@ -32,12 +32,12 @@ describe('res.status=', () => {
     });
 
     describe('and custom status', () => {
-      before(() => statuses['700'] = 'custom status');
+      beforeEach(() => statuses['700'] = 'custom status');
 
       it('should set the status', () => {
         const res = response();
         res.status = 700;
-        res.status.should.equal(700);
+        assert.equal(res.status, 700);
       });
 
       it('should not throw', () => {
@@ -52,8 +52,8 @@ describe('res.status=', () => {
     });
   });
 
-  function strip(status){
-    it('should strip content related header fields', done => {
+  function strip (status) {
+    it('should strip content related header fields', async () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -67,19 +67,17 @@ describe('res.status=', () => {
         assert(null == ctx.response.header['transfer-encoding']);
       });
 
-      request(app.listen())
+      const res = await request(app.listen())
         .get('/')
-        .expect(status)
-        .end((err, res) => {
-          res.should.not.have.header('content-type');
-          res.should.not.have.header('content-length');
-          res.should.not.have.header('content-encoding');
-          res.text.should.have.length(0);
-          done(err);
-        });
+        .expect(status);
+
+      assert.equal(res.headers.hasOwnProperty('content-type'), false);
+      assert.equal(res.headers.hasOwnProperty('content-length'), false);
+      assert.equal(res.headers.hasOwnProperty('content-encoding'), false);
+      assert.equal(res.text.length, 0);
     });
 
-    it('should strip content releated header fields after status set', done => {
+    it('should strip content releated header fields after status set', async () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -90,16 +88,14 @@ describe('res.status=', () => {
         ctx.set('Transfer-Encoding', 'chunked');
       });
 
-      request(app.listen())
+      const res = await request(app.listen())
         .get('/')
-        .expect(status)
-        .end((err, res) => {
-          res.should.not.have.header('content-type');
-          res.should.not.have.header('content-length');
-          res.should.not.have.header('content-encoding');
-          res.text.should.have.length(0);
-          done(err);
-        });
+        .expect(status);
+
+      assert.equal(res.headers.hasOwnProperty('content-type'), false);
+      assert.equal(res.headers.hasOwnProperty('content-length'), false);
+      assert.equal(res.headers.hasOwnProperty('content-encoding'), false);
+      assert.equal(res.text.length, 0);
     });
   }
 

@@ -47,8 +47,8 @@ app.listen(3000);
 
 Koa is a middleware framework that can take two different kinds of functions as middleware:
 
-  * common function
   * async function
+  * common function
 
 Here is an example of logger middleware with each of the different functions:
 
@@ -56,9 +56,9 @@ Here is an example of logger middleware with each of the different functions:
 
 ```js
 app.use(async (ctx, next) => {
-  const start = new Date();
+  const start = Date.now();
   await next();
-  const ms = new Date() - start;
+  const ms = Date.now() - start;
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 ```
@@ -70,9 +70,9 @@ app.use(async (ctx, next) => {
 // next is a function that is invoked to execute the downstream middleware. It returns a Promise with a then function for running code after completion.
 
 app.use((ctx, next) => {
-  const start = new Date();
+  const start = Date.now();
   return next().then(() => {
-    const ms = new Date() - start;
+    const ms = Date.now() - start;
     console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
   });
 });
@@ -213,6 +213,14 @@ See [AUTHORS](AUTHORS).
  - [Mailing list](https://groups.google.com/forum/#!forum/koajs)
  - [中文文档](https://github.com/guo-yu/koa-guide)
  - __[#koajs]__ on freenode
+
+## Job Board
+
+Looking for a career upgrade?
+
+<a href="https://astro.netlify.com/automattic"><img src="https://astro.netlify.com/static/automattic.png"></a>
+<a href="https://astro.netlify.com/segment"><img src="https://astro.netlify.com/static/segment.png"></a>
+<a href="https://astro.netlify.com/auth0"><img src="https://astro.netlify.com/static/auth0.png"/></a>
 
 ## Backers
 
