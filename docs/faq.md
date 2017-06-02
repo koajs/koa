@@ -16,7 +16,7 @@
 ## Does Koa replace Connect?
 
   No, just a different take on similar functionality
-  now that async functions allow us to write code with less
+  now that async functions allow us to write code with fewer
   callbacks. Connect is equally capable, and some may still prefer it,
   it's up to what you prefer.
 
