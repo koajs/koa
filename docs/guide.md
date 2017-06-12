@@ -6,7 +6,7 @@
 ## Writing Middleware
 
   Koa middleware are simple functions which return a `MiddlewareFunction` with signature (ctx, next). When
-  the middleware is run by an "upstream" middleware, it must manually invoke `next()` to run the "downstream" middleware.
+  the middleware is run, it must manually invoke `next()` to run the "downstream" middleware.
 
   For example if you wanted to track how long it takes for a request to propagate through Koa by adding an
   `X-Response-Time` header field the middleware would look like the following:
