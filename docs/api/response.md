@@ -217,9 +217,8 @@ ctx.type = 'png';
 ```
 
   Note: when appropriate a `charset` is selected for you, for
-  example `response.type = 'html'` will default to "utf-8", however
-  when explicitly defined in full as `response.type = 'text/html'`
-  no charset is assigned.
+  example `response.type = 'html'` will default to "utf-8". If you need to overwrite `charset`,
+  use `ctx.set('Content-Type', 'text/html')` to set response header field to value directly.
 
 ### response.is(types...)
 
