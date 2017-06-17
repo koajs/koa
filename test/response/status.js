@@ -52,7 +52,7 @@ describe('res.status=', () => {
     });
   });
 
-  function strip (status) {
+  function strip(status){
     it('should strip content related header fields', async () => {
       const app = new Koa();
 
