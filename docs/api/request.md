@@ -10,9 +10,17 @@
 
  Request header object.
 
+### request.header=
+
+ Set request header object.
+
 ### request.headers
 
  Request header object. Alias as `request.header`.
+
+### request.headers=
+
+  Set request header object. Alias as `request.header=`.
 
 ### request.method
 
