@@ -98,6 +98,14 @@ ctx.request.href
 
   Get hostname when present. Supports `X-Forwarded-Host`
   when `app.proxy` is __true__, otherwise `Host` is used.
+  
+  If host is IPv6, Koa delegates parsing to
+  [WHATWG URL API](https://nodejs.org/dist/latest-v8.x/docs/api/url.html#url_the_whatwg_url_api),
+  *Note* This may impact performance.
+
+### request.URL
+
+  Get WHATWG parsed URL object.
 
 ### request.type
 
