@@ -42,6 +42,12 @@ describe('req.hostname', () => {
       req.header.host = '[2001:cdba:0000:0000:0000:0000:3257:9652]:1337';
       assert.equal(req.hostname, '[2001:cdba::3257:9652]');
     });
+
+    it('should return empty string when invalid', () => {
+      const req = request();
+      req.header.host = '[invalidIPv6]';
+      assert.equal(req.hostname, '');
+    });
   });
 
   describe('when X-Forwarded-Host is present', () => {
