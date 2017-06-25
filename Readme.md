@@ -81,9 +81,8 @@ app.use((ctx, next) => {
 
 ### Koa v1.x Middleware Signature
 
-The middleware signature changed between v1.x and v2.x.  The older signature is deprecated.
-
-**Old signature middleware support will be removed in v3**
+The middleware signature changed between v1.x and v2.x.
+The older signature was deprecated in v2, and removed in v3.
 
 Please see the [Migration Guide](docs/migration.md) for more information on upgrading from v1.x and
 using v1.x middleware with v2.x.

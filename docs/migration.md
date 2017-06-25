@@ -4,7 +4,7 @@
 
 Koa v2 introduces a new signature for middleware.
 
-**Old signature middleware (v1.x) support will be removed in v3**
+**Old signature middleware (v1.x) support was removed in v3**
 
 The new middleware signature is:
 

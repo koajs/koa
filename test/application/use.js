@@ -40,40 +40,6 @@ describe('app.use(fn)', () => {
     assert.deepEqual(calls, [1, 2, 3, 4, 5, 6]);
   });
 
-  it('should compose mixed middleware', async () => {
-    process.once('deprecation', () => {}); // silence deprecation message
-    const app = new Koa();
-    const calls = [];
-
-    app.use((ctx, next) => {
-      calls.push(1);
-      return next().then(() => {
-        calls.push(6);
-      });
-    });
-
-    app.use(function * (next){
-      calls.push(2);
-      yield next;
-      calls.push(5);
-    });
-
-    app.use((ctx, next) => {
-      calls.push(3);
-      return next().then(() => {
-        calls.push(4);
-      });
-    });
-
-    const server = app.listen();
-
-    await request(server)
-      .get('/')
-      .expect(404);
-
-    assert.deepEqual(calls, [1, 2, 3, 4, 5, 6]);
-  });
-
   // https://github.com/koajs/koa/pull/530#issuecomment-148138051
   it('should catch thrown errors in non-async functions', () => {
     const app = new Koa();
@@ -85,19 +51,6 @@ describe('app.use(fn)', () => {
       .expect(404);
   });
 
-  it('should accept both generator and function middleware', () => {
-    process.once('deprecation', () => {}); // silence deprecation message
-    const app = new Koa();
-
-    app.use((ctx, next) => next());
-    app.use(function * (next){ this.body = 'generator'; });
-
-    return request(app.callback())
-      .get('/')
-      .expect(200)
-      .expect('generator');
-  });
-
   it('should throw error for non function', () => {
     const app = new Koa();
 
@@ -106,13 +59,8 @@ describe('app.use(fn)', () => {
     });
   });
 
-  it('should output deprecation message for generator functions', done => {
-    process.once('deprecation', message => {
-      assert(/Support for generators will be removed/.test(message));
-      done();
-    });
-
+  it('should throw error for legacy signature middleware', () => {
     const app = new Koa();
-    app.use(function * (){});
+    assert.throws(() => app.use(function * (){}), /old signature is not supported/);
   });
 });
