@@ -234,7 +234,7 @@ ctx.type = 'png';
 const minify = require('html-minifier');
 
 app.use(function * minifyHTML(next) {
-  yield next;
+  await next;
 
   if (!ctx.response.is('html')) return;
 
