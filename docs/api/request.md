@@ -167,7 +167,7 @@ if (ctx.fresh) {
 
 // cache is stale
 // fetch new data
-ctx.body = yield db.find('something');
+ctx.body = await db.find('something');
 ```
 
 ### request.stale
