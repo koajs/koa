@@ -163,7 +163,7 @@ app.use(function * (next) {
   Get a response header field value with case-insensitive `field`.
 
 ```js
-const etag = ctx.get('ETag');
+const etag = ctx.response.get('ETag');
 ```
 
 ### response.set(field, value)
