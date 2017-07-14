@@ -16,7 +16,7 @@
 
 ## Installation
 
-Koa requires __node v7.6.0__ or higher for ES2015 and async function support.
+Koa requires __node v7.10.1__(or higher) or __node v8.1.4__(or higher) for ES2015 and async function support.
 
 ```
 $ npm install koa
