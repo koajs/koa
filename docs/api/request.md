@@ -61,7 +61,7 @@ ctx.request.origin
   Get full request URL, include `protocol`, `host` and `url`.
 
 ```js
-ctx.request.href
+ctx.request.href;
 // => http://example.com/foo/bar?q=1
 ```
 
@@ -112,7 +112,7 @@ ctx.request.href
   Get request `Content-Type` void of parameters such as "charset".
 
 ```js
-const ct = ctx.request.type
+const ct = ctx.request.type;
 // => "image/png"
 ```
 
@@ -121,7 +121,7 @@ const ct = ctx.request.type
   Get request charset when present, or `undefined`:
 
 ```js
-ctx.request.charset
+ctx.request.charset;
 // => "utf-8"
 ```
 
@@ -146,7 +146,7 @@ ctx.request.charset
   setter does _not_ support nested objects.
 
 ```js
-ctx.query = { next: '/login' }
+ctx.query = { next: '/login' };
 ```
 
 ### request.fresh

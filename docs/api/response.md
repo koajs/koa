@@ -150,7 +150,7 @@ If `response.status` has not been set, Koa will automatically set the status to 
 ```js
 const PassThrough = require('stream').PassThrough;
 
-app.use(function * (next) {
+app.use(async ctx => {
   ctx.body = someHTTPStream.on('error', ctx.onerror).pipe(PassThrough());
 });
 ```
@@ -234,8 +234,8 @@ ctx.type = 'png';
 ```js
 const minify = require('html-minifier');
 
-app.use(function * minifyHTML(next) {
-  await next;
+app.use(async (ctx, next) => {
+  await next();
 
   if (!ctx.response.is('html')) return;
 
