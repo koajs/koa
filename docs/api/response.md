@@ -66,6 +66,7 @@
   - 415 "unsupported media type"
   - 416 "range not satisfiable"
   - 417 "expectation failed"
+  - 418 "I'm a teapot"
   - 422 "unprocessable entity"
   - 423 "locked"
   - 424 "failed dependency"
