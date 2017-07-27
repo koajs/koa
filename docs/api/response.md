@@ -66,6 +66,7 @@
   - 415 "unsupported media type"
   - 416 "range not satisfiable"
   - 417 "expectation failed"
+  - 418 "I'm a teapot"
   - 422 "unprocessable entity"
   - 423 "locked"
   - 424 "failed dependency"
@@ -149,7 +150,7 @@ If `response.status` has not been set, Koa will automatically set the status to 
 ```js
 const PassThrough = require('stream').PassThrough;
 
-app.use(function * (next) {
+app.use(async ctx => {
   ctx.body = someHTTPStream.on('error', ctx.onerror).pipe(PassThrough());
 });
 ```
@@ -233,8 +234,8 @@ ctx.type = 'png';
 ```js
 const minify = require('html-minifier');
 
-app.use(function * minifyHTML(next) {
-  await next;
+app.use(async (ctx, next) => {
+  await next();
 
   if (!ctx.response.is('html')) return;
 

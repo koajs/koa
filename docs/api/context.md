@@ -12,7 +12,7 @@
   snippet:
 
 ```js
-app.use(async (ctx, next) => {
+app.use(async ctx => {
   ctx; // is the Context
   ctx.request; // is a koa Request
   ctx.response; // is a koa Response
