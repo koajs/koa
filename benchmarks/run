@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo
-MW=$1 node $2 &
+MW=$1 USE_ASYNC=$2 node $3 &
 pid=$!
 
 sleep 2
