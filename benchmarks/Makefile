@@ -2,14 +2,22 @@
 all: middleware
 
 middleware:
-	@./run 1 $@
-	@./run 5 $@
-	@./run 10 $@
-	@./run 15 $@
-	@./run 20 $@
-	@./run 30 $@
-	@./run 50 $@
-	@./run 100 $@
+	@./run 1 false $@
+	@./run 5 false $@
+	@./run 10 false $@
+	@./run 15 false $@
+	@./run 20 false $@
+	@./run 30 false $@
+	@./run 50 false $@
+	@./run 100 false $@
+	@./run 1 true $@
+	@./run 5 true $@
+	@./run 10 true $@
+	@./run 15 true $@
+	@./run 20 true $@
+	@./run 30 true $@
+	@./run 50 true $@
+	@./run 100 true $@
 	@echo
 
 .PHONY: all middleware
