@@ -44,6 +44,17 @@ describe('res.status=', () => {
         assert.doesNotThrow(() => response().status = 700);
       });
     });
+
+    describe('and HTTP/2', () => {
+      it('should not set the status message', () => {
+        const res = response({
+          'httpVersionMajor': 2,
+          'httpVersion': '2.0'
+        });
+        res.status = 200;
+        assert(!res.res.statusMessage);
+      });
+    });
   });
 
   describe('when a status string', () => {
