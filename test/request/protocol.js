@@ -51,4 +51,22 @@ describe('req.protocol', () => {
       });
     });
   });
+
+  describe('when X-AppEngine-HTTPS is set', () => {
+    it('should return "https"', () => {
+      const req = request();
+      req.req.socket = {};
+      req.header['x-appengine-https'] = 'on';
+      assert.equal(req.protocol, 'https');
+    });
+
+    describe('and X-AppEngine-HTTPS is empty', () => {
+      it('should return "http"', () => {
+        const req = request();
+        req.req.socket = {};
+        req.header['x-appengine-https'] = '';
+        assert.equal(req.protocol, 'http');
+      });
+    });
+  });
 });
