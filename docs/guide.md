@@ -26,7 +26,7 @@ app.use(responseTime);
   while any code after is the "bubble" phase. This crude gif illustrates how async function allow us
   to properly utilize stack flow to implement request and response flows:
 
-![koa middleware](/docs/middleware.gif =100x)
+![koa middleware](/docs/middleware.gif)
 
    1. Create a date to track response time
    2. Await control to the next middleware
