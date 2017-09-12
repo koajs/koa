@@ -544,6 +544,7 @@ describe('app.respond', () => {
           ctx.length = fs.readFileSync('package.json').length;
           const stream = fs.createReadStream('package.json');
           ctx.body = stream;
+          ctx.body = stream;
           ctx.set('Content-Type', 'application/json; charset=utf-8');
         });
 
