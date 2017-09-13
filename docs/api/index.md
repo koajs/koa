@@ -116,7 +116,7 @@ app.listen(3000);
 
 ## app.listen(...)
 
-  A Koa application is not a 1-to-1 representation of a HTTP server.
+  A Koa application is not a 1-to-1 representation of an HTTP server.
   One or more Koa applications may be mounted together to form larger
   applications with a single HTTP server.
 
