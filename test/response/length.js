@@ -29,6 +29,9 @@ describe('res.length', () => {
       it('should return a number', () => {
         const res = response();
 
+        res.body = null;
+        assert.equal(res.length, undefined);
+
         res.body = 'foo';
         res.remove('Content-Length');
         assert.equal(res.length, 3);
@@ -52,9 +55,18 @@ describe('res.length', () => {
 
         res.body = fs.createReadStream('package.json');
         assert.equal(res.length, undefined);
+      });
+    });
 
-        res.body = null;
-        assert.equal(res.length, undefined);
+    describe('and a .type is set to json', () => {
+      describe('and a .body is set to null', () => {
+        it('should return a number', () => {
+          const res = response();
+
+          res.type = 'json';
+          res.body = null;
+          assert.equal(res.length, 4);
+        });
       });
     });
 
