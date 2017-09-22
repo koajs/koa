@@ -195,7 +195,7 @@ the general Koa guide.
 ## Running tests
 
 ```
-$ make test
+$ npm test
 ```
 
 ## Authors
