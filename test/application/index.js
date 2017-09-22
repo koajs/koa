@@ -19,7 +19,7 @@ describe('app', () => {
       done();
     });
 
-    request(app.listen())
+    request(app.callback())
       .get('/')
       .end(() => {});
   });
@@ -41,7 +41,7 @@ describe('app', () => {
     // hackish, but the response should occur in a single tick
     setImmediate(done);
 
-    request(app.listen())
+    request(app.callback())
       .get('/')
       .end(() => {});
   });
