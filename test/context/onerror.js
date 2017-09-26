@@ -102,7 +102,7 @@ describe('ctx.onerror(err)', () => {
       ctx.body = 'response';
     });
 
-    request(app.listen())
+    request(app.callback())
       .get('/')
       .expect('X-Foo', 'Bar')
       .expect(200, () => {});

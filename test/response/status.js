@@ -67,7 +67,7 @@ describe('res.status=', () => {
         assert(null == ctx.response.header['transfer-encoding']);
       });
 
-      const res = await request(app.listen())
+      const res = await request(app.callback())
         .get('/')
         .expect(status);
 
@@ -88,7 +88,7 @@ describe('res.status=', () => {
         ctx.set('Transfer-Encoding', 'chunked');
       });
 
-      const res = await request(app.listen())
+      const res = await request(app.callback())
         .get('/')
         .expect(status);
 
