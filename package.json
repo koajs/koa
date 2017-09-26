@@ -4,7 +4,7 @@
   "description": "Koa web app framework",
   "main": "lib/application.js",
   "scripts": {
-    "test": "jest --forceExit",
+    "test": "jest",
     "test-cov": "npm run test -- --coverage",
     "lint": "eslint benchmarks lib test",
     "bench": "make -C benchmarks",
