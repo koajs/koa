@@ -28,35 +28,16 @@ app.use(responseTime);
 
 ![koa middleware](/docs/middleware.gif)
 
-   1. Create a date to track duration
+   1. Create a date to track response time
    2. Await control to the next middleware
-   3. Create another date to track response time
+   3. Create another date to track duration
    4. Await control to the next middleware
-   5. Await immediately since `contentLength` only works with responses
-   6. Await upstream to Koa's noop middleware
-   7. Ignore setting the body unless the path is "/"
-   8. Set the response to "Hello World"
-   9. Ignore setting `Content-Length` when no body is present
-   10. Set the field
-   11. Output log line
-   12. Set `X-Response-Time` header field before response
-   13. Hand off to Koa to handle the response
-
-
-Note that the final middleware (step __6__) await to what looks to be nothing — it's actually
-yielding to a no-op promise within Koa. This is so that every middleware can conform with the
-same API, and may be placed before or after others. If you removed `next();` from the furthest
-"downstream" middleware everything would function appropriately, however it would no longer conform
-to this behaviour.
-
- For example this would be fine:
-
-```js
-app.use(async function response(ctx, next) {
-  if ('/' != this.url) return;
-  ctx.body = 'Hello World';
-});
-```
+   5. Set the response body to "Hello World"
+   6. Calculate duration time
+   7. Output log line
+   8. Calculate response time
+   9. Set `X-Response-Time` header field
+   10. Hand off to Koa to handle the response
 
  Next we'll look at the best practices for creating Koa middleware.
 
