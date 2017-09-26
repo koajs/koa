@@ -1,4 +1,13 @@
 
+2.3.0 / 2017-06-20
+==================
+
+ * test on node 7 & 8
+ * add `package-lock.json` to `.gitignore`
+ * run `lint --fix`
+ * add `request.header` in addition to `request.headers`
+ * add IPv6 hostname support
+
 2.2.0 / 2017-03-14
 ==================
 

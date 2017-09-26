@@ -10,9 +10,17 @@
 
  Request header object.
 
+### request.header=
+
+ Set request header object.
+
 ### request.headers
 
  Request header object. Alias as `request.header`.
+
+### request.headers=
+
+  Set request header object. Alias as `request.header=`.
 
 ### request.method
 
@@ -53,7 +61,7 @@ ctx.request.origin
   Get full request URL, include `protocol`, `host` and `url`.
 
 ```js
-ctx.request.href
+ctx.request.href;
 // => http://example.com/foo/bar?q=1
 ```
 
@@ -90,13 +98,21 @@ ctx.request.href
 
   Get hostname when present. Supports `X-Forwarded-Host`
   when `app.proxy` is __true__, otherwise `Host` is used.
+  
+  If host is IPv6, Koa delegates parsing to
+  [WHATWG URL API](https://nodejs.org/dist/latest-v8.x/docs/api/url.html#url_the_whatwg_url_api),
+  *Note* This may impact performance.
+
+### request.URL
+
+  Get WHATWG parsed URL object.
 
 ### request.type
 
   Get request `Content-Type` void of parameters such as "charset".
 
 ```js
-const ct = ctx.request.type
+const ct = ctx.request.type;
 // => "image/png"
 ```
 
@@ -105,7 +121,7 @@ const ct = ctx.request.type
   Get request charset when present, or `undefined`:
 
 ```js
-ctx.request.charset
+ctx.request.charset;
 // => "utf-8"
 ```
 
@@ -130,7 +146,7 @@ ctx.request.charset
   setter does _not_ support nested objects.
 
 ```js
-ctx.query = { next: '/login' }
+ctx.query = { next: '/login' };
 ```
 
 ### request.fresh
@@ -151,7 +167,7 @@ if (ctx.fresh) {
 
 // cache is stale
 // fetch new data
-ctx.body = yield db.find('something');
+ctx.body = await db.find('something');
 ```
 
 ### request.stale

@@ -66,6 +66,7 @@
   - 415 "unsupported media type"
   - 416 "range not satisfiable"
   - 417 "expectation failed"
+  - 418 "I'm a teapot"
   - 422 "unprocessable entity"
   - 423 "locked"
   - 424 "failed dependency"
@@ -149,7 +150,7 @@ If `response.status` has not been set, Koa will automatically set the status to 
 ```js
 const PassThrough = require('stream').PassThrough;
 
-app.use(function * (next) {
+app.use(async ctx => {
   ctx.body = someHTTPStream.on('error', ctx.onerror).pipe(PassThrough());
 });
 ```
@@ -163,7 +164,7 @@ app.use(function * (next) {
   Get a response header field value with case-insensitive `field`.
 
 ```js
-const etag = ctx.get('ETag');
+const etag = ctx.response.get('ETag');
 ```
 
 ### response.set(field, value)
@@ -217,9 +218,8 @@ ctx.type = 'png';
 ```
 
   Note: when appropriate a `charset` is selected for you, for
-  example `response.type = 'html'` will default to "utf-8", however
-  when explicitly defined in full as `response.type = 'text/html'`
-  no charset is assigned.
+  example `response.type = 'html'` will default to "utf-8". If you need to overwrite `charset`,
+  use `ctx.set('Content-Type', 'text/html')` to set response header field to value directly.
 
 ### response.is(types...)
 
@@ -234,8 +234,8 @@ ctx.type = 'png';
 ```js
 const minify = require('html-minifier');
 
-app.use(function * minifyHTML(next) {
-  yield next;
+app.use(async (ctx, next) => {
+  await next();
 
   if (!ctx.response.is('html')) return;
 

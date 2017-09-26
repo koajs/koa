@@ -80,7 +80,7 @@ describe('app.use(fn)', () => {
 
     app.use(ctx => ctx.throw('Not Found', 404));
 
-    return request(app.listen())
+    return request(app.callback())
       .get('/')
       .expect(404);
   });
@@ -92,7 +92,7 @@ describe('app.use(fn)', () => {
     app.use((ctx, next) => next());
     app.use(function * (next){ this.body = 'generator'; });
 
-    return request(app.listen())
+    return request(app.callback())
       .get('/')
       .expect(200)
       .expect('generator');

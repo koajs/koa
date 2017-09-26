@@ -55,7 +55,7 @@ THIS DOCUMENT IS IN PROGRESS. THIS PARAGRAPH SHALL BE REMOVED WHEN THIS DOCUMENT
 
 ## How is Koa different than Connect/Express?
 
-### Generated-based control flow
+### Promises-based control flow
 
   No callback hell.
 
@@ -84,3 +84,12 @@ THIS DOCUMENT IS IN PROGRESS. THIS PARAGRAPH SHALL BE REMOVED WHEN THIS DOCUMENT
   Better user experience.
 
   Proper stream handling.
+  
+### Koa routing (third party libraries support)
+
+  Since Express comes with its own routing, but Koa does not have
+  any in-built routing, but there are third party libraries available
+  koa-router and koa-route for routing.
+  Similarly just like we have helmet for security in Express, For koa
+  we have koa-helmet available and the list goes on for koa third
+  party available libraries.

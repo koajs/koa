@@ -52,7 +52,7 @@ You can also use the [env preset](http://babeljs.io/docs/plugins/preset-env/) wi
 const Koa = require('koa');
 const app = new Koa();
 
-app.use(ctx => {
+app.use(async ctx => {
   ctx.body = 'Hello World';
 });
 
@@ -80,7 +80,7 @@ const app = new Koa();
 
 // x-response-time
 
-app.use(async function (ctx, next) {
+app.use(async (ctx, next) => {
   const start = Date.now();
   await next();
   const ms = Date.now() - start;
@@ -89,7 +89,7 @@ app.use(async function (ctx, next) {
 
 // logger
 
-app.use(async function (ctx, next) {
+app.use(async (ctx, next) => {
   const start = Date.now();
   await next();
   const ms = Date.now() - start;
@@ -98,7 +98,7 @@ app.use(async function (ctx, next) {
 
 // response
 
-app.use(ctx => {
+app.use(async ctx => {
   ctx.body = 'Hello World';
 });
 
@@ -116,7 +116,7 @@ app.listen(3000);
 
 ## app.listen(...)
 
-  A Koa application is not a 1-to-1 representation of a HTTP server.
+  A Koa application is not a 1-to-1 representation of an HTTP server.
   One or more Koa applications may be mounted together to form larger
   applications with a single HTTP server.
 
@@ -195,7 +195,7 @@ ctx.cookies.set('name', 'tobi', { signed: true });
 ```js
 app.context.db = db();
 
-app.use(async (ctx) => {
+app.use(async ctx => {
   console.log(ctx.db);
 });
 ```
@@ -212,17 +212,17 @@ Note:
   To perform custom error-handling logic such as centralized logging you can add an "error" event listener:
 
 ```js
-app.on('error', err =>
+app.on('error', err => {
   log.error('server error', err)
-);
+});
 ```
 
   If an error is in the req/res cycle and it is _not_ possible to respond to the client, the `Context` instance is also passed:
 
 ```js
-app.on('error', (err, ctx) =>
+app.on('error', (err, ctx) => {
   log.error('server error', err, ctx)
-);
+});
 ```
 
   When an error occurs _and_ it is still possible to respond to the client, aka no data has been written to the socket, Koa will respond
