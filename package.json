@@ -30,7 +30,7 @@
     "destroy": "^1.0.3",
     "error-inject": "~1.0.0",
     "escape-html": "~1.0.1",
-    "fresh": "^0.3.0",
+    "fresh": "^0.5.2",
     "http-assert": "^1.1.0",
     "http-errors": "^1.2.8",
     "koa-compose": "^2.3.0",
