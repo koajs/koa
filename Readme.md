@@ -1,4 +1,4 @@
-<img src="https://dl.dropboxusercontent.com/u/6396913/koa/logo.png" alt="koa middleware framework for nodejs" width="255px" />
+<img src="/docs/logo.png" alt="koa middleware framework for nodejs"/>
 
   [![gitter][gitter-image]][gitter-url]
   [![NPM version][npm-image]][npm-url]
@@ -195,7 +195,7 @@ the general Koa guide.
 ## Running tests
 
 ```
-$ make test
+$ npm test
 ```
 
 ## Authors

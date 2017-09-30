@@ -40,7 +40,7 @@ describe('ctx.attachment([filename])', () => {
         ctx.body = {foo: 'bar'};
       });
 
-      return request(app.listen())
+      return request(app.callback())
         .get('/')
         .expect('content-disposition', 'attachment; filename="include-no-ascii-char-???-ok.json"; filename*=UTF-8\'\'include-no-ascii-char-%E4%B8%AD%E6%96%87%E5%90%8D-ok.json')
         .expect({foo: 'bar'})

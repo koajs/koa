@@ -639,7 +639,7 @@ describe('app.respond', () => {
         done();
       });
 
-      request(app.listen())
+      request(app.callback())
         .get('/')
         .end(() => {});
     });
@@ -655,7 +655,7 @@ describe('app.respond', () => {
           throw err;
         });
 
-        return request(app.listen())
+        return request(app.callback())
           .get('/')
           .expect(403, 'sorry!');
       });
@@ -671,7 +671,7 @@ describe('app.respond', () => {
           throw err;
         });
 
-        return request(app.listen())
+        return request(app.callback())
           .get('/')
           .expect(403, 'Forbidden');
       });

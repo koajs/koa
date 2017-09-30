@@ -4,10 +4,11 @@
   "description": "Koa web app framework",
   "main": "lib/application.js",
   "scripts": {
-    "test": "jest --forceExit",
+    "test": "jest",
     "test-cov": "npm run test -- --coverage",
-    "lint": "eslint benchmarks lib test --fix",
-    "bench": "make -C benchmarks"
+    "lint": "eslint benchmarks lib test",
+    "bench": "make -C benchmarks",
+    "authors": "git log --format='%aN <%aE>' | sort -u > AUTHORS"
   },
   "repository": "koajs/koa",
   "keywords": [
