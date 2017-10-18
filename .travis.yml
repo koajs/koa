@@ -3,11 +3,6 @@ language: node_js
 node_js:
   - 7
   - 8
-cache:
-  yarn: true
-  directories:
-    - wrk/bin
-    - node_modules
 before_script:
   - "[ ! -f wrk/bin/wrk ] && rm -rf wrk && git clone https://github.com/wg/wrk.git && make -C wrk && mkdir wrk/bin && mv wrk/wrk wrk/bin || true"
   - export PATH=$PATH:$PWD/wrk/bin/
