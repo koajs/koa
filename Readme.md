@@ -211,7 +211,8 @@ See [AUTHORS](AUTHORS).
  - [G+ Community](https://plus.google.com/communities/101845768320796750641)
  - [Reddit Community](https://www.reddit.com/r/koajs)
  - [Mailing list](https://groups.google.com/forum/#!forum/koajs)
- - [中文文档](https://github.com/guo-yu/koa-guide)
+ - [中文文档 v1.x](https://github.com/guo-yu/koa-guide)
+ - [中文文档 v2.x](https://github.com/demopark/koa-docs-Zh-CN)
  - __[#koajs]__ on freenode
 
 ## Job Board
