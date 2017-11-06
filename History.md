@@ -1,5 +1,5 @@
 
-2.3.0 / 2017-11-06
+2.4.0 / 2017-11-06
 ==================
 
  * update `package.engines.node` to be more strict
@@ -7,6 +7,14 @@
  * fix: `inspect()` no longer crashes `context`
  * fix: gated `res.statusMessage` for HTTP/2
  * added: `app.handleRequest()` is exposed
+
+2.3.0 / 2017-06-20
+==================
+
+ * fix: use `Buffer.from()`
+ * update: `koa-compose@4`
+ * added: setters for `request.header=` and `request.headers=`
+ * added: use node 7+ WHATWG parser for hostname
 
 2.2.0 / 2017-03-14
 ==================
