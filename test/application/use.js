@@ -74,6 +74,103 @@ describe('app.use(fn)', () => {
     assert.deepEqual(calls, [1, 2, 3, 4, 5, 6]);
   });
 
+  it('should invalidate middleware', async () => {
+    process.once('deprecation', () => {}); // silence deprecation message
+    const app = new Koa();
+    let calls = [];
+
+    app.use((ctx, next) => {
+      calls.push(1);
+      return next().then(() => {
+        calls.push(6);
+      });
+    });
+
+    app.use(function * (next){
+      calls.push(2);
+      yield next;
+      calls.push(5);
+    });
+
+    app.use((ctx, next) => {
+      calls.push(3);
+      return next().then(() => {
+        calls.push(4);
+      });
+    });
+
+    const server = app.listen();
+
+    await request(server)
+      .get('/')
+      .expect(404);
+
+    assert.deepEqual(calls, [1, 2, 3, 4, 5, 6]);
+
+    app.middleware = [];
+    calls = [];
+
+    app.context.invalidateMiddleware = true;
+
+    await request(server)
+      .get('/')
+      .expect(404);
+
+    assert.deepEqual(calls, []);
+    assert(!app.context.invalidateMiddleware);
+
+    await request(server)
+      .get('/')
+      .expect(404);
+
+    assert.deepEqual(calls, []);
+  });
+
+  it('should invalidate middleware from middleware', async () => {
+    process.once('deprecation', () => {}); // silence deprecation message
+    const app = new Koa();
+    let calls = [];
+
+    app.use((ctx, next) => {
+      calls.push(1);
+      return next().then(() => {
+        ctx.app.middleware = [];
+        ctx.app.context.invalidateMiddleware = true;
+        calls.push(6);
+      });
+    });
+
+    app.use(function * (next){
+      calls.push(2);
+      yield next;
+      calls.push(5);
+    });
+
+    app.use((ctx, next) => {
+      calls.push(3);
+      return next().then(() => {
+        calls.push(4);
+      });
+    });
+
+    const server = app.listen();
+
+    await request(server)
+      .get('/')
+      .expect(404);
+
+    assert.deepEqual(calls, [1, 2, 3, 4, 5, 6]);
+
+    calls = [];
+
+    await request(server)
+      .get('/')
+      .expect(404);
+
+    assert.deepEqual(calls, []);
+    assert(!app.context.invalidateMiddleware);
+  });
+
   // https://github.com/koajs/koa/pull/530#issuecomment-148138051
   it('should catch thrown errors in non-async functions', () => {
     const app = new Koa();
