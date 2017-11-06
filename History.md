@@ -1,12 +1,12 @@
 
-2.3.0 / 2017-06-20
+2.3.0 / 2017-11-06
 ==================
 
- * test on node 7 & 8
- * add `package-lock.json` to `.gitignore`
- * run `lint --fix`
- * add `request.header` in addition to `request.headers`
- * add IPv6 hostname support
+ * update `package.engines.node` to be more strict
+ * update `fresh@^0.5.2`
+ * fix: `inspect()` no longer crashes `context`
+ * fix: gated `res.statusMessage` for HTTP/2
+ * added: `app.handleRequest()` is exposed
 
 2.2.0 / 2017-03-14
 ==================
