@@ -1,6 +1,14 @@
 
+
+2.4.1 / 2017-11-06
+==================
+
+ * fix bad merge w/ 2.4.0
+
 2.4.0 / 2017-11-06
 ==================
+
+UNPUBLISHED
 
  * update `package.engines.node` to be more strict
  * update `fresh@^0.5.2`
@@ -12,9 +20,11 @@
 ==================
 
  * fix: use `Buffer.from()`
- * update: `koa-compose@4`
- * added: setters for `request.header=` and `request.headers=`
- * added: use node 7+ WHATWG parser for hostname
+ * test on node 7 & 8
+ * add `package-lock.json` to `.gitignore`
+ * run `lint --fix`
+ * add `request.header` in addition to `request.headers`
+ * add IPv6 hostname support
 
 2.2.0 / 2017-03-14
 ==================
