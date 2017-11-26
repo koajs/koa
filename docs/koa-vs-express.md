@@ -34,7 +34,7 @@
   Typically many middleware would
   re-implement similar features, or even worse incorrectly implement them,
   when features like signed cookie secrets among others are typically application-specific,
-  not middleware specific.
+  not middleware-specific.
 
 ## Does Koa replace Connect?
 
@@ -82,11 +82,11 @@
   Better user experience.
 
   Proper stream handling.
-  
+
 ### Koa routing (third party libraries support)
 
   Since Express comes with its own routing, but Koa does not have
-  any in-built routing, there are third party libraries available such as
+  any built-in routing, there are third party libraries available such as
   koa-router and koa-route.
   Similarly, just like we have helmet for security in Express, for Koa
   we have koa-helmet available and the list goes on for Koa available third
