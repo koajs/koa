@@ -3,7 +3,6 @@
 const assert = require('assert');
 const Koa = require('../..');
 const http = require('http');
-const EventEmitter = require('events');
 
 describe('app.start', () => {
   describe('when server starts successfully', () => {
@@ -24,29 +23,22 @@ describe('app.start', () => {
     });
   });
 
-  describe('when server emits an error', () => {
-    const error = new Error('EADDRINUSE');
-
-    const originalCreateServer = http.createServer;
-    beforeEach(() => {
-      const server = new EventEmitter();
-      http.createServer = () => server;
-      server.listen = () => {
-        process.nextTick(() => server.emit('error', error));
-      };
-    });
-    afterEach(() => {
-      http.createServer = originalCreateServer;
-    });
+  describe('when port is already in use', () => {
+    const app1 = new Koa();
+    let server;
+    beforeEach(async () => server = await app1.start());
+    afterEach(done => server.close(done));
 
     it('should eventually throw an error', async () => {
-      const app = new Koa();
+      const app2 = new Koa();
 
+      let err;
       try {
-        await app.start();
+        await app2.start(server.address().port);
       } catch (e) {
-        assert.strictEqual(e, error);
+        err = e;
       }
+      assert(err);
     });
   });
 });
