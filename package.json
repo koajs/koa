@@ -48,7 +48,6 @@
     "vary": "^1.0.0"
   },
   "devDependencies": {
-    "babel-eslint": "^7.1.1",
     "eslint": "^3.17.1",
     "eslint-config-koa": "^2.0.0-alpha",
     "eslint-config-standard": "^7.0.1",
