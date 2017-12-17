@@ -184,7 +184,7 @@ ctx.cookies.set('name', 'tobi', { signed: true });
 
 ## app.context
 
-  `app.context` is the prototype from which `ctx` is created from.
+  `app.context` is the prototype from which `ctx` is created.
   You may add additional properties to `ctx` by editing `app.context`.
   This is useful for adding properties or methods to `ctx` to be used across your entire app,
   which may be more performant (no middleware) and/or easier (fewer `require()`s)
