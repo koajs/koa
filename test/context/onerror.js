@@ -185,5 +185,23 @@ describe('ctx.onerror(err)', () => {
 
       assert.equal(removed, 2);
     });
+
+    it('should stringify error if it is an object', done => {
+      const app = new Koa();
+
+      app.on('error', err => {
+        assert.equal(err, 'Error: non-error thrown: {"key":"value"}');
+        done();
+      });
+
+      app.use(async ctx => {
+        throw {key: 'value'}; // eslint-disable-line no-throw-literal
+      });
+
+      request(app.callback())
+        .get('/')
+        .expect(500)
+        .expect('Internal Server Error', () => {});
+    });
   });
 });
