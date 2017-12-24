@@ -2,4 +2,3 @@ node_modules
 test.js
 coverage
 npm-debug.log
-package-lock.json
