@@ -2,7 +2,6 @@
 'use strict';
 
 const request = require('supertest');
-const statuses = require('statuses');
 const assert = require('assert');
 const Koa = require('../..');
 const fs = require('fs');
@@ -315,7 +314,7 @@ describe('app.respond', () => {
     describe('with custom status=700', () => {
       it('should respond with the associated status message', async () => {
         const app = new Koa();
-        statuses['700'] = 'custom status';
+        app.addStatus(700, 'custom status');
 
         app.use(ctx => {
           ctx.status = 700;
