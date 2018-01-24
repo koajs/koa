@@ -1,4 +1,9 @@
 
+1.5.0 / 2018-01-24
+==================
+
+  * expose the Application::handleRequest method
+
 1.4.1 / 2017-10-09
 ==================
 
