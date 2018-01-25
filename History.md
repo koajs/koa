@@ -1,4 +1,9 @@
 
+1.5.1 / 2018-01-25
+==================
+
+  * fix: this.handleRequest replace app.handleRequest
+
 1.5.0 / 2018-01-24
 ==================
 
