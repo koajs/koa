@@ -14,8 +14,8 @@
 ```js
 app.use(async ctx => {
   ctx; // is the Context
-  ctx.request; // is a koa Request
-  ctx.response; // is a koa Response
+  ctx.request; // is a Koa Request
+  ctx.response; // is a Koa Response
 });
 ```
 
@@ -44,11 +44,11 @@ app.use(async ctx => {
 
 ### ctx.request
 
-  A koa `Request` object.
+  A Koa `Request` object.
 
 ### ctx.response
 
-  A koa `Response` object.
+  A Koa `Response` object.
 
 ### ctx.state
 
@@ -68,7 +68,7 @@ ctx.state.user = await User.find(id);
 
  - `signed` the cookie requested should be signed
 
-koa uses the [cookies](https://github.com/jed/cookies) module where options are simply passed.
+Koa uses the [cookies](https://github.com/jed/cookies) module where options are simply passed.
 
 ### ctx.cookies.set(name, value, [options])
 
@@ -83,7 +83,7 @@ koa uses the [cookies](https://github.com/jed/cookies) module where options are 
  - `httpOnly` server-accessible cookie, __true__ by default
  - `overwrite` a boolean indicating whether to overwrite previously set cookies of the same name (__false__ by default). If this is true, all cookies set during the same request with the same name (regardless of path or domain) are filtered out of the Set-Cookie header when setting this cookie.
 
-koa uses the [cookies](https://github.com/jed/cookies) module where options are simply passed.
+Koa uses the [cookies](https://github.com/jed/cookies) module where options are simply passed.
 
 ### ctx.throw([status], [msg], [properties])
 
@@ -118,7 +118,7 @@ throw err;
 ctx.throw(401, 'access_denied', { user: user });
 ```
 
-koa uses [http-errors](https://github.com/jshttp/http-errors) to create errors.
+Koa uses [http-errors](https://github.com/jshttp/http-errors) to create errors.
 
 ### ctx.assert(value, [status], [msg], [properties])
 
@@ -130,7 +130,7 @@ koa uses [http-errors](https://github.com/jshttp/http-errors) to create errors.
 ctx.assert(ctx.state.user, 401, 'User not found. Please login!');
 ```
 
-koa uses [http-assert](https://github.com/jshttp/http-assert) for assertions.
+Koa uses [http-assert](https://github.com/jshttp/http-assert) for assertions.
 
 ### ctx.respond
 

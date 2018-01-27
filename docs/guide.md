@@ -26,7 +26,7 @@ app.use(responseTime);
   while any code after is the "bubble" phase. This crude gif illustrates how async function allow us
   to properly utilize stack flow to implement request and response flows:
 
-![koa middleware](/docs/middleware.gif)
+![Koa middleware](/docs/middleware.gif)
 
    1. Create a date to track response time
    2. Await control to the next middleware
@@ -203,7 +203,7 @@ app.use(async function (ctx, next) {
   Koa along with many of the libraries it's built with support the __DEBUG__ environment variable from [debug](https://github.com/visionmedia/debug) which provides simple conditional logging.
 
   For example
-  to see all koa-specific debugging information just pass `DEBUG=koa*` and upon boot you'll see the list of middleware used, among other things.
+  to see all Koa-specific debugging information just pass `DEBUG=koa*` and upon boot you'll see the list of middleware used, among other things.
 
 ```
 $ DEBUG=koa* node --harmony examples/simple

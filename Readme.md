@@ -1,4 +1,4 @@
-<img src="/docs/logo.png" alt="koa middleware framework for nodejs"/>
+<img src="/docs/logo.png" alt="Koa middleware framework for nodejs"/>
 
   [![gitter][gitter-image]][gitter-url]
   [![NPM version][npm-image]][npm-url]
@@ -22,7 +22,7 @@ Koa requires __node v7.6.0__ or higher for ES2015 and async function support.
 $ npm install koa
 ```
 
-## Hello koa
+## Hello Koa
 
 ```js
 const Koa = require('koa');
@@ -38,8 +38,8 @@ app.listen(3000);
 
 ## Getting started
 
- - [Kick-Off-Koa](https://github.com/koajs/kick-off-koa) - An intro to koa via a set of self-guided workshops.
- - [Workshop](https://github.com/koajs/workshop) - A workshop to learn the basics of koa, Express' spiritual successor.
+ - [Kick-Off-Koa](https://github.com/koajs/kick-off-koa) - An intro to Koa via a set of self-guided workshops.
+ - [Workshop](https://github.com/koajs/workshop) - A workshop to learn the basics of Koa, Express' spiritual successor.
  - [Introduction Screencast](http://knowthen.com/episode-3-koajs-quickstart-guide/) - An introduction to installing and getting started with Koa
 
 
