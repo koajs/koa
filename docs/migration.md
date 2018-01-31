@@ -29,7 +29,7 @@ You don't have to use asynchronous functions - you just have to pass a function 
 A regular function that returns a promise works too!
 
 The signature has changed to pass `Context` via an explicit parameter, `ctx` above, instead of via
-`this`.  The context passing change makes koa more compatible with es6 arrow functions, which capture `this`.
+`this`.  The context passing change makes Koa more compatible with es6 arrow functions, which capture `this`.
 
 ## Using v1.x Middleware in v2.x
 
@@ -75,7 +75,7 @@ Upgrading your middleware may require some work. One migration path is to update
 
 1. Wrap all your current middleware in `koa-convert`
 2. Test
-3. `npm outdated` to see which koa middleware is outdated
+3. `npm outdated` to see which Koa middleware is outdated
 4. Update one outdated middleware, remove using `koa-convert`
 5. Test
 6. Repeat steps 3-5 until you're done

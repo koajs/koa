@@ -154,7 +154,7 @@ https.createServer(app.callback()).listen(3001);
 
   Return a callback function suitable for the `http.createServer()`
   method to handle a request.
-  You may also use this callback function to mount your koa app in a
+  You may also use this callback function to mount your Koa app in a
   Connect/Express app.
 
 ## app.use(function)
