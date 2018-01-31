@@ -208,7 +208,7 @@ Note:
 ## Error Handling
 
   By default outputs all errors to stderr unless `app.silent` is `true`.
-  The default error handler also won't outputs errors when `err.status` is `404` or `err.expose` is `true`.
+  The default error handler also won't output errors when `err.status` is `404` or `err.expose` is `true`.
   To perform custom error-handling logic such as centralized logging you can add an "error" event listener:
 
 ```js
