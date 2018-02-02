@@ -15,14 +15,14 @@ describe('res.body=', () => {
     });
 
     describe('when body is an object', () => {
-      it('should override as json', () => {
+      it('should not override as json', () => {
         const res = response();
 
         res.body = '<em>hey</em>';
         assert.equal('text/html; charset=utf-8', res.header['content-type']);
 
         res.body = { foo: 'bar' };
-        assert.equal('application/json; charset=utf-8', res.header['content-type']);
+        assert.equal('text/html; charset=utf-8', res.header['content-type']);
       });
     });
 
