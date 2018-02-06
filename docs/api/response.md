@@ -311,3 +311,7 @@ ctx.response.etag = crypto.createHash('md5').update(ctx.body).digest('hex');
 ### response.flushHeaders()
 
   Flush any set headers, and begin the body.
+  
+### response.breakMw()
+
+  response immediately, and throw KoaBreakMwError. context.onerror will ignore the error.
