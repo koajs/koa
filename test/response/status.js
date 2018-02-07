@@ -73,9 +73,9 @@ describe('res.status=', () => {
         ctx.set('Content-Length', '15');
         ctx.set('Transfer-Encoding', 'chunked');
         ctx.status = status;
-        assert(null == ctx.response.header['content-type']);
-        assert(null == ctx.response.header['content-length']);
-        assert(null == ctx.response.header['transfer-encoding']);
+        assert(null === ctx.response.header['content-type']);
+        assert(null === ctx.response.header['content-length']);
+        assert(null === ctx.response.header['transfer-encoding']);
       });
 
       const res = await request(app.callback())

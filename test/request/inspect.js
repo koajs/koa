@@ -10,7 +10,7 @@ describe('req.inspect()', () => {
       const req = request();
       req.method = 'GET';
       delete req.req;
-      assert(null == req.inspect());
+      assert(null === req.inspect());
     });
   });
 
