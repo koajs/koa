@@ -5,7 +5,7 @@
   "main": "lib/application.js",
   "scripts": {
     "test": "jest",
-    "test-cov": "npm run test -- --coverage",
+    "test-cov": "jest --coverage --runInBand --forceExit",
     "lint": "eslint benchmarks lib test",
     "bench": "make -C benchmarks",
     "authors": "git log --format='%aN <%aE>' | sort -u > AUTHORS"
