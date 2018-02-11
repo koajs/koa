@@ -2,6 +2,7 @@
 'use strict';
 
 var context = require('../context');
+var should = require('should');
 
 describe('ctx.set(name, val)', function(){
   it('should set a field value', function(){
@@ -20,6 +21,14 @@ describe('ctx.set(name, val)', function(){
     var ctx = context();
     ctx.set('x-foo', ['foo', 'bar']);
     ctx.response.header['x-foo'].should.eql([ 'foo', 'bar' ]);
+  })
+
+  describe('after header sent', function(){
+    it('should ignore', function(){
+      var ctx = context(null, { headersSent: true });
+      ctx.set('foo', 'bar');
+      should.not.exist(ctx.response.header.foo);
+    })
   })
 })
 
