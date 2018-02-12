@@ -5,6 +5,7 @@ var response = require('../context').response;
 var request = require('supertest');
 var statuses = require('statuses');
 var assert = require('assert');
+var should = require('should');
 var koa = require('../..');
 
 describe('res.status=', function(){
@@ -47,6 +48,14 @@ describe('res.status=', function(){
           response().status = 700;
         });
       })
+    })
+  })
+
+  describe('after header sent', function(){
+    it('should ignore', function(){
+      var res = response(null, { headersSent: true });
+      res.status = 200;
+      should.not.exist(res.status);
     })
   })
 

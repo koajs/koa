@@ -2,6 +2,7 @@
 'use strict';
 
 var context = require('../context');
+var should = require('should');
 
 describe('ctx.vary(field)', function(){
   describe('when Vary is not set', function(){
@@ -29,6 +30,14 @@ describe('ctx.vary(field)', function(){
       ctx.vary('Accept');
       ctx.vary('Accept-Encoding');
       ctx.response.header.vary.should.equal('Accept, Accept-Encoding');
+    })
+  })
+
+  describe('after header sent', function(){
+    it('should ignore', function(){
+      var ctx = context(null, { headersSent: true });
+      ctx.vary('Accept');
+      should.not.exist(ctx.response.header.vary);
     })
   })
 })
