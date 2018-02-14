@@ -39,6 +39,51 @@ describe('app.respond', () => {
         .expect(200)
         .expect('lol');
     });
+
+    it('should ignore set header after header sent', () => {
+      const app = new Koa();
+      app.use(ctx => {
+        ctx.body = 'Hello';
+        ctx.respond = false;
+
+        const res = ctx.res;
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/plain');
+        res.end('lol');
+        ctx.set('foo', 'bar');
+      });
+
+      const server = app.listen();
+
+      return request(server)
+        .get('/')
+        .expect(200)
+        .expect('lol')
+        .expect(res => {
+          assert(!res.headers.foo);
+        });
+    });
+
+    it('should ignore set status after header sent', () => {
+      const app = new Koa();
+      app.use(ctx => {
+        ctx.body = 'Hello';
+        ctx.respond = false;
+
+        const res = ctx.res;
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/plain');
+        res.end('lol');
+        ctx.status = 201;
+      });
+
+      const server = app.listen();
+
+      return request(server)
+        .get('/')
+        .expect(200)
+        .expect('lol');
+    });
   });
 
   describe('when this.type === null', () => {

@@ -1,4 +1,19 @@
 
+2.5.0 / 2018-02-11
+==================
+
+  * feat: ignore set header/status when header sent (#1137)
+  * run coverage using --runInBand (#1141)
+  * [Update] license year to 2018 (#1130)
+  * docs: small grammatical fix in api docs index (#1111)
+  * docs: fixed typo (#1112)
+  * docs: capitalize K in word koa (#1126)
+  * Error handling: on non-error throw try to stringify if error is an object (#1113)
+  * Use eslint-config-koa (#1105)
+  * Update mgol's name in AUTHORS, add .mailmap (#1100)
+  * Avoid generating package locks instead of ignoring them (#1108)
+  * chore: update copyright year to 2017 (#1095)
+
 
 2.4.1 / 2017-11-06
 ==================
