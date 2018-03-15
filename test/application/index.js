@@ -77,4 +77,12 @@ describe('app', () => {
     const app = new Koa({ subdomainOffset });
     assert.strictEqual(app.subdomainOffset, subdomainOffset);
   });
+
+  it('should have a static property exporting `HttpError` from http-errors library', () => {
+    const CreateError = require('http-errors');
+
+    assert.notEqual(Koa.HttpError, undefined);
+    assert.deepStrictEqual(Koa.HttpError, CreateError.HttpError);
+    assert.throws(() => { throw new CreateError(500, 'test error'); }, Koa.HttpError);
+  });
 });
