@@ -53,4 +53,12 @@ describe('app', () => {
     process.env.NODE_ENV = NODE_ENV;
     assert.equal(app.env, 'development');
   });
+
+  it('should have a static property exporting `HttpError` from http-errors library', () => {
+    const createError = require('http-errors')
+
+    assert.notEqual(Koa.HttpError, undefined)
+    assert.deepStrictEqual(Koa.HttpError, createError.HttpError)
+    assert.throws(() => { throw new createError(500, 'test error') }, Koa.HttpError)
+  })
 });
