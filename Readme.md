@@ -16,7 +16,7 @@
 
 ## Installation
 
-Koa requires __node v7.6.0__ or higher for ES2015 and async function support.
+Koa requires __node v7.10.1__ or higher for ES2015 and async function support.
 
 ```
 $ npm install koa
@@ -52,7 +52,7 @@ Koa is a middleware framework that can take two different kinds of functions as 
 
 Here is an example of logger middleware with each of the different functions:
 
-### ___async___ functions (node v7.6+)
+### ___async___ functions (node v7.10.1+)
 
 ```js
 app.use(async (ctx, next) => {
@@ -161,7 +161,7 @@ Learn more about the application object in the [Application API Reference](docs/
 
 ## Babel setup
 
-If you're not using `node v7.6+`, we recommend setting up `babel` with [`babel-preset-env`](https://github.com/babel/babel-preset-env):
+If you're not using `node v7.10.1+`, we recommend setting up `babel` with [`babel-preset-env`](https://github.com/babel/babel-preset-env):
 
 ```bash
 $ npm install babel-register babel-preset-env --save
