@@ -17,9 +17,7 @@ describe('res.status=', () => {
       });
 
       it('should not throw', () => {
-        assert.doesNotThrow(() => {
-          response().status = 403;
-        });
+        response().status = 403;
       });
     });
 
@@ -27,7 +25,7 @@ describe('res.status=', () => {
       it('should throw', () => {
         assert.throws(() => {
           response().status = 999;
-        }, 'invalid status code: 999');
+        }, /invalid status code: 999/);
       });
     });
 
@@ -41,7 +39,7 @@ describe('res.status=', () => {
       });
 
       it('should not throw', () => {
-        assert.doesNotThrow(() => response().status = 700);
+        response().status = 700;
       });
     });
 
@@ -59,7 +57,7 @@ describe('res.status=', () => {
 
   describe('when a status string', () => {
     it('should throw', () => {
-      assert.throws(() => response().status = 'forbidden', 'status code must be a number');
+      assert.throws(() => response().status = 'forbidden', /status code must be a number/);
     });
   });
 

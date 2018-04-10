@@ -7,14 +7,15 @@ const assert = require('assert');
 describe('req.URL', () => {
   describe('should not throw when', () => {
     it('host is void', () => {
-      const req = request();
-      assert.doesNotThrow(() => req.URL, TypeError);
+      // Accessing the URL should not throw.
+      request().URL;
     });
 
     it('header.host is invalid', () => {
       const req = request();
       req.header.host = 'invalid host';
-      assert.doesNotThrow(() => req.URL, TypeError);
+      // Accessing the URL should not throw.
+      req.URL;
     });
   });
 
