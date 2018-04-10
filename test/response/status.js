@@ -17,9 +17,7 @@ describe('res.status=', () => {
       });
 
       it('should not throw', () => {
-        assert.doesNotThrow(() => {
-          response().status = 403;
-        });
+        response().status = 403;
       });
     });
 
@@ -41,7 +39,7 @@ describe('res.status=', () => {
       });
 
       it('should not throw', () => {
-        assert.doesNotThrow(() => response().status = 700);
+        response().status = 700;
       });
     });
 
