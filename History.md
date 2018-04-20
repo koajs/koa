@@ -1,4 +1,19 @@
 
+1.6.0 / 2018-02-12
+==================
+
+  * feat: ignore set/remove header/status when header sent (#1145)
+
+1.5.1 / 2018-01-25
+==================
+
+  * fix: this.handleRequest replace app.handleRequest
+
+1.5.0 / 2018-01-24
+==================
+
+  * expose the Application::handleRequest method
+
 1.4.1 / 2017-10-09
 ==================
 
