@@ -26,6 +26,22 @@ describe('res.body=', function(){
       })
     })
 
+    describe('when headersSent', function(){
+      describe('when body is an object', function(){
+        it('should not override as json', function(){
+          var res = response();
+
+          res.body = '<em>hey</em>';
+          assert('text/html; charset=utf-8' == res.header['content-type']);
+
+          res.res.headersSent = true;
+
+          res.body = { foo: 'bar' };
+          assert('text/html; charset=utf-8' == res.header['content-type']);
+        })
+      })
+    })
+
     it('should override length', function(){
       var res = response();
       res.type = 'html';
