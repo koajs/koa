@@ -1,4 +1,13 @@
 
+2.5.1 / 2018-04-27
+==================
+
+  * test: node v10 on travis (#1182)
+  * fix tests: remove unnecessary assert doesNotThrow and api calls (#1170)
+  * use this.response insteadof this.ctx.response (#1163)
+  * deps: remove istanbul (#1151)
+  * Update guide.md (#1150)
+
 2.5.0 / 2018-02-11
 ==================
 
