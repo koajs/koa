@@ -26,37 +26,18 @@ app.use(responseTime);
   while any code after is the "bubble" phase. This crude gif illustrates how async function allow us
   to properly utilize stack flow to implement request and response flows:
 
-![koa middleware](/docs/middleware.gif)
+![Koa middleware](/docs/middleware.gif)
 
-   1. Create a date to track duration
+   1. Create a date to track response time
    2. Await control to the next middleware
-   3. Create another date to track response time
+   3. Create another date to track duration
    4. Await control to the next middleware
-   5. Await immediately since `contentLength` only works with responses
-   6. Await upstream to Koa's noop middleware
-   7. Ignore setting the body unless the path is "/"
-   8. Set the response to "Hello World"
-   9. Ignore setting `Content-Length` when no body is present
-   10. Set the field
-   11. Output log line
-   12. Set `X-Response-Time` header field before response
-   13. Hand off to Koa to handle the response
-
-
-Note that the final middleware (step __6__) await to what looks to be nothing — it's actually
-yielding to a no-op promise within Koa. This is so that every middleware can conform with the
-same API, and may be placed before or after others. If you removed `next();` from the furthest
-"downstream" middleware everything would function appropriately, however it would no longer conform
-to this behaviour.
-
- For example this would be fine:
-
-```js
-app.use(async function response(ctx, next) {
-  if ('/' != this.url) return;
-  ctx.body = 'Hello World';
-});
-```
+   5. Set the response body to "Hello World"
+   6. Calculate duration time
+   7. Output log line
+   8. Calculate response time
+   9. Set `X-Response-Time` header field
+   10. Hand off to Koa to handle the response
 
  Next we'll look at the best practices for creating Koa middleware.
 
@@ -222,7 +203,7 @@ app.use(async function (ctx, next) {
   Koa along with many of the libraries it's built with support the __DEBUG__ environment variable from [debug](https://github.com/visionmedia/debug) which provides simple conditional logging.
 
   For example
-  to see all koa-specific debugging information just pass `DEBUG=koa*` and upon boot you'll see the list of middleware used, among other things.
+  to see all Koa-specific debugging information just pass `DEBUG=koa*` and upon boot you'll see the list of middleware used, among other things.
 
 ```
 $ DEBUG=koa* node --harmony examples/simple
@@ -236,7 +217,7 @@ $ DEBUG=koa* node --harmony examples/simple
 
   Since JavaScript does not allow defining function names at
   runtime, you can also set a middleware's name as `._name`.
-  This useful when you don't have control of a middleware's name.
+  This is useful when you don't have control of a middleware's name.
   For example:
 
 ```js

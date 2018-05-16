@@ -29,7 +29,7 @@ describe('res.header', () => {
       header = Object.assign({}, ctx.response.header);
     });
 
-    await request(app.listen())
+    await request(app.callback())
       .get('/');
 
     assert.deepEqual(header, { 'x-foo': '42' });

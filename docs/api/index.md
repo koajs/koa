@@ -12,10 +12,10 @@ $ node my-koa-app.js
 
 ## Async Functions with Babel
 
-To use `async` functions in Koa in versions of node < 7.6, we recommend using [babel's require hook](http://babeljs.io/docs/usage/require/).
+To use `async` functions in Koa in versions of node < 7.6, we recommend using [babel's require hook](http://babeljs.io/docs/usage/babel-register/).
 
 ```js
-require('babel-core/register');
+require('babel-register');
 // require the rest of the app that needs to be transpiled after the hook
 const app = require('./app');
 ```
@@ -154,7 +154,7 @@ https.createServer(app.callback()).listen(3001);
 
   Return a callback function suitable for the `http.createServer()`
   method to handle a request.
-  You may also use this callback function to mount your koa app in a
+  You may also use this callback function to mount your Koa app in a
   Connect/Express app.
 
 ## app.use(function)
@@ -184,7 +184,7 @@ ctx.cookies.set('name', 'tobi', { signed: true });
 
 ## app.context
 
-  `app.context` is the prototype from which `ctx` is created from.
+  `app.context` is the prototype from which `ctx` is created.
   You may add additional properties to `ctx` by editing `app.context`.
   This is useful for adding properties or methods to `ctx` to be used across your entire app,
   which may be more performant (no middleware) and/or easier (fewer `require()`s)
@@ -208,7 +208,7 @@ Note:
 ## Error Handling
 
   By default outputs all errors to stderr unless `app.silent` is `true`.
-  The default error handler also won't outputs errors when `err.status` is `404` or `err.expose` is `true`.
+  The default error handler also won't output errors when `err.status` is `404` or `err.expose` is `true`.
   To perform custom error-handling logic such as centralized logging you can add an "error" event listener:
 
 ```js

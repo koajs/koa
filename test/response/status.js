@@ -17,9 +17,7 @@ describe('res.status=', () => {
       });
 
       it('should not throw', () => {
-        assert.doesNotThrow(() => {
-          response().status = 403;
-        });
+        response().status = 403;
       });
     });
 
@@ -27,7 +25,7 @@ describe('res.status=', () => {
       it('should throw', () => {
         assert.throws(() => {
           response().status = 999;
-        }, 'invalid status code: 999');
+        }, /invalid status code: 999/);
       });
     });
 
@@ -41,14 +39,25 @@ describe('res.status=', () => {
       });
 
       it('should not throw', () => {
-        assert.doesNotThrow(() => response().status = 700);
+        response().status = 700;
+      });
+    });
+
+    describe('and HTTP/2', () => {
+      it('should not set the status message', () => {
+        const res = response({
+          'httpVersionMajor': 2,
+          'httpVersion': '2.0'
+        });
+        res.status = 200;
+        assert(!res.res.statusMessage);
       });
     });
   });
 
   describe('when a status string', () => {
     it('should throw', () => {
-      assert.throws(() => response().status = 'forbidden', 'status code must be a number');
+      assert.throws(() => response().status = 'forbidden', /status code must be a number/);
     });
   });
 
@@ -67,7 +76,7 @@ describe('res.status=', () => {
         assert(null == ctx.response.header['transfer-encoding']);
       });
 
-      const res = await request(app.listen())
+      const res = await request(app.callback())
         .get('/')
         .expect(status);
 
@@ -88,7 +97,7 @@ describe('res.status=', () => {
         ctx.set('Transfer-Encoding', 'chunked');
       });
 
-      const res = await request(app.listen())
+      const res = await request(app.callback())
         .get('/')
         .expect(status);
 

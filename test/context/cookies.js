@@ -37,7 +37,7 @@ describe('ctx.cookies.set()', () => {
           }
         });
 
-        return request(app.listen())
+        return request(app.callback())
           .get('/')
           .expect('.keys required for signed cookies');
       });

@@ -1,4 +1,4 @@
-<img src="https://dl.dropboxusercontent.com/u/6396913/koa/logo.png" alt="koa middleware framework for nodejs" width="255px" />
+<img src="/docs/logo.png" alt="Koa middleware framework for nodejs"/>
 
   [![gitter][gitter-image]][gitter-url]
   [![NPM version][npm-image]][npm-url]
@@ -22,7 +22,7 @@ Koa requires __node v7.6.0__ or higher for ES2015 and async function support.
 $ npm install koa
 ```
 
-## Hello koa
+## Hello Koa
 
 ```js
 const Koa = require('koa');
@@ -38,8 +38,8 @@ app.listen(3000);
 
 ## Getting started
 
- - [Kick-Off-Koa](https://github.com/koajs/kick-off-koa) - An intro to koa via a set of self-guided workshops.
- - [Workshop](https://github.com/koajs/workshop) - A workshop to learn the basics of koa, Express' spiritual successor.
+ - [Kick-Off-Koa](https://github.com/koajs/kick-off-koa) - An intro to Koa via a set of self-guided workshops.
+ - [Workshop](https://github.com/koajs/workshop) - A workshop to learn the basics of Koa, Express' spiritual successor.
  - [Introduction Screencast](http://knowthen.com/episode-3-koajs-quickstart-guide/) - An introduction to installing and getting started with Koa
 
 
@@ -195,7 +195,7 @@ the general Koa guide.
 ## Running tests
 
 ```
-$ make test
+$ npm test
 ```
 
 ## Authors
@@ -211,7 +211,8 @@ See [AUTHORS](AUTHORS).
  - [G+ Community](https://plus.google.com/communities/101845768320796750641)
  - [Reddit Community](https://www.reddit.com/r/koajs)
  - [Mailing list](https://groups.google.com/forum/#!forum/koajs)
- - [中文文档](https://github.com/guo-yu/koa-guide)
+ - [中文文档 v1.x](https://github.com/guo-yu/koa-guide)
+ - [中文文档 v2.x](https://github.com/demopark/koa-docs-Zh-CN)
  - __[#koajs]__ on freenode
 
 ## Job Board
