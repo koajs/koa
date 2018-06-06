@@ -3,7 +3,6 @@
 
 const assert = require('assert');
 const Koa = require('../..');
-const AssertionError = require('assert').AssertionError;
 
 describe('app.onerror(err)', () => {
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('app.onerror(err)', () => {
 
     assert.throws(() => {
       app.onerror('foo');
-    }, AssertionError, 'non-error thrown: foo');
+    }, TypeError, 'non-error thrown: foo');
   });
 
   it('should do nothing if status is 404', () => {
