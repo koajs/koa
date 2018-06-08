@@ -25,7 +25,7 @@ describe('res.status=', () => {
       it('should throw', () => {
         assert.throws(() => {
           response().status = 999;
-        }, /invalid status code: 999/);
+        }, RangeError, /invalid status code: 999/);
       });
     });
 
@@ -57,7 +57,7 @@ describe('res.status=', () => {
 
   describe('when a status string', () => {
     it('should throw', () => {
-      assert.throws(() => response().status = 'forbidden', /status code must be a number/);
+      assert.throws(() => response().status = 'forbidden', TypeError, /non-numeric status code: "forbidden"/);
     });
   });
 
