@@ -23,5 +23,23 @@ describe('req.ips', () => {
         assert.deepEqual(req.ips, ['127.0.0.1', '127.0.0.2']);
       });
     });
+
+    describe('and contains IPv4', () => {
+      it('should not return port', () => {
+        const req = request();
+        req.app.proxy = true;
+        req.header['x-forwarded-for'] = '127.0.0.1:80,127.0.0.2';
+        assert.deepEqual(req.ips, ['127.0.0.1', '127.0.0.2']);
+      });
+    });
+
+    describe('and contains IPv6', () => {
+      it('should parse correctly', () => {
+        const req = request();
+        req.app.proxy = true;
+        req.header['x-forwarded-for'] = '::1';
+        assert.deepEqual(req.ips, ['::1']);
+      });
+    });
   });
 });
