@@ -136,7 +136,7 @@ describe('ctx.onerror(err)', () => {
         app.use((ctx, next) => {
           ctx.body = 'something else';
           const err = new Error('test for ENOENT');
-          err.code = 'ENOENT'
+          err.code = 'ENOENT';
           throw err;
         });
 
