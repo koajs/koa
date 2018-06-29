@@ -130,7 +130,7 @@ describe('ctx.onerror(err)', () => {
       });
     });
     describe('when ENOENT error', () => {
-      it('should ENOENT error', () => {
+      it('should respond 404', () => {
         const app = new Koa();
 
         app.use((ctx, next) => {
