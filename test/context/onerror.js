@@ -129,7 +129,26 @@ describe('ctx.onerror(err)', () => {
           .expect('Internal Server Error');
       });
     });
+    describe('when ENOENT error', () => {
+      it('should ENOENT error', () => {
+        const app = new Koa();
 
+        app.use((ctx, next) => {
+          ctx.body = 'something else';
+          const err = new Error('test for ENOENT');
+          err.code = 'ENOENT'
+          throw err;
+        });
+
+        const server = app.listen();
+
+        return request(server)
+          .get('/')
+          .expect(404)
+          .expect('Content-Type', 'text/plain; charset=utf-8')
+          .expect('Not Found');
+      });
+    });
     describe('not http status code', () => {
       it('should respond 500', () => {
         const app = new Koa();
