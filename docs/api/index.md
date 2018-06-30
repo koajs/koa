@@ -202,7 +202,7 @@ app.use(async ctx => {
 Note:
 
 - Many properties on `ctx` are defined using getters, setters, and `Object.defineProperty()`. You can only edit these properties (not recommended) by using `Object.defineProperty()` on `app.context`. See https://github.com/koajs/koa/issues/652.
-- Mounted apps currently use its parent's `ctx` and settings. Thus, mounted apps are really just groups of middleware.
+- Mounted apps currently use their parent's `ctx` and settings. Thus, mounted apps are really just groups of middleware.
 
 ## Error Handling
 
