@@ -47,4 +47,13 @@ describe('req.ip', () => {
     req.socket.remoteAddress = '127.0.0.1';
     assert.equal(request.ip, '127.0.0.2');
   });
+
+  it('should reset ip work', () => {
+    const req = { socket: new Stream.Duplex() };
+    req.socket.remoteAddress = '127.0.0.2';
+    const request = Request(req);
+    assert.equal(request.ip, '127.0.0.2');
+    request.ip = '127.0.0.1';
+    assert.equal(request.ip, '127.0.0.1');
+  });
 });
