@@ -28,6 +28,13 @@ describe('ctx.set(name, val)', () => {
     ctx.set('x-foo', ['foo', 'bar']);
     assert.deepEqual(ctx.response.header['x-foo'], [ 'foo', 'bar' ]);
   });
+
+  it('should set a field value of array with non-string values', () => {
+    const ctx = context();
+    ctx.set('x-foo', ['foo', 'bar', undefined, null, 200]);
+    // node will transfer non-string values to string when response to client
+    assert.deepEqual(ctx.response.header['x-foo'], ['foo', 'bar', undefined, null, 200]);
+  });
 });
 
 describe('ctx.set(object)', () => {
