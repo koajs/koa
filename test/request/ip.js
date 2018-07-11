@@ -39,10 +39,11 @@ describe('req.ip', () => {
     });
   });
 
-  it('should be cached', () => {
+  it('should be lazy inited and cached', () => {
     const req = { socket: new Stream.Duplex() };
     req.socket.remoteAddress = '127.0.0.2';
     const request = Request(req);
+    assert.equal(request.ip, '127.0.0.2');
     req.socket.remoteAddress = '127.0.0.1';
     assert.equal(request.ip, '127.0.0.2');
   });
