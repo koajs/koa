@@ -14,8 +14,7 @@ describe('ctx.set(name, val)', () => {
   it('should coerce number to string', () => {
     const ctx = context();
     ctx.set('x-foo', 5);
-    // node will transfer non-string values to string when response to client
-    assert.strictEqual(ctx.response.header['x-foo'], 5);
+    assert.equal(ctx.response.header['x-foo'], '5');
   });
 
   it('should coerce undefined to string', () => {
@@ -28,13 +27,6 @@ describe('ctx.set(name, val)', () => {
     const ctx = context();
     ctx.set('x-foo', ['foo', 'bar']);
     assert.deepEqual(ctx.response.header['x-foo'], [ 'foo', 'bar' ]);
-  });
-
-  it('should set a field value of array with non-string values', () => {
-    const ctx = context();
-    ctx.set('x-foo', ['foo', 'bar', undefined, null, 200]);
-    // node will transfer non-string values to string when response to client
-    assert.deepEqual(ctx.response.header['x-foo'], ['foo', 'bar', undefined, null, 200]);
   });
 });
 

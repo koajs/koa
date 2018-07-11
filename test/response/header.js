@@ -10,7 +10,8 @@ describe('res.header', () => {
   it('should return the response header object', () => {
     const res = response();
     res.set('X-Foo', 'bar');
-    assert.deepEqual(res.header, { 'x-foo': 'bar' });
+    res.set('X-Number', 200);
+    assert.deepEqual(res.header, { 'x-foo': 'bar', 'x-number': '200' });
   });
 
   it('should use res.getHeaders() accessor when available', () => {
