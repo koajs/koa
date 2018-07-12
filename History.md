@@ -1,4 +1,23 @@
 
+2.5.2 / 2018-07-12
+==================
+
+  * deps: upgrade all dependencies
+  * perf: avoid stringify when set header (#1220)
+  * perf: cache content type's result (#1218)
+  * perf: lazy init cookies and ip when first time use it (#1216)
+  * chore: fix comment & approve cov (#1214)
+  * docs: fix grammar
+  * test&cov: add test case (#1211)
+  * Lazily initialize `request.accept` and delegate `context.accept` (#1209)
+  * fix: use non deprecated custom inspect (#1198)
+  * Simplify processes in the getter `request.protocol` (#1203)
+  * docs: better demonstrate middleware flow (#1195)
+  * fix: Throw a TypeError instead of a AssertionError (#1199)
+  * chore: mistake in a comment (#1201)
+  * chore: use this.res.socket insteadof this.ctx.req.socket (#1177)
+  * chore: Using "listenerCount" instead of "listeners" (#1184)
+
 2.5.1 / 2018-04-27
 ==================
 
