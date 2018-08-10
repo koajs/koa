@@ -12,6 +12,13 @@ describe('ctx.redirect(url)', () => {
     assert.equal(ctx.status, 302);
   });
 
+  it('should redirect to the given url with escape', () => {
+    const ctx = context();
+    ctx.redirect('http://google.com/search?q=你好世界');
+    assert.equal(ctx.response.header.location, 'http://google.com/search?q=%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C');
+    assert.equal(ctx.status, 302);
+  });
+
   describe('with "back"', () => {
     it('should redirect to Referrer', () => {
       const ctx = context();
