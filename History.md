@@ -1,4 +1,10 @@
 
+1.6.1 / 2018-09-11
+==================
+
+**fixes**
+  * [[`a92c83f`](http://github.com/koajs/koa/commit/a92c83f03c5a453868fd7781f65cb6a5896bcc2a)] - fix: pin debug@3 (#1241) (Yiyu He <<dead_horse@qq.com>>)
+
 1.6.0 / 2018-02-12
 ==================
 
