@@ -1,4 +1,13 @@
 
+2.5.3 / 2018-09-11
+==================
+
+**fixes**
+  * [[`2ee32f5`](http://github.com/koajs/koa/commit/2ee32f50b88b383317e33cc0a4bfaa5f2eadead7)] - fix: pin debug@~3.1.0 avoid deprecated warnning (#1245) (fengmk2 <<fengmk2@gmail.com>>)
+
+**others**
+  * [[`2180839`](http://github.com/koajs/koa/commit/2180839eda2cb16edcfda46ccfe24711680af850)] - docs: Update koa-vs-express.md (#1230) (Clayton Ray <<iamclaytonray@gmail.com>>)
+
 2.5.2 / 2018-07-12
 ==================
 
