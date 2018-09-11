@@ -25,7 +25,7 @@
     "content-disposition": "~0.5.0",
     "content-type": "^1.0.0",
     "cookies": "~0.7.0",
-    "debug": "*",
+    "debug": "^3.2.4",
     "delegates": "^1.0.0",
     "destroy": "^1.0.3",
     "error-inject": "~1.0.0",
