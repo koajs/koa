@@ -1,6 +1,8 @@
+sudo: false
 language: node_js
 node_js:
-  - stable
+  - 10
+  - 8
   - 7
   - 6
   - 5
@@ -9,17 +11,12 @@ node_js:
   - 2
   - 1
   - 0.12
-matrix:
-  include:
-    - node_js: "8.0"
-      env: "NVM_NODEJS_ORG_MIRROR=https://nodejs.org/download/nightly"
-  allow_failures:
-    # Allow the nightly installs to fail
-    - env: "NVM_NODEJS_ORG_MIRROR=https://nodejs.org/download/nightly"
+cache:
+  directories:
+    - wrk/bin
 before_script:
-  - sudo apt-get install build-essential libssl-dev git
-  - git clone https://github.com/wg/wrk.git
-  - cd wrk && make && sudo cp wrk /usr/local/bin && cd ..
+  - "[ ! -f wrk/bin/wrk ] && rm -rf wrk && git clone https://github.com/wg/wrk.git && make -C wrk && mkdir wrk/bin && mv wrk/wrk wrk/bin || true"
+  - export PATH=$PATH:$PWD/wrk/bin/
 script:
   - make test-travis
   - make bench
