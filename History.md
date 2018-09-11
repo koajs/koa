@@ -1,4 +1,13 @@
 
+1.6.2 / 2018-09-11
+==================
+
+**fixes**
+  * [[`fd3db0f`](http://github.com/koajs/koa/commit/fd3db0f3232f11efac96c3634671855164dc9b6c)] - fix: pin debug@2 avoid deprecated warnning (#1244) (fengmk2 <<fengmk2@gmail.com>>)
+
+**others**
+  * [[`c67f543`](http://github.com/koajs/koa/commit/c67f543f754f49875d0857b100dec7438b03d6c5)] - test: make ci run faster (#1242) (fengmk2 <<fengmk2@gmail.com>>)
+
 1.6.1 / 2018-09-11
 ==================
 
