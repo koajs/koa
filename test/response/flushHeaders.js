@@ -146,6 +146,6 @@ describe('ctx.flushHeaders()', () => {
 
     const server = app.listen();
 
-    request(server).get('/').end();
+    request(server).get('/').end(() => {});
   });
 });
