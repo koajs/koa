@@ -604,7 +604,7 @@ describe('app.respond', () => {
         assert.deepEqual(res.body, pkg);
       });
 
-    it('should handle errors', done => {
+    it('should handle errors', () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -614,11 +614,10 @@ describe('app.respond', () => {
 
       const server = app.listen();
 
-      request(server)
+      return request(server)
         .get('/')
         .expect('Content-Type', 'text/plain; charset=utf-8')
-        .expect(404)
-        .end(done);
+        .expect(404);
     });
 
     it('should handle errors when no content status', () => {
@@ -636,7 +635,7 @@ describe('app.respond', () => {
         .expect(204);
     });
 
-    it('should handle all intermediate stream body errors', done => {
+    it('should handle all intermediate stream body errors', () => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -647,10 +646,9 @@ describe('app.respond', () => {
 
       const server = app.listen();
 
-      request(server)
+      return request(server)
         .get('/')
-        .expect(404)
-        .end(done);
+        .expect(404);
     });
   });
 
