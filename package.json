@@ -24,7 +24,7 @@
     "content-disposition": "~0.5.0",
     "content-type": "^1.0.0",
     "cookies": "~0.5.0",
-    "debug": "*",
+    "debug": "^2.6.9",
     "delegates": "0.1.0",
     "destroy": "^1.0.3",
     "error-inject": "~1.0.0",
@@ -57,5 +57,8 @@
   },
   "files": [
     "lib"
-  ]
+  ],
+  "publishConfig": {
+    "tag": "latest-0"
+  }
 }
