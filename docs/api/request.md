@@ -181,7 +181,7 @@ ctx.body = await db.find('something');
 
 ### request.secure
 
-  Shorthand for `ctx.protocol == "https"` to check if a request was
+  Shorthand for `ctx.protocol === "https"` to check if a request was
   issued via TLS.
 
 ### request.ip

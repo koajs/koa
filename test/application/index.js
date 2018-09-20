@@ -10,7 +10,7 @@ describe('app', () => {
     const app = new Koa();
 
     app.use((ctx, next) => {
-      // triggers ctx.socket.writable == false
+      // triggers ctx.socket.writable === false
       ctx.socket.emit('error', new Error('boom'));
     });
 
