@@ -20,3 +20,7 @@ script:
 after_script:
   - npm install codecov
   - ./node_modules/.bin/codecov
+notifications:
+  email:
+    on_success: never
+    on_failure: always
