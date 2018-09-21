@@ -48,3 +48,138 @@ describe('ctx.attachment([filename])', () => {
     });
   });
 });
+
+// reference [content-disposition test case](https://github.com/jshttp/content-disposition/blob/master/test/test.js)
+describe('contentDisposition(filename, options)', function () {
+  describe('with "fallback" option', function () {
+    it('should require a string or Boolean', function () {
+      const ctx = context();
+      assert.throws(() => { ctx.attachment('plans.pdf', { fallback: 42 }) },
+        /fallback.*string/);
+    });
+
+    it('should default to true', function () {
+      const ctx = context();
+      ctx.attachment('€ rates.pdf');
+      assert.equal(ctx.response.header['content-disposition'],
+        'attachment; filename="? rates.pdf"; filename*=UTF-8\'\'%E2%82%AC%20rates.pdf');
+    });
+
+    describe('when "false"', function () {
+      it('should not generate ISO-8859-1 fallback', function () {
+        const ctx = context();
+        ctx.attachment('£ and € rates.pdf', { fallback: false });
+        assert.equal(ctx.response.header['content-disposition'],
+          'attachment; filename*=UTF-8\'\'%C2%A3%20and%20%E2%82%AC%20rates.pdf');
+      });
+
+      it('should keep ISO-8859-1 filename', function () {
+        const ctx = context();
+        ctx.attachment('£ rates.pdf', { fallback: false });
+        assert.equal(ctx.response.header['content-disposition'],
+          'attachment; filename="£ rates.pdf"');
+      });
+    });
+
+    describe('when "true"', function () {
+      it('should generate ISO-8859-1 fallback', function () {
+        const ctx = context();
+        ctx.attachment('£ and € rates.pdf', { fallback: true });
+        assert.equal(ctx.response.header['content-disposition'],
+          'attachment; filename="£ and ? rates.pdf"; filename*=UTF-8\'\'%C2%A3%20and%20%E2%82%AC%20rates.pdf');
+      });
+
+      it('should pass through ISO-8859-1 filename', function () {
+        const ctx = context();
+        ctx.attachment('£ rates.pdf', { fallback: true });
+        assert.equal(ctx.response.header['content-disposition'],
+          'attachment; filename="£ rates.pdf"');
+      });
+    })
+
+    describe('when a string', function () {
+      it('should require an ISO-8859-1 string', function () {
+        const ctx = context();
+        assert.throws(() => { ctx.attachment('€ rates.pdf', { fallback: '€ rates.pdf' }); },
+          /fallback.*iso-8859-1/i);
+      });
+
+      it('should use as ISO-8859-1 fallback', function () {
+        const ctx = context();
+        ctx.attachment('£ and € rates.pdf', { fallback: '£ and EURO rates.pdf' });
+        assert.equal(ctx.response.header['content-disposition'],
+          'attachment; filename="£ and EURO rates.pdf"; filename*=UTF-8\'\'%C2%A3%20and%20%E2%82%AC%20rates.pdf');
+      });
+
+      it('should use as fallback even when filename is ISO-8859-1', function () {
+        const ctx = context();
+        ctx.attachment('"£ rates".pdf', { fallback: '£ rates.pdf' });
+        assert.equal(ctx.response.header['content-disposition'],
+          'attachment; filename="£ rates.pdf"; filename*=UTF-8\'\'%22%C2%A3%20rates%22.pdf');
+      });
+
+      it('should do nothing if equal to filename', function () {
+        const ctx = context();
+        ctx.attachment('plans.pdf', { fallback: 'plans.pdf' });
+        assert.equal(ctx.response.header['content-disposition'],
+          'attachment; filename="plans.pdf"');
+      });
+
+      it('should use the basename of the string', function () {
+        const ctx = context();
+        ctx.attachment('€ rates.pdf', { fallback: '/path/to/EURO rates.pdf' });
+        assert.equal(ctx.response.header['content-disposition'],
+          'attachment; filename="EURO rates.pdf"; filename*=UTF-8\'\'%E2%82%AC%20rates.pdf');
+      });
+
+      it('should do nothing without filename option', function () {
+        const ctx = context();
+        ctx.attachment(undefined, { fallback: 'plans.pdf' });
+        assert.equal(ctx.response.header['content-disposition'],
+          'attachment');
+      });
+    })
+  })
+
+  describe('with "type" option', function () {
+    it('should default to attachment', function () {
+      const ctx = context();
+      ctx.attachment();
+      assert.equal(ctx.response.header['content-disposition'],
+        'attachment');
+    });
+
+    it('should require a string', function () {
+      const ctx = context();
+      assert.throws(() => { ctx.attachment(undefined, { type: 42 }); },
+        /invalid type/);
+    });
+
+    it('should require a valid type', function () {
+      const ctx = context();
+      assert.throws(() => { ctx.attachment(undefined, { type: 'invlaid;type' }); },
+        /invalid type/);
+    });
+
+    it('should create a header with inline type', function () {
+      const ctx = context();
+      ctx.attachment(undefined, { type: 'inline' });
+      assert.equal(ctx.response.header['content-disposition'],
+        'inline');
+    });
+
+    it('should create a header with inline type & filename', function () {
+      const ctx = context();
+      ctx.attachment('plans.pdf', { type: 'inline' });
+      assert.equal(ctx.response.header['content-disposition'],
+        'inline; filename="plans.pdf"');
+    });
+
+    it('should normalize type', function () {
+      const ctx = context();
+      ctx.attachment(undefined, { type: 'INLINE' });
+      assert.equal(ctx.response.header['content-disposition'],
+        'inline');
+    });
+  });
+});
