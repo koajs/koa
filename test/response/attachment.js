@@ -49,7 +49,7 @@ describe('ctx.attachment([filename])', () => {
   });
 });
 
-// reference [content-disposition test case](https://github.com/jshttp/content-disposition/blob/master/test/test.js)
+// reference test case of content-disposition module
 describe('contentDisposition(filename, options)', () => {
   describe('with "fallback" option', () => {
     it('should require a string or Boolean', () => {

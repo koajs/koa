@@ -271,11 +271,11 @@ ctx.redirect('/cart');
 ctx.body = 'Redirecting to shopping cart';
 ```
 
-### response.attachment([filename])
+### response.attachment([filename], [options])
 
   Set `Content-Disposition` to "attachment" to signal the client
   to prompt for download. Optionally specify the `filename` of the
-  download.
+  download and some [options](https://github.com/jshttp/content-disposition#options).
 
 ### response.headerSent
 
