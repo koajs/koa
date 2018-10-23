@@ -1,4 +1,10 @@
 
+2.6.1 / 2018-10-23
+==================
+
+**fixes**
+  * [[`4964242`](http://github.com/koajs/koa/commit/49642428342e5f291eb9d690802e83ed830623b5)] - fix: use X-Forwarded-Host first on app.proxy present (#1263) (fengmk2 <<fengmk2@gmail.com>>)
+
 2.6.0 / 2018-10-23
 ==================
 
