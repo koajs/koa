@@ -1,4 +1,14 @@
 
+2.6.0 / 2018-10-23
+==================
+
+**features**
+  * [[`9c5c58b`](http://github.com/koajs/koa/commit/9c5c58b18363494976185e7ddc790ac63de840ed)] - feat: use :authority header of http2 requests as host (#1262) (Martin Michaelis <<code@mgjm.de>>)
+  * [[`9146024`](http://github.com/koajs/koa/commit/9146024e1094e8bb871ab15d1b7fc556a710732f)] - feat: response.attachment append a parameter: options from contentDisposition (#1240) (小雷 <<863837949@qq.com>>)
+
+**others**
+  * [[`d32623b`](http://github.com/koajs/koa/commit/d32623baa7a6273d47be67d587ad4ea0ecffc5de)] - docs: Update error-handling.md (#1239) (urugator <<j.placek@centrum.cz>>)
+
 2.5.3 / 2018-09-11
 ==================
 
