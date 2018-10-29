@@ -118,7 +118,7 @@ throw err;
 ctx.throw(401, 'access_denied', { user: user });
 ```
 
-Koa uses [http-errors](https://github.com/jshttp/http-errors) to create errors.
+Koa uses [http-errors](https://github.com/jshttp/http-errors) to create errors. `status` should only be passed as the first parameter.
 
 ### ctx.assert(value, [status], [msg], [properties])
 
