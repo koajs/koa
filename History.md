@@ -1,4 +1,17 @@
 
+2.6.2 / 2018-11-10
+==================
+
+**fixes**
+  * [[`9905199`](http://github.com/koajs/koa/commit/99051992a9f45eb0dd79e062681d6f5d366deb41)] - fix: Status message is not supported on HTTP/2 (#1264) (André Cruz <<andre@cabine.org>>)
+
+**others**
+  * [[`325792a`](http://github.com/koajs/koa/commit/325792aee92de0ba6fea306657933fc63dc00474)] - docs: add table of contents for guide.md (#1267) (ZYSzys <<zyszys98@gmail.com>>)
+  * [[`71aaa29`](http://github.com/koajs/koa/commit/71aaa29591d6681f8579486f18d32ba1ee651a5b)] - docs: fix spelling in throw docs (#1269) (Martin Iwanowski <<martin@iwanowski.se>>)
+  * [[`bc81ca9`](http://github.com/koajs/koa/commit/bc81ca9414296234c764b7306a19ba72b2e59b52)] - chore: use res instead of this.res (#1271) (Jordan <<mingmingwon@gmail.com>>)
+  * [[`0251b38`](http://github.com/koajs/koa/commit/0251b38a8405471892c5eeaba7c8d54bd7028214)] - test: node v11 on travis (#1265) (Martin Iwanowski <<martin@iwanowski.se>>)
+  * [[`88b92b4`](http://github.com/koajs/koa/commit/88b92b43153f21609aee71d47abcd4dc27a6586d)] - doc: updated docs for throw() to pass status as first param. (#1268) (Waleed Ashraf <<waleedashraf@outlook.com>>)
+
 2.6.1 / 2018-10-23
 ==================
 
