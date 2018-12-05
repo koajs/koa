@@ -193,6 +193,8 @@ ctx.set({
 });
 ```
 
+This sets or updates header field by specified keys and doesn't reset the entire header.
+
 ### response.remove(field)
 
   Remove header `field`.
