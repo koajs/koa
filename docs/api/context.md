@@ -62,6 +62,10 @@ ctx.state.user = await User.find(id);
 
   Application instance reference.
 
+### ctx.app.emit
+
+  Koa applications extend an internal [EventEmitter](https://nodejs.org/dist/latest-v11.x/docs/api/events.html). `ctx.app.emit` emits an event with a type, defined by the first argument. For each event you can hook up "listeners", which is a function that is called when the event is emitted. Consult the [error handling docs](https://koajs.com/#error-handling) for more information.
+
 ### ctx.cookies.get(name, [options])
 
   Get cookie `name` with `options`:
