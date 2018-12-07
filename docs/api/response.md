@@ -193,7 +193,7 @@ ctx.set({
 });
 ```
 
-This sets or updates header field by specified keys and doesn't reset the entire header.
+This delegates to [setHeader](https://nodejs.org/dist/latest/docs/api/http.html#http_request_setheader_name_value) which sets or updates headers by specified keys and doesn't reset the entire header.
 
 ### response.remove(field)
 
