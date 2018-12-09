@@ -193,6 +193,44 @@ And have your `.babelrc` setup:
 }
 ```
 
+## Performance
+
+By default, Koa is already fast enought for most common use cases.  
+However, we can optionally "energize" our HTTP server "reqs/s" throughput by executing the 
+requests handlers within the [setImmediate](https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/) priority queue.  
+
+> *setImmediate()* is designed to execute a script once the current poll phase completes.  
+
+```js
+const app = new Koa();
+// this flag indicates Koa to run the requests handlers using setImmediate
+app.prioRequestsProcessing = true;
+```
+### Benchmarks
+> Use this feature if your process runs in a multicore CPU and your controllers logic does majorly I/O operations.
+
+Node version: v10.14.1  
+Laptop: MacBook Pro 2016, 2,7 GHz Intel Core i7, 16 GB 2133 MHz LPDDR3
+```bash
+wrk -t8 -c40 -d10s http://localhost:3000/hi
+```
+```js
+const Koa = require('koa')
+const app = new Koa()
+const router = require('koa-router')()
+
+router.get('/hi', async (ctx) => {
+  ctx.body = 'Hello World!'
+  ctx.status = 200
+})
+app.use(router.routes())
+app.listen(3000)
+
+```
+- With `app.prioRequestsProcessing = true;` = **37440.67 reqs/s**  
+- Without = 25711.95  
+
+Performance gain: **145%**
 ## Troubleshooting
 
 Check the [Troubleshooting Guide](docs/troubleshooting.md) or [Debugging Koa](docs/guide.md#debugging-koa) in
