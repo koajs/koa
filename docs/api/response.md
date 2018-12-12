@@ -124,6 +124,16 @@ so you can make a correction.
 
 If `response.status` has not been set, Koa will automatically set the status to `200` or `204`.
 
+Koa doesn't guard against everything that could be put as a response body -- a function doesn't serialise meaningfully, returning a boolean may make sense based on your application, and while an error works, it may not work as intended as some properties of an error are not enumerable.  We recommend adding middleware in your app that asserts body types per app.  A sample middleware might be:
+
+```
+app.use(async (ctx, next) => {
+  await next()
+
+  ctx.assert.equal('object', typeof ctx, 500, 'some dev did something wrong')
+})
+```
+
 #### String
 
   The Content-Type is defaulted to text/html or text/plain, both with
