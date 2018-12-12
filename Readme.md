@@ -204,6 +204,12 @@ the general Koa guide.
 $ npm test
 ```
 
+## Reporting vulnerabilities
+
+To report a security vulnerability, please do not open an issue, as this notifies attackers
+of the vulnerability. Instead, please email [dead_horse](mailto:heyiyu.deadhorse@gmail.com) and [jonathanong](mailto:me@jongleberry.com) to
+disclose.
+
 ## Authors
 
 See [AUTHORS](AUTHORS).
