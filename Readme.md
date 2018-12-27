@@ -308,7 +308,7 @@ Become a sponsor and get your logo on our README on Github with a link to your s
 
 # License
 
-  MIT
+  [MIT](https://github.com/koajs/koa/blob/master/LICENSE)
 
 [npm-image]: https://img.shields.io/npm/v/koa.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/koa
