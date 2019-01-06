@@ -1,6 +1,6 @@
 {
   "name": "koa",
-  "version": "2.5.2",
+  "version": "2.6.2",
   "description": "Koa web app framework",
   "main": "lib/application.js",
   "scripts": {
@@ -27,7 +27,7 @@
     "content-disposition": "~0.5.2",
     "content-type": "^1.0.4",
     "cookies": "~0.7.1",
-    "debug": "^3.1.0",
+    "debug": "~3.1.0",
     "delegates": "^1.0.0",
     "depd": "^1.1.2",
     "destroy": "^1.0.4",

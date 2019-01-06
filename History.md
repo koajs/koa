@@ -1,4 +1,42 @@
 
+2.6.2 / 2018-11-10
+==================
+
+**fixes**
+  * [[`9905199`](http://github.com/koajs/koa/commit/99051992a9f45eb0dd79e062681d6f5d366deb41)] - fix: Status message is not supported on HTTP/2 (#1264) (André Cruz <<andre@cabine.org>>)
+
+**others**
+  * [[`325792a`](http://github.com/koajs/koa/commit/325792aee92de0ba6fea306657933fc63dc00474)] - docs: add table of contents for guide.md (#1267) (ZYSzys <<zyszys98@gmail.com>>)
+  * [[`71aaa29`](http://github.com/koajs/koa/commit/71aaa29591d6681f8579486f18d32ba1ee651a5b)] - docs: fix spelling in throw docs (#1269) (Martin Iwanowski <<martin@iwanowski.se>>)
+  * [[`bc81ca9`](http://github.com/koajs/koa/commit/bc81ca9414296234c764b7306a19ba72b2e59b52)] - chore: use res instead of this.res (#1271) (Jordan <<mingmingwon@gmail.com>>)
+  * [[`0251b38`](http://github.com/koajs/koa/commit/0251b38a8405471892c5eeaba7c8d54bd7028214)] - test: node v11 on travis (#1265) (Martin Iwanowski <<martin@iwanowski.se>>)
+  * [[`88b92b4`](http://github.com/koajs/koa/commit/88b92b43153f21609aee71d47abcd4dc27a6586d)] - doc: updated docs for throw() to pass status as first param. (#1268) (Waleed Ashraf <<waleedashraf@outlook.com>>)
+
+2.6.1 / 2018-10-23
+==================
+
+**fixes**
+  * [[`4964242`](http://github.com/koajs/koa/commit/49642428342e5f291eb9d690802e83ed830623b5)] - fix: use X-Forwarded-Host first on app.proxy present (#1263) (fengmk2 <<fengmk2@gmail.com>>)
+
+2.6.0 / 2018-10-23
+==================
+
+**features**
+  * [[`9c5c58b`](http://github.com/koajs/koa/commit/9c5c58b18363494976185e7ddc790ac63de840ed)] - feat: use :authority header of http2 requests as host (#1262) (Martin Michaelis <<code@mgjm.de>>)
+  * [[`9146024`](http://github.com/koajs/koa/commit/9146024e1094e8bb871ab15d1b7fc556a710732f)] - feat: response.attachment append a parameter: options from contentDisposition (#1240) (小雷 <<863837949@qq.com>>)
+
+**others**
+  * [[`d32623b`](http://github.com/koajs/koa/commit/d32623baa7a6273d47be67d587ad4ea0ecffc5de)] - docs: Update error-handling.md (#1239) (urugator <<j.placek@centrum.cz>>)
+
+2.5.3 / 2018-09-11
+==================
+
+**fixes**
+  * [[`2ee32f5`](http://github.com/koajs/koa/commit/2ee32f50b88b383317e33cc0a4bfaa5f2eadead7)] - fix: pin debug@~3.1.0 avoid deprecated warnning (#1245) (fengmk2 <<fengmk2@gmail.com>>)
+
+**others**
+  * [[`2180839`](http://github.com/koajs/koa/commit/2180839eda2cb16edcfda46ccfe24711680af850)] - docs: Update koa-vs-express.md (#1230) (Clayton Ray <<iamclaytonray@gmail.com>>)
+
 2.5.2 / 2018-07-12
 ==================
 

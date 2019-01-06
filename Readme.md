@@ -161,16 +161,22 @@ Learn more about the application object in the [Application API Reference](docs/
 
 ## Babel setup
 
-If you're not using `node v7.6+`, we recommend setting up `babel` with [`babel-preset-env`](https://github.com/babel/babel-preset-env):
+If you're not using `node v7.6+`, we recommend setting up `babel` with [`@babel/preset-env`](https://babeljs.io/docs/en/next/babel-preset-env):
 
 ```bash
-$ npm install babel-register babel-preset-env --save
+$ npm install @babel/register @babel/preset-env @babel/cli --save-dev
 ```
 
-Setup `babel-register` in your entry file:
+In development, you'll want to use [`@babel/register`](https://babeljs.io/docs/en/next/babel-register):
 
-```js
-require('babel-register');
+```bash
+node --require @babel/register <your-entry-file>
+```
+
+In production, you'll want to build your files with [`@babel/cli`](https://babeljs.io/docs/en/babel-cli). Suppose you are compiling a folder `src` and you wanted the output to go to a new folder `dist` with non-javascript files copied:
+
+```bash
+babel src --out-dir dist --copy-files
 ```
 
 And have your `.babelrc` setup:
@@ -178,7 +184,7 @@ And have your `.babelrc` setup:
 ```json
 {
   "presets": [
-    ["env", {
+    ["@babel/preset-env", {
       "targets": {
         "node": true
       }
@@ -197,6 +203,12 @@ the general Koa guide.
 ```
 $ npm test
 ```
+
+## Reporting vulnerabilities
+
+To report a security vulnerability, please do not open an issue, as this notifies attackers
+of the vulnerability. Instead, please email [dead_horse](mailto:heyiyu.deadhorse@gmail.com) and [jonathanong](mailto:me@jongleberry.com) to
+disclose.
 
 ## Authors
 
@@ -296,7 +308,7 @@ Become a sponsor and get your logo on our README on Github with a link to your s
 
 # License
 
-  MIT
+  [MIT](https://github.com/koajs/koa/blob/master/LICENSE)
 
 [npm-image]: https://img.shields.io/npm/v/koa.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/koa
