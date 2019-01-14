@@ -6,6 +6,7 @@
   [![Test coverage][coveralls-image]][coveralls-url]
   [![OpenCollective Backers][backers-image]](#backers)
   [![OpenCollective Sponsors][sponsors-image]](#sponsors)
+  [![PR's Welcome][pr-welcoming-image]][pr-welcoming-url]
 
   Expressive HTTP middleware framework for node.js to make web applications and APIs more enjoyable to write. Koa's middleware stack flows in a stack-like manner, allowing you to perform actions downstream then filter and manipulate the response upstream.
 
@@ -321,3 +322,5 @@ Become a sponsor and get your logo on our README on Github with a link to your s
 [gitter-image]: https://img.shields.io/gitter/room/koajs/koa.svg?style=flat-square
 [gitter-url]: https://gitter.im/koajs/koa?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 [#koajs]: https://webchat.freenode.net/?channels=#koajs
+[pr-welcoming-image]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
+[pr-welcoming-url]: https://github.com/koajs/koa
