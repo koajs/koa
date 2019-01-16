@@ -1,0 +1,9 @@
+/benchmarks/
+/docs/
+/test/
+.editorconfig
+.eslintrc.yml
+.mail.map
+.travis.yml
+CODE_OF_CONDUCT.md
+History.md
