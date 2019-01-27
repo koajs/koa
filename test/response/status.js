@@ -24,8 +24,8 @@ describe('res.status=', () => {
     describe('and invalid', () => {
       it('should throw', () => {
         assert.throws(() => {
-          response().status = 999;
-        }, /invalid status code: 999/);
+          response().status = 99;
+        }, /invalid status code: 99/);
       });
     });
 
