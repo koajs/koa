@@ -1,4 +1,25 @@
 
+2.7.0 / 2019-01-28
+==================
+
+**features**
+  * [[`b7bfa71`](http://github.com/koajs/koa/commit/b7bfa7113b8d1af49a57ab767f24a599ed92044f)] - feat: change set status assert, allowing valid custom statuses (#1308) (Martin Iwanowski <<martin@iwanowski.se>>)
+
+**others**
+  * [[`72f325b`](http://github.com/koajs/koa/commit/72f325b78edd0dc2aac940a76ce5f644005ce4c3)] - chore: add pr welcoming badge (#1291) (James George <<jamesgeorge998001@gmail.com>>)
+  * [[`b15115b`](http://github.com/koajs/koa/commit/b15115b2cbfffe15827cd5e4368267d417b72f08)] - chore: Reduce unnecessary variable declarations (#1298) (call me saisai <<1457358080@qq.com>>)
+  * [[`ad91ce2`](http://github.com/koajs/koa/commit/ad91ce2346cb34e5d5a49d07dd952d15f6c832a3)] - chore: license 2019 (dead-horse <<dead_horse@qq.com>>)
+  * [[`b25e79d`](http://github.com/koajs/koa/commit/b25e79dfb599777a38157bd419395bd28369ee86)] - Mark two examples as live for the corresponding documentation change in https://github.com/koajs/koajs.com/pull/38. (#1031) (Francisco Ryan Tolmasky I <<tolmasky@gmail.com>>)
+  * [[`d9ef603`](http://github.com/koajs/koa/commit/d9ef60398e88f2c2f958ab2b159d38052ffe7f8a)] - chore: Optimize array split (#1295) (Mikhail Bodrov <<connormiha1@gmail.com>>)
+  * [[`9be8583`](http://github.com/koajs/koa/commit/9be858312553002841725b617050aaff3c48951d)] - chore: replace ~~ with Math.trunc in res.length (option) (#1288) (jeremiG <<gendronjeremi@gmail.com>>)
+  * [[`7e46c20`](http://github.com/koajs/koa/commit/7e46c2058cb5994809eab5f4dbb12f21e937c72b)] - docs: add link to the license file (#1290) (James George <<jamesgeorge998001@gmail.com>>)
+  * [[`48993ad`](http://github.com/koajs/koa/commit/48993ade9b0831fbce28d94b3b0963a4b0dccbdd)] - docs: Document other body types (#1285) (Douglas Wade <<douglas.b.wade@gmail.com>>)
+  * [[`acb388b`](http://github.com/koajs/koa/commit/acb388bc0546b48fca11dce8aa7a595af2cda5e2)] - docs: Add security vulnerability disclosure instructions to the Readme (#1283) (Douglas Wade <<douglas.b.wade@gmail.com>>)
+  * [[`a007198`](http://github.com/koajs/koa/commit/a007198fa23c19902b1f3ffb81498629e0e9c875)] - docs: Document ctx.app.emit (#1284) (Douglas Wade <<douglas.b.wade@gmail.com>>)
+  * [[`f90e825`](http://github.com/koajs/koa/commit/f90e825da9d505c11b4262c50cd54553f979c300)] - docs: response.set(fields) won't overwrites previous header fields(#1282) (Douglas Wade <<douglas.b.wade@gmail.com>>)
+  * [[`fc93c05`](http://github.com/koajs/koa/commit/fc93c05f68398f30abc46fd16ae6c673a1eee099)] - docs: update readme to add babel 7 instructions (#1274) (Vikram Rangaraj <<vik120@icloud.com>>)
+  * [[`5560f72`](http://github.com/koajs/koa/commit/5560f729124f022ffed00085aafea43dded7fb03)] - chore: use the ability of `content-type` lib directly (#1276) (Jordan <<mingmingwon@gmail.com>>)
+
 2.6.2 / 2018-11-10
 ==================
 
