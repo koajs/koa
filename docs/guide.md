@@ -196,7 +196,7 @@ app.use(async function (ctx, next) {
 
 
 ```js
-const fs = require('fs-promise');
+const fs = require('mz/fs');
 
 app.use(async function (ctx, next) {
   const paths = await fs.readdir('docs');
