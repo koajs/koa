@@ -89,7 +89,7 @@ describe('ctx.cookies', () => {
         const cookies = res.headers['set-cookie'];
         assert.equal(cookies.some(cookie => /^name=/.test(cookie)), true);
         assert.equal(cookies.some(cookie => /(,|^)name\.sig=/.test(cookie)), true);
-        assert.equal(cookies.every(cookie => /secure/.test(cookie)), true);
+        assert.equal(cookies.every(cookie => /secure/.test(cookie)), false);
       });
     });
   });
