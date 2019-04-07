@@ -24,16 +24,14 @@ describe('ctx.onerror(err)', () => {
       ctx.throw(418, 'boom');
     });
 
-    const server = app.listen();
-
-    return request(server)
+    return request(app.callback())
       .get('/')
       .expect(418)
       .expect('Content-Type', 'text/plain; charset=utf-8')
       .expect('Content-Length', '4');
   });
 
-  it('should unset all headers', async () => {
+  it('should unset all headers', async() => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -44,19 +42,17 @@ describe('ctx.onerror(err)', () => {
       ctx.throw(418, 'boom');
     });
 
-    const server = app.listen();
-
-    const res = await request(server)
+    const res = await request(app.callback())
       .get('/')
       .expect(418)
       .expect('Content-Type', 'text/plain; charset=utf-8')
       .expect('Content-Length', '4');
 
-    assert.equal(res.headers.hasOwnProperty('vary'), false);
-    assert.equal(res.headers.hasOwnProperty('x-csrf-token'), false);
+    assert.strictEqual(res.headers.hasOwnProperty('vary'), false);
+    assert.strictEqual(res.headers.hasOwnProperty('x-csrf-token'), false);
   });
 
-  it('should set headers specified in the error', async () => {
+  it('should set headers specified in the error', async() => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -73,25 +69,29 @@ describe('ctx.onerror(err)', () => {
       });
     });
 
-    const server = app.listen();
-
-    const res = await request(server)
+    const res = await request(app.callback())
       .get('/')
       .expect(418)
       .expect('Content-Type', 'text/plain; charset=utf-8')
       .expect('X-New-Header', 'Value');
 
-    assert.equal(res.headers.hasOwnProperty('vary'), false);
-    assert.equal(res.headers.hasOwnProperty('x-csrf-token'), false);
+    assert.strictEqual(res.headers.hasOwnProperty('vary'), false);
+    assert.strictEqual(res.headers.hasOwnProperty('x-csrf-token'), false);
   });
 
-  it('should ignore error after headerSent', done => {
+  it('should ignore error after headerSent', async() => {
     const app = new Koa();
 
-    app.on('error', err => {
-      assert.equal(err.message, 'mock error');
-      assert.equal(err.headerSent, true);
-      done();
+    const verify = new Promise((resolve, reject) => {
+      app.on('error', err => {
+        try {
+          assert.strictEqual(err.message, 'mock error');
+          assert.strictEqual(err.headerSent, true);
+          resolve();
+        } catch (reason) {
+          reject(reason);
+        }
+      });
     });
 
     app.use(async ctx => {
@@ -102,10 +102,11 @@ describe('ctx.onerror(err)', () => {
       ctx.body = 'response';
     });
 
-    request(app.callback())
+    await request(app.callback())
       .get('/')
       .expect('X-Foo', 'Bar')
       .expect(200, () => {});
+    await verify;
   });
 
   describe('when invalid err.status', () => {
@@ -120,9 +121,7 @@ describe('ctx.onerror(err)', () => {
           throw err;
         });
 
-        const server = app.listen();
-
-        return request(server)
+        return request(app.callback())
           .get('/')
           .expect(500)
           .expect('Content-Type', 'text/plain; charset=utf-8')
@@ -140,9 +139,7 @@ describe('ctx.onerror(err)', () => {
           throw err;
         });
 
-        const server = app.listen();
-
-        return request(server)
+        return request(app.callback())
           .get('/')
           .expect(404)
           .expect('Content-Type', 'text/plain; charset=utf-8')
@@ -160,9 +157,7 @@ describe('ctx.onerror(err)', () => {
           throw err;
         });
 
-        const server = app.listen();
-
-        return request(server)
+        return request(app.callback())
           .get('/')
           .expect(500)
           .expect('Content-Type', 'text/plain; charset=utf-8')
@@ -179,9 +174,7 @@ describe('ctx.onerror(err)', () => {
         throw 'string error'; // eslint-disable-line no-throw-literal
       });
 
-      const server = app.listen();
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(500)
         .expect('Content-Type', 'text/plain; charset=utf-8')
@@ -202,19 +195,20 @@ describe('ctx.onerror(err)', () => {
 
       ctx.onerror(new Error('error'));
 
-      assert.equal(removed, 2);
+      assert.strictEqual(removed, 2);
     });
 
-    it('should stringify error if it is an object', done => {
+    it('should throw an error if a non-error is given', done => {
       const app = new Koa();
 
       app.on('error', err => {
-        assert.equal(err, 'Error: non-error thrown: {"key":"value"}');
+        assert.ok(err instanceof TypeError);
+        assert.strictEqual(err.message, 'non-error thrown: {"key":"value"}');
         done();
       });
 
       app.use(async ctx => {
-        throw {key: 'value'}; // eslint-disable-line no-throw-literal
+        throw { key: 'value' }; // eslint-disable-line no-throw-literal
       });
 
       request(app.callback())

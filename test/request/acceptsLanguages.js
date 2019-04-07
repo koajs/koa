@@ -10,7 +10,7 @@ describe('ctx.acceptsLanguages(langs)', () => {
       it('should return accepted types', () => {
         const ctx = context();
         ctx.req.headers['accept-language'] = 'en;q=0.8, es, pt';
-        assert.deepEqual(ctx.acceptsLanguages(), ['es', 'pt', 'en']);
+        assert.deepStrictEqual(ctx.acceptsLanguages(), ['es', 'pt', 'en']);
       });
     });
   });
@@ -21,7 +21,7 @@ describe('ctx.acceptsLanguages(langs)', () => {
         it('should return the best fit', () => {
           const ctx = context();
           ctx.req.headers['accept-language'] = 'en;q=0.8, es, pt';
-          assert.equal(ctx.acceptsLanguages('es', 'en'), 'es');
+          assert.strictEqual(ctx.acceptsLanguages('es', 'en'), 'es');
         });
       });
 
@@ -29,7 +29,7 @@ describe('ctx.acceptsLanguages(langs)', () => {
         it('should return false', () => {
           const ctx = context();
           ctx.req.headers['accept-language'] = 'en;q=0.8, es, pt';
-          assert.equal(ctx.acceptsLanguages('fr', 'au'), false);
+          assert.strictEqual(ctx.acceptsLanguages('fr', 'au'), false);
         });
       });
     });
@@ -37,7 +37,7 @@ describe('ctx.acceptsLanguages(langs)', () => {
     describe('when Accept-Language is not populated', () => {
       it('should return the first type', () => {
         const ctx = context();
-        assert.equal(ctx.acceptsLanguages('es', 'en'), 'es');
+        assert.strictEqual(ctx.acceptsLanguages('es', 'en'), 'es');
       });
     });
   });
@@ -46,7 +46,7 @@ describe('ctx.acceptsLanguages(langs)', () => {
     it('should return the best fit', () => {
       const ctx = context();
       ctx.req.headers['accept-language'] = 'en;q=0.8, es, pt';
-      assert.equal(ctx.acceptsLanguages(['es', 'en']), 'es');
+      assert.strictEqual(ctx.acceptsLanguages(['es', 'en']), 'es');
     });
   });
 });

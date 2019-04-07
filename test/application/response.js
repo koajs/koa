@@ -13,7 +13,7 @@ describe('app.response', () => {
 
   it('should merge properties', () => {
     app1.use((ctx, next) => {
-      assert.equal(ctx.response.msg, 'hello');
+      assert.strictEqual(ctx.response.msg, 'hello');
       ctx.status = 204;
     });
 
@@ -24,7 +24,7 @@ describe('app.response', () => {
 
   it('should not affect the original prototype', () => {
     app2.use((ctx, next) => {
-      assert.equal(ctx.response.msg, undefined);
+      assert.strictEqual(ctx.response.msg, undefined);
       ctx.status = 204;
     });
 
@@ -33,7 +33,7 @@ describe('app.response', () => {
       .expect(204);
   });
 
-  it('should not include status message in body for http2', async () => {
+  it('should not include status message in body for http2', async() => {
     app3.use((ctx, next) => {
       ctx.req.httpVersionMajor = 2;
       ctx.status = 404;
@@ -41,6 +41,6 @@ describe('app.response', () => {
     const response = await request(app3.listen())
       .get('/')
       .expect(404);
-    assert.equal(response.text, '404');
+    assert.strictEqual(response.text, '404');
   });
 });

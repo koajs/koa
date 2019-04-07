@@ -9,7 +9,7 @@ describe('res.writable', () => {
   describe('when continuous requests in one persistent connection', () => {
     function requestTwice(server, done){
       const port = server.address().port;
-      const buf = new Buffer('GET / HTTP/1.1\r\nHost: localhost:' + port + '\r\nConnection: keep-alive\r\n\r\n');
+      const buf = Buffer.from('GET / HTTP/1.1\r\nHost: localhost:' + port + '\r\nConnection: keep-alive\r\n\r\n');
       const client = net.connect(port);
       const datas = [];
       client
@@ -32,8 +32,8 @@ describe('res.writable', () => {
       const server = app.listen();
       requestTwice(server, (_, datas) => {
         const responses = Buffer.concat(datas).toString();
-        assert.equal(/request 1, writable: true/.test(responses), true);
-        assert.equal(/request 2, writable: true/.test(responses), true);
+        assert.strictEqual(/request 1, writable: true/.test(responses), true);
+        assert.strictEqual(/request 2, writable: true/.test(responses), true);
         done();
       });
     });
@@ -54,10 +54,10 @@ describe('res.writable', () => {
       const app = new Koa();
       app.use(ctx => {
         sleep(1000)
-        .then(() => {
-          if (ctx.writable) return done(new Error('ctx.writable should not be true'));
-          done();
-        });
+          .then(() => {
+            if (ctx.writable) return done(new Error('ctx.writable should not be true'));
+            done();
+          });
       });
       const server = app.listen();
       requestClosed(server);

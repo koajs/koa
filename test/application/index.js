@@ -15,7 +15,7 @@ describe('app', () => {
     });
 
     app.on('error', err => {
-      assert.equal(err.message, 'boom');
+      assert.strictEqual(err.message, 'boom');
       done();
     });
 
@@ -51,6 +51,6 @@ describe('app', () => {
     process.env.NODE_ENV = '';
     const app = new Koa();
     process.env.NODE_ENV = NODE_ENV;
-    assert.equal(app.env, 'development');
+    assert.strictEqual(app.env, 'development');
   });
 });

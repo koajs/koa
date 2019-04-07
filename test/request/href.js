@@ -19,10 +19,10 @@ describe('ctx.href', () => {
       __proto__: Stream.Readable.prototype
     };
     const ctx = context(req);
-    assert.equal(ctx.href, 'http://localhost/users/1?next=/dashboard');
+    assert.strictEqual(ctx.href, 'http://localhost/users/1?next=/dashboard');
     // change it also work
     ctx.url = '/foo/users/1?next=/dashboard';
-    assert.equal(ctx.href, 'http://localhost/users/1?next=/dashboard');
+    assert.strictEqual(ctx.href, 'http://localhost/users/1?next=/dashboard');
   });
 
   it('should work with `GET http://example.com/foo`', done => {
@@ -37,12 +37,12 @@ describe('ctx.href', () => {
         path: 'http://example.com/foo',
         port: address.port
       }, res => {
-        assert.equal(res.statusCode, 200);
+        assert.strictEqual(res.statusCode, 200);
         let buf = '';
         res.setEncoding('utf8');
         res.on('data', s => buf += s);
         res.on('end', () => {
-          assert.equal(buf, 'http://example.com/foo');
+          assert.strictEqual(buf, 'http://example.com/foo');
           done();
         });
       });

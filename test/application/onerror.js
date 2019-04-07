@@ -29,7 +29,7 @@ describe('app.onerror(err)', () => {
 
     app.onerror(err);
 
-    assert.deepEqual(console.error.mock.calls, []);
+    assert.deepStrictEqual([...console.error.mock.calls], []);
   });
 
   it('should do nothing if .silent', () => {
@@ -39,7 +39,7 @@ describe('app.onerror(err)', () => {
 
     app.onerror(err);
 
-    assert.deepEqual(console.error.mock.calls, []);
+    assert.deepStrictEqual([...console.error.mock.calls], []);
   });
 
   it('should log the error to stderr', () => {
@@ -52,10 +52,10 @@ describe('app.onerror(err)', () => {
     app.onerror(err);
 
     const stderr = console.error.mock.calls.join('\n');
-    assert.deepEqual(stderr, '\n  Foo\n');
+    assert.deepStrictEqual(stderr, '\n  Foo\n');
   });
 
-  it('should use err.toString() instad of err.stack', () => {
+  it('should use err.toString() instead of err.stack', () => {
     const app = new Koa();
     app.env = 'dev';
 
@@ -65,6 +65,6 @@ describe('app.onerror(err)', () => {
     app.onerror(err);
 
     const stderr = console.error.mock.calls.join('\n');
-    assert.equal(stderr, '\n  Error: mock stack null\n');
+    assert.strictEqual(stderr, '\n  Error: mock stack null\n');
   });
 });

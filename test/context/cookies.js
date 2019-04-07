@@ -7,7 +7,7 @@ const Koa = require('../..');
 
 describe('ctx.cookies', () => {
   describe('ctx.cookies.set()', () => {
-    it('should set an unsigned cookie', async () => {
+    it('should set an unsigned cookie', async() => {
       const app = new Koa();
 
       app.use((ctx, next) => {
@@ -22,7 +22,7 @@ describe('ctx.cookies', () => {
         .expect(204);
 
       const cookie = res.headers['set-cookie'].some(cookie => /^name=/.test(cookie));
-      assert.equal(cookie, true);
+      assert.strictEqual(cookie, true);
     });
 
     describe('with .signed', () => {
@@ -44,7 +44,7 @@ describe('ctx.cookies', () => {
         });
       });
 
-      it('should send a signed cookie', async () => {
+      it('should send a signed cookie', async() => {
         const app = new Koa();
 
         app.keys = ['a', 'b'];
@@ -62,13 +62,13 @@ describe('ctx.cookies', () => {
 
         const cookies = res.headers['set-cookie'];
 
-        assert.equal(cookies.some(cookie => /^name=/.test(cookie)), true);
-        assert.equal(cookies.some(cookie => /(,|^)name\.sig=/.test(cookie)), true);
+        assert.strictEqual(cookies.some(cookie => /^name=/.test(cookie)), true);
+        assert.strictEqual(cookies.some(cookie => /(,|^)name\.sig=/.test(cookie)), true);
       });
     });
 
     describe('with secure', () => {
-      it('should get secure from request', async () => {
+      it('should get secure from request', async() => {
         const app = new Koa();
 
         app.proxy = true;
@@ -87,15 +87,15 @@ describe('ctx.cookies', () => {
           .expect(204);
 
         const cookies = res.headers['set-cookie'];
-        assert.equal(cookies.some(cookie => /^name=/.test(cookie)), true);
-        assert.equal(cookies.some(cookie => /(,|^)name\.sig=/.test(cookie)), true);
-        assert.equal(cookies.every(cookie => /secure/.test(cookie)), true);
+        assert.strictEqual(cookies.some(cookie => /^name=/.test(cookie)), true);
+        assert.strictEqual(cookies.some(cookie => /(,|^)name\.sig=/.test(cookie)), true);
+        assert.strictEqual(cookies.every(cookie => /secure/.test(cookie)), true);
       });
     });
   });
 
   describe('ctx.cookies=', () => {
-    it('should override cookie work', async () => {
+    it('should override cookie work', async() => {
       const app = new Koa();
 
       app.use((ctx, next) => {

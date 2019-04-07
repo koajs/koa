@@ -30,7 +30,7 @@ describe('req.inspect()', () => {
       }
     };
 
-    assert.deepEqual(req.inspect(), expected);
-    assert.deepEqual(util.inspect(req), util.inspect(expected));
+    assert.deepStrictEqual(req.inspect(), expected);
+    assert.deepStrictEqual(util.inspect(req), util.inspect(expected));
   });
 });

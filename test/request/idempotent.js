@@ -11,7 +11,7 @@ describe('ctx.idempotent', () => {
       function check(method){
         const req = request();
         req.method = method;
-        assert.equal(req.idempotent, true);
+        assert.strictEqual(req.idempotent, true);
       }
     });
   });
@@ -20,7 +20,7 @@ describe('ctx.idempotent', () => {
     it('should return false', () => {
       const req = request();
       req.method = 'POST';
-      assert.equal(req.idempotent, false);
+      assert.strictEqual(req.idempotent, false);
     });
   });
 });

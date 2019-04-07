@@ -12,7 +12,7 @@ describe('ctx.assert(value, status)', () => {
       ctx.assert(false, 404);
       throw new Error('asdf');
     } catch (err) {
-      assert.equal(err.status, 404);
+      assert.strictEqual(err.status, 404);
       assert.strictEqual(err.expose, true);
     }
   });

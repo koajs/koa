@@ -10,16 +10,16 @@ describe('ctx.acceptsEncodings()', () => {
       it('should return accepted types', () => {
         const ctx = context();
         ctx.req.headers['accept-encoding'] = 'gzip, compress;q=0.2';
-        assert.deepEqual(ctx.acceptsEncodings(), ['gzip', 'compress', 'identity']);
-        assert.equal(ctx.acceptsEncodings('gzip', 'compress'), 'gzip');
+        assert.deepStrictEqual(ctx.acceptsEncodings(), ['gzip', 'compress', 'identity']);
+        assert.strictEqual(ctx.acceptsEncodings('gzip', 'compress'), 'gzip');
       });
     });
 
     describe('when Accept-Encoding is not populated', () => {
       it('should return identity', () => {
         const ctx = context();
-        assert.deepEqual(ctx.acceptsEncodings(), ['identity']);
-        assert.equal(ctx.acceptsEncodings('gzip', 'deflate', 'identity'), 'identity');
+        assert.deepStrictEqual(ctx.acceptsEncodings(), ['identity']);
+        assert.strictEqual(ctx.acceptsEncodings('gzip', 'deflate', 'identity'), 'identity');
       });
     });
   });
@@ -28,8 +28,8 @@ describe('ctx.acceptsEncodings()', () => {
     it('should return the best fit', () => {
       const ctx = context();
       ctx.req.headers['accept-encoding'] = 'gzip, compress;q=0.2';
-      assert.equal(ctx.acceptsEncodings('compress', 'gzip'), 'gzip');
-      assert.equal(ctx.acceptsEncodings('gzip', 'compress'), 'gzip');
+      assert.strictEqual(ctx.acceptsEncodings('compress', 'gzip'), 'gzip');
+      assert.strictEqual(ctx.acceptsEncodings('gzip', 'compress'), 'gzip');
     });
   });
 
@@ -37,7 +37,7 @@ describe('ctx.acceptsEncodings()', () => {
     it('should return the best fit', () => {
       const ctx = context();
       ctx.req.headers['accept-encoding'] = 'gzip, compress;q=0.2';
-      assert.equal(ctx.acceptsEncodings(['compress', 'gzip']), 'gzip');
+      assert.strictEqual(ctx.acceptsEncodings(['compress', 'gzip']), 'gzip');
     });
   });
 });

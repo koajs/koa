@@ -9,7 +9,7 @@ describe('ctx.fresh', () => {
     it('should return false', () => {
       const ctx = context();
       ctx.req.method = 'POST';
-      assert.equal(ctx.fresh, false);
+      assert.strictEqual(ctx.fresh, false);
     });
   });
 
@@ -20,7 +20,7 @@ describe('ctx.fresh', () => {
       ctx.req.method = 'GET';
       ctx.req.headers['if-none-match'] = '123';
       ctx.set('ETag', '123');
-      assert.equal(ctx.fresh, false);
+      assert.strictEqual(ctx.fresh, false);
     });
   });
 
@@ -32,7 +32,7 @@ describe('ctx.fresh', () => {
         ctx.req.method = 'GET';
         ctx.req.headers['if-none-match'] = '123';
         ctx.set('ETag', '123');
-        assert.equal(ctx.fresh, true);
+        assert.strictEqual(ctx.fresh, true);
       });
     });
 
@@ -43,7 +43,7 @@ describe('ctx.fresh', () => {
         ctx.req.method = 'GET';
         ctx.req.headers['if-none-match'] = '123';
         ctx.set('ETag', 'hey');
-        assert.equal(ctx.fresh, false);
+        assert.strictEqual(ctx.fresh, false);
       });
     });
   });

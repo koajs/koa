@@ -9,15 +9,15 @@ describe('response.is(type)', () => {
     const res = context().response;
     res.type = 'text/html; charset=utf-8';
 
-    assert.equal(res.is('text/*'), 'text/html');
+    assert.strictEqual(res.is('text/*'), 'text/html');
   });
 
   describe('when no type is set', () => {
     it('should return false', () => {
       const res = context().response;
 
-      assert.equal(res.is(), false);
-      assert.equal(res.is('html'), false);
+      assert.strictEqual(res.is(), false);
+      assert.strictEqual(res.is('html'), false);
     });
   });
 
@@ -26,7 +26,7 @@ describe('response.is(type)', () => {
       const res = context().response;
       res.type = 'text/html; charset=utf-8';
 
-      assert.equal(res.is(), 'text/html');
+      assert.strictEqual(res.is(), 'text/html');
     });
   });
 
@@ -35,17 +35,17 @@ describe('response.is(type)', () => {
       const res = context().response;
       res.type = 'image/png';
 
-      assert.equal(res.is('png'), 'png');
-      assert.equal(res.is('.png'), '.png');
-      assert.equal(res.is('image/png'), 'image/png');
-      assert.equal(res.is('image/*'), 'image/png');
-      assert.equal(res.is('*/png'), 'image/png');
+      assert.strictEqual(res.is('png'), 'png');
+      assert.strictEqual(res.is('.png'), '.png');
+      assert.strictEqual(res.is('image/png'), 'image/png');
+      assert.strictEqual(res.is('image/*'), 'image/png');
+      assert.strictEqual(res.is('*/png'), 'image/png');
 
-      assert.equal(res.is('jpeg'), false);
-      assert.equal(res.is('.jpeg'), false);
-      assert.equal(res.is('image/jpeg'), false);
-      assert.equal(res.is('text/*'), false);
-      assert.equal(res.is('*/jpeg'), false);
+      assert.strictEqual(res.is('jpeg'), false);
+      assert.strictEqual(res.is('.jpeg'), false);
+      assert.strictEqual(res.is('image/jpeg'), false);
+      assert.strictEqual(res.is('text/*'), false);
+      assert.strictEqual(res.is('*/jpeg'), false);
     });
   });
 
@@ -54,22 +54,22 @@ describe('response.is(type)', () => {
       const res = context().response;
       res.type = 'image/png';
 
-      assert.equal(res.is('png'), 'png');
-      assert.equal(res.is('.png'), '.png');
-      assert.equal(res.is('text/*', 'image/*'), 'image/png');
-      assert.equal(res.is('image/*', 'text/*'), 'image/png');
-      assert.equal(res.is('image/*', 'image/png'), 'image/png');
-      assert.equal(res.is('image/png', 'image/*'), 'image/png');
+      assert.strictEqual(res.is('png'), 'png');
+      assert.strictEqual(res.is('.png'), '.png');
+      assert.strictEqual(res.is('text/*', 'image/*'), 'image/png');
+      assert.strictEqual(res.is('image/*', 'text/*'), 'image/png');
+      assert.strictEqual(res.is('image/*', 'image/png'), 'image/png');
+      assert.strictEqual(res.is('image/png', 'image/*'), 'image/png');
 
-      assert.equal(res.is(['text/*', 'image/*']), 'image/png');
-      assert.equal(res.is(['image/*', 'text/*']), 'image/png');
-      assert.equal(res.is(['image/*', 'image/png']), 'image/png');
-      assert.equal(res.is(['image/png', 'image/*']), 'image/png');
+      assert.strictEqual(res.is(['text/*', 'image/*']), 'image/png');
+      assert.strictEqual(res.is(['image/*', 'text/*']), 'image/png');
+      assert.strictEqual(res.is(['image/*', 'image/png']), 'image/png');
+      assert.strictEqual(res.is(['image/png', 'image/*']), 'image/png');
 
-      assert.equal(res.is('jpeg'), false);
-      assert.equal(res.is('.jpeg'), false);
-      assert.equal(res.is('text/*', 'application/*'), false);
-      assert.equal(res.is('text/html', 'text/plain', 'application/json; charset=utf-8'), false);
+      assert.strictEqual(res.is('jpeg'), false);
+      assert.strictEqual(res.is('.jpeg'), false);
+      assert.strictEqual(res.is('text/*', 'application/*'), false);
+      assert.strictEqual(res.is('text/html', 'text/plain', 'application/json; charset=utf-8'), false);
     });
   });
 
@@ -78,9 +78,9 @@ describe('response.is(type)', () => {
       const res = context().response;
       res.type = 'application/x-www-form-urlencoded';
 
-      assert.equal(res.is('urlencoded'), 'urlencoded');
-      assert.equal(res.is('json', 'urlencoded'), 'urlencoded');
-      assert.equal(res.is('urlencoded', 'json'), 'urlencoded');
+      assert.strictEqual(res.is('urlencoded'), 'urlencoded');
+      assert.strictEqual(res.is('json', 'urlencoded'), 'urlencoded');
+      assert.strictEqual(res.is('urlencoded', 'json'), 'urlencoded');
     });
   });
 });

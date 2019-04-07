@@ -15,7 +15,7 @@ describe('req.ip', () => {
       req.headers['x-forwarded-for'] = '127.0.0.1';
       req.socket.remoteAddress = '127.0.0.2';
       const request = Request(req, undefined, app);
-      assert.equal(request.ip, '127.0.0.1');
+      assert.strictEqual(request.ip, '127.0.0.1');
     });
   });
 
@@ -24,7 +24,7 @@ describe('req.ip', () => {
       const req = { socket: new Stream.Duplex() };
       req.socket.remoteAddress = '127.0.0.2';
       const request = Request(req);
-      assert.equal(request.ip, '127.0.0.2');
+      assert.strictEqual(request.ip, '127.0.0.2');
     });
 
     describe('with req.socket.remoteAddress not present', () => {
@@ -34,7 +34,7 @@ describe('req.ip', () => {
           get: () => undefined, // So that the helper doesn't override it with a reasonable value
           set: () => {}
         });
-        assert.equal(Request({ socket }).ip, '');
+        assert.strictEqual(Request({ socket }).ip, '');
       });
     });
   });
@@ -43,17 +43,17 @@ describe('req.ip', () => {
     const req = { socket: new Stream.Duplex() };
     req.socket.remoteAddress = '127.0.0.2';
     const request = Request(req);
-    assert.equal(request.ip, '127.0.0.2');
+    assert.strictEqual(request.ip, '127.0.0.2');
     req.socket.remoteAddress = '127.0.0.1';
-    assert.equal(request.ip, '127.0.0.2');
+    assert.strictEqual(request.ip, '127.0.0.2');
   });
 
   it('should reset ip work', () => {
     const req = { socket: new Stream.Duplex() };
     req.socket.remoteAddress = '127.0.0.2';
     const request = Request(req);
-    assert.equal(request.ip, '127.0.0.2');
+    assert.strictEqual(request.ip, '127.0.0.2');
     request.ip = '127.0.0.1';
-    assert.equal(request.ip, '127.0.0.1');
+    assert.strictEqual(request.ip, '127.0.0.1');
   });
 });

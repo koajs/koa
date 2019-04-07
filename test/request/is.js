@@ -10,16 +10,16 @@ describe('ctx.is(type)', () => {
     ctx.header['content-type'] = 'text/html; charset=utf-8';
     ctx.header['transfer-encoding'] = 'chunked';
 
-    assert.equal(ctx.is('text/*'), 'text/html');
+    assert.strictEqual(ctx.is('text/*'), 'text/html');
   });
 
   describe('when no body is given', () => {
     it('should return null', () => {
       const ctx = context();
 
-      assert.equal(ctx.is(), null);
-      assert.equal(ctx.is('image/*'), null);
-      assert.equal(ctx.is('image/*', 'text/*'), null);
+      assert.strictEqual(ctx.is(), null);
+      assert.strictEqual(ctx.is('image/*'), null);
+      assert.strictEqual(ctx.is('image/*', 'text/*'), null);
     });
   });
 
@@ -28,9 +28,9 @@ describe('ctx.is(type)', () => {
       const ctx = context();
       ctx.header['transfer-encoding'] = 'chunked';
 
-      assert.equal(ctx.is(), false);
-      assert.equal(ctx.is('image/*'), false);
-      assert.equal(ctx.is('text/*', 'image/*'), false);
+      assert.strictEqual(ctx.is(), false);
+      assert.strictEqual(ctx.is('image/*'), false);
+      assert.strictEqual(ctx.is('text/*', 'image/*'), false);
     });
   });
 
@@ -40,7 +40,7 @@ describe('ctx.is(type)', () => {
       ctx.header['content-type'] = 'image/png';
       ctx.header['transfer-encoding'] = 'chunked';
 
-      assert.equal(ctx.is(), 'image/png');
+      assert.strictEqual(ctx.is(), 'image/png');
     });
   });
 
@@ -50,17 +50,17 @@ describe('ctx.is(type)', () => {
       ctx.header['content-type'] = 'image/png';
       ctx.header['transfer-encoding'] = 'chunked';
 
-      assert.equal(ctx.is('png'), 'png');
-      assert.equal(ctx.is('.png'), '.png');
-      assert.equal(ctx.is('image/png'), 'image/png');
-      assert.equal(ctx.is('image/*'), 'image/png');
-      assert.equal(ctx.is('*/png'), 'image/png');
+      assert.strictEqual(ctx.is('png'), 'png');
+      assert.strictEqual(ctx.is('.png'), '.png');
+      assert.strictEqual(ctx.is('image/png'), 'image/png');
+      assert.strictEqual(ctx.is('image/*'), 'image/png');
+      assert.strictEqual(ctx.is('*/png'), 'image/png');
 
-      assert.equal(ctx.is('jpeg'), false);
-      assert.equal(ctx.is('.jpeg'), false);
-      assert.equal(ctx.is('image/jpeg'), false);
-      assert.equal(ctx.is('text/*'), false);
-      assert.equal(ctx.is('*/jpeg'), false);
+      assert.strictEqual(ctx.is('jpeg'), false);
+      assert.strictEqual(ctx.is('.jpeg'), false);
+      assert.strictEqual(ctx.is('image/jpeg'), false);
+      assert.strictEqual(ctx.is('text/*'), false);
+      assert.strictEqual(ctx.is('*/jpeg'), false);
     });
   });
 
@@ -70,22 +70,22 @@ describe('ctx.is(type)', () => {
       ctx.header['content-type'] = 'image/png';
       ctx.header['transfer-encoding'] = 'chunked';
 
-      assert.equal(ctx.is('png'), 'png');
-      assert.equal(ctx.is('.png'), '.png');
-      assert.equal(ctx.is('text/*', 'image/*'), 'image/png');
-      assert.equal(ctx.is('image/*', 'text/*'), 'image/png');
-      assert.equal(ctx.is('image/*', 'image/png'), 'image/png');
-      assert.equal(ctx.is('image/png', 'image/*'), 'image/png');
+      assert.strictEqual(ctx.is('png'), 'png');
+      assert.strictEqual(ctx.is('.png'), '.png');
+      assert.strictEqual(ctx.is('text/*', 'image/*'), 'image/png');
+      assert.strictEqual(ctx.is('image/*', 'text/*'), 'image/png');
+      assert.strictEqual(ctx.is('image/*', 'image/png'), 'image/png');
+      assert.strictEqual(ctx.is('image/png', 'image/*'), 'image/png');
 
-      assert.equal(ctx.is(['text/*', 'image/*']), 'image/png');
-      assert.equal(ctx.is(['image/*', 'text/*']), 'image/png');
-      assert.equal(ctx.is(['image/*', 'image/png']), 'image/png');
-      assert.equal(ctx.is(['image/png', 'image/*']), 'image/png');
+      assert.strictEqual(ctx.is(['text/*', 'image/*']), 'image/png');
+      assert.strictEqual(ctx.is(['image/*', 'text/*']), 'image/png');
+      assert.strictEqual(ctx.is(['image/*', 'image/png']), 'image/png');
+      assert.strictEqual(ctx.is(['image/png', 'image/*']), 'image/png');
 
-      assert.equal(ctx.is('jpeg'), false);
-      assert.equal(ctx.is('.jpeg'), false);
-      assert.equal(ctx.is('text/*', 'application/*'), false);
-      assert.equal(ctx.is('text/html', 'text/plain', 'application/json; charset=utf-8'), false);
+      assert.strictEqual(ctx.is('jpeg'), false);
+      assert.strictEqual(ctx.is('.jpeg'), false);
+      assert.strictEqual(ctx.is('text/*', 'application/*'), false);
+      assert.strictEqual(ctx.is('text/html', 'text/plain', 'application/json; charset=utf-8'), false);
     });
   });
 
@@ -95,9 +95,9 @@ describe('ctx.is(type)', () => {
       ctx.header['content-type'] = 'application/x-www-form-urlencoded';
       ctx.header['transfer-encoding'] = 'chunked';
 
-      assert.equal(ctx.is('urlencoded'), 'urlencoded');
-      assert.equal(ctx.is('json', 'urlencoded'), 'urlencoded');
-      assert.equal(ctx.is('urlencoded', 'json'), 'urlencoded');
+      assert.strictEqual(ctx.is('urlencoded'), 'urlencoded');
+      assert.strictEqual(ctx.is('json', 'urlencoded'), 'urlencoded');
+      assert.strictEqual(ctx.is('urlencoded', 'json'), 'urlencoded');
     });
   });
 });

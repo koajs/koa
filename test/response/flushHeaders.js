@@ -14,12 +14,10 @@ describe('ctx.flushHeaders()', () => {
       ctx.body = 'Body';
       ctx.status = 200;
       ctx.flushHeaders();
-      assert.equal(ctx.res.headersSent, true);
+      assert.strictEqual(ctx.res.headersSent, true);
     });
 
-    const server = app.listen();
-
-    return request(server)
+    return request(app.callback())
       .get('/')
       .expect(200)
       .expect('Body');
@@ -35,8 +33,7 @@ describe('ctx.flushHeaders()', () => {
       ctx.body = 'Body';
     });
 
-    const server = app.listen();
-    return request(server)
+    return request(app.callback())
       .get('/')
       .expect(200)
       .expect('Content-Type', 'text/plain')
@@ -53,15 +50,14 @@ describe('ctx.flushHeaders()', () => {
       ctx.body = 'Body';
     });
 
-    const server = app.listen();
-    return request(server)
+    return request(app.callback())
       .get('/')
       .expect(401)
       .expect('Content-Type', 'text/plain')
       .expect('Body');
   });
 
-  it('should ignore set header after flushHeaders', async () => {
+  it('should ignore set header after flushHeaders', async() => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -74,14 +70,13 @@ describe('ctx.flushHeaders()', () => {
       ctx.vary('Content-Type');
     });
 
-    const server = app.listen();
-    const res = await request(server)
+    const res = await request(app.callback())
       .get('/')
       .expect(401)
       .expect('Content-Type', 'text/plain');
 
-    assert.equal(res.headers['x-shouldnt-work'], undefined, 'header set after flushHeaders');
-    assert.equal(res.headers.vary, undefined, 'header set after flushHeaders');
+    assert.strictEqual(res.headers['x-shouldnt-work'], undefined, 'header set after flushHeaders');
+    assert.strictEqual(res.headers.vary, undefined, 'header set after flushHeaders');
   });
 
   it('should flush headers first and delay to send data', done => {
@@ -108,27 +103,33 @@ describe('ctx.flushHeaders()', () => {
       http.request({
         port
       })
-      .on('response', res => {
-        const onData = () => done(new Error('boom'));
-        res.on('data', onData);
+        .on('response', res => {
+          const onData = () => done(new Error('boom'));
+          res.on('data', onData);
 
-        // shouldn't receive any data for a while
-        setTimeout(() => {
-          res.removeListener('data', onData);
-          done();
-        }, 1000);
-      })
-      .on('error', done)
-      .end();
+          // shouldn't receive any data for a while
+          setTimeout(() => {
+            res.removeListener('data', onData);
+            done();
+          }, 1000);
+        })
+        .on('error', done)
+        .end();
     });
   });
 
-  it('should catch stream error', done => {
+  it('should catch stream error', async() => {
     const PassThrough = require('stream').PassThrough;
     const app = new Koa();
-    app.once('error', err => {
-      assert(err.message === 'mock error');
-      done();
+    const verify = new Promise((resolve, reject) => {
+      app.once('error', err => {
+        try {
+          assert(err.message === 'mock error');
+          resolve();
+        } catch (e) {
+          reject(e);
+        }
+      });
     });
 
     app.use(ctx => {
@@ -144,8 +145,7 @@ describe('ctx.flushHeaders()', () => {
       }, 100);
     });
 
-    const server = app.listen();
-
-    request(server).get('/').end();
+    await request(app.callback()).get('/');
+    await verify;
   });
 });

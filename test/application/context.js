@@ -12,7 +12,7 @@ describe('app.context', () => {
 
   it('should merge properties', () => {
     app1.use((ctx, next) => {
-      assert.equal(ctx.msg, 'hello');
+      assert.strictEqual(ctx.msg, 'hello');
       ctx.status = 204;
     });
 
@@ -23,7 +23,7 @@ describe('app.context', () => {
 
   it('should not affect the original prototype', () => {
     app2.use((ctx, next) => {
-      assert.equal(ctx.msg, undefined);
+      assert.strictEqual(ctx.msg, undefined);
       ctx.status = 204;
     });
 

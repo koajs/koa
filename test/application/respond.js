@@ -32,9 +32,7 @@ describe('app.respond', () => {
         });
       });
 
-      const server = app.listen();
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(200)
         .expect('lol');
@@ -53,9 +51,7 @@ describe('app.respond', () => {
         ctx.set('foo', 'bar');
       });
 
-      const server = app.listen();
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(200)
         .expect('lol')
@@ -77,9 +73,7 @@ describe('app.respond', () => {
         ctx.status = 201;
       });
 
-      const server = app.listen();
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(200)
         .expect('lol');
@@ -87,7 +81,7 @@ describe('app.respond', () => {
   });
 
   describe('when this.type === null', () => {
-    it('should not send Content-Type header', async () => {
+    it('should not send Content-Type header', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -95,86 +89,76 @@ describe('app.respond', () => {
         ctx.type = null;
       });
 
-      const server = app.listen();
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect(200);
 
-      assert.equal(res.headers.hasOwnProperty('Content-Type'), false);
+      assert.strictEqual(res.headers.hasOwnProperty('Content-Type'), false);
     });
   });
 
   describe('when HEAD is used', () => {
-    it('should not respond with the body', async () => {
+    it('should not respond with the body', async() => {
       const app = new Koa();
 
       app.use(ctx => {
         ctx.body = 'Hello';
       });
 
-      const server = app.listen();
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .head('/')
         .expect(200);
 
-      assert.equal(res.headers['content-type'], 'text/plain; charset=utf-8');
-      assert.equal(res.headers['content-length'], '5');
+      assert.strictEqual(res.headers['content-type'], 'text/plain; charset=utf-8');
+      assert.strictEqual(res.headers['content-length'], '5');
       assert(!res.text);
     });
 
-    it('should keep json headers', async () => {
+    it('should keep json headers', async() => {
       const app = new Koa();
 
       app.use(ctx => {
         ctx.body = { hello: 'world' };
       });
 
-      const server = app.listen();
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .head('/')
         .expect(200);
 
-      assert.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-      assert.equal(res.headers['content-length'], '17');
+      assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
+      assert.strictEqual(res.headers['content-length'], '17');
       assert(!res.text);
     });
 
-    it('should keep string headers', async () => {
+    it('should keep string headers', async() => {
       const app = new Koa();
 
       app.use(ctx => {
         ctx.body = 'hello world';
       });
 
-      const server = app.listen();
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .head('/')
         .expect(200);
 
-      assert.equal(res.headers['content-type'], 'text/plain; charset=utf-8');
-      assert.equal(res.headers['content-length'], '11');
+      assert.strictEqual(res.headers['content-type'], 'text/plain; charset=utf-8');
+      assert.strictEqual(res.headers['content-length'], '11');
       assert(!res.text);
     });
 
-    it('should keep buffer headers', async () => {
+    it('should keep buffer headers', async() => {
       const app = new Koa();
 
       app.use(ctx => {
         ctx.body = Buffer.from('hello world');
       });
 
-      const server = app.listen();
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .head('/')
         .expect(200);
 
-      assert.equal(res.headers['content-type'], 'application/octet-stream');
-      assert.equal(res.headers['content-length'], '11');
+      assert.strictEqual(res.headers['content-type'], 'application/octet-stream');
+      assert.strictEqual(res.headers['content-length'], '11');
       assert(!res.text);
     });
 
@@ -185,9 +169,7 @@ describe('app.respond', () => {
 
       });
 
-      const server = app.listen();
-
-      return request(server)
+      return request(app.callback())
         .head('/')
         .expect(404);
     });
@@ -199,9 +181,7 @@ describe('app.respond', () => {
         ctx.body = '';
       });
 
-      const server = app.listen();
-
-      return request(server)
+      return request(app.callback())
         .head('/')
         .expect(200);
     });
@@ -214,9 +194,7 @@ describe('app.respond', () => {
         ctx.type = 'application/javascript';
       });
 
-      const server = app.listen();
-
-      return request(server)
+      return request(app.callback())
         .head('/')
         .expect('content-type', /application\/javascript/)
         .expect(200);
@@ -227,9 +205,7 @@ describe('app.respond', () => {
     it('should 404', () => {
       const app = new Koa();
 
-      const server = app.listen();
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(404);
     });
@@ -249,9 +225,7 @@ describe('app.respond', () => {
 
       app.on('error', err => { throw err; });
 
-      const server = app.listen();
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(200);
     });
@@ -272,9 +246,7 @@ describe('app.respond', () => {
         });
       });
 
-      const server = app.listen();
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(200)
         .expect('HelloGoodbye');
@@ -290,9 +262,7 @@ describe('app.respond', () => {
           ctx.status = 400;
         });
 
-        const server = app.listen();
-
-        return request(server)
+        return request(app.callback())
           .get('/')
           .expect(400)
           .expect('Content-Length', '11')
@@ -301,64 +271,58 @@ describe('app.respond', () => {
     });
 
     describe('with status=204', () => {
-      it('should respond without a body', async () => {
+      it('should respond without a body', async() => {
         const app = new Koa();
 
         app.use(ctx => {
           ctx.status = 204;
         });
 
-        const server = app.listen();
-
-        const res = await request(server)
+        const res = await request(app.callback())
           .get('/')
           .expect(204)
           .expect('');
 
-        assert.equal(res.headers.hasOwnProperty('content-type'), false);
+        assert.strictEqual(res.headers.hasOwnProperty('content-type'), false);
       });
     });
 
     describe('with status=205', () => {
-      it('should respond without a body', async () => {
+      it('should respond without a body', async() => {
         const app = new Koa();
 
         app.use(ctx => {
           ctx.status = 205;
         });
 
-        const server = app.listen();
-
-        const res = await request(server)
+        const res = await request(app.callback())
           .get('/')
           .expect(205)
           .expect('');
 
-        assert.equal(res.headers.hasOwnProperty('content-type'), false);
+        assert.strictEqual(res.headers.hasOwnProperty('content-type'), false);
       });
     });
 
     describe('with status=304', () => {
-      it('should respond without a body', async () => {
+      it('should respond without a body', async() => {
         const app = new Koa();
 
         app.use(ctx => {
           ctx.status = 304;
         });
 
-        const server = app.listen();
-
-        const res = await request(server)
+        const res = await request(app.callback())
           .get('/')
           .expect(304)
           .expect('');
 
-        assert.equal(res.headers.hasOwnProperty('content-type'), false);
+        assert.strictEqual(res.headers.hasOwnProperty('content-type'), false);
       });
     });
 
     describe('with custom status=700', () => {
-      it('should respond with the associated status message', async () => {
+      it('should respond with the associated status message', async() => {
         const app = new Koa();
         statuses['700'] = 'custom status';
 
@@ -366,19 +330,17 @@ describe('app.respond', () => {
           ctx.status = 700;
         });
 
-        const server = app.listen();
-
-        const res = await request(server)
+        const res = await request(app.callback())
           .get('/')
           .expect(700)
           .expect('custom status');
 
-        assert.equal(res.res.statusMessage, 'custom status');
+        assert.strictEqual(res.res.statusMessage, 'custom status');
       });
     });
 
     describe('with custom statusMessage=ok', () => {
-      it('should respond with the custom status message', async () => {
+      it('should respond with the custom status message', async() => {
         const app = new Koa();
 
         app.use(ctx => {
@@ -386,14 +348,12 @@ describe('app.respond', () => {
           ctx.message = 'ok';
         });
 
-        const server = app.listen();
-
-        const res = await request(server)
+        const res = await request(app.callback())
           .get('/')
           .expect(200)
           .expect('ok');
 
-        assert.equal(res.res.statusMessage, 'ok');
+        assert.strictEqual(res.res.statusMessage, 'ok');
       });
     });
 
@@ -405,9 +365,7 @@ describe('app.respond', () => {
           ctx.res.statusCode = 701;
         });
 
-        const server = app.listen();
-
-        return request(server)
+        return request(app.callback())
           .get('/')
           .expect(701)
           .expect('701');
@@ -416,24 +374,22 @@ describe('app.respond', () => {
   });
 
   describe('when .body is a null', () => {
-    it('should respond 204 by default', async () => {
+    it('should respond 204 by default', async() => {
       const app = new Koa();
 
       app.use(ctx => {
         ctx.body = null;
       });
 
-      const server = app.listen();
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect(204)
         .expect('');
 
-      assert.equal(res.headers.hasOwnProperty('content-type'), false);
+      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false);
     });
 
-    it('should respond 204 with status=200', async () => {
+    it('should respond 204 with status=200', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -441,17 +397,15 @@ describe('app.respond', () => {
         ctx.body = null;
       });
 
-      const server = app.listen();
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect(204)
         .expect('');
 
-      assert.equal(res.headers.hasOwnProperty('content-type'), false);
+      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false);
     });
 
-    it('should respond 205 with status=205', async () => {
+    it('should respond 205 with status=205', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -459,17 +413,15 @@ describe('app.respond', () => {
         ctx.body = null;
       });
 
-      const server = app.listen();
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect(205)
         .expect('');
 
-      assert.equal(res.headers.hasOwnProperty('content-type'), false);
+      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false);
     });
 
-    it('should respond 304 with status=304', async () => {
+    it('should respond 304 with status=304', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -477,14 +429,12 @@ describe('app.respond', () => {
         ctx.body = null;
       });
 
-      const server = app.listen();
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect(304)
         .expect('');
 
-      assert.equal(res.headers.hasOwnProperty('content-type'), false);
+      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false);
     });
   });
 
@@ -496,9 +446,7 @@ describe('app.respond', () => {
         ctx.body = 'Hello';
       });
 
-      const server = app.listen();
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect('Hello');
     });
@@ -512,9 +460,7 @@ describe('app.respond', () => {
         ctx.body = Buffer.from('Hello');
       });
 
-      const server = app.listen();
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(200)
         .expect(Buffer.from('Hello'));
@@ -522,7 +468,7 @@ describe('app.respond', () => {
   });
 
   describe('when .body is a Stream', () => {
-    it('should respond', async () => {
+    it('should respond', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -530,18 +476,16 @@ describe('app.respond', () => {
         ctx.set('Content-Type', 'application/json; charset=utf-8');
       });
 
-      const server = app.listen();
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect('Content-Type', 'application/json; charset=utf-8');
 
       const pkg = require('../../package');
-      assert.equal(res.headers.hasOwnProperty('content-length'), false);
-      assert.deepEqual(res.body, pkg);
+      assert.strictEqual(res.headers.hasOwnProperty('content-length'), false);
+      assert.deepStrictEqual(res.body, pkg);
     });
 
-    it('should strip content-length when overwriting', async () => {
+    it('should strip content-length when overwriting', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -550,18 +494,16 @@ describe('app.respond', () => {
         ctx.set('Content-Type', 'application/json; charset=utf-8');
       });
 
-      const server = app.listen();
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect('Content-Type', 'application/json; charset=utf-8');
 
       const pkg = require('../../package');
-      assert.equal(res.headers.hasOwnProperty('content-length'), false);
-      assert.deepEqual(res.body, pkg);
+      assert.strictEqual(res.headers.hasOwnProperty('content-length'), false);
+      assert.deepStrictEqual(res.body, pkg);
     });
 
-    it('should keep content-length if not overwritten', async () => {
+    it('should keep content-length if not overwritten', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -570,19 +512,17 @@ describe('app.respond', () => {
         ctx.set('Content-Type', 'application/json; charset=utf-8');
       });
 
-      const server = app.listen();
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect('Content-Type', 'application/json; charset=utf-8');
 
       const pkg = require('../../package');
-      assert.equal(res.headers.hasOwnProperty('content-length'), true);
-      assert.deepEqual(res.body, pkg);
+      assert.strictEqual(res.headers.hasOwnProperty('content-length'), true);
+      assert.deepStrictEqual(res.body, pkg);
     });
 
     it('should keep content-length if overwritten with the same stream',
-      async () => {
+      async() => {
         const app = new Koa();
 
         app.use(ctx => {
@@ -593,18 +533,16 @@ describe('app.respond', () => {
           ctx.set('Content-Type', 'application/json; charset=utf-8');
         });
 
-        const server = app.listen();
-
-        const res = await request(server)
+        const res = await request(app.callback())
           .get('/')
           .expect('Content-Type', 'application/json; charset=utf-8');
 
         const pkg = require('../../package');
-        assert.equal(res.headers.hasOwnProperty('content-length'), true);
-        assert.deepEqual(res.body, pkg);
+        assert.strictEqual(res.headers.hasOwnProperty('content-length'), true);
+        assert.deepStrictEqual(res.body, pkg);
       });
 
-    it('should handle errors', done => {
+    it('should handle errors', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -612,13 +550,10 @@ describe('app.respond', () => {
         ctx.body = fs.createReadStream('does not exist');
       });
 
-      const server = app.listen();
-
-      request(server)
+      await request(app.callback())
         .get('/')
         .expect('Content-Type', 'text/plain; charset=utf-8')
-        .expect(404)
-        .end(done);
+        .expect(404);
     });
 
     it('should handle errors when no content status', () => {
@@ -629,9 +564,7 @@ describe('app.respond', () => {
         ctx.body = fs.createReadStream('does not exist');
       });
 
-      const server = app.listen();
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(204);
     });
@@ -645,9 +578,7 @@ describe('app.respond', () => {
         ctx.body = fs.createReadStream('does not exist');
       });
 
-      const server = app.listen();
-
-      request(server)
+      request(app.callback())
         .get('/')
         .expect(404)
         .end(done);
@@ -662,9 +593,7 @@ describe('app.respond', () => {
         ctx.body = { hello: 'world' };
       });
 
-      const server = app.listen();
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect('Content-Type', 'application/json; charset=utf-8')
         .expect('{"hello":"world"}');
@@ -680,7 +609,7 @@ describe('app.respond', () => {
       });
 
       app.on('error', err => {
-        assert.equal(err.message, 'boom');
+        assert.strictEqual(err.message, 'boom');
         done();
       });
 
@@ -729,9 +658,7 @@ describe('app.respond', () => {
         throw new Error('boom!');
       });
 
-      const server = app.listen();
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(500, 'Internal Server Error');
     });
@@ -751,9 +678,7 @@ describe('app.respond', () => {
         throw new Error('boom!');
       });
 
-      const server = app.listen();
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(200, 'Got error');
     });
@@ -769,15 +694,13 @@ describe('app.respond', () => {
         ctx.status = 200;
       });
 
-      const server = app.listen();
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(200)
         .expect('hello');
     });
 
-    it('should 204', async () => {
+    it('should 204', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -787,13 +710,11 @@ describe('app.respond', () => {
         ctx.status = 204;
       });
 
-      const server = app.listen();
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect(204);
 
-      assert.equal(res.headers.hasOwnProperty('content-type'), false);
+      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false);
     });
   });
 });

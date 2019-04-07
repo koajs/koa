@@ -9,7 +9,7 @@ describe('ctx.vary(field)', () => {
     it('should set it', () => {
       const ctx = context();
       ctx.vary('Accept');
-      assert.equal(ctx.response.header.vary, 'Accept');
+      assert.strictEqual(ctx.response.header.vary, 'Accept');
     });
   });
 
@@ -18,7 +18,7 @@ describe('ctx.vary(field)', () => {
       const ctx = context();
       ctx.vary('Accept');
       ctx.vary('Accept-Encoding');
-      assert.equal(ctx.response.header.vary, 'Accept, Accept-Encoding');
+      assert.strictEqual(ctx.response.header.vary, 'Accept, Accept-Encoding');
     });
   });
 
@@ -29,7 +29,7 @@ describe('ctx.vary(field)', () => {
       ctx.vary('Accept-Encoding');
       ctx.vary('Accept');
       ctx.vary('Accept-Encoding');
-      assert.equal(ctx.response.header.vary, 'Accept, Accept-Encoding');
+      assert.strictEqual(ctx.response.header.vary, 'Accept, Accept-Encoding');
     });
   });
 });
