@@ -9,7 +9,7 @@ describe('res.writable', () => {
   describe('when continuous requests in one persistent connection', () => {
     function requestTwice(server, done){
       const port = server.address().port;
-      const buf = new Buffer('GET / HTTP/1.1\r\nHost: localhost:' + port + '\r\nConnection: keep-alive\r\n\r\n');
+      const buf = Buffer.from('GET / HTTP/1.1\r\nHost: localhost:' + port + '\r\nConnection: keep-alive\r\n\r\n');
       const client = net.connect(port);
       const datas = [];
       client
