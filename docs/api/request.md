@@ -8,7 +8,8 @@
 
 ### request.header
 
- Request header object.
+ Request header object.  This is the same as the [`headers`](https://nodejs.org/api/http.html#http_message_headers) field
+ on node's [`http.IncomingMessage`](https://nodejs.org/api/http.html#http_class_http_incomingmessage).
 
 ### request.header=
 
