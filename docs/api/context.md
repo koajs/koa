@@ -81,7 +81,7 @@ Koa uses the [cookies](https://github.com/jed/cookies) module where options are 
  - `maxAge` a number representing the milliseconds from Date.now() for expiry
  - `signed` sign the cookie value
  - `expires` a `Date` for cookie expiration
- - `path` cookie path, `/'` by default
+ - `path` cookie path, `'/'` by default
  - `domain` cookie domain
  - `secure` secure cookie
  - `httpOnly` server-accessible cookie, __true__ by default
