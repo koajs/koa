@@ -136,7 +136,7 @@ app.use(async (ctx, next) => {
 ```
 
 The `Context` object also provides shortcuts for methods on its `request` and `response`.  In the prior
-examples,  `ctx.type` can be used instead of `ctx.request.type` and `ctx.accepts` can be used
+examples,  `ctx.type` can be used instead of `ctx.response.type` and `ctx.accepts` can be used
 instead of `ctx.request.accepts`.
 
 For more information on `Request`, `Response` and `Context`, see the [Request API Reference](docs/api/request.md),
