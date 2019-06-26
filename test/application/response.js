@@ -33,7 +33,7 @@ describe('app.response', () => {
       .expect(204);
   });
 
-  it('should not include status message in body for http2', async () => {
+  it('should not include status message in body for http2', async() => {
     app3.use((ctx, next) => {
       ctx.req.httpVersionMajor = 2;
       ctx.status = 404;

@@ -21,7 +21,7 @@ describe('res.header', () => {
     assert.deepEqual(res.header, { 'x-foo': 'baz' });
   });
 
-  it('should return the response header object when no mocks are in use', async () => {
+  it('should return the response header object when no mocks are in use', async() => {
     const app = new Koa();
     let header;
 

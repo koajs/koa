@@ -33,7 +33,7 @@ describe('ctx.onerror(err)', () => {
       .expect('Content-Length', '4');
   });
 
-  it('should unset all headers', async () => {
+  it('should unset all headers', async() => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -56,7 +56,7 @@ describe('ctx.onerror(err)', () => {
     assert.equal(res.headers.hasOwnProperty('x-csrf-token'), false);
   });
 
-  it('should set headers specified in the error', async () => {
+  it('should set headers specified in the error', async() => {
     const app = new Koa();
 
     app.use((ctx, next) => {

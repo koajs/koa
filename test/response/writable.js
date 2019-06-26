@@ -54,10 +54,10 @@ describe('res.writable', () => {
       const app = new Koa();
       app.use(ctx => {
         sleep(1000)
-        .then(() => {
-          if (ctx.writable) return done(new Error('ctx.writable should not be true'));
-          done();
-        });
+          .then(() => {
+            if (ctx.writable) return done(new Error('ctx.writable should not be true'));
+            done();
+          });
       });
       const server = app.listen();
       requestClosed(server);

@@ -7,7 +7,7 @@ const Koa = require('../..');
 
 describe('ctx.cookies', () => {
   describe('ctx.cookies.set()', () => {
-    it('should set an unsigned cookie', async () => {
+    it('should set an unsigned cookie', async() => {
       const app = new Koa();
 
       app.use((ctx, next) => {
@@ -44,7 +44,7 @@ describe('ctx.cookies', () => {
         });
       });
 
-      it('should send a signed cookie', async () => {
+      it('should send a signed cookie', async() => {
         const app = new Koa();
 
         app.keys = ['a', 'b'];
@@ -68,7 +68,7 @@ describe('ctx.cookies', () => {
     });
 
     describe('with secure', () => {
-      it('should get secure from request', async () => {
+      it('should get secure from request', async() => {
         const app = new Koa();
 
         app.proxy = true;
@@ -95,7 +95,7 @@ describe('ctx.cookies', () => {
   });
 
   describe('ctx.cookies=', () => {
-    it('should override cookie work', async () => {
+    it('should override cookie work', async() => {
       const app = new Koa();
 
       app.use((ctx, next) => {

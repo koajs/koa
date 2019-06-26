@@ -62,7 +62,7 @@ describe('res.status=', () => {
   });
 
   function strip(status){
-    it('should strip content related header fields', async () => {
+    it('should strip content related header fields', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -86,7 +86,7 @@ describe('res.status=', () => {
       assert.equal(res.text.length, 0);
     });
 
-    it('should strip content releated header fields after status set', async () => {
+    it('should strip content releated header fields after status set', async() => {
       const app = new Koa();
 
       app.use(ctx => {
