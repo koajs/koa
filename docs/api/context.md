@@ -72,7 +72,7 @@ ctx.state.user = await User.find(id);
 
  - `signed` the cookie requested should be signed
 
-Koa uses the [cookies](https://github.com/jed/cookies) module where options are simply passed.
+Koa uses the [cookies](https://github.com/pillarjs/cookies) module where options are simply passed.
 
 ### ctx.cookies.set(name, value, [options])
 
