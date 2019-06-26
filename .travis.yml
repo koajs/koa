@@ -1,11 +1,9 @@
 sudo: false
 language: node_js
 node_js:
-  - 7
   - 8
-  - 9
   - 10
-  - 11
+  - 12
 cache:
   directories:
     - wrk/bin
