@@ -167,7 +167,7 @@ https.createServer(app.callback()).listen(3001);
 
  Set signed cookie keys.
 
- These are passed to [KeyGrip](https://github.com/jed/keygrip),
+ These are passed to [KeyGrip](https://github.com/crypto-utils/keygrip),
  however you may also pass your own `KeyGrip` instance. For
  example the following are acceptable:
 
