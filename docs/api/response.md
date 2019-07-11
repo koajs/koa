@@ -17,7 +17,7 @@
 
 ### response.socket
 
-  Request socket.
+  Response socket.
 
 ### response.status
 
