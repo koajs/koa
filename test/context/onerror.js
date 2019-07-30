@@ -7,7 +7,6 @@ const Koa = require('../..');
 const context = require('../helpers/context');
 
 describe('ctx.onerror(err)', () => {
-
   it('should respond', () => {
     const app = new Koa();
 
