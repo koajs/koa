@@ -4,8 +4,8 @@
   "description": "Koa web app framework",
   "main": "lib/application.js",
   "scripts": {
-    "test": "jest",
-    "test-cov": "jest --coverage --runInBand --forceExit",
+    "test": "egg-bin test test",
+    "test-cov": "egg-bin cov test",
     "lint": "eslint benchmarks lib test",
     "bench": "make -C benchmarks",
     "authors": "git log --format='%aN <%aE>' | sort -u > AUTHORS"
@@ -31,6 +31,7 @@
     "delegates": "^1.0.0",
     "depd": "^1.1.2",
     "destroy": "^1.0.4",
+    "egg-bin": "^4.13.0",
     "error-inject": "^1.0.0",
     "escape-html": "^1.0.3",
     "fresh": "~0.5.2",
@@ -40,6 +41,7 @@
     "koa-compose": "^4.1.0",
     "koa-convert": "^1.2.0",
     "koa-is-json": "^1.0.0",
+    "mm": "^2.5.0",
     "on-finished": "^2.3.0",
     "only": "~0.0.2",
     "parseurl": "^1.3.2",
@@ -53,7 +55,6 @@
     "eslint-config-standard": "^7.0.1",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^2.1.1",
-    "jest": "^20.0.0",
     "supertest": "^3.1.0"
   },
   "engines": {
@@ -61,16 +62,5 @@
   },
   "files": [
     "lib"
-  ],
-  "jest": {
-    "testMatch": [
-      "**/test/!(helpers)/*.js"
-    ],
-    "coverageReporters": [
-      "text-summary",
-      "lcov"
-    ],
-    "bail": true,
-    "testEnvironment": "node"
-  }
+  ]
 }
