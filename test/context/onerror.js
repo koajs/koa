@@ -7,14 +7,6 @@ const Koa = require('../..');
 const context = require('../helpers/context');
 
 describe('ctx.onerror(err)', () => {
-  beforeEach(() => {
-    global.console = jest.genMockFromModule('console');
-  });
-
-  afterEach(() => {
-    global.console = require('console');
-  });
-
   it('should respond', () => {
     const app = new Koa();
 

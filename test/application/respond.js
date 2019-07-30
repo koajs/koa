@@ -8,14 +8,6 @@ const Koa = require('../..');
 const fs = require('fs');
 
 describe('app.respond', () => {
-  beforeEach(() => {
-    global.console = jest.genMockFromModule('console');
-  });
-
-  afterEach(() => {
-    global.console = require('console');
-  });
-
   describe('when ctx.respond === false', () => {
     it('should function (ctx)', () => {
       const app = new Koa();
