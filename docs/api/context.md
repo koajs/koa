@@ -87,7 +87,7 @@ Koa uses the [cookies](https://github.com/pillarjs/cookies) module where options
  - `httpOnly` server-accessible cookie, __true__ by default
  - `overwrite` a boolean indicating whether to overwrite previously set cookies of the same name (__false__ by default). If this is true, all cookies set during the same request with the same name (regardless of path or domain) are filtered out of the Set-Cookie header when setting this cookie.
 
-Koa uses the [cookies](https://github.com/jed/cookies) module where options are simply passed.
+Koa uses the [cookies](https://github.com/pillarjs/cookies) module where options are simply passed.
 
 ### ctx.throw([status], [msg], [properties])
 

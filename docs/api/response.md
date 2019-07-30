@@ -126,7 +126,7 @@ If `response.status` has not been set, Koa will automatically set the status to 
 
 Koa doesn't guard against everything that could be put as a response body -- a function doesn't serialise meaningfully, returning a boolean may make sense based on your application, and while an error works, it may not work as intended as some properties of an error are not enumerable.  We recommend adding middleware in your app that asserts body types per app.  A sample middleware might be:
 
-```
+```js
 app.use(async (ctx, next) => {
   await next()
 
