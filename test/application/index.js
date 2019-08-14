@@ -53,4 +53,28 @@ describe('app', () => {
     process.env.NODE_ENV = NODE_ENV;
     assert.equal(app.env, 'development');
   });
+
+  it('should set env from the constructor', () => {
+    const env = 'custom';
+    const app = new Koa({ env });
+    assert.strictEqual(app.env, env);
+  });
+
+  it('should set proxy flag from the constructor', () => {
+    const proxy = true;
+    const app = new Koa({ proxy });
+    assert.strictEqual(app.proxy, proxy);
+  });
+
+  it('should set signed cookie keys from the constructor', () => {
+    const keys = ['customkey'];
+    const app = new Koa({ keys });
+    assert.strictEqual(app.keys, keys);
+  });
+
+  it('should set env from the constructor', () => {
+    const subdomainOffset = 3;
+    const app = new Koa({ subdomainOffset });
+    assert.strictEqual(app.subdomainOffset, subdomainOffset);
+  });
 });
