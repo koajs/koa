@@ -72,7 +72,7 @@ describe('app', () => {
     assert.strictEqual(app.keys, keys);
   });
 
-  it('should set env from the constructor', () => {
+  it('should set subdomainOffset from the constructor', () => {
     const subdomainOffset = 3;
     const app = new Koa({ subdomainOffset });
     assert.strictEqual(app.subdomainOffset, subdomainOffset);
