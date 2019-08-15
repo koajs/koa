@@ -112,8 +112,21 @@ app.listen(3000);
   the following are supported:
 
   - `app.env` defaulting to the __NODE_ENV__ or "development"
+  - `app.keys` array of signed cookie keys
   - `app.proxy` when true proxy header fields will be trusted
   - `app.subdomainOffset` offset of `.subdomains` to ignore [2]
+
+  You can pass the settings to the constructor:
+  ```js
+  const Koa = require('koa');
+  const app = new Koa({ proxy: true });
+  ```
+  or dynamically:
+  ```js
+  const Koa = require('koa');
+  const app = new Koa();
+  app.proxy = true;
+  ```
 
 ## app.listen(...)
 
