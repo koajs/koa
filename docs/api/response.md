@@ -17,7 +17,7 @@
 
 ### response.socket
 
-  Response socket.
+  Response socket. Points to net.Socket instance as `request.socket`.
 
 ### response.status
 
