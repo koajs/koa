@@ -386,4 +386,4 @@ ctx.acceptsLanguages();
 
 ### request.get(field)
 
-  Return request header.
+  Return request header with case-insensitive `field`.
