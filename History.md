@@ -1,4 +1,34 @@
 
+2.8.0 / 2019-08-19
+==================
+
+**features**
+  * [[`5afff89`](http://github.com/koajs/koa/commit/5afff89eca0efe7081309dc2d123309e825df221)] - feat: accept options in the Application constructor (#1372) (Jake <<djakelambert@gmail.com>>)
+
+**fixes**
+  * [[`ff70bdc`](http://github.com/koajs/koa/commit/ff70bdc75a30a37f63fc1f7d8cbae3204df3d982)] - fix: typo on document (#1355) (Jeff <<jeff.tian@outlook.com>>)
+
+**others**
+  * [[`3b23865`](http://github.com/koajs/koa/commit/3b23865340cfba075f61f7dba0ea31fcc27260ec)] - docs: parameter of request.get is case-insensitive (#1373) (Gunnlaugur Thor Briem <<gunnlaugur@gmail.com>>)
+  * [[`a245d18`](http://github.com/koajs/koa/commit/a245d18a131341feec4f87659746954e78cae780)] - docs: Update response.socket (#1357) (Jeff <<jeff.tian@outlook.com>>)
+  * [[`d1d65dd`](http://github.com/koajs/koa/commit/d1d65dd29d7bbaf9ea42eaa5fcb0da3fb4df98e9)] - chore(deps): install egg-bin, mm as devDeps not deps (#1366) (Edvard Chen <<pigeon73101@gmail.com>>)
+  * [[`2c86b10`](http://github.com/koajs/koa/commit/2c86b10feafd868ebd071dda3a222e6f51972b5d)] - test: remove jest and use egg-bin(mocha) (#1363) (Yiyu He <<dead_horse@qq.com>>)
+  * [[`219bf22`](http://github.com/koajs/koa/commit/219bf22237b11bc375e2e110b93db512f1acfdd4)] - docs(context): update link (#1354) (Peng Jie <<bivinity.pengzjie@gmail.com>>)
+  * [[`52a6737`](http://github.com/koajs/koa/commit/52a673703a87a93c0f6a8552e6bd73caba66d2eb)] - chore: ignore Intellij IDEA project files (#1361) (Imon-Haque <<38266345+Imon-Haque@users.noreply.github.com>>)
+  * [[`b9e3546`](http://github.com/koajs/koa/commit/b9e35469d3bbd0a1ee92e0a815ce2512904d4a18)] - docs(api): fix keygrip link (#1350) (Peng Jie <<bivinity.pengzjie@gmail.com>>)
+  * [[`d4bdb5e`](http://github.com/koajs/koa/commit/d4bdb5ed9e2fe06ec44698b66c029f624135a0ab)] - chore: update eslint and fix lint errors (dead-horse <<dead_horse@qq.com>>)
+  * [[`12960c4`](http://github.com/koajs/koa/commit/12960c437cc25c53e682cfe5bff06d74a5bb1eb9)] - build: test on 8/10/12 (dead-horse <<dead_horse@qq.com>>)
+  * [[`00e8f7a`](http://github.com/koajs/koa/commit/00e8f7a1b7603aabdb7fb3567f485cb1c2076702)] - docs: ctx.type aliases ctx.response, not ctx.request (#1343) (Alex Berk <<berkalexanderc@gmail.com>>)
+  * [[`62f29eb`](http://github.com/koajs/koa/commit/62f29eb0c4dee01170a5511615e5bcc9faca26ca)] - docs(context): update cookies link (#1348) (Peng Jie <<dean.leehom@gmail.com>>)
+  * [[`b7fc526`](http://github.com/koajs/koa/commit/b7fc526ea49894f366153bd32997e02568c0b8a6)] - docs: fix typo in cookie path default value docs (#1340) (Igor Adamenko <<igoradamenko@users.noreply.github.com>>)
+  * [[`23f7f54`](http://github.com/koajs/koa/commit/23f7f545abfe1fb6499cd61cc8ff41fd86cef4a0)] - chore: simplify variable (#1332) (kzhang <<godky@users.noreply.github.com>>)
+  * [[`132c9ee`](http://github.com/koajs/koa/commit/132c9ee63f92a586a120ed3bd6b7ef023badb8bb)] - docs: Clarify the format of request.headers (#1325) (Dobes Vandermeer <<dobesv@gmail.com>>)
+  * [[`5810f27`](http://github.com/koajs/koa/commit/5810f279a4caeda115f39e429c9671795613abf8)] - docs: Removed Document in Progress note in Koa vs Express (#1336) (Andrew Peterson <<andrew@andpeterson.com>>)
+  * [[`75233d9`](http://github.com/koajs/koa/commit/75233d974a30af6e3b8ab38a73e5ede67172fc1c)] - chore: Consider removing this return statement; it will be ignored. (#1322) (Vern Brandl <<tkvern@users.noreply.github.com>>)
+  * [[`04e07fd`](http://github.com/koajs/koa/commit/04e07fdc620841068f12b8edf36f27e6592a0a18)] - test: Buffer() is deprecated due to security and usability issues. so use the Buffer.alloc() instead (#1321) (Vern Brandl <<tkvern@users.noreply.github.com>>)
+  * [[`130e363`](http://github.com/koajs/koa/commit/130e363856747b487652f04b5550056d7778e43a)] - docs: use 'fs-extra' instead of 'fs-promise' (#1309) (rosald <<35028438+rosald@users.noreply.github.com>>)
+  * [[`2f2078b`](http://github.com/koajs/koa/commit/2f2078bf998bd3f44289ebd17eeccf5e12e4c134)] - chore: Update PR-welcome badge url (#1299) (James George <<jamesgeorge998001@gmail.com>>)
+
 2.7.0 / 2019-01-28
 ==================
 
