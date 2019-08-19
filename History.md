@@ -1,4 +1,10 @@
 
+2.8.1 / 2019-08-19
+==================
+
+**fixes**
+  * [[`287e589`](http://github.com/koajs/koa/commit/287e589ac773d3738b2aa7d40e0b6d43dde5261b)] - fix: make options more compatibility (dead-horse <<dead_horse@qq.com>>)
+
 2.8.0 / 2019-08-19
 ==================
 
