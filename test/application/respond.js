@@ -20,6 +20,7 @@ describe('app.respond', () => {
         res.statusCode = 200;
         setImmediate(() => {
           res.setHeader('Content-Type', 'text/plain');
+          res.setHeader('Content-Length', '3');
           res.end('lol');
         });
       });
@@ -41,6 +42,7 @@ describe('app.respond', () => {
         const res = ctx.res;
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
+        res.setHeader('Content-Length', '3');
         res.end('lol');
         ctx.set('foo', 'bar');
       });
@@ -65,6 +67,7 @@ describe('app.respond', () => {
         const res = ctx.res;
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
+        res.setHeader('Content-Length', '3');
         res.end('lol');
         ctx.status = 201;
       });
