@@ -236,7 +236,6 @@ describe('app.respond', () => {
         ctx.status = 200;
         res.setHeader('Content-Type', 'text/html');
         res.write('Hello');
-        res.end('Goodbye');
       });
 
       app.on('error', err => { throw err; });
