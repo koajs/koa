@@ -234,10 +234,9 @@ describe('app.respond', () => {
       app.use((ctx, next) => {
         const res = ctx.res;
         ctx.status = 200;
-        ctx.respond = false;
         res.setHeader('Content-Type', 'text/html');
         res.write('Hello');
-        setTimeout(() => res.end('Goodbye'), 0);
+        res.end('Goodbye');
       });
 
       app.on('error', err => { throw err; });
