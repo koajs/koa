@@ -31,6 +31,7 @@
     "delegates": "^1.0.0",
     "depd": "^1.1.2",
     "destroy": "^1.0.4",
+    "encodeurl": "^1.0.2",
     "error-inject": "^1.0.0",
     "escape-html": "^1.0.3",
     "fresh": "~0.5.2",
