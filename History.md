@@ -1,4 +1,14 @@
 
+2.8.2 / 2019-09-28
+==================
+
+**fixes**
+  * [[`54e8fab`](http://github.com/koajs/koa/commit/54e8fab3e3d907bbb264caf3e28a24773d0d6fdb)] - fix: encode redirect url if not already encoded (#1384) (fengmk2 <<fengmk2@gmail.com>>)
+
+**others**
+  * [[`817b498`](http://github.com/koajs/koa/commit/817b49830571b45a8aec6b1fc1525434f5798c58)] - test: fix body test (#1375) (Robert Nagy <<ronagy@icloud.com>>)
+  * [[`f75d445`](http://github.com/koajs/koa/commit/f75d4455359ecdf30eeb676e2c7f31d4cf7b42ed)] - test: fix end after end (#1374) (Robert Nagy <<ronagy@icloud.com>>)
+
 2.8.1 / 2019-08-19
 ==================
 
