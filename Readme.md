@@ -41,7 +41,7 @@ app.listen(3000);
 
  - [Kick-Off-Koa](https://github.com/koajs/kick-off-koa) - An intro to Koa via a set of self-guided workshops.
  - [Workshop](https://github.com/koajs/workshop) - A workshop to learn the basics of Koa, Express' spiritual successor.
- - [Introduction Screencast](http://knowthen.com/episode-3-koajs-quickstart-guide/) - An introduction to installing and getting started with Koa
+ - [Introduction Screencast](https://knowthen.com/episode-3-koajs-quickstart-guide/) - An introduction to installing and getting started with Koa
 
 
 ## Middleware
