@@ -9,6 +9,7 @@ describe('app.response', () => {
   const app1 = new Koa();
   app1.response.msg = 'hello';
   const app2 = new Koa();
+  const app3 = new Koa();
 
   it('should merge properties', () => {
     app1.use((ctx, next) => {
@@ -30,5 +31,16 @@ describe('app.response', () => {
     return request(app2.listen())
       .get('/')
       .expect(204);
+  });
+
+  it('should not include status message in body for http2', async() => {
+    app3.use((ctx, next) => {
+      ctx.req.httpVersionMajor = 2;
+      ctx.status = 404;
+    });
+    const response = await request(app3.listen())
+      .get('/')
+      .expect(404);
+    assert.equal(response.text, '404');
   });
 });

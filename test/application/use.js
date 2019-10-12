@@ -6,7 +6,7 @@ const assert = require('assert');
 const Koa = require('../..');
 
 describe('app.use(fn)', () => {
-  it('should compose middleware', async () => {
+  it('should compose middleware', async() => {
     const app = new Koa();
     const calls = [];
 
@@ -40,7 +40,7 @@ describe('app.use(fn)', () => {
     assert.deepEqual(calls, [1, 2, 3, 4, 5, 6]);
   });
 
-  it('should compose mixed middleware', async () => {
+  it('should compose mixed middleware', async() => {
     process.once('deprecation', () => {}); // silence deprecation message
     const app = new Koa();
     const calls = [];

@@ -17,17 +17,15 @@ describe('res.status=', () => {
       });
 
       it('should not throw', () => {
-        assert.doesNotThrow(() => {
-          response().status = 403;
-        });
+        response().status = 403;
       });
     });
 
     describe('and invalid', () => {
       it('should throw', () => {
         assert.throws(() => {
-          response().status = 999;
-        }, 'invalid status code: 999');
+          response().status = 99;
+        }, /invalid status code: 99/);
       });
     });
 
@@ -41,7 +39,7 @@ describe('res.status=', () => {
       });
 
       it('should not throw', () => {
-        assert.doesNotThrow(() => response().status = 700);
+        response().status = 700;
       });
     });
 
@@ -59,12 +57,12 @@ describe('res.status=', () => {
 
   describe('when a status string', () => {
     it('should throw', () => {
-      assert.throws(() => response().status = 'forbidden', 'status code must be a number');
+      assert.throws(() => response().status = 'forbidden', /status code must be a number/);
     });
   });
 
   function strip(status){
-    it('should strip content related header fields', async () => {
+    it('should strip content related header fields', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -88,7 +86,7 @@ describe('res.status=', () => {
       assert.equal(res.text.length, 0);
     });
 
-    it('should strip content releated header fields after status set', async () => {
+    it('should strip content releated header fields after status set', async() => {
       const app = new Koa();
 
       app.use(ctx => {

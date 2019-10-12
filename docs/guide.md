@@ -3,6 +3,17 @@
 
   This guide covers Koa topics that are not directly API related, such as best practices for writing middleware and application structure suggestions. In these examples we use async functions as middleware - you can also use commonFunction or generatorFunction which will be a little different.
 
+## Table of Contents
+
+- [Writing Middleware](#writing-middleware)
+- [Middleware Best Practices](#middleware-best-practices)
+  - [Middleware options](#middleware-options)
+  - [Named middleware](#named-middleware)
+  - [Combining multiple middleware with koa-compose](#combining-multiple-middleware-with-koa-compose)
+  - [Response Middleware](#response-middleware)
+- [Async operations](#async-operations)
+- [Debugging Koa](#debugging-koa)
+
 ## Writing Middleware
 
   Koa middleware are simple functions which return a `MiddlewareFunction` with signature (ctx, next). When
@@ -123,8 +134,6 @@ const all = compose([random, backwards, pi]);
 app.use(all);
 ```
 
-  
-
 ### Response Middleware
 
   Middleware that decide to respond to a request and wish to bypass downstream middleware may
@@ -187,7 +196,7 @@ app.use(async function (ctx, next) {
 
 
 ```js
-const fs = require('fs-promise');
+const fs = require('mz/fs');
 
 app.use(async function (ctx, next) {
   const paths = await fs.readdir('docs');

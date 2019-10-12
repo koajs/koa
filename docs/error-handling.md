@@ -56,5 +56,6 @@ app.use(async (ctx, next) => {
   way back through the middleware chain, if an error is caught
   and not thrown again, it will not be passed to the error
   listener. If no error event listener is specified, then
-  `app.onerror` will be used, which simply log the error if
-  `error.expose` is true and `app.silent` is false.
+  `app.onerror` will be used, which simply log the error unless
+  `error.expose`is true or `app.silent` is true or `error.status`
+  is 404.

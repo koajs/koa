@@ -2,7 +2,9 @@
 'use strict';
 
 const assert = require('assert');
+const request = require('supertest');
 const context = require('../helpers/context');
+const Koa = require('../..');
 
 describe('ctx.redirect(url)', () => {
   it('should redirect to the given url', () => {
@@ -10,6 +12,23 @@ describe('ctx.redirect(url)', () => {
     ctx.redirect('http://google.com');
     assert.equal(ctx.response.header.location, 'http://google.com');
     assert.equal(ctx.status, 302);
+  });
+
+  it('should auto fix not encode url', done => {
+    const app = new Koa();
+
+    app.use(ctx => {
+      ctx.redirect('http://google.com/😓');
+    });
+
+    request(app.callback())
+      .get('/')
+      .end((err, res) => {
+        if (err) return done(err);
+        assert.equal(res.status, 302);
+        assert.equal(res.headers.location, 'http://google.com/%F0%9F%98%93');
+        done();
+      });
   });
 
   describe('with "back"', () => {

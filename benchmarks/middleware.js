@@ -13,7 +13,7 @@ console.log(`  ${n}${useAsync ? ' async' : ''} middleware`);
 
 while (n--) {
   if (useAsync) {
-    app.use(async (ctx, next) => await next());
+    app.use(async(ctx, next) => await next());
   } else {
     app.use((ctx, next) => next());
   }
@@ -22,7 +22,7 @@ while (n--) {
 const body = Buffer.from('Hello World');
 
 if (useAsync) {
-  app.use(async (ctx, next) => { await next(); ctx.body = body; });
+  app.use(async(ctx, next) => { await next(); ctx.body = body; });
 } else {
   app.use((ctx, next) => next().then(() => ctx.body = body));
 }

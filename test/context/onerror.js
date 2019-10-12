@@ -7,14 +7,6 @@ const Koa = require('../..');
 const context = require('../helpers/context');
 
 describe('ctx.onerror(err)', () => {
-  beforeEach(() => {
-    global.console = jest.genMockFromModule('console');
-  });
-
-  afterEach(() => {
-    global.console = require('console');
-  });
-
   it('should respond', () => {
     const app = new Koa();
 
@@ -33,7 +25,7 @@ describe('ctx.onerror(err)', () => {
       .expect('Content-Length', '4');
   });
 
-  it('should unset all headers', async () => {
+  it('should unset all headers', async() => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -56,7 +48,7 @@ describe('ctx.onerror(err)', () => {
     assert.equal(res.headers.hasOwnProperty('x-csrf-token'), false);
   });
 
-  it('should set headers specified in the error', async () => {
+  it('should set headers specified in the error', async() => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -129,7 +121,26 @@ describe('ctx.onerror(err)', () => {
           .expect('Internal Server Error');
       });
     });
+    describe('when ENOENT error', () => {
+      it('should respond 404', () => {
+        const app = new Koa();
 
+        app.use((ctx, next) => {
+          ctx.body = 'something else';
+          const err = new Error('test for ENOENT');
+          err.code = 'ENOENT';
+          throw err;
+        });
+
+        const server = app.listen();
+
+        return request(server)
+          .get('/')
+          .expect(404)
+          .expect('Content-Type', 'text/plain; charset=utf-8')
+          .expect('Not Found');
+      });
+    });
     describe('not http status code', () => {
       it('should respond 500', () => {
         const app = new Koa();

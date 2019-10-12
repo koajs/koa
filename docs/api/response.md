@@ -17,7 +17,7 @@
 
 ### response.socket
 
-  Request socket.
+  Response socket. Points to net.Socket instance as `request.socket`.
 
 ### response.status
 
@@ -124,6 +124,16 @@ so you can make a correction.
 
 If `response.status` has not been set, Koa will automatically set the status to `200` or `204`.
 
+Koa doesn't guard against everything that could be put as a response body -- a function doesn't serialise meaningfully, returning a boolean may make sense based on your application, and while an error works, it may not work as intended as some properties of an error are not enumerable.  We recommend adding middleware in your app that asserts body types per app.  A sample middleware might be:
+
+```js
+app.use(async (ctx, next) => {
+  await next()
+
+  ctx.assert.equal('object', typeof ctx, 500, 'some dev did something wrong')
+})
+```
+
 #### String
 
   The Content-Type is defaulted to text/html or text/plain, both with
@@ -192,6 +202,8 @@ ctx.set({
   'Last-Modified': date
 });
 ```
+
+This delegates to [setHeader](https://nodejs.org/dist/latest/docs/api/http.html#http_request_setheader_name_value) which sets or updates headers by specified keys and doesn't reset the entire header.
 
 ### response.remove(field)
 
@@ -271,11 +283,11 @@ ctx.redirect('/cart');
 ctx.body = 'Redirecting to shopping cart';
 ```
 
-### response.attachment([filename])
+### response.attachment([filename], [options])
 
   Set `Content-Disposition` to "attachment" to signal the client
   to prompt for download. Optionally specify the `filename` of the
-  download.
+  download and some [options](https://github.com/jshttp/content-disposition#options).
 
 ### response.headerSent
 

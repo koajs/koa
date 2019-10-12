@@ -3,6 +3,7 @@
 
 const request = require('../helpers/context').request;
 const assert = require('assert');
+const util = require('util');
 
 describe('req.inspect()', () => {
   describe('with no request.req present', () => {
@@ -10,7 +11,8 @@ describe('req.inspect()', () => {
       const req = request();
       req.method = 'GET';
       delete req.req;
-      assert(null == req.inspect());
+      assert(undefined === req.inspect());
+      assert('undefined' === util.inspect(req));
     });
   });
 
@@ -20,12 +22,15 @@ describe('req.inspect()', () => {
     req.url = 'example.com';
     req.header.host = 'example.com';
 
-    assert.deepEqual({
+    const expected = {
       method: 'GET',
       url: 'example.com',
       header: {
         host: 'example.com'
       }
-    }, req.inspect());
+    };
+
+    assert.deepEqual(req.inspect(), expected);
+    assert.deepEqual(util.inspect(req), util.inspect(expected));
   });
 });
