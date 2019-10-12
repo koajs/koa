@@ -1,4 +1,13 @@
 
+2.9.0 / 2019-10-12
+==================
+
+**features**
+  * [[`2d1c598`](http://github.com/koajs/koa/commit/2d1c5981869e0fe6f5bc71b5c5582accfd125cc6)] - feat: export HttpError from http-errors library (Micheal Hill <<micheal.hill@trunkplatform.com>>)
+
+**others**
+  * [[`cf70dbc`](http://github.com/koajs/koa/commit/cf70dbc6d2ba62bf1eb12b563dd5ecd27af6e2be)] - Chore: Use https in readme (#1389) (谭九鼎 <<109224573@qq.com>>)
+
 2.8.2 / 2019-09-28
 ==================
 
