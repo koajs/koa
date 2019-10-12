@@ -1,4 +1,10 @@
 
+2.10.0 / 2019-10-12
+==================
+
+**features**
+  * [[`d7f7f77`](http://github.com/koajs/koa/commit/d7f7f77689e2eaef050686be2bdf3e72881a79ac)] - feat: support sameSite=none cookies (bump cookies dependency) (#1390) (Filip Skokan <<panva.ip@gmail.com>>)
+
 2.9.0 / 2019-10-12
 ==================
 
