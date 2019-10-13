@@ -18,4 +18,4 @@ script:
   - npm run bench
 after_script:
   # only upload the coverage.json file
-  - bash <(curl -s https://codecov.io/bash) -f coverage/coverage.json
+  - bash <(curl -s https://codecov.io/bash) -f coverage/coverage-final.json
