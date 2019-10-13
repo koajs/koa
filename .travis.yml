@@ -17,5 +17,5 @@ script:
   - npm run test-cov
   - npm run bench
 after_script:
-  - npm install codecov
-  - ./node_modules/.bin/codecov
+  # only upload the coverage.json file
+  - bash <(curl -s https://codecov.io/bash) -f coverage/coverage.json
