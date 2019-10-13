@@ -219,6 +219,64 @@ Note:
 - Many properties on `ctx` are defined using getters, setters, and `Object.defineProperty()`. You can only edit these properties (not recommended) by using `Object.defineProperty()` on `app.context`. See https://github.com/koajs/koa/issues/652.
 - Mounted apps currently use their parent's `ctx` and settings. Thus, mounted apps are really just groups of middleware.
 
+## Events
+
+  Koa application is an instance of `EventEmitter` and emits following events to allow hooks into lifecycle.
+  All these events (except `error`) have `ctx` as first parameter:
+
+### Event: 'request'
+
+  Emitted each time there is a request, with `ctx` as parameter, before passing to any middleware.
+  May be a good place for per-request context mutation, when needed, for example:
+
+  ```js
+  app.on('request', ctx => {
+    ctx.state.start = Date.now();
+    // or something more advanced
+    if(!ctx.get('DNT')) ctx.state = new Proxy({})
+  })
+  ```
+
+### Event: 'respond'
+
+  Emitted after passing all middleware, but before sending the response to network.
+  May be used when some action required to be latest after all middleware processing, for example:
+
+  ```js
+  app.on('respond', ctx => {
+    if (ctx.state.start) ctx.set('X-Response-Time', Date.now() - ctx.state.start)
+  })
+  ```
+
+### Event: 'responded'
+
+  Emitted when the response stream is finished. Good place to cleanup any resources attached to `ctx.state` for example:
+
+  ```js
+  app.on('responded', ctx => {
+    if (ctx.state.dataStream) ctx.state.dataStream.destroy();
+  })
+  ```
+
+  More advanced example, use events to detect that server is idling for some time:
+
+  ```js
+    const onIdle10000ms = () => { console.warn('Server is idle for 10 seconds!'); }
+    const IDLE_INTERVAL = 10000;
+    let idleInterval = setInterval(onIdle10000ms, IDLE_INTERVAL);
+    app
+      .on('request', () => {
+        clearInterval(idleInterval);
+      })
+      .on('responded', () => {
+        idleInterval = setInterval(onIdle10000ms, IDLE_INTERVAL);
+      })
+  ```
+
+### Event: 'error'
+
+  See **Error Handling** below.
+
 ## Error Handling
 
   By default outputs all errors to stderr unless `app.silent` is `true`.
