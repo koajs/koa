@@ -8,19 +8,19 @@ describe('ctx.set(name, val)', () => {
   it('should set a field value', () => {
     const ctx = context();
     ctx.set('x-foo', 'bar');
-    assert.equal(ctx.response.header['x-foo'], 'bar');
+    assert.equal(ctx.response.get('X-foo'), 'bar');
   });
 
-  it('should coerce number to string', () => {
+  it('should not coerce number to string', () => {
     const ctx = context();
     ctx.set('x-foo', 5);
-    assert.equal(ctx.response.header['x-foo'], '5');
+    assert.strictEqual(ctx.response.header['x-foo'], 5);
   });
 
-  it('should coerce undefined to string', () => {
+  it('should not coerce undefined to string', () => {
     const ctx = context();
     ctx.set('x-foo', undefined);
-    assert.equal(ctx.response.header['x-foo'], 'undefined');
+    assert.strictEqual(ctx.response.header['x-foo'], undefined);
   });
 
   it('should set a field value of array', () => {
@@ -35,11 +35,11 @@ describe('ctx.set(object)', () => {
     const ctx = context();
 
     ctx.set({
-      foo: '1',
+      foo: 0,
       bar: '2'
     });
 
-    assert.equal(ctx.response.header.foo, '1');
+    assert.strictEqual(ctx.response.header.foo, 0);
     assert.equal(ctx.response.header.bar, '2');
   });
 });
