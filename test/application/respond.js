@@ -173,6 +173,26 @@ describe('app.respond', () => {
       assert(!res.text);
     });
 
+    it('should keep stream header if set manually', async() => {
+      const app = new Koa();
+
+      const { length } = fs.readFileSync('package.json');
+
+      app.use(ctx => {
+        ctx.length = length;
+        ctx.body = fs.createReadStream('package.json');
+      });
+
+      const server = app.listen();
+
+      const res = await request(server)
+        .head('/')
+        .expect(200);
+
+      assert.equal(res.header['content-length'], length);
+      assert(!res.text);
+    });
+
     it('should respond with a 404 if no body was set', () => {
       const app = new Koa();
 
