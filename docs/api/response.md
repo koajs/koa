@@ -177,6 +177,15 @@ app.use(async ctx => {
 const etag = ctx.response.get('ETag');
 ```
 
+### response.has(field)
+
+  Returns `true` if the header identified by name is currently set in the outgoing headers.
+  The header name matching is case-insensitive.
+
+```js
+const rateLimited = ctx.response.has('X-RateLimit-Limit');
+```
+
 ### response.set(field, value)
 
   Set response header `field` to `value`:
