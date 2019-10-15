@@ -86,7 +86,7 @@ describe('app.use(fn)', () => {
   });
 
   it('should accept both generator and function middleware', () => {
-    process.once('deprecation', () => {}); // silence deprecation message
+    process.once('warning', () => {}); // silence deprecation message
     const app = new Koa();
 
     app.use((ctx, next) => next());
@@ -107,6 +107,7 @@ describe('app.use(fn)', () => {
   });
 
   it('should output deprecation message for generator functions', done => {
+    delete process.env.warned_generator_deprecation;
     process.once('warning', message => {
       assert(/Support for generators will be removed/.test(message));
       done();
