@@ -4,6 +4,7 @@
 const response = require('../helpers/context').response;
 const assert = require('assert');
 const fs = require('fs');
+const { PassThrough } = require('stream');
 
 describe('res.body=', () => {
   describe('when Content-Type is set', () => {
@@ -107,6 +108,13 @@ describe('res.body=', () => {
       const res = response();
       res.body = fs.createReadStream('LICENSE');
       assert.equal('application/octet-stream', res.header['content-type']);
+    });
+
+    it('object mode stream', () => {
+      const res = response();
+      const stream = new PassThrough({ objectMode: true });
+      res.body = stream;
+      assert.equal('application/json; charset=utf-8', res.header['content-type']);
     });
   });
 
