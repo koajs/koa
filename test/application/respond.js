@@ -619,7 +619,7 @@ describe('app.respond', () => {
         assert.deepEqual(res.body, pkg);
       });
 
-    it('should serve object mode streams as JSON', () => {
+    it('should serve object mode streams as JSON', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -634,10 +634,11 @@ describe('app.respond', () => {
 
       const server = app.listen();
 
-      return request(server)
+      const res = await request(server)
         .get('/')
         .expect('Content-Type', 'application/json; charset=utf-8')
         .expect('[{"foo":1},{"boo":[true]},{"finish":true}]');
+      assert.strictEqual(res.headers.hasOwnProperty('content-length'), false);
     });
 
     it('should handle errors', done => {
