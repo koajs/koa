@@ -6,6 +6,7 @@ const statuses = require('statuses');
 const assert = require('assert');
 const Koa = require('../..');
 const fs = require('fs');
+const { PassThrough } = require('stream');
 
 describe('app.respond', () => {
   describe('when ctx.respond === false', () => {
@@ -617,6 +618,27 @@ describe('app.respond', () => {
         assert.equal(res.headers.hasOwnProperty('content-length'), true);
         assert.deepEqual(res.body, pkg);
       });
+
+    it('should serve object mode streams as JSON', () => {
+      const app = new Koa();
+
+      app.use(ctx => {
+        const stream = new PassThrough({ objectMode: true, autoDestroy: false });
+        ctx.body = stream;
+        setImmediate(() => {
+          stream.write({ foo: 1 });
+          stream.write({ boo: [true] });
+          stream.end({ finish: true });
+        });
+      });
+
+      const server = app.listen();
+
+      return request(server)
+        .get('/')
+        .expect('Content-Type', 'application/json; charset=utf-8')
+        .expect('[{"foo":1},{"boo":[true]},{"finish":true}]');
+    });
 
     it('should handle errors', done => {
       const app = new Koa();
