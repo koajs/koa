@@ -641,6 +641,24 @@ describe('app.respond', () => {
       assert.strictEqual(res.headers.hasOwnProperty('content-length'), false);
     });
 
+    it('empty object mode stream should result in empty array', async() => {
+      const app = new Koa();
+
+      app.use(ctx => {
+        const stream = new PassThrough({ objectMode: true, autoDestroy: false });
+        ctx.body = stream;
+        setImmediate(() => stream.end());
+      });
+
+      const server = app.listen();
+
+      const res = await request(server)
+        .get('/')
+        .expect('Content-Type', 'application/json; charset=utf-8')
+        .expect('[]');
+      assert.strictEqual(res.headers.hasOwnProperty('content-length'), false);
+    });
+
     it('should handle errors', done => {
       const app = new Koa();
 
