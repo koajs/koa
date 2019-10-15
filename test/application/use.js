@@ -107,7 +107,7 @@ describe('app.use(fn)', () => {
   });
 
   it('should output deprecation message for generator functions', done => {
-    process.once('deprecation', message => {
+    process.once('warning', message => {
       assert(/Support for generators will be removed/.test(message));
       done();
     });

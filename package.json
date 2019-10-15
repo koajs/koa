@@ -29,7 +29,6 @@
     "cookies": "~0.8.0",
     "debug": "~3.1.0",
     "delegates": "^1.0.0",
-    "depd": "^1.1.2",
     "destroy": "^1.0.4",
     "encodeurl": "^1.0.2",
     "error-inject": "^1.0.0",
