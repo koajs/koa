@@ -1,4 +1,10 @@
 
+1.7.0 / 2019-10-17
+==================
+
+**features**
+  * [[`db7f52d`](http://github.com/koajs/koa/commit/db7f52d05e1d3ca804494267239257e56d0fe2dc)] - feat: support sameSite=none cookies (bump cookies dependency) (#1390) (#1408) (Elias-Serneels <<elias.serneels@gmail.com>>)
+
 1.6.2 / 2018-09-11
 ==================
 
