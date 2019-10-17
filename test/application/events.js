@@ -43,4 +43,31 @@ describe('app emits events', () => {
     assert.deepStrictEqual(emitted, ['request', 'fistMiddleWare', 'customEvent', 'lastMiddleware', 'respond', 'responded']);
     assert.strictEqual(onceEvents, 3);
   });
+
+  it('should emit error event on middleware throw', async() => {
+    const app = new Koa();
+    const emitted = [];
+    app.on('error', err => emitted.push(err));
+
+    app.use((ctx, next) => {
+      throw new TypeError('Hello Koa!');
+    });
+
+    const server = app.listen();
+
+    let onceEvents = 0;
+    app.once('error', (err, ctx) => {
+      assert.ok(err instanceof TypeError);
+      assert.strictEqual(ctx.app, app);
+      onceEvents++;
+    });
+
+    await request(server)
+      .get('/')
+      .expect(500);
+
+    assert.deepStrictEqual(emitted.length, 1);
+    assert.ok(emitted[0] instanceof TypeError);
+    assert.strictEqual(onceEvents, 1);
+  });
 });
