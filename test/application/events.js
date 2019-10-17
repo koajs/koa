@@ -9,11 +9,16 @@ describe('app emits events', () => {
   it('should emit request, respond and responded once and in correct order', async() => {
     const app = new Koa();
     const emitted = [];
-    ['request', 'respond', 'responded', 'error'].forEach(event => app.on(event, () => emitted.push(event)));
+    ['request', 'respond', 'responded', 'error', 'customEvent'].forEach(event => app.on(event, () => emitted.push(event)));
 
     app.use((ctx, next) => {
       emitted.push('fistMiddleWare');
       ctx.body = 'hello!';
+      return next();
+    });
+
+    app.use((ctx, next) => {
+      ctx.app.emit('customEvent');
       return next();
     });
 
@@ -27,6 +32,6 @@ describe('app emits events', () => {
       .get('/')
       .expect(200);
 
-    assert.deepStrictEqual(emitted, ['request', 'fistMiddleWare', 'lastMiddleware', 'respond', 'responded']);
+    assert.deepStrictEqual(emitted, ['request', 'fistMiddleWare', 'customEvent', 'lastMiddleware', 'respond', 'responded']);
   });
 });
