@@ -15,7 +15,10 @@ describe('app', () => {
     });
 
     app.on('error', err => {
-      assert.equal(err.message, 'boom');
+      // Stream.finished throws different error than `on-finished` module
+      assert.ok(
+        err.code === 'ERR_STREAM_PREMATURE_CLOSE' || err.message === 'boom'
+      );
       done();
     });
 
