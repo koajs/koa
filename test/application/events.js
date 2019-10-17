@@ -24,14 +24,24 @@ describe('app emits events', () => {
 
     app.use(ctx => {
       emitted.push('lastMiddleware');
+      console.log('Called');
     });
 
     const server = app.listen();
+
+    let onceEvents = 0;
+    ['request', 'respond', 'responded'].forEach(event =>
+      app.once(event, ctx => {
+        assert.strictEqual(ctx.app, app);
+        onceEvents++;
+      })
+    );
 
     await request(server)
       .get('/')
       .expect(200);
 
     assert.deepStrictEqual(emitted, ['request', 'fistMiddleWare', 'customEvent', 'lastMiddleware', 'respond', 'responded']);
+    assert.strictEqual(onceEvents, 3);
   });
 });
