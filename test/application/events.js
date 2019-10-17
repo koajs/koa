@@ -24,7 +24,6 @@ describe('app emits events', () => {
 
     app.use(ctx => {
       emitted.push('lastMiddleware');
-      console.log('Called');
     });
 
     const server = app.listen();
