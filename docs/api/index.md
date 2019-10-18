@@ -261,16 +261,17 @@ Note:
   More advanced example, use events to detect that server is idling for some time:
 
   ```js
-    const onIdle10000ms = () => { console.warn('Server is idle for 10 seconds!'); }
-    const IDLE_INTERVAL = 10000;
-    let idleInterval = setInterval(onIdle10000ms, IDLE_INTERVAL);
+    const server = app.listen();
+    const IDLE_INTERVAL = 2 * server.timeout;
+    const onIdle = () => { console.warn(`Server is idle for ${IDLE_INTERVAL / 1000} seconds!`); }
+    let idleInterval = setInterval(onIdle, IDLE_INTERVAL);
     app
       .on('request', () => {
         clearInterval(idleInterval);
       })
       .on('responded', () => {
         clearInterval(idleInterval);
-        idleInterval = setInterval(onIdle10000ms, IDLE_INTERVAL);
+        idleInterval = setInterval(onIdle, IDLE_INTERVAL);
       })
   ```
 
