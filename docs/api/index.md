@@ -248,6 +248,8 @@ Note:
   })
   ```
 
+  Note: `respond` event may not be emitted in case of premature socket close (due to a middleware timeout, for example).
+
 ### Event: 'responded'
 
   Emitted when the response stream is finished. Good place to cleanup any resources attached to `ctx.state` for example:

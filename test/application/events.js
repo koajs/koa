@@ -69,4 +69,24 @@ describe('app emits events', () => {
     assert.deepStrictEqual(emitted, ['request', 'error', 'respond', 'responded']);
     assert.strictEqual(onceEvents, 1);
   });
+
+  it('should emit correct events on middleware timeout', async() => {
+    const app = new Koa();
+    const emitted = [];
+    ['request', 'respond', 'responded', 'error', 'timeout'].forEach(event => app.on(event, () => emitted.push(event)));
+
+    app.use(async(ctx, next) => {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      ctx.body = 'Timeout';
+    });
+
+    const server = app.listen();
+    server.setTimeout(1000, socket => { app.emit('timeout'); socket.end('HTTP/1.1 408 Request Timeout\r\n\r\n'); });
+
+    await request(server)
+      .get('/')
+      .expect(408);
+
+    assert.deepStrictEqual(emitted, ['request', 'responded', 'timeout']);
+  });
 });
