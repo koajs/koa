@@ -47,7 +47,7 @@ describe('app emits events', () => {
   it('should emit error event on middleware throw', async() => {
     const app = new Koa();
     const emitted = [];
-    app.on('error', err => emitted.push(err));
+    ['request', 'respond', 'responded', 'error'].forEach(event => app.on(event, () => emitted.push(event)));
 
     app.use((ctx, next) => {
       throw new TypeError('Hello Koa!');
@@ -66,8 +66,7 @@ describe('app emits events', () => {
       .get('/')
       .expect(500);
 
-    assert.deepStrictEqual(emitted.length, 1);
-    assert.ok(emitted[0] instanceof TypeError);
+    assert.deepStrictEqual(emitted, ['request', 'error', 'respond', 'responded']);
     assert.strictEqual(onceEvents, 1);
   });
 });
