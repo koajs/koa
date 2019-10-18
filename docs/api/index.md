@@ -269,6 +269,7 @@ Note:
         clearInterval(idleInterval);
       })
       .on('responded', () => {
+        clearInterval(idleInterval);
         idleInterval = setInterval(onIdle10000ms, IDLE_INTERVAL);
       })
   ```
