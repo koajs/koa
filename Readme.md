@@ -42,8 +42,8 @@ app.listen(3000);
  - [Kick-Off-Koa](https://github.com/koajs/kick-off-koa) - An intro to Koa via a set of self-guided workshops.
  - [Workshop](https://github.com/koajs/workshop) - A workshop to learn the basics of Koa, Express' spiritual successor.
  - [Introduction Screencast](https://knowthen.com/episode-3-koajs-quickstart-guide/) - An introduction to installing and getting started with Koa
-
-
+ - [How to set up a powerful API with GraphQL, Koa, and MongoDB](https://medium.com/better-programming/how-to-setup-a-powerful-api-with-graphql-koa-and-mongodb-339cfae832a1) - How to build and GraphQL API using Koa, for beginners. 
+ - [NODE.JS: LEARNING KOA.JS BY BUILDING REST APIS](https://courseforfree.com/node-js-learning-koa-js-by-building-rest-apis/) - A free Koa course
 ## Middleware
 
 Koa is a middleware framework that can take two different kinds of functions as middleware:
