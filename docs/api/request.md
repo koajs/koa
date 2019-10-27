@@ -202,9 +202,13 @@ ctx.body = await db.find('something');
   Most of the reverse proxy(nginx) set x-forwarded-for via
   `proxy_add_x_forwarded_for`, which poses a certain security risk.
   A malicious attacker can forge a client's ip address by forging
-  a `X-Forwarded-For`request header(like ["mocked client",
-  "client", "proxy1", "proxy2"]), Koa offers two options to avoid
-  being bypassed.
+  a `X-Forwarded-For`request header. The request sent by the client
+  has an `X-Forwarded-For` request header for 'forged'. After being
+  forwarded by the reverse proxy, the server will receive the
+  `X-Forwarded-For` request header of
+  ['forged', 'client', 'proxy1', 'proxy2'].
+
+  Koa offers two options to avoid being bypassed.
 
   If you can control the reverse proxy, you can avoid bypassing
   by adjusting the configuration, or use the `app.proxyIpHeader`
