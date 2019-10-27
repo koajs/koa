@@ -115,7 +115,7 @@ app.listen(3000);
   - `app.keys` array of signed cookie keys
   - `app.proxy` when true proxy header fields will be trusted
   - `app.subdomainOffset` offset of `.subdomains` to ignore, default to 2
-  - `app.proxyIPHeader` proxy ip header, default to `X-Forwarded-For`
+  - `app.proxyIpHeader` proxy ip header, default to `X-Forwarded-For`
   - `app.maxIpsCount` max ips read from proxy ip header, default to 0 (means infinity)
 
   You can pass the settings to the constructor:
