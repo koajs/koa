@@ -204,8 +204,7 @@ ctx.body = await db.find('something');
   A malicious attacker can forge a client's ip address by forging
   a `X-Forwarded-For`request header. The request sent by the client
   has an `X-Forwarded-For` request header for 'forged'. After being
-  forwarded by the reverse proxy, the server will receive the
-  `X-Forwarded-For` request header of
+  forwarded by the reverse proxy, `request.ips` will be
   ['forged', 'client', 'proxy1', 'proxy2'].
 
   Koa offers two options to avoid being bypassed.
