@@ -1,4 +1,20 @@
 
+2.11.0 / 2019-10-28
+==================
+
+**features**
+  * [[`422e539`](http://github.com/koajs/koa/commit/422e539e8989e65ba43ecc39ddbaa3c4f755d465)] - feat: support app.proxyIPHeader and app.maxIpsCount to make ctx.ips more security (Yiyu He <<dead_horse@qq.com>>)
+  * [[`d48d88e`](http://github.com/koajs/koa/commit/d48d88ee17b780c02123e6d657274cab456e943e)] - feat: implement response.has (#1397) (Konstantin Vyatkin <<tino@vtkn.io>>)
+
+**others**
+  * [[`4dc56f6`](http://github.com/koajs/koa/commit/4dc56f6d04e8f5fe12ba53a8a776653b3d7b60ed)] - chore: update ESLint and plugins/configs (#1407) (Konstantin Vyatkin <<tino@vtkn.io>>)
+  * [[`be7d334`](http://github.com/koajs/koa/commit/be7d334778481639294cdf87f5c359a230aeb65b)] - chore: removes code duplication at handling HEAD method (#1400) (Konstantin Vyatkin <<tino@vtkn.io>>)
+  * [[`f155785`](http://github.com/koajs/koa/commit/f155785e2bb42b5ddf0a8156401c6dafdf57ba8b)] - chore: support `writableEnded` (#1402) (Konstantin Vyatkin <<tino@vtkn.io>>)
+  * [[`b968688`](http://github.com/koajs/koa/commit/b968688afe2c727ae141f50aa983d481dbc1dbbf)] - chore: add FUNDING.yml (#1403) (Konstantin Vyatkin <<tino@vtkn.io>>)
+  * [[`4f96829`](http://github.com/koajs/koa/commit/4f968298f97394e488297ec32c8e927a3a322076)] - chore: remove isJSON in res.length (#1399) (Konstantin Vyatkin <<tino@vtkn.io>>)
+  * [[`8be5626`](http://github.com/koajs/koa/commit/8be5626bbb54e6c899a1b71d22411709126d9fea)] - build: enable codecov partial coverage and use bash uploader (#1396) (Konstantin Vyatkin <<tino@vtkn.io>>)
+  * [[`ef5c43b`](http://github.com/koajs/koa/commit/ef5c43bcbcf31819e032c3b7ae7654b7f8e9358b)] - chore: use rest params (#1393) (Konstantin Vyatkin <<tino@vtkn.io>>)
+
 2.10.0 / 2019-10-12
 ==================
 
