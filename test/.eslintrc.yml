@@ -1,0 +1,12 @@
+env:
+  mocha: true
+
+rules:
+  space-before-blocks: [2, {functions: never, keywords: always}]
+  no-unused-expressions: 0
+  node/no-deprecated-api: 'warn'
+  quote-props: 'warn'
+  no-prototype-builtins: 'warn'
+  array-bracket-spacing: 'warn'
+  object-curly-spacing: 'warn'
+  dot-notation: 'warn'
