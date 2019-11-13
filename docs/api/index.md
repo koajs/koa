@@ -112,7 +112,7 @@ app.listen(3000);
   the following are supported:
 
   - `app.env` defaulting to the __NODE_ENV__ or "development"
-  - `app.keys` array of signed cookie keys
+  - `app.keys` `KeyGrip` instance, or array of signed cookie keys (less secured)
   - `app.proxy` when true proxy header fields will be trusted
   - `app.subdomainOffset` offset of `.subdomains` to ignore, default to 2
   - `app.proxyIpHeader` proxy ip header, default to `X-Forwarded-For`
@@ -187,8 +187,8 @@ https.createServer(app.callback()).listen(3001);
  example the following are acceptable:
 
 ```js
-app.keys = ['im a newer secret', 'i like turtle'];
-app.keys = new KeyGrip(['im a newer secret', 'i like turtle'], 'sha256');
+app.keys = ['insert 64 bytes random string', 'insert another 64 bytes random string']; // sha1 is less secured
+app.keys = new KeyGrip(['insert 64 bytes random string', 'insert another 64 bytes random string'], 'sha256');
 ```
 
   These keys may be rotated and are used when signing cookies
