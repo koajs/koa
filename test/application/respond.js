@@ -465,6 +465,29 @@ describe('app.respond', () => {
       assert.equal(res.headers.hasOwnProperty('content-type'), false);
     });
 
+    it('should respond 200 with status=200 and emptyBodyAs204=false', async() => {
+      const app = new Koa({
+        response: {
+          emptyBodyAs204: false
+        }
+      });
+
+      app.use(ctx => {
+        ctx.status = 200;
+        ctx.body = null;
+        ctx.type = 'json';
+      });
+
+      const server = app.listen();
+
+      await request(server)
+        .get('/')
+        .expect(200)
+        .expect('null')
+        .expect('Content-Type', 'application/json; charset=utf-8')
+        .expect('Content-Length', '4');
+    });
+
     it('should respond 205 with status=205', async() => {
       const app = new Koa();
 
