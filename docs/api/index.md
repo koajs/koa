@@ -117,6 +117,7 @@ app.listen(3000);
   - `app.subdomainOffset` offset of `.subdomains` to ignore, default to 2
   - `app.proxyIpHeader` proxy ip header, default to `X-Forwarded-For`
   - `app.maxIpsCount` max ips read from proxy ip header, default to 0 (means infinity)
+  - `app.maxHeaderSize` maximum size of HTTP headers in bytes
 
   You can pass the settings to the constructor:
   ```js
