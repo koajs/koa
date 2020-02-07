@@ -78,7 +78,7 @@ Koa uses the [cookies](https://github.com/pillarjs/cookies) module where options
 
   Set cookie `name` to `value` with `options`:
 
-* `maxAge`: a number representing the milliseconds from `Date.now()` for expiry
+* `maxAge`: a number representing the milliseconds from `Date.now()` for expiry.
 * `expires`: a `Date` object indicating the cookie's expiration date (expires at the end of session by default).
 * `path`: a string indicating the path of the cookie (`/` by default).
 * `domain`: a string indicating the domain of the cookie (no default).
