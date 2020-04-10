@@ -221,7 +221,6 @@ See [AUTHORS](AUTHORS).
  - [Examples](https://github.com/koajs/examples)
  - [Middleware](https://github.com/koajs/koa/wiki) list
  - [Wiki](https://github.com/koajs/koa/wiki)
- - [G+ Community](https://plus.google.com/communities/101845768320796750641)
  - [Reddit Community](https://www.reddit.com/r/koajs)
  - [Mailing list](https://groups.google.com/forum/#!forum/koajs)
  - [中文文档 v1.x](https://github.com/guo-yu/koa-guide)
