@@ -90,6 +90,16 @@ __NOTE__: don't worry too much about memorizing these strings,
 if you have a typo an error will be thrown, displaying this list
 so you can make a correction.
 
+  Since `response.status` default is set to `404`, to send a response
+  without a body and with a different status is to be done like this:
+
+```js
+ctx.response.status = 200;
+
+// Or whatever other status
+ctx.response.status = 204;
+```
+
 ### response.message
 
   Get response status message. By default, `response.message` is
