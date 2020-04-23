@@ -175,7 +175,21 @@ https.createServer(app.callback()).listen(3001);
 
 ## app.use(function)
 
-  Add the given middleware function to this application. See [Middleware](https://github.com/koajs/koa/wiki#middleware) for
+  Add the given middleware function to this application.
+  `app.use()` returns `this`, so is chainable.
+```js
+app.use(someMiddleware)
+app.use(someOtherMiddleware)
+app.listen(3000)
+```
+  Is the same as
+```js
+app.use(someMiddleware)
+  .use(someOtherMiddleware)
+  .listen(3000)
+```
+
+  See [Middleware](https://github.com/koajs/koa/wiki#middleware) for
   more information.
 
 ## app.keys=
