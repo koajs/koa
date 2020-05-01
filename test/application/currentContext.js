@@ -6,7 +6,13 @@ const assert = require('assert');
 const Koa = require('../..');
 
 describe('app.currentContext', () => {
-  it('should get currentContext work', async() => {
+  it('should throw error if AsyncLocalStorage not support', () => {
+    if (require('async_hooks').AsyncLocalStorage) return;
+    assert.throws(() => new Koa({ asyncLocalStorage: true }),
+      /Requires node 13\.0\.0 or higher to enable asyncLocalStorage/);
+  });
+
+  it('should get currentContext return context when asyncLocalStorage enable', async() => {
     if (!require('async_hooks').AsyncLocalStorage) return;
 
     const app = new Koa({ asyncLocalStorage: true });
@@ -41,5 +47,18 @@ describe('app.currentContext', () => {
       requestServer(),
       requestServer()
     ]);
+  });
+
+  it('should get currentContext return undefined when asyncLocalStorage disable', async() => {
+    if (!require('async_hooks').AsyncLocalStorage) return;
+
+    const app = new Koa();
+
+    app.use(async ctx => {
+      assert(app.currentContext === undefined);
+      ctx.body = 'ok';
+    });
+
+    await request(app.callback()).get('/').expect('ok');
   });
 });
