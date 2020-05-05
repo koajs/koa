@@ -810,4 +810,41 @@ describe('app.respond', () => {
       assert.equal(res.headers.hasOwnProperty('content-type'), false);
     });
   });
+
+  describe('with explicit null body', () => {
+    it('should preserve given status', async() => {
+      const app = new Koa();
+
+      app.use(ctx => {
+        ctx.body = null;
+        ctx.status = 404;
+      });
+
+      const server = app.listen();
+
+      return request(server)
+        .get('/')
+        .expect(404)
+        .expect('')
+        .expect({});
+    });
+    it('should respond with correct headers', async() => {
+      const app = new Koa();
+
+      app.use(ctx => {
+        ctx.body = null;
+        ctx.status = 401;
+      });
+
+      const server = app.listen();
+
+      const res = await request(server)
+        .get('/')
+        .expect(401)
+        .expect('')
+        .expect({});
+
+      assert.equal(res.headers.hasOwnProperty('content-type'), false);
+    });
+  });
 });
