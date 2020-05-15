@@ -10,6 +10,8 @@ describe('app.response', () => {
   app1.response.msg = 'hello';
   const app2 = new Koa();
   const app3 = new Koa();
+  const app4 = new Koa();
+  const app5 = new Koa();
 
   it('should merge properties', () => {
     app1.use((ctx, next) => {
@@ -42,5 +44,31 @@ describe('app.response', () => {
       .get('/')
       .expect(404);
     assert.equal(response.text, '404');
+  });
+
+  it('should set ._explicitNullBody correctly', async() => {
+    app4.use((ctx, next) => {
+      ctx.body = null;
+      assert.strictEqual(ctx.response._explicitNullBody, true);
+    });
+
+    return request(app4.listen())
+      .get('/')
+      .expect(204);
+  });
+
+  it('should not set ._explicitNullBody incorrectly', async() => {
+    app5.use((ctx, next) => {
+      ctx.body = undefined;
+      assert.strictEqual(ctx.response._explicitNullBody, undefined);
+      ctx.body = '';
+      assert.strictEqual(ctx.response._explicitNullBody, undefined);
+      ctx.body = false;
+      assert.strictEqual(ctx.response._explicitNullBody, undefined);
+    });
+
+    return request(app5.listen())
+      .get('/')
+      .expect(204);
   });
 });
