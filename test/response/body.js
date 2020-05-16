@@ -4,6 +4,7 @@
 const response = require('../helpers/context').response;
 const assert = require('assert');
 const fs = require('fs');
+const Stream = require('stream');
 
 describe('res.body=', () => {
   describe('when Content-Type is set', () => {
@@ -107,6 +108,16 @@ describe('res.body=', () => {
       const res = response();
       res.body = fs.createReadStream('LICENSE');
       assert.equal('application/octet-stream', res.header['content-type']);
+    });
+
+    it('should add error handler to the stream, but only once', () => {
+      const res = response();
+      const body = new Stream.PassThrough();
+      assert.strictEqual(body.listenerCount('error'), 0);
+      res.body = body;
+      assert.strictEqual(body.listenerCount('error'), 1);
+      res.body = body;
+      assert.strictEqual(body.listenerCount('error'), 1);
     });
   });
 
