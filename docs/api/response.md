@@ -171,7 +171,7 @@ app.use(async (ctx, next) => {
 const PassThrough = require('stream').PassThrough;
 
 app.use(async ctx => {
-  ctx.body = someHTTPStream.on('error', ctx.onerror).pipe(PassThrough());
+  ctx.body = someHTTPStream.on('error', (err) => ctx.onerror(err)).pipe(PassThrough());
 });
 ```
 
