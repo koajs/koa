@@ -1,6 +1,6 @@
 {
   "name": "koa",
-  "version": "2.11.0",
+  "version": "2.12.0",
   "description": "Koa web app framework",
   "main": "lib/application.js",
   "scripts": {
