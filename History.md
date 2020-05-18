@@ -1,4 +1,21 @@
 
+2.12.0 / 2020-05-18
+==================
+
+**features**
+  * [[`0d2f421`](http://github.com/koajs/koa/commit/0d2f421c265350d3d84e1bc261572954479f27d3)] - feat: error handler treat err.statusCode as the same as err.status (#1460) (Vijay Krishnavanshi <<vijaykrishnavanshi@gmail.com>>)
+  * [[`8d52105`](http://github.com/koajs/koa/commit/8d52105a34234be9e771ff3b76b43e4e30328943)] - feat: allow bodyless responses for non empty status codes (#1447) (ejose19 <<8742215+ejose19@users.noreply.github.com>>)
+
+**others**
+  * [[`faeaff5`](http://github.com/koajs/koa/commit/faeaff5c149a81a188ab8e5af0b994029e45acbb)] - fox: remove `error-inject` and fix error handling (#1409) (Konstantin Vyatkin <<tino@vtkn.io>>)
+  * [[`f7c732f`](http://github.com/koajs/koa/commit/f7c732fd06f724505e9090add4d977e667da55a8)] - docs: fixed incorrect onerror example (#1459) (Paul Annekov <<paul.annekov@gmail.com>>)
+  * [[`143d8f7`](http://github.com/koajs/koa/commit/143d8f72f2a232b4c97eac00e7811015911e4f7c)] - Always use strict equality. (#1225) (Yazan Medanat <<medanat@gmail.com>>)
+  * [[`6b6b0dd`](http://github.com/koajs/koa/commit/6b6b0ddf7aff073e65493c6efaffab8331c0331c)] - docs(api): add app.use chainability note (#1449) (Zac Anger <<zac@zacanger.com>>)
+  * [[`8ddab48`](http://github.com/koajs/koa/commit/8ddab48cbdbca1e6d1cc8c3ddae45491db524d51)] - docs: Document response status with empty body (#1445) (Marc-Aurèle DARCHE <<152407+madarche@users.noreply.github.com>>)
+  * [[`7deedb2`](http://github.com/koajs/koa/commit/7deedb235274223f1b9da46dee296545b23598de)] - docs: Updating context.md with the latest cookies opts (#1433) (Brad Ito <<phlogisticfugu@users.noreply.github.com>>)
+  * [[`3e97a10`](http://github.com/koajs/koa/commit/3e97a106bb846d9337737011bb85149ddd797229)] - docs(links): remove Google+ link (#1439) (laffachan <<45162759+laffachan@users.noreply.github.com>>)
+  * [[`eda2760`](http://github.com/koajs/koa/commit/eda27608f7d39ede86d7b402aae64b1867ce31c6)] - build: Drop unused Travis sudo: false directive (#1416) (Olle Jonsson <<olle.jonsson@gmail.com>>)
+
 2.11.0 / 2019-10-28
 ==================
 
