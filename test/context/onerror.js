@@ -100,6 +100,48 @@ describe('ctx.onerror(err)', () => {
       .expect(200, () => {});
   });
 
+  it('should set status specified in the error using statusCode', () => {
+    const app = new Koa();
+
+    app.use((ctx, next) => {
+      ctx.body = 'something else';
+      const err = new Error('Not found');
+      err.statusCode = 404;
+      throw err;
+    });
+
+    const server = app.listen();
+
+    return request(server)
+      .get('/')
+      .expect(404)
+      .expect('Content-Type', 'text/plain; charset=utf-8')
+      .expect('Not Found');
+  });
+
+  describe('when invalid err.statusCode', () => {
+    describe('not number', () => {
+      it('should respond 500', () => {
+        const app = new Koa();
+
+        app.use((ctx, next) => {
+          ctx.body = 'something else';
+          const err = new Error('some error');
+          err.statusCode = 'notnumber';
+          throw err;
+        });
+
+        const server = app.listen();
+
+        return request(server)
+          .get('/')
+          .expect(500)
+          .expect('Content-Type', 'text/plain; charset=utf-8')
+          .expect('Internal Server Error');
+      });
+    });
+  });
+
   describe('when invalid err.status', () => {
     describe('not number', () => {
       it('should respond 500', () => {
