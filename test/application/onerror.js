@@ -16,6 +16,18 @@ describe('app.onerror(err)', () => {
     }, TypeError, 'non-error thrown: foo');
   });
 
+  it('should accept errors coming from other scopes', () => {
+    const ExternError = require('vm').runInNewContext('Error');
+
+    const app = new Koa();
+    const error = Object.assign(new ExternError('boom'), {
+      status: 418,
+      expose: true
+    });
+
+    assert.doesNotThrow(() => app.onerror(error));
+  });
+
   it('should do nothing if status is 404', () => {
     const app = new Koa();
     const err = new Error();
