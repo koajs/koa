@@ -16,6 +16,18 @@ describe('app.onerror(err)', () => {
     }, TypeError, 'non-error thrown: foo');
   });
 
+  it('should accept errors coming from other scopes', () => {
+    const ExternError = require('vm').runInNewContext('Error');
+
+    const app = new Koa();
+    const error = Object.assign(new ExternError('boom'), {
+      status: 418,
+      expose: true
+    });
+
+    assert.doesNotThrow(() => app.onerror(error));
+  });
+
   it('should do nothing if status is 404', () => {
     const app = new Koa();
     const err = new Error();
@@ -51,7 +63,7 @@ describe('app.onerror(err)', () => {
       if (input) msg = input;
     });
     app.onerror(err);
-    assert(msg === '  Foo');
+    assert(msg === '\n  Foo\n');
   });
 
   it('should use err.toString() instad of err.stack', () => {
@@ -68,6 +80,6 @@ describe('app.onerror(err)', () => {
       if (input) msg = input;
     });
     app.onerror(err);
-    assert(msg === '  Error: mock stack null');
+    assert(msg === '\n  Error: mock stack null\n');
   });
 });

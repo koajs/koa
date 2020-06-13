@@ -1,4 +1,13 @@
 
+2.12.1 / 2020-06-13
+==================
+
+**fixes**
+  * [[`e2030c7`](http://github.com/koajs/koa/commit/e2030c7249c7ae24e28158d8eae405a02fefc9f8)] - fix: Improve checks for Error in onerror handlers (#1468) (Julien Wajsberg <<felash@gmail.com>>)
+
+**others**
+  * [[`5208c5e`](http://github.com/koajs/koa/commit/5208c5e15d35b3653fce6b8ed68d09865abea843)] - chore: Use single console.error() statement in error handler (#1471) (Mike Vosseller <<michael.vosseller@gmail.com>>)
+
 2.12.0 / 2020-05-18
 ==================
 
