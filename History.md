@@ -1,4 +1,15 @@
 
+2.13.0 / 2020-06-21
+==================
+
+**features**
+  * [[`bbcde76`](http://github.com/koajs/koa/commit/bbcde76f5cb5b67bbcd3201791cf0ef648fd3a8b)] - feat: support esm (#1474) (ZYSzys <<zhangyongsheng@youzan.com>>)
+
+**others**
+  * [[`20e58cf`](http://github.com/koajs/koa/commit/20e58cf3e4f20fc5d5886df1d0ac6dd8c33bd202)] - test: imporve coverage to 100% (dead-horse <<dead_horse@qq.com>>)
+  * [[`4a40d63`](http://github.com/koajs/koa/commit/4a40d633c4b4a203c6656078f9952ccef65c5875)] - build: use prepare instead of prepublish (dead-horse <<dead_horse@qq.com>>)
+  * [[`226ba8c`](http://github.com/koajs/koa/commit/226ba8c8e81e83da48e7bf137be3f146d03f40b8)] - build: use prepublish instead of prepack (dead-horse <<dead_horse@qq.com>>)
+
 2.12.1 / 2020-06-13
 ==================
 
