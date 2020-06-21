@@ -3,6 +3,7 @@ node_js:
   - 8
   - 10
   - 12
+  - 14
 cache:
   directories:
     - wrk/bin
@@ -13,6 +14,7 @@ before_script:
   - export PATH=$PATH:$PWD/wrk/bin/
 script:
   - npm run lint
+  - npm run prepack
   - npm run test-cov
   - npm run bench
 after_script:

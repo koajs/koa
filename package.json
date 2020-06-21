@@ -3,12 +3,21 @@
   "version": "2.12.1",
   "description": "Koa web app framework",
   "main": "lib/application.js",
+  "exports": {
+    ".": {
+      "require": "./lib/application.js",
+      "import": "./dist/koa.mjs"
+    },
+    "./": "./"
+  },
   "scripts": {
     "test": "egg-bin test test",
     "test-cov": "egg-bin cov test",
     "lint": "eslint benchmarks lib test",
     "bench": "make -C benchmarks",
-    "authors": "git log --format='%aN <%aE>' | sort -u > AUTHORS"
+    "authors": "git log --format='%aN <%aE>' | sort -u > AUTHORS",
+    "build": "gen-esm-wrapper . ./dist/koa.mjs",
+    "prepack": "npm run build"
   },
   "repository": "koajs/koa",
   "keywords": [
@@ -55,6 +64,7 @@
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "gen-esm-wrapper": "^1.0.6",
     "mm": "^2.5.0",
     "supertest": "^3.1.0"
   },
@@ -62,6 +72,7 @@
     "node": "^4.8.4 || ^6.10.1 || ^7.10.1 || >= 8.1.4"
   },
   "files": [
+    "dist",
     "lib"
   ]
 }
