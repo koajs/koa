@@ -683,6 +683,28 @@ describe('app.respond', () => {
         .expect('Content-Type', 'application/json; charset=utf-8')
         .expect('{"hello":"world"}');
     });
+    describe('and headers sent', () => {
+      it('should respond with json body and headers', () => {
+        const app = new Koa();
+
+        app.use(ctx => {
+          ctx.length = 17;
+          ctx.type = 'json';
+          ctx.set('foo', 'bar');
+          ctx.res.flushHeaders();
+          ctx.body = { hello: 'world' };
+        });
+
+        const server = app.listen();
+
+        return request(server)
+          .get('/')
+          .expect('Content-Type', 'application/json; charset=utf-8')
+          .expect('Content-Length', '17')
+          .expect('foo', 'bar')
+          .expect('{"hello":"world"}');
+      });
+    });
   });
 
   describe('when an error occurs', () => {
