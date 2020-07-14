@@ -43,7 +43,7 @@
     "encodeurl": "^1.0.2",
     "escape-html": "^1.0.3",
     "fresh": "~0.5.2",
-    "http-assert": "^1.3.0",
+    "http-assert": "^1.4.1",
     "http-errors": "^1.6.3",
     "is-generator-function": "^1.0.7",
     "koa-compose": "^4.1.0",
