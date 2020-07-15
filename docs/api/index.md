@@ -10,29 +10,6 @@ $ npm i koa
 $ node my-koa-app.js
 ```
 
-## Async Functions with Babel
-
-To use `async` functions in Koa in versions of node < 7.6, we recommend using [babel's require hook](http://babeljs.io/docs/usage/babel-register/).
-
-```js
-require('babel-register');
-// require the rest of the app that needs to be transpiled after the hook
-const app = require('./app');
-```
-
-To parse and transpile async functions,
-you should at a minimum have the [transform-async-to-generator](http://babeljs.io/docs/plugins/transform-async-to-generator/)
-or [transform-async-to-module-method](http://babeljs.io/docs/plugins/transform-async-to-module-method/) plugins.
-For example, in your `.babelrc` file, you should have:
-
-```json
-{
-  "plugins": ["transform-async-to-generator"]
-}
-```
-
-You can also use the [env preset](http://babeljs.io/docs/plugins/preset-env/) with a target option `"node": "current"` instead.
-
 # Application
 
   A Koa application is an object containing an array of middleware functions
