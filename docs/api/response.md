@@ -140,7 +140,7 @@ Koa doesn't guard against everything that could be put as a response body -- a f
 app.use(async (ctx, next) => {
   await next()
 
-  ctx.assert.equal('object', typeof ctx, 500, 'some dev did something wrong')
+  ctx.assert.equal('object', typeof ctx.body, 500, 'some dev did something wrong')
 })
 ```
 
