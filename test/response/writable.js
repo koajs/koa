@@ -21,7 +21,7 @@ describe('res.writable', () => {
       setTimeout(() => client.end(), 100);
     }
 
-    it('should always writable and response all requests', done => {
+    it('should always be writable and respond to all requests', done => {
       const app = new Koa();
       let count = 0;
       app.use(ctx => {
@@ -50,7 +50,7 @@ describe('res.writable', () => {
       });
     }
 
-    it('should not writable', done => {
+    it('should not be writable', done => {
       const app = new Koa();
       app.use(ctx => {
         sleep(1000)
@@ -77,7 +77,7 @@ describe('res.writable', () => {
       }, 100);
     }
 
-    it('should not writable', done => {
+    it('should not be writable', done => {
       const app = new Koa();
       app.use(ctx => {
         ctx.res.end();

@@ -24,7 +24,7 @@ describe('ctx.attachment([filename])', () => {
     });
   });
 
-  describe('when given a no-ascii filename', () => {
+  describe('when given a non-ascii filename', () => {
     it('should set the encodeURI filename param', () => {
       const ctx = context();
       ctx.attachment('path/to/include-no-ascii-char-中文名-ok.png');
@@ -168,7 +168,7 @@ describe('contentDisposition(filename, options)', () => {
         'inline');
     });
 
-    it('should create a header with inline type & filename', () => {
+    it('should create a header with inline type and filename', () => {
       const ctx = context();
       ctx.attachment('plans.pdf', { type: 'inline' });
       assert.equal(ctx.response.header['content-disposition'],

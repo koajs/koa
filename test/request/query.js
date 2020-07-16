@@ -18,14 +18,14 @@ describe('ctx.query', () => {
     });
   });
 
-  it('should return a parsed query-string', () => {
+  it('should return a parsed query string', () => {
     const ctx = context({ url: '/?page=2' });
     assert.equal(ctx.query.page, '2');
   });
 });
 
 describe('ctx.query=', () => {
-  it('should stringify and replace the querystring and search', () => {
+  it('should stringify and replace the query string and search', () => {
     const ctx = context({ url: '/store/shoes' });
     ctx.query = { page: 2, color: 'blue' };
     assert.equal(ctx.url, '/store/shoes?page=2&color=blue');
