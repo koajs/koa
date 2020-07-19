@@ -9,18 +9,16 @@ describe('res.length', () => {
   describe('when Content-Length is defined', () => {
     it('should return a number', () => {
       const res = response();
-      res.header['content-length'] = '120';
-      assert.equal(res.length, 120);
-    });
-  });
-});
-
-describe('res.length', () => {
-  describe('when Content-Length is defined', () => {
-    it('should return a number', () => {
-      const res = response();
       res.set('Content-Length', '1024');
       assert.equal(res.length, 1024);
+    });
+
+    describe('but not number', () => {
+      it('should return 0', () => {
+        const res = response();
+        res.set('Content-Length', 'hey');
+        assert.equal(res.length, 0);
+      });
     });
   });
 

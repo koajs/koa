@@ -6,6 +6,7 @@
   [![Test coverage][coveralls-image]][coveralls-url]
   [![OpenCollective Backers][backers-image]](#backers)
   [![OpenCollective Sponsors][sponsors-image]](#sponsors)
+  [![PR's Welcome][pr-welcoming-image]][pr-welcoming-url]
 
   Expressive HTTP middleware framework for node.js to make web applications and APIs more enjoyable to write. Koa's middleware stack flows in a stack-like manner, allowing you to perform actions downstream then filter and manipulate the response upstream.
 
@@ -40,7 +41,7 @@ app.listen(3000);
 
  - [Kick-Off-Koa](https://github.com/koajs/kick-off-koa) - An intro to Koa via a set of self-guided workshops.
  - [Workshop](https://github.com/koajs/workshop) - A workshop to learn the basics of Koa, Express' spiritual successor.
- - [Introduction Screencast](http://knowthen.com/episode-3-koajs-quickstart-guide/) - An introduction to installing and getting started with Koa
+ - [Introduction Screencast](https://knowthen.com/episode-3-koajs-quickstart-guide/) - An introduction to installing and getting started with Koa
 
 
 ## Middleware
@@ -135,7 +136,7 @@ app.use(async (ctx, next) => {
 ```
 
 The `Context` object also provides shortcuts for methods on its `request` and `response`.  In the prior
-examples,  `ctx.type` can be used instead of `ctx.request.type` and `ctx.accepts` can be used
+examples,  `ctx.type` can be used instead of `ctx.response.type` and `ctx.accepts` can be used
 instead of `ctx.request.accepts`.
 
 For more information on `Request`, `Response` and `Context`, see the [Request API Reference](docs/api/request.md),
@@ -161,16 +162,22 @@ Learn more about the application object in the [Application API Reference](docs/
 
 ## Babel setup
 
-If you're not using `node v7.6+`, we recommend setting up `babel` with [`babel-preset-env`](https://github.com/babel/babel-preset-env):
+If you're not using `node v7.6+`, we recommend setting up `babel` with [`@babel/preset-env`](https://babeljs.io/docs/en/next/babel-preset-env):
 
 ```bash
-$ npm install babel-register babel-preset-env --save
+$ npm install @babel/register @babel/preset-env @babel/cli --save-dev
 ```
 
-Setup `babel-register` in your entry file:
+In development, you'll want to use [`@babel/register`](https://babeljs.io/docs/en/next/babel-register):
 
-```js
-require('babel-register');
+```bash
+node --require @babel/register <your-entry-file>
+```
+
+In production, you'll want to build your files with [`@babel/cli`](https://babeljs.io/docs/en/babel-cli). Suppose you are compiling a folder `src` and you wanted the output to go to a new folder `dist` with non-javascript files copied:
+
+```bash
+babel src --out-dir dist --copy-files
 ```
 
 And have your `.babelrc` setup:
@@ -178,7 +185,7 @@ And have your `.babelrc` setup:
 ```json
 {
   "presets": [
-    ["env", {
+    ["@babel/preset-env", {
       "targets": {
         "node": true
       }
@@ -198,6 +205,12 @@ the general Koa guide.
 $ npm test
 ```
 
+## Reporting vulnerabilities
+
+To report a security vulnerability, please do not open an issue, as this notifies attackers
+of the vulnerability. Instead, please email [dead_horse](mailto:heyiyu.deadhorse@gmail.com) and [jonathanong](mailto:me@jongleberry.com) to
+disclose.
+
 ## Authors
 
 See [AUTHORS](AUTHORS).
@@ -208,7 +221,6 @@ See [AUTHORS](AUTHORS).
  - [Examples](https://github.com/koajs/examples)
  - [Middleware](https://github.com/koajs/koa/wiki) list
  - [Wiki](https://github.com/koajs/koa/wiki)
- - [G+ Community](https://plus.google.com/communities/101845768320796750641)
  - [Reddit Community](https://www.reddit.com/r/koajs)
  - [Mailing list](https://groups.google.com/forum/#!forum/koajs)
  - [中文文档 v1.x](https://github.com/guo-yu/koa-guide)
@@ -296,7 +308,7 @@ Become a sponsor and get your logo on our README on Github with a link to your s
 
 # License
 
-  MIT
+  [MIT](https://github.com/koajs/koa/blob/master/LICENSE)
 
 [npm-image]: https://img.shields.io/npm/v/koa.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/koa
@@ -309,3 +321,5 @@ Become a sponsor and get your logo on our README on Github with a link to your s
 [gitter-image]: https://img.shields.io/gitter/room/koajs/koa.svg?style=flat-square
 [gitter-url]: https://gitter.im/koajs/koa?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 [#koajs]: https://webchat.freenode.net/?channels=#koajs
+[pr-welcoming-image]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
+[pr-welcoming-url]: https://github.com/koajs/koa/pull/new

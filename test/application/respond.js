@@ -8,14 +8,6 @@ const Koa = require('../..');
 const fs = require('fs');
 
 describe('app.respond', () => {
-  beforeEach(() => {
-    global.console = jest.genMockFromModule('console');
-  });
-
-  afterEach(() => {
-    global.console = require('console');
-  });
-
   describe('when ctx.respond === false', () => {
     it('should function (ctx)', () => {
       const app = new Koa();
@@ -28,6 +20,7 @@ describe('app.respond', () => {
         res.statusCode = 200;
         setImmediate(() => {
           res.setHeader('Content-Type', 'text/plain');
+          res.setHeader('Content-Length', '3');
           res.end('lol');
         });
       });
@@ -49,6 +42,7 @@ describe('app.respond', () => {
         const res = ctx.res;
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
+        res.setHeader('Content-Length', '3');
         res.end('lol');
         ctx.set('foo', 'bar');
       });
@@ -73,6 +67,7 @@ describe('app.respond', () => {
         const res = ctx.res;
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
+        res.setHeader('Content-Length', '3');
         res.end('lol');
         ctx.status = 201;
       });
@@ -87,7 +82,7 @@ describe('app.respond', () => {
   });
 
   describe('when this.type === null', () => {
-    it('should not send Content-Type header', async () => {
+    it('should not send Content-Type header', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -106,7 +101,7 @@ describe('app.respond', () => {
   });
 
   describe('when HEAD is used', () => {
-    it('should not respond with the body', async () => {
+    it('should not respond with the body', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -124,7 +119,7 @@ describe('app.respond', () => {
       assert(!res.text);
     });
 
-    it('should keep json headers', async () => {
+    it('should keep json headers', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -142,7 +137,7 @@ describe('app.respond', () => {
       assert(!res.text);
     });
 
-    it('should keep string headers', async () => {
+    it('should keep string headers', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -160,7 +155,7 @@ describe('app.respond', () => {
       assert(!res.text);
     });
 
-    it('should keep buffer headers', async () => {
+    it('should keep buffer headers', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -175,6 +170,26 @@ describe('app.respond', () => {
 
       assert.equal(res.headers['content-type'], 'application/octet-stream');
       assert.equal(res.headers['content-length'], '11');
+      assert(!res.text);
+    });
+
+    it('should keep stream header if set manually', async() => {
+      const app = new Koa();
+
+      const { length } = fs.readFileSync('package.json');
+
+      app.use(ctx => {
+        ctx.length = length;
+        ctx.body = fs.createReadStream('package.json');
+      });
+
+      const server = app.listen();
+
+      const res = await request(server)
+        .head('/')
+        .expect(200);
+
+      assert.equal(res.header['content-length'], length);
       assert(!res.text);
     });
 
@@ -244,7 +259,6 @@ describe('app.respond', () => {
         ctx.status = 200;
         res.setHeader('Content-Type', 'text/html');
         res.write('Hello');
-        setTimeout(() => res.end('Goodbye'), 0);
       });
 
       app.on('error', err => { throw err; });
@@ -301,7 +315,7 @@ describe('app.respond', () => {
     });
 
     describe('with status=204', () => {
-      it('should respond without a body', async () => {
+      it('should respond without a body', async() => {
         const app = new Koa();
 
         app.use(ctx => {
@@ -320,7 +334,7 @@ describe('app.respond', () => {
     });
 
     describe('with status=205', () => {
-      it('should respond without a body', async () => {
+      it('should respond without a body', async() => {
         const app = new Koa();
 
         app.use(ctx => {
@@ -339,7 +353,7 @@ describe('app.respond', () => {
     });
 
     describe('with status=304', () => {
-      it('should respond without a body', async () => {
+      it('should respond without a body', async() => {
         const app = new Koa();
 
         app.use(ctx => {
@@ -358,7 +372,7 @@ describe('app.respond', () => {
     });
 
     describe('with custom status=700', () => {
-      it('should respond with the associated status message', async () => {
+      it('should respond with the associated status message', async() => {
         const app = new Koa();
         statuses['700'] = 'custom status';
 
@@ -378,7 +392,7 @@ describe('app.respond', () => {
     });
 
     describe('with custom statusMessage=ok', () => {
-      it('should respond with the custom status message', async () => {
+      it('should respond with the custom status message', async() => {
         const app = new Koa();
 
         app.use(ctx => {
@@ -416,7 +430,7 @@ describe('app.respond', () => {
   });
 
   describe('when .body is a null', () => {
-    it('should respond 204 by default', async () => {
+    it('should respond 204 by default', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -433,7 +447,7 @@ describe('app.respond', () => {
       assert.equal(res.headers.hasOwnProperty('content-type'), false);
     });
 
-    it('should respond 204 with status=200', async () => {
+    it('should respond 204 with status=200', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -451,7 +465,7 @@ describe('app.respond', () => {
       assert.equal(res.headers.hasOwnProperty('content-type'), false);
     });
 
-    it('should respond 205 with status=205', async () => {
+    it('should respond 205 with status=205', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -469,7 +483,7 @@ describe('app.respond', () => {
       assert.equal(res.headers.hasOwnProperty('content-type'), false);
     });
 
-    it('should respond 304 with status=304', async () => {
+    it('should respond 304 with status=304', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -522,7 +536,7 @@ describe('app.respond', () => {
   });
 
   describe('when .body is a Stream', () => {
-    it('should respond', async () => {
+    it('should respond', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -541,7 +555,7 @@ describe('app.respond', () => {
       assert.deepEqual(res.body, pkg);
     });
 
-    it('should strip content-length when overwriting', async () => {
+    it('should strip content-length when overwriting', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -561,7 +575,7 @@ describe('app.respond', () => {
       assert.deepEqual(res.body, pkg);
     });
 
-    it('should keep content-length if not overwritten', async () => {
+    it('should keep content-length if not overwritten', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -582,7 +596,7 @@ describe('app.respond', () => {
     });
 
     it('should keep content-length if overwritten with the same stream',
-      async () => {
+      async() => {
         const app = new Koa();
 
         app.use(ctx => {
@@ -668,6 +682,28 @@ describe('app.respond', () => {
         .get('/')
         .expect('Content-Type', 'application/json; charset=utf-8')
         .expect('{"hello":"world"}');
+    });
+    describe('and headers sent', () => {
+      it('should respond with json body and headers', () => {
+        const app = new Koa();
+
+        app.use(ctx => {
+          ctx.length = 17;
+          ctx.type = 'json';
+          ctx.set('foo', 'bar');
+          ctx.res.flushHeaders();
+          ctx.body = { hello: 'world' };
+        });
+
+        const server = app.listen();
+
+        return request(server)
+          .get('/')
+          .expect('Content-Type', 'application/json; charset=utf-8')
+          .expect('Content-Length', '17')
+          .expect('foo', 'bar')
+          .expect('{"hello":"world"}');
+      });
     });
   });
 
@@ -777,7 +813,7 @@ describe('app.respond', () => {
         .expect('hello');
     });
 
-    it('should 204', async () => {
+    it('should 204', async() => {
       const app = new Koa();
 
       app.use(ctx => {
@@ -792,6 +828,43 @@ describe('app.respond', () => {
       const res = await request(server)
         .get('/')
         .expect(204);
+
+      assert.equal(res.headers.hasOwnProperty('content-type'), false);
+    });
+  });
+
+  describe('with explicit null body', () => {
+    it('should preserve given status', async() => {
+      const app = new Koa();
+
+      app.use(ctx => {
+        ctx.body = null;
+        ctx.status = 404;
+      });
+
+      const server = app.listen();
+
+      return request(server)
+        .get('/')
+        .expect(404)
+        .expect('')
+        .expect({});
+    });
+    it('should respond with correct headers', async() => {
+      const app = new Koa();
+
+      app.use(ctx => {
+        ctx.body = null;
+        ctx.status = 401;
+      });
+
+      const server = app.listen();
+
+      const res = await request(server)
+        .get('/')
+        .expect(401)
+        .expect('')
+        .expect({});
 
       assert.equal(res.headers.hasOwnProperty('content-type'), false);
     });

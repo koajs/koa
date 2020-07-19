@@ -17,7 +17,7 @@
 
 ### response.socket
 
-  Request socket.
+  Response socket. Points to net.Socket instance as `request.socket`.
 
 ### response.status
 
@@ -90,6 +90,16 @@ __NOTE__: don't worry too much about memorizing these strings,
 if you have a typo an error will be thrown, displaying this list
 so you can make a correction.
 
+  Since `response.status` default is set to `404`, to send a response
+  without a body and with a different status is to be done like this:
+
+```js
+ctx.response.status = 200;
+
+// Or whatever other status
+ctx.response.status = 204;
+```
+
 ### response.message
 
   Get response status message. By default, `response.message` is
@@ -124,6 +134,16 @@ so you can make a correction.
 
 If `response.status` has not been set, Koa will automatically set the status to `200` or `204`.
 
+Koa doesn't guard against everything that could be put as a response body -- a function doesn't serialise meaningfully, returning a boolean may make sense based on your application, and while an error works, it may not work as intended as some properties of an error are not enumerable.  We recommend adding middleware in your app that asserts body types per app.  A sample middleware might be:
+
+```js
+app.use(async (ctx, next) => {
+  await next()
+
+  ctx.assert.equal('object', typeof ctx, 500, 'some dev did something wrong')
+})
+```
+
 #### String
 
   The Content-Type is defaulted to text/html or text/plain, both with
@@ -151,7 +171,7 @@ If `response.status` has not been set, Koa will automatically set the status to 
 const PassThrough = require('stream').PassThrough;
 
 app.use(async ctx => {
-  ctx.body = someHTTPStream.on('error', ctx.onerror).pipe(PassThrough());
+  ctx.body = someHTTPStream.on('error', (err) => ctx.onerror(err)).pipe(PassThrough());
 });
 ```
 
@@ -165,6 +185,15 @@ app.use(async ctx => {
 
 ```js
 const etag = ctx.response.get('ETag');
+```
+
+### response.has(field)
+
+  Returns `true` if the header identified by name is currently set in the outgoing headers.
+  The header name matching is case-insensitive.
+
+```js
+const rateLimited = ctx.response.has('X-RateLimit-Limit');
 ```
 
 ### response.set(field, value)
@@ -192,6 +221,8 @@ ctx.set({
   'Last-Modified': date
 });
 ```
+
+This delegates to [setHeader](https://nodejs.org/dist/latest/docs/api/http.html#http_request_setheader_name_value) which sets or updates headers by specified keys and doesn't reset the entire header.
 
 ### response.remove(field)
 
@@ -271,11 +302,11 @@ ctx.redirect('/cart');
 ctx.body = 'Redirecting to shopping cart';
 ```
 
-### response.attachment([filename])
+### response.attachment([filename], [options])
 
   Set `Content-Disposition` to "attachment" to signal the client
   to prompt for download. Optionally specify the `filename` of the
-  download.
+  download and some [options](https://github.com/jshttp/content-disposition#options).
 
 ### response.headerSent
 

@@ -48,6 +48,7 @@ You can also use the [env preset](http://babeljs.io/docs/plugins/preset-env/) wi
 
   The obligatory hello world application:
 
+<!-- runkit:endpoint -->
 ```js
 const Koa = require('koa');
 const app = new Koa();
@@ -74,6 +75,7 @@ app.listen(3000);
   middleware to execute downstream, the stack will unwind and each middleware is resumed to perform
   its upstream behaviour.
 
+<!-- runkit:endpoint -->
 ```js
 const Koa = require('koa');
 const app = new Koa();
@@ -110,8 +112,23 @@ app.listen(3000);
   the following are supported:
 
   - `app.env` defaulting to the __NODE_ENV__ or "development"
+  - `app.keys` array of signed cookie keys
   - `app.proxy` when true proxy header fields will be trusted
-  - `app.subdomainOffset` offset of `.subdomains` to ignore [2]
+  - `app.subdomainOffset` offset of `.subdomains` to ignore, default to 2
+  - `app.proxyIpHeader` proxy ip header, default to `X-Forwarded-For`
+  - `app.maxIpsCount` max ips read from proxy ip header, default to 0 (means infinity)
+
+  You can pass the settings to the constructor:
+  ```js
+  const Koa = require('koa');
+  const app = new Koa({ proxy: true });
+  ```
+  or dynamically:
+  ```js
+  const Koa = require('koa');
+  const app = new Koa();
+  app.proxy = true;
+  ```
 
 ## app.listen(...)
 
@@ -158,14 +175,28 @@ https.createServer(app.callback()).listen(3001);
 
 ## app.use(function)
 
-  Add the given middleware function to this application. See [Middleware](https://github.com/koajs/koa/wiki#middleware) for
+  Add the given middleware function to this application.
+  `app.use()` returns `this`, so is chainable.
+```js
+app.use(someMiddleware)
+app.use(someOtherMiddleware)
+app.listen(3000)
+```
+  Is the same as
+```js
+app.use(someMiddleware)
+  .use(someOtherMiddleware)
+  .listen(3000)
+```
+
+  See [Middleware](https://github.com/koajs/koa/wiki#middleware) for
   more information.
 
 ## app.keys=
 
  Set signed cookie keys.
 
- These are passed to [KeyGrip](https://github.com/jed/keygrip),
+ These are passed to [KeyGrip](https://github.com/crypto-utils/keygrip),
  however you may also pass your own `KeyGrip` instance. For
  example the following are acceptable:
 
@@ -202,7 +233,7 @@ app.use(async ctx => {
 Note:
 
 - Many properties on `ctx` are defined using getters, setters, and `Object.defineProperty()`. You can only edit these properties (not recommended) by using `Object.defineProperty()` on `app.context`. See https://github.com/koajs/koa/issues/652.
-- Mounted apps currently use its parent's `ctx` and settings. Thus, mounted apps are really just groups of middleware.
+- Mounted apps currently use their parent's `ctx` and settings. Thus, mounted apps are really just groups of middleware.
 
 ## Error Handling
 

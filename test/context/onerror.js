@@ -1,4 +1,3 @@
-
 'use strict';
 
 const assert = require('assert');
@@ -7,14 +6,6 @@ const Koa = require('../..');
 const context = require('../helpers/context');
 
 describe('ctx.onerror(err)', () => {
-  beforeEach(() => {
-    global.console = jest.genMockFromModule('console');
-  });
-
-  afterEach(() => {
-    global.console = require('console');
-  });
-
   it('should respond', () => {
     const app = new Koa();
 
@@ -33,7 +24,7 @@ describe('ctx.onerror(err)', () => {
       .expect('Content-Length', '4');
   });
 
-  it('should unset all headers', async () => {
+  it('should unset all headers', async() => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -56,7 +47,7 @@ describe('ctx.onerror(err)', () => {
     assert.equal(res.headers.hasOwnProperty('x-csrf-token'), false);
   });
 
-  it('should set headers specified in the error', async () => {
+  it('should set headers specified in the error', async() => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -108,6 +99,48 @@ describe('ctx.onerror(err)', () => {
       .expect(200, () => {});
   });
 
+  it('should set status specified in the error using statusCode', () => {
+    const app = new Koa();
+
+    app.use((ctx, next) => {
+      ctx.body = 'something else';
+      const err = new Error('Not found');
+      err.statusCode = 404;
+      throw err;
+    });
+
+    const server = app.listen();
+
+    return request(server)
+      .get('/')
+      .expect(404)
+      .expect('Content-Type', 'text/plain; charset=utf-8')
+      .expect('Not Found');
+  });
+
+  describe('when invalid err.statusCode', () => {
+    describe('not number', () => {
+      it('should respond 500', () => {
+        const app = new Koa();
+
+        app.use((ctx, next) => {
+          ctx.body = 'something else';
+          const err = new Error('some error');
+          err.statusCode = 'notnumber';
+          throw err;
+        });
+
+        const server = app.listen();
+
+        return request(server)
+          .get('/')
+          .expect(500)
+          .expect('Content-Type', 'text/plain; charset=utf-8')
+          .expect('Internal Server Error');
+      });
+    });
+  });
+
   describe('when invalid err.status', () => {
     describe('not number', () => {
       it('should respond 500', () => {
@@ -129,7 +162,26 @@ describe('ctx.onerror(err)', () => {
           .expect('Internal Server Error');
       });
     });
+    describe('when ENOENT error', () => {
+      it('should respond 404', () => {
+        const app = new Koa();
 
+        app.use((ctx, next) => {
+          ctx.body = 'something else';
+          const err = new Error('test for ENOENT');
+          err.code = 'ENOENT';
+          throw err;
+        });
+
+        const server = app.listen();
+
+        return request(server)
+          .get('/')
+          .expect(404)
+          .expect('Content-Type', 'text/plain; charset=utf-8')
+          .expect('Not Found');
+      });
+    });
     describe('not http status code', () => {
       it('should respond 500', () => {
         const app = new Koa();
@@ -149,6 +201,40 @@ describe('ctx.onerror(err)', () => {
           .expect('Content-Type', 'text/plain; charset=utf-8')
           .expect('Internal Server Error');
       });
+    });
+  });
+
+  describe('when error from another scope thrown', () => {
+    it('should handle it like a normal error', async() => {
+      const ExternError = require('vm').runInNewContext('Error');
+
+      const app = new Koa();
+      const error = Object.assign(new ExternError('boom'), {
+        status: 418,
+        expose: true
+      });
+      app.use((ctx, next) => {
+        throw error;
+      });
+
+      const server = app.listen();
+
+      const gotRightErrorPromise = new Promise((resolve, reject) => {
+        app.on('error', receivedError => {
+          try {
+            assert.strictEqual(receivedError, error);
+            resolve();
+          } catch (e) {
+            reject(e);
+          }
+        });
+      });
+
+      await request(server)
+        .get('/')
+        .expect(418);
+
+      await gotRightErrorPromise;
     });
   });
 
@@ -195,7 +281,7 @@ describe('ctx.onerror(err)', () => {
       });
 
       app.use(async ctx => {
-        throw {key: 'value'}; // eslint-disable-line no-throw-literal
+        throw { key: 'value' }; // eslint-disable-line no-throw-literal
       });
 
       request(app.callback())

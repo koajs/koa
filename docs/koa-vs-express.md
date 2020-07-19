@@ -1,5 +1,3 @@
-THIS DOCUMENT IS IN PROGRESS. THIS PARAGRAPH SHALL BE REMOVED WHEN THIS DOCUMENT IS DONE.
-
 # Koa vs Express
 
   Philosophically, Koa aims to "fix and replace node", whereas Express "augments node".
@@ -88,8 +86,8 @@ THIS DOCUMENT IS IN PROGRESS. THIS PARAGRAPH SHALL BE REMOVED WHEN THIS DOCUMENT
 ### Koa routing (third party libraries support)
 
   Since Express comes with its own routing, but Koa does not have
-  any in-built routing, but there are third party libraries available
-  koa-router and koa-route for routing.
-  Similarly just like we have helmet for security in Express, for Koa
-  we have koa-helmet available and the list goes on for Koa third
-  party available libraries.
+  any in-built routing, there are third party libraries available such as
+  koa-router and koa-route.
+  Similarly, just like we have helmet for security in Express, for Koa
+  we have koa-helmet available and the list goes on for Koa available third
+  party libraries.
