@@ -239,7 +239,7 @@ describe('ctx.onerror(err)', () => {
   });
 
   describe('when non-error thrown', () => {
-    it('should response non-error thrown message', () => {
+    it('should respond with non-error thrown message', () => {
       const app = new Koa();
 
       app.use((ctx, next) => {

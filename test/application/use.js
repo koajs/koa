@@ -98,7 +98,7 @@ describe('app.use(fn)', () => {
       .expect('generator');
   });
 
-  it('should throw error for non function', () => {
+  it('should throw error for non-function', () => {
     const app = new Koa();
 
     [null, undefined, 0, false, 'not a function'].forEach(v => {

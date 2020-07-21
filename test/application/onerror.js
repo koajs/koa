@@ -66,7 +66,7 @@ describe('app.onerror(err)', () => {
     assert(msg === '\n  Foo\n');
   });
 
-  it('should use err.toString() instad of err.stack', () => {
+  it('should use err.toString() instead of err.stack', () => {
     const app = new Koa();
     app.env = 'dev';
 

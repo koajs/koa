@@ -238,7 +238,7 @@ describe('app.respond', () => {
     });
   });
 
-  describe('when no middleware are present', () => {
+  describe('when no middleware is present', () => {
     it('should 404', () => {
       const app = new Koa();
 
