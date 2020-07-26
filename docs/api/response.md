@@ -130,9 +130,18 @@ ctx.response.status = 204;
   - `Buffer` written
   - `Stream` piped
   - `Object` || `Array` json-stringified
-  - `null` no content response
+  - `null` || `undefined` no content response
 
-If `response.status` has not been set, Koa will automatically set the status to `200` or `204`.
+If `response.status` has not been set, Koa will automatically set the status to `200` or `204` depending on `response.body`. Specifically, if `response.body` has not been set or has been set as `null` or `undefined`, Koa will automatically set `response.status` to `204`. If you really want to send no content response with other status, you should override the `204` status as the following way:
+
+```js
+// This must be always set first before status, since null | undefined
+// body automatically sets the status to 204
+ctx.body = null;
+// Now we override the 204 status with the desired one
+ctx.status = 200;
+```
+
 
 Koa doesn't guard against everything that could be put as a response body -- a function doesn't serialise meaningfully, returning a boolean may make sense based on your application, and while an error works, it may not work as intended as some properties of an error are not enumerable.  We recommend adding middleware in your app that asserts body types per app.  A sample middleware might be:
 
