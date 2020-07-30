@@ -36,7 +36,7 @@ describe('ctx.fresh', () => {
       });
     });
 
-    describe('and etag do not match', () => {
+    describe('and etag does not match', () => {
       it('should return false', () => {
         const ctx = context();
         ctx.status = 200;

@@ -1,4 +1,3 @@
-
 'use strict';
 
 const assert = require('assert');
@@ -205,8 +204,42 @@ describe('ctx.onerror(err)', () => {
     });
   });
 
+  describe('when error from another scope thrown', () => {
+    it('should handle it like a normal error', async() => {
+      const ExternError = require('vm').runInNewContext('Error');
+
+      const app = new Koa();
+      const error = Object.assign(new ExternError('boom'), {
+        status: 418,
+        expose: true
+      });
+      app.use((ctx, next) => {
+        throw error;
+      });
+
+      const server = app.listen();
+
+      const gotRightErrorPromise = new Promise((resolve, reject) => {
+        app.on('error', receivedError => {
+          try {
+            assert.strictEqual(receivedError, error);
+            resolve();
+          } catch (e) {
+            reject(e);
+          }
+        });
+      });
+
+      await request(server)
+        .get('/')
+        .expect(418);
+
+      await gotRightErrorPromise;
+    });
+  });
+
   describe('when non-error thrown', () => {
-    it('should response non-error thrown message', () => {
+    it('should respond with non-error thrown message', () => {
       const app = new Koa();
 
       app.use((ctx, next) => {
@@ -248,7 +281,7 @@ describe('ctx.onerror(err)', () => {
       });
 
       app.use(async ctx => {
-        throw {key: 'value'}; // eslint-disable-line no-throw-literal
+        throw { key: 'value' }; // eslint-disable-line no-throw-literal
       });
 
       request(app.callback())

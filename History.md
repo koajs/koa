@@ -1,4 +1,24 @@
 
+2.13.0 / 2020-06-21
+==================
+
+**features**
+  * [[`bbcde76`](http://github.com/koajs/koa/commit/bbcde76f5cb5b67bbcd3201791cf0ef648fd3a8b)] - feat: support esm (#1474) (ZYSzys <<zhangyongsheng@youzan.com>>)
+
+**others**
+  * [[`20e58cf`](http://github.com/koajs/koa/commit/20e58cf3e4f20fc5d5886df1d0ac6dd8c33bd202)] - test: imporve coverage to 100% (dead-horse <<dead_horse@qq.com>>)
+  * [[`4a40d63`](http://github.com/koajs/koa/commit/4a40d633c4b4a203c6656078f9952ccef65c5875)] - build: use prepare instead of prepublish (dead-horse <<dead_horse@qq.com>>)
+  * [[`226ba8c`](http://github.com/koajs/koa/commit/226ba8c8e81e83da48e7bf137be3f146d03f40b8)] - build: use prepublish instead of prepack (dead-horse <<dead_horse@qq.com>>)
+
+2.12.1 / 2020-06-13
+==================
+
+**fixes**
+  * [[`e2030c7`](http://github.com/koajs/koa/commit/e2030c7249c7ae24e28158d8eae405a02fefc9f8)] - fix: Improve checks for Error in onerror handlers (#1468) (Julien Wajsberg <<felash@gmail.com>>)
+
+**others**
+  * [[`5208c5e`](http://github.com/koajs/koa/commit/5208c5e15d35b3653fce6b8ed68d09865abea843)] - chore: Use single console.error() statement in error handler (#1471) (Mike Vosseller <<michael.vosseller@gmail.com>>)
+
 2.12.0 / 2020-05-18
 ==================
 

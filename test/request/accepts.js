@@ -62,7 +62,7 @@ describe('ctx.accepts(types)', () => {
     });
   });
 
-  describe('when present in Accept as an exact match', () => {
+  describe('when value present in Accept is an exact match', () => {
     it('should return the type', () => {
       const ctx = context();
       ctx.req.headers.accept = 'text/plain, text/html';
@@ -71,7 +71,7 @@ describe('ctx.accepts(types)', () => {
     });
   });
 
-  describe('when present in Accept as a type match', () => {
+  describe('when value present in Accept is a type match', () => {
     it('should return the type', () => {
       const ctx = context();
       ctx.req.headers.accept = 'application/json, */*';
@@ -81,7 +81,7 @@ describe('ctx.accepts(types)', () => {
     });
   });
 
-  describe('when present in Accept as a subtype match', () => {
+  describe('when value present in Accept is a subtype match', () => {
     it('should return the type', () => {
       const ctx = context();
       ctx.req.headers.accept = 'application/json, text/*';
