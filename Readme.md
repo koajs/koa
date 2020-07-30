@@ -160,40 +160,6 @@ Learn more about the application object in the [Application API Reference](docs/
  - [FAQ](docs/faq.md)
  - [API documentation](docs/api/index.md)
 
-## Babel setup
-
-If you're not using `node v7.6+`, we recommend setting up `babel` with [`@babel/preset-env`](https://babeljs.io/docs/en/next/babel-preset-env):
-
-```bash
-$ npm install @babel/register @babel/preset-env @babel/cli --save-dev
-```
-
-In development, you'll want to use [`@babel/register`](https://babeljs.io/docs/en/next/babel-register):
-
-```bash
-node --require @babel/register <your-entry-file>
-```
-
-In production, you'll want to build your files with [`@babel/cli`](https://babeljs.io/docs/en/babel-cli). Suppose you are compiling a folder `src` and you wanted the output to go to a new folder `dist` with non-javascript files copied:
-
-```bash
-babel src --out-dir dist --copy-files
-```
-
-And have your `.babelrc` setup:
-
-```json
-{
-  "presets": [
-    ["@babel/preset-env", {
-      "targets": {
-        "node": true
-      }
-    }]
-  ]
-}
-```
-
 ## Troubleshooting
 
 Check the [Troubleshooting Guide](docs/troubleshooting.md) or [Debugging Koa](docs/guide.md#debugging-koa) in
