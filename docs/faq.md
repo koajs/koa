@@ -8,7 +8,7 @@
   and less error-prone to write, for the entire stack, not
   just the end application code.
 
-  Typically many middleware would
+  Typically many middlewares would
   re-implement similar features, or even worse incorrectly implement them,
   when features like signed cookie secrets among others are typically application-specific,
   not middleware specific.
@@ -23,7 +23,7 @@
 ## Does Koa include routing?
 
   No - out of the box Koa has no form of routing, however
-  many routing middleware are available: https://github.com/koajs/koa/wiki
+  many routing middlewares are available: https://github.com/koajs/koa/wiki
 
 ## Why isn't Koa just Express 4.0?
 
