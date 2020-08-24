@@ -11,7 +11,7 @@
   - [Middleware Best Practices](#middleware-best-practices)
     - [Middleware options](#middleware-options)
     - [Named middleware](#named-middleware)
-    - [Combining multiple middlewares with koa-compose](#combining-multiple-middlewares-with-koa-compose)
+    - [Combining multiple middleware with koa-compose](#combining-multiple-middleware-with-koa-compose)
     - [Response Middleware](#response-middleware)
   - [Async operations](#async-operations)
   - [Debugging Koa](#debugging-koa)
@@ -100,9 +100,9 @@ function logger(format) {
 }
 ```
 
-### Combining multiple middlewares with koa-compose
+### Combining multiple middleware with koa-compose
 
-  Sometimes you want to "compose" multiple middlewares into a single middleware for easy re-use or exporting. You can use [koa-compose](https://github.com/koajs/compose)
+  Sometimes you want to "compose" multiple middleware into a single middleware for easy re-use or exporting. You can use [koa-compose](https://github.com/koajs/compose)
 
 ```js
 const compose = require('koa-compose');
