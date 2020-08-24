@@ -52,7 +52,7 @@ app.use(async (ctx, next) => {
 
   Error event listeners can be specified with `app.on('error')`.
   If no error listener is specified, a default error listener
-  is used. Error listener receives all errors that make their
+  is used. Error listeners receive all errors that make their
   way back through the middleware chain, if an error is caught
   and not thrown again, it will not be passed to the error
   listener. If no error event listener is specified, then
