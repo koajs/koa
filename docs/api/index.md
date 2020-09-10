@@ -2,7 +2,7 @@
 
   Koa requires __node v7.6.0__ or higher for ES2015 and async function support.
 
-  You can quickly install a supported version of node with your favorite version manager:
+  You can quickly install a supported version of Node with your favorite version manager:
 
 ```bash
 $ nvm install 7
@@ -40,7 +40,7 @@ app.listen(3000);
 ## Cascading
 
   Koa middleware cascade in a more traditional way as you may be used to with similar tools -
-  this was previously difficult to make user friendly with node's use of callbacks.
+  this was previously difficult to make user friendly with Node's use of callbacks.
   However with async functions we can achieve "true" middleware. Contrasting Connect's implementation which
   simply passes control through series of functions until one returns, Koa invoke "downstream", then
   control flows back "upstream".

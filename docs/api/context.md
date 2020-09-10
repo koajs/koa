@@ -1,6 +1,6 @@
 # Context
 
-  A Koa Context encapsulates node's `request` and `response` objects
+  A Koa Context encapsulates Node's `request` and `response` objects
   into a single object which provides many helpful methods for writing
   web applications and APIs.
   These operations are used so frequently in HTTP server development
@@ -35,7 +35,7 @@ app.use(async ctx => {
 
   Node's `response` object.
 
-  Bypassing Koa's response handling is __not supported__. Avoid using the following node properties:
+  Bypassing Koa's response handling is __not supported__. Avoid using the following Node properties:
 
 - `res.statusCode`
 - `res.writeHead()`
@@ -128,7 +128,7 @@ Koa uses [http-errors](https://github.com/jshttp/http-errors) to create errors. 
 ### ctx.assert(value, [status], [msg], [properties])
 
   Helper method to throw an error similar to `.throw()`
-  when `!value`. Similar to node's [assert()](http://nodejs.org/api/assert.html)
+  when `!value`. Similar to Node's [assert()](http://nodejs.org/api/assert.html)
   method.
 
 ```js

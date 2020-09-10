@@ -1,13 +1,13 @@
 # Koa vs Express
 
-  Philosophically, Koa aims to "fix and replace node", whereas Express "augments node".
+  Philosophically, Koa aims to "fix and replace Node", whereas Express "augments Node".
   Koa uses promises and async functions to rid apps of callback hell and simplify error handling.
-  It exposes its own `ctx.request` and `ctx.response` objects instead of node's `req` and `res` objects.
+  It exposes its own `ctx.request` and `ctx.response` objects instead of Node's `req` and `res` objects.
 
-  Express, on the other hand, augments node's `req` and `res` objects with additional properties and methods
+  Express, on the other hand, augments Node's `req` and `res` objects with additional properties and methods
   and includes many other "framework" features, such as routing and templating, which Koa does not.
 
-  Thus, Koa can be viewed as an abstraction of node.js's `http` modules, where as Express is an application framework for node.js.
+  Thus, Koa can be viewed as an abstraction of Node.js's `http` modules, where as Express is an application framework for Node.js.
 
 | Feature           | Koa | Express | Connect |
 |------------------:|-----|---------|---------|
@@ -18,10 +18,10 @@
 | JSONP             |     | ✓       |         |
 
 
-  Thus, if you'd like to be closer to node.js and traditional node.js-style coding, you probably want to stick to Connect/Express or similar frameworks.
+  Thus, if you'd like to be closer to Node.js and traditional Node.js-style coding, you probably want to stick to Connect/Express or similar frameworks.
   If you want to get rid of callbacks, use Koa.
 
-  As result of this different philosophy is that traditional node.js "middleware", i.e. functions of the form `(req, res, next)`, are incompatible with Koa. Your application will essentially have to be rewritten from the ground, up.
+  As result of this different philosophy is that traditional Node.js "middleware", i.e. functions of the form `(req, res, next)`, are incompatible with Koa. Your application will essentially have to be rewritten from the ground, up.
 
 ## Does Koa replace Express?
 
@@ -75,7 +75,7 @@
 
   For example, instead of a "body parsing" middleware, you would instead use a body parsing function.
 
-### Koa abstracts node's request/response
+### Koa abstracts Node's request/response
 
   Less hackery.
 
