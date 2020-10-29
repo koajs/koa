@@ -2,7 +2,7 @@
 
 ## Try-Catch
 
-  Using async functions mean that you can try-catch `next`.
+  Using async functions means that you can try-catch `next`.
   This example adds a `.status` to all errors:
 
   ```js
