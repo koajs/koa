@@ -36,4 +36,14 @@ describe('Load with esm', () => {
     assert.strictEqual(exported.size, required.size);
     assert.strictEqual([...exported].every(property => required.has(property)), true);
   });
+
+  it('CommonJS exports default property', async() => {
+    const required = require('../');
+    assert.strictEqual(required.hasOwnProperty('default'), true);
+  });
+
+  it('CommonJS exports default property referencing self', async() => {
+    const required = require('../');
+    assert.strictEqual(required.default, required);
+  });
 });
