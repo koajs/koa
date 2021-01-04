@@ -1,4 +1,22 @@
 
+2.13.1 / 2021-01-04
+==================
+
+**fixes**
+  * [[`b5472f4`](http://github.com/koajs/koa/commit/b5472f4cbb87349becae36b4a9ad5f76a825abb8)] - fix: make ESM transpiled CommonJS play nice for TS folks, fix #1513 (#1518) (miwnwski <<m@iwnw.ski>>)
+  * [[`68d97d6`](http://github.com/koajs/koa/commit/68d97d69e4536065504bf9ef1e348a66b3f35709)] - fix: fixed order of vulnerability disclosure addresses (niftylettuce <<niftylettuce@gmail.com>>)
+
+**others**
+  * [[`b4398f5`](http://github.com/koajs/koa/commit/b4398f5d68f9546167419f394a686afdcb5e10e2)] - correct verb tense in doc (#1512) (Matan Shavit <<71092861+matanshavit@users.noreply.github.com>>)
+  * [[`39e1a5a`](http://github.com/koajs/koa/commit/39e1a5a380aa2bbc4e2d164e8e4bf37cfd512516)] - fixed multiple grammatical errors in docs. (#1497) (Hridayesh Sharma <<vyasriday7@gmail.com>>)
+  * [[`aeb5d19`](http://github.com/koajs/koa/commit/aeb5d1984dcc5f8e3386f8f9724807ae6f3aa1c4)] - docs: added niftylettuce@gmail.com to vulnerability disclosure (niftylettuce <<niftylettuce@gmail.com>>)
+  * [[`6e1093b`](http://github.com/koajs/koa/commit/6e1093be27b41135c8e67fce108743d54e9cab67)] - docs: remove babel from readme (#1494) (miwnwski <<m@iwnw.ski>>)
+  * [[`38cb591`](http://github.com/koajs/koa/commit/38cb591254ff5f65a04e8fb57be293afe697c46e)] - docs: update specific for auto response status (AlbertAZ1992 <<ziyuximing@163.com>>)
+  * [[`2224cd9`](http://github.com/koajs/koa/commit/2224cd9b6a648e7ac2eb27eac332e7d6de7db26c)] -  docs: remove babel ref. (#1488) (Imed Jaberi <<imed_jebari@hotmail.fr>>)
+  * [[`d51f983`](http://github.com/koajs/koa/commit/d51f98328c3b84493cc6bda0732aabb69e20e3a1)] -  docs: fix assert example for response (#1489) (Imed Jaberi <<imed_jebari@hotmail.fr>>)
+  * [[`f8b49b8`](http://github.com/koajs/koa/commit/f8b49b859363ad6c3d9ea5c11ee62341407ceafd)] - chore: fix grammatical and spelling errors in comments and tests (#1490) (Matt Kubej <<mkubej@gmail.com>>)
+  * [[`d1c9263`](http://github.com/koajs/koa/commit/d1c92638c95d799df2fdff5576b96fc43a62813f)] -  deps: update depd  >> v2.0.0 (#1482) (imed jaberi <<imed_jebari@hotmail.fr>>)
+
 2.13.0 / 2020-06-21
 ==================
 
