@@ -171,16 +171,18 @@ app.use(someMiddleware)
 
 ## app.keys=
 
- Set signed cookie keys.
+  Set signed cookie keys.
 
- These are passed to [KeyGrip](https://github.com/crypto-utils/keygrip),
- however you may also pass your own `KeyGrip` instance. For
- example the following are acceptable:
+  These are passed to [KeyGrip](https://github.com/crypto-utils/keygrip),
+  however you may also pass your own `KeyGrip` instance. For
+  example the following are acceptable:
 
 ```js
-app.keys = ['im a newer secret', 'i like turtle'];
-app.keys = new KeyGrip(['im a newer secret', 'i like turtle'], 'sha256');
+app.keys = ['OEK5zjaAMPc3L6iK7PyUjCOziUH3rsrMKB9u8H07La1SkfwtuBoDnHaaPCkG5Brg', 'MNKeIebviQnCPo38ufHcSfw3FFv8EtnAe1xE02xkN1wkCV1B2z126U44yk2BQVK7'];
+app.keys = new KeyGrip(['OEK5zjaAMPc3L6iK7PyUjCOziUH3rsrMKB9u8H07La1SkfwtuBoDnHaaPCkG5Brg', 'MNKeIebviQnCPo38ufHcSfw3FFv8EtnAe1xE02xkN1wkCV1B2z126U44yk2BQVK7'], 'sha256');
 ```
+
+  For security reasons, please ensure that the key is long enough and random.
 
   These keys may be rotated and are used when signing cookies
   with the `{ signed: true }` option:
