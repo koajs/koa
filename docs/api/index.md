@@ -46,7 +46,7 @@ app.listen(3000);
   control flows back "upstream".
 
   The following example responds with "Hello World", however first the request flows through
-  the `x-response-time` and `logging` middleware to mark when the request started, then continue
+  the `x-response-time` and `logging` middleware to mark when the request started, then continues
   to yield control through the response middleware. When a middleware invokes `next()`
   the function suspends and passes control to the next middleware defined. After there are no more
   middleware to execute downstream, the stack will unwind and each middleware is resumed to perform
