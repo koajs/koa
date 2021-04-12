@@ -12,6 +12,8 @@ describe('app.response', () => {
   const app3 = new Koa();
   const app4 = new Koa();
   const app5 = new Koa();
+  const app6 = new Koa();
+  const app7 = new Koa();
 
   it('should merge properties', () => {
     app1.use((ctx, next) => {
@@ -46,10 +48,9 @@ describe('app.response', () => {
     assert.equal(response.text, '404');
   });
 
-  it('should set ._explicitNullBody correctly', async() => {
+  it('set null to body.', async() => {
     app4.use((ctx, next) => {
       ctx.body = null;
-      assert.strictEqual(ctx.response._explicitNullBody, true);
     });
 
     return request(app4.listen())
@@ -57,18 +58,33 @@ describe('app.response', () => {
       .expect(204);
   });
 
-  it('should not set ._explicitNullBody incorrectly', async() => {
+  it('set undefined to body.', async() => {
     app5.use((ctx, next) => {
       ctx.body = undefined;
-      assert.strictEqual(ctx.response._explicitNullBody, undefined);
-      ctx.body = '';
-      assert.strictEqual(ctx.response._explicitNullBody, undefined);
-      ctx.body = false;
-      assert.strictEqual(ctx.response._explicitNullBody, undefined);
     });
 
     return request(app5.listen())
       .get('/')
       .expect(204);
   });
+
+  it('set boolean to body.', async() => {
+    app6.use((ctx, next) => {
+      ctx.body = false;
+    });
+
+    return request(app6.listen())
+      .get('/')
+      .expect(200);
+  })
+
+  it('set blank string to body.', async() => {
+    app7.use((ctx, next) => {
+      ctx.body = '';
+    });
+
+    return request(app6.listen())
+      .get('/')
+      .expect(200);
+  })
 });
