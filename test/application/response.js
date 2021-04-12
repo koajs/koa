@@ -76,7 +76,7 @@ describe('app.response', () => {
     return request(app6.listen())
       .get('/')
       .expect(200);
-  })
+  });
 
   it('set blank string to body.', async() => {
     app7.use((ctx, next) => {
@@ -86,5 +86,5 @@ describe('app.response', () => {
     return request(app6.listen())
       .get('/')
       .expect(200);
-  })
+  });
 });
