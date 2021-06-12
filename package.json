@@ -8,7 +8,7 @@
       "require": "./lib/application.js",
       "import": "./dist/koa.mjs"
     },
-    "./": "./"
+    "./*": "./*"
   },
   "scripts": {
     "test": "egg-bin test test",
