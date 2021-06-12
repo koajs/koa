@@ -1,5 +1,3 @@
-THIS DOCUMENT IS IN PROGRESS. THIS PARAGRAPH SHALL BE REMOVED WHEN THIS DOCUMENT IS DONE.
-
 # Koa vs Express
 
   Philosophically, Koa aims to "fix and replace node", whereas Express "augments node".

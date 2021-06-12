@@ -61,7 +61,7 @@ describe('ctx.flushHeaders()', () => {
       .expect('Body');
   });
 
-  it('should ignore set header after flushHeaders', async () => {
+  it('should ignore set header after flushHeaders', async() => {
     const app = new Koa();
 
     app.use((ctx, next) => {
@@ -108,18 +108,18 @@ describe('ctx.flushHeaders()', () => {
       http.request({
         port
       })
-      .on('response', res => {
-        const onData = () => done(new Error('boom'));
-        res.on('data', onData);
+        .on('response', res => {
+          const onData = () => done(new Error('boom'));
+          res.on('data', onData);
 
-        // shouldn't receive any data for a while
-        setTimeout(() => {
-          res.removeListener('data', onData);
-          done();
-        }, 1000);
-      })
-      .on('error', done)
-      .end();
+          // shouldn't receive any data for a while
+          setTimeout(() => {
+            res.removeListener('data', onData);
+            done();
+          }, 1000);
+        })
+        .on('error', done)
+        .end();
     });
   });
 

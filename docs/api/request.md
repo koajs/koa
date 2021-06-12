@@ -8,7 +8,8 @@
 
 ### request.header
 
- Request header object.
+ Request header object.  This is the same as the [`headers`](https://nodejs.org/api/http.html#http_message_headers) field
+ on node's [`http.IncomingMessage`](https://nodejs.org/api/http.html#http_class_http_incomingmessage).
 
 ### request.header=
 
@@ -98,7 +99,7 @@ ctx.request.href;
 
   Get hostname when present. Supports `X-Forwarded-Host`
   when `app.proxy` is __true__, otherwise `Host` is used.
-  
+
   If host is IPv6, Koa delegates parsing to
   [WHATWG URL API](https://nodejs.org/dist/latest-v8.x/docs/api/url.html#url_the_whatwg_url_api),
   *Note* This may impact performance.
@@ -192,8 +193,46 @@ ctx.body = await db.find('something');
 ### request.ips
 
   When `X-Forwarded-For` is present and `app.proxy` is enabled an array
-  of these ips is returned, ordered from upstream -> downstream. When disabled
-  an empty array is returned.
+  of these ips is returned, ordered from upstream -> downstream. When
+  disabled an empty array is returned.
+
+  For example if the value were "client, proxy1, proxy2",
+  you would receive the array `["client", "proxy1", "proxy2"]`.
+
+  Most of the reverse proxy(nginx) set x-forwarded-for via
+  `proxy_add_x_forwarded_for`, which poses a certain security risk.
+  A malicious attacker can forge a client's ip address by forging
+  a `X-Forwarded-For`request header. The request sent by the client
+  has an `X-Forwarded-For` request header for 'forged'. After being
+  forwarded by the reverse proxy, `request.ips` will be
+  ['forged', 'client', 'proxy1', 'proxy2'].
+
+  Koa offers two options to avoid being bypassed.
+
+  If you can control the reverse proxy, you can avoid bypassing
+  by adjusting the configuration, or use the `app.proxyIpHeader`
+  provided by koa to avoid reading `x-forwarded-for` to get ips.
+
+  ```js
+  const app = new Koa({
+    proxy: true,
+    proxyIpHeader: 'X-Real-IP',
+  });
+  ```
+
+  If you know exactly how many reverse proxies are in front of
+  the server, you can avoid reading the user's forged request
+  header by configuring `app.maxIpsCount`:
+
+  ```js
+  const app = new Koa({
+    proxy: true,
+    maxIpsCount: 1, // only one proxy in front of the server
+  });
+
+  // request.header['X-Forwarded-For'] === [ '127.0.0.1', '127.0.0.2' ];
+  // ctx.ips === [ '127.0.0.2' ];
+  ```
 
 ### request.subdomains
 
@@ -385,4 +424,4 @@ ctx.acceptsLanguages();
 
 ### request.get(field)
 
-  Return request header.
+  Return request header with case-insensitive `field`.

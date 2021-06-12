@@ -1,4 +1,136 @@
 
+2.13.1 / 2021-01-04
+==================
+
+**fixes**
+  * [[`b5472f4`](http://github.com/koajs/koa/commit/b5472f4cbb87349becae36b4a9ad5f76a825abb8)] - fix: make ESM transpiled CommonJS play nice for TS folks, fix #1513 (#1518) (miwnwski <<m@iwnw.ski>>)
+  * [[`68d97d6`](http://github.com/koajs/koa/commit/68d97d69e4536065504bf9ef1e348a66b3f35709)] - fix: fixed order of vulnerability disclosure addresses (niftylettuce <<niftylettuce@gmail.com>>)
+
+**others**
+  * [[`b4398f5`](http://github.com/koajs/koa/commit/b4398f5d68f9546167419f394a686afdcb5e10e2)] - correct verb tense in doc (#1512) (Matan Shavit <<71092861+matanshavit@users.noreply.github.com>>)
+  * [[`39e1a5a`](http://github.com/koajs/koa/commit/39e1a5a380aa2bbc4e2d164e8e4bf37cfd512516)] - fixed multiple grammatical errors in docs. (#1497) (Hridayesh Sharma <<vyasriday7@gmail.com>>)
+  * [[`aeb5d19`](http://github.com/koajs/koa/commit/aeb5d1984dcc5f8e3386f8f9724807ae6f3aa1c4)] - docs: added niftylettuce@gmail.com to vulnerability disclosure (niftylettuce <<niftylettuce@gmail.com>>)
+  * [[`6e1093b`](http://github.com/koajs/koa/commit/6e1093be27b41135c8e67fce108743d54e9cab67)] - docs: remove babel from readme (#1494) (miwnwski <<m@iwnw.ski>>)
+  * [[`38cb591`](http://github.com/koajs/koa/commit/38cb591254ff5f65a04e8fb57be293afe697c46e)] - docs: update specific for auto response status (AlbertAZ1992 <<ziyuximing@163.com>>)
+  * [[`2224cd9`](http://github.com/koajs/koa/commit/2224cd9b6a648e7ac2eb27eac332e7d6de7db26c)] -  docs: remove babel ref. (#1488) (Imed Jaberi <<imed_jebari@hotmail.fr>>)
+  * [[`d51f983`](http://github.com/koajs/koa/commit/d51f98328c3b84493cc6bda0732aabb69e20e3a1)] -  docs: fix assert example for response (#1489) (Imed Jaberi <<imed_jebari@hotmail.fr>>)
+  * [[`f8b49b8`](http://github.com/koajs/koa/commit/f8b49b859363ad6c3d9ea5c11ee62341407ceafd)] - chore: fix grammatical and spelling errors in comments and tests (#1490) (Matt Kubej <<mkubej@gmail.com>>)
+  * [[`d1c9263`](http://github.com/koajs/koa/commit/d1c92638c95d799df2fdff5576b96fc43a62813f)] -  deps: update depd  >> v2.0.0 (#1482) (imed jaberi <<imed_jebari@hotmail.fr>>)
+
+2.13.0 / 2020-06-21
+==================
+
+**features**
+  * [[`bbcde76`](http://github.com/koajs/koa/commit/bbcde76f5cb5b67bbcd3201791cf0ef648fd3a8b)] - feat: support esm (#1474) (ZYSzys <<zhangyongsheng@youzan.com>>)
+
+**others**
+  * [[`20e58cf`](http://github.com/koajs/koa/commit/20e58cf3e4f20fc5d5886df1d0ac6dd8c33bd202)] - test: imporve coverage to 100% (dead-horse <<dead_horse@qq.com>>)
+  * [[`4a40d63`](http://github.com/koajs/koa/commit/4a40d633c4b4a203c6656078f9952ccef65c5875)] - build: use prepare instead of prepublish (dead-horse <<dead_horse@qq.com>>)
+  * [[`226ba8c`](http://github.com/koajs/koa/commit/226ba8c8e81e83da48e7bf137be3f146d03f40b8)] - build: use prepublish instead of prepack (dead-horse <<dead_horse@qq.com>>)
+
+2.12.1 / 2020-06-13
+==================
+
+**fixes**
+  * [[`e2030c7`](http://github.com/koajs/koa/commit/e2030c7249c7ae24e28158d8eae405a02fefc9f8)] - fix: Improve checks for Error in onerror handlers (#1468) (Julien Wajsberg <<felash@gmail.com>>)
+
+**others**
+  * [[`5208c5e`](http://github.com/koajs/koa/commit/5208c5e15d35b3653fce6b8ed68d09865abea843)] - chore: Use single console.error() statement in error handler (#1471) (Mike Vosseller <<michael.vosseller@gmail.com>>)
+
+2.12.0 / 2020-05-18
+==================
+
+**features**
+  * [[`0d2f421`](http://github.com/koajs/koa/commit/0d2f421c265350d3d84e1bc261572954479f27d3)] - feat: error handler treat err.statusCode as the same as err.status (#1460) (Vijay Krishnavanshi <<vijaykrishnavanshi@gmail.com>>)
+  * [[`8d52105`](http://github.com/koajs/koa/commit/8d52105a34234be9e771ff3b76b43e4e30328943)] - feat: allow bodyless responses for non empty status codes (#1447) (ejose19 <<8742215+ejose19@users.noreply.github.com>>)
+
+**others**
+  * [[`faeaff5`](http://github.com/koajs/koa/commit/faeaff5c149a81a188ab8e5af0b994029e45acbb)] - fox: remove `error-inject` and fix error handling (#1409) (Konstantin Vyatkin <<tino@vtkn.io>>)
+  * [[`f7c732f`](http://github.com/koajs/koa/commit/f7c732fd06f724505e9090add4d977e667da55a8)] - docs: fixed incorrect onerror example (#1459) (Paul Annekov <<paul.annekov@gmail.com>>)
+  * [[`143d8f7`](http://github.com/koajs/koa/commit/143d8f72f2a232b4c97eac00e7811015911e4f7c)] - Always use strict equality. (#1225) (Yazan Medanat <<medanat@gmail.com>>)
+  * [[`6b6b0dd`](http://github.com/koajs/koa/commit/6b6b0ddf7aff073e65493c6efaffab8331c0331c)] - docs(api): add app.use chainability note (#1449) (Zac Anger <<zac@zacanger.com>>)
+  * [[`8ddab48`](http://github.com/koajs/koa/commit/8ddab48cbdbca1e6d1cc8c3ddae45491db524d51)] - docs: Document response status with empty body (#1445) (Marc-Aurèle DARCHE <<152407+madarche@users.noreply.github.com>>)
+  * [[`7deedb2`](http://github.com/koajs/koa/commit/7deedb235274223f1b9da46dee296545b23598de)] - docs: Updating context.md with the latest cookies opts (#1433) (Brad Ito <<phlogisticfugu@users.noreply.github.com>>)
+  * [[`3e97a10`](http://github.com/koajs/koa/commit/3e97a106bb846d9337737011bb85149ddd797229)] - docs(links): remove Google+ link (#1439) (laffachan <<45162759+laffachan@users.noreply.github.com>>)
+  * [[`eda2760`](http://github.com/koajs/koa/commit/eda27608f7d39ede86d7b402aae64b1867ce31c6)] - build: Drop unused Travis sudo: false directive (#1416) (Olle Jonsson <<olle.jonsson@gmail.com>>)
+
+2.11.0 / 2019-10-28
+==================
+
+**features**
+  * [[`422e539`](http://github.com/koajs/koa/commit/422e539e8989e65ba43ecc39ddbaa3c4f755d465)] - feat: support app.proxyIPHeader and app.maxIpsCount to make ctx.ips more security (Yiyu He <<dead_horse@qq.com>>)
+  * [[`d48d88e`](http://github.com/koajs/koa/commit/d48d88ee17b780c02123e6d657274cab456e943e)] - feat: implement response.has (#1397) (Konstantin Vyatkin <<tino@vtkn.io>>)
+
+**others**
+  * [[`4dc56f6`](http://github.com/koajs/koa/commit/4dc56f6d04e8f5fe12ba53a8a776653b3d7b60ed)] - chore: update ESLint and plugins/configs (#1407) (Konstantin Vyatkin <<tino@vtkn.io>>)
+  * [[`be7d334`](http://github.com/koajs/koa/commit/be7d334778481639294cdf87f5c359a230aeb65b)] - chore: removes code duplication at handling HEAD method (#1400) (Konstantin Vyatkin <<tino@vtkn.io>>)
+  * [[`f155785`](http://github.com/koajs/koa/commit/f155785e2bb42b5ddf0a8156401c6dafdf57ba8b)] - chore: support `writableEnded` (#1402) (Konstantin Vyatkin <<tino@vtkn.io>>)
+  * [[`b968688`](http://github.com/koajs/koa/commit/b968688afe2c727ae141f50aa983d481dbc1dbbf)] - chore: add FUNDING.yml (#1403) (Konstantin Vyatkin <<tino@vtkn.io>>)
+  * [[`4f96829`](http://github.com/koajs/koa/commit/4f968298f97394e488297ec32c8e927a3a322076)] - chore: remove isJSON in res.length (#1399) (Konstantin Vyatkin <<tino@vtkn.io>>)
+  * [[`8be5626`](http://github.com/koajs/koa/commit/8be5626bbb54e6c899a1b71d22411709126d9fea)] - build: enable codecov partial coverage and use bash uploader (#1396) (Konstantin Vyatkin <<tino@vtkn.io>>)
+  * [[`ef5c43b`](http://github.com/koajs/koa/commit/ef5c43bcbcf31819e032c3b7ae7654b7f8e9358b)] - chore: use rest params (#1393) (Konstantin Vyatkin <<tino@vtkn.io>>)
+
+2.10.0 / 2019-10-12
+==================
+
+**features**
+  * [[`d7f7f77`](http://github.com/koajs/koa/commit/d7f7f77689e2eaef050686be2bdf3e72881a79ac)] - feat: support sameSite=none cookies (bump cookies dependency) (#1390) (Filip Skokan <<panva.ip@gmail.com>>)
+
+2.9.0 / 2019-10-12
+==================
+
+**features**
+  * [[`2d1c598`](http://github.com/koajs/koa/commit/2d1c5981869e0fe6f5bc71b5c5582accfd125cc6)] - feat: export HttpError from http-errors library (Micheal Hill <<micheal.hill@trunkplatform.com>>)
+
+**others**
+  * [[`cf70dbc`](http://github.com/koajs/koa/commit/cf70dbc6d2ba62bf1eb12b563dd5ecd27af6e2be)] - Chore: Use https in readme (#1389) (谭九鼎 <<109224573@qq.com>>)
+
+2.8.2 / 2019-09-28
+==================
+
+**fixes**
+  * [[`54e8fab`](http://github.com/koajs/koa/commit/54e8fab3e3d907bbb264caf3e28a24773d0d6fdb)] - fix: encode redirect url if not already encoded (#1384) (fengmk2 <<fengmk2@gmail.com>>)
+
+**others**
+  * [[`817b498`](http://github.com/koajs/koa/commit/817b49830571b45a8aec6b1fc1525434f5798c58)] - test: fix body test (#1375) (Robert Nagy <<ronagy@icloud.com>>)
+  * [[`f75d445`](http://github.com/koajs/koa/commit/f75d4455359ecdf30eeb676e2c7f31d4cf7b42ed)] - test: fix end after end (#1374) (Robert Nagy <<ronagy@icloud.com>>)
+
+2.8.1 / 2019-08-19
+==================
+
+**fixes**
+  * [[`287e589`](http://github.com/koajs/koa/commit/287e589ac773d3738b2aa7d40e0b6d43dde5261b)] - fix: make options more compatibility (dead-horse <<dead_horse@qq.com>>)
+
+2.8.0 / 2019-08-19
+==================
+
+**features**
+  * [[`5afff89`](http://github.com/koajs/koa/commit/5afff89eca0efe7081309dc2d123309e825df221)] - feat: accept options in the Application constructor (#1372) (Jake <<djakelambert@gmail.com>>)
+
+**fixes**
+  * [[`ff70bdc`](http://github.com/koajs/koa/commit/ff70bdc75a30a37f63fc1f7d8cbae3204df3d982)] - fix: typo on document (#1355) (Jeff <<jeff.tian@outlook.com>>)
+
+**others**
+  * [[`3b23865`](http://github.com/koajs/koa/commit/3b23865340cfba075f61f7dba0ea31fcc27260ec)] - docs: parameter of request.get is case-insensitive (#1373) (Gunnlaugur Thor Briem <<gunnlaugur@gmail.com>>)
+  * [[`a245d18`](http://github.com/koajs/koa/commit/a245d18a131341feec4f87659746954e78cae780)] - docs: Update response.socket (#1357) (Jeff <<jeff.tian@outlook.com>>)
+  * [[`d1d65dd`](http://github.com/koajs/koa/commit/d1d65dd29d7bbaf9ea42eaa5fcb0da3fb4df98e9)] - chore(deps): install egg-bin, mm as devDeps not deps (#1366) (Edvard Chen <<pigeon73101@gmail.com>>)
+  * [[`2c86b10`](http://github.com/koajs/koa/commit/2c86b10feafd868ebd071dda3a222e6f51972b5d)] - test: remove jest and use egg-bin(mocha) (#1363) (Yiyu He <<dead_horse@qq.com>>)
+  * [[`219bf22`](http://github.com/koajs/koa/commit/219bf22237b11bc375e2e110b93db512f1acfdd4)] - docs(context): update link (#1354) (Peng Jie <<bivinity.pengzjie@gmail.com>>)
+  * [[`52a6737`](http://github.com/koajs/koa/commit/52a673703a87a93c0f6a8552e6bd73caba66d2eb)] - chore: ignore Intellij IDEA project files (#1361) (Imon-Haque <<38266345+Imon-Haque@users.noreply.github.com>>)
+  * [[`b9e3546`](http://github.com/koajs/koa/commit/b9e35469d3bbd0a1ee92e0a815ce2512904d4a18)] - docs(api): fix keygrip link (#1350) (Peng Jie <<bivinity.pengzjie@gmail.com>>)
+  * [[`d4bdb5e`](http://github.com/koajs/koa/commit/d4bdb5ed9e2fe06ec44698b66c029f624135a0ab)] - chore: update eslint and fix lint errors (dead-horse <<dead_horse@qq.com>>)
+  * [[`12960c4`](http://github.com/koajs/koa/commit/12960c437cc25c53e682cfe5bff06d74a5bb1eb9)] - build: test on 8/10/12 (dead-horse <<dead_horse@qq.com>>)
+  * [[`00e8f7a`](http://github.com/koajs/koa/commit/00e8f7a1b7603aabdb7fb3567f485cb1c2076702)] - docs: ctx.type aliases ctx.response, not ctx.request (#1343) (Alex Berk <<berkalexanderc@gmail.com>>)
+  * [[`62f29eb`](http://github.com/koajs/koa/commit/62f29eb0c4dee01170a5511615e5bcc9faca26ca)] - docs(context): update cookies link (#1348) (Peng Jie <<dean.leehom@gmail.com>>)
+  * [[`b7fc526`](http://github.com/koajs/koa/commit/b7fc526ea49894f366153bd32997e02568c0b8a6)] - docs: fix typo in cookie path default value docs (#1340) (Igor Adamenko <<igoradamenko@users.noreply.github.com>>)
+  * [[`23f7f54`](http://github.com/koajs/koa/commit/23f7f545abfe1fb6499cd61cc8ff41fd86cef4a0)] - chore: simplify variable (#1332) (kzhang <<godky@users.noreply.github.com>>)
+  * [[`132c9ee`](http://github.com/koajs/koa/commit/132c9ee63f92a586a120ed3bd6b7ef023badb8bb)] - docs: Clarify the format of request.headers (#1325) (Dobes Vandermeer <<dobesv@gmail.com>>)
+  * [[`5810f27`](http://github.com/koajs/koa/commit/5810f279a4caeda115f39e429c9671795613abf8)] - docs: Removed Document in Progress note in Koa vs Express (#1336) (Andrew Peterson <<andrew@andpeterson.com>>)
+  * [[`75233d9`](http://github.com/koajs/koa/commit/75233d974a30af6e3b8ab38a73e5ede67172fc1c)] - chore: Consider removing this return statement; it will be ignored. (#1322) (Vern Brandl <<tkvern@users.noreply.github.com>>)
+  * [[`04e07fd`](http://github.com/koajs/koa/commit/04e07fdc620841068f12b8edf36f27e6592a0a18)] - test: Buffer() is deprecated due to security and usability issues. so use the Buffer.alloc() instead (#1321) (Vern Brandl <<tkvern@users.noreply.github.com>>)
+  * [[`130e363`](http://github.com/koajs/koa/commit/130e363856747b487652f04b5550056d7778e43a)] - docs: use 'fs-extra' instead of 'fs-promise' (#1309) (rosald <<35028438+rosald@users.noreply.github.com>>)
+  * [[`2f2078b`](http://github.com/koajs/koa/commit/2f2078bf998bd3f44289ebd17eeccf5e12e4c134)] - chore: Update PR-welcome badge url (#1299) (James George <<jamesgeorge998001@gmail.com>>)
+
 2.7.0 / 2019-01-28
 ==================
 

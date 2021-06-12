@@ -11,7 +11,7 @@ describe('req.type', () => {
     assert.equal(req.type, 'text/html');
   });
 
-  it('with no host present', () => {
+  it('should return empty string with no host present', () => {
     const req = request();
     assert.equal(req.type, '');
   });
