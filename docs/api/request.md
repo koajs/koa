@@ -132,12 +132,21 @@ ctx.request.charset;
   query-string is present. Note that this getter does _not_
   support nested parsing.
 
-  For example "color=blue&size=small":
+  If there are URL percent-encoded characters in the query-string (for example
+  previously encoded through the
+  [encodeURIComponent()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent)
+  method), they are
+  automatically decoded using the JavaScript built-in
+  [decodeURIComponent()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURIComponent)
+  method.
+
+  For example "color=blue&size=small&email=user%40example.org":
 
 ```js
 {
   color: 'blue',
-  size: 'small'
+  size: 'small',
+  email: 'user@example.org'
 }
 ```
 
