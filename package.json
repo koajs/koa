@@ -45,7 +45,7 @@
     "http-errors": "^1.6.3",
     "is-generator-function": "^1.0.7",
     "koa-compose": "^4.1.0",
-    "koa-convert": "^1.2.0",
+    "koa-convert": "^2.0.0",
     "on-finished": "^2.3.0",
     "only": "~0.0.2",
     "parseurl": "^1.3.2",
