@@ -1,4 +1,13 @@
 
+3.0.0 /
+==================
+
+## Breaking Changes
+
+- Removes generator deprecation messages. 
+  Generators are no longer supported.
+  Koa no longer asserts if generators are used.
+
 2.13.1 / 2021-01-04
 ==================
 
