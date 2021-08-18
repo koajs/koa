@@ -8,6 +8,10 @@
   Generators are no longer supported.
   Koa no longer asserts if generators are used.
 
+## Fixes
+
+- fix: Do not response Content-Length if Transfer-Encoding is defined #1562 @charlyzeng
+
 2.13.1 / 2021-01-04
 ==================
 

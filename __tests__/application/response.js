@@ -12,6 +12,8 @@ describe('app.response', () => {
   const app3 = new Koa()
   const app4 = new Koa()
   const app5 = new Koa()
+  const app6 = new Koa()
+  const app7 = new Koa()
 
   it('should merge properties', () => {
     app1.use((ctx, next) => {
@@ -70,5 +72,29 @@ describe('app.response', () => {
     return request(app5.listen())
       .get('/')
       .expect(204)
+  })
+
+  it('should add Content-Length when Transfer-Encoding is not defined', () => {
+    app6.use((ctx, next) => {
+      ctx.body = 'hello world'
+    })
+
+    return request(app6.listen())
+      .get('/')
+      .expect('Content-Length', '11')
+      .expect(200)
+  })
+
+  it('should not add Content-Length when Transfer-Encoding is defined', () => {
+    app7.use((ctx, next) => {
+      ctx.set('Transfer-Encoding', 'chunked')
+      ctx.body = 'hello world'
+      assert.strictEqual(ctx.response.get('Content-Length'), '')
+    })
+
+    return request(app7.listen())
+      .get('/')
+      .expect('Transfer-Encoding', 'chunked')
+      .expect(200)
   })
 })
