@@ -4,6 +4,7 @@
 
 ## Breaking Changes
 
+- Supports node@12+ only.
 - Removes generator deprecation messages. 
   Generators are no longer supported.
   Koa no longer asserts if generators are used.
