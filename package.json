@@ -13,8 +13,7 @@
   "scripts": {
     "test": "egg-bin test test",
     "test-cov": "egg-bin cov test",
-    "lint": "eslint benchmarks lib test",
-    "bench": "make -C benchmarks",
+    "lint": "eslint lib test",
     "authors": "git log --format='%aN <%aE>' | sort -u > AUTHORS",
     "build": "gen-esm-wrapper . ./dist/koa.mjs",
     "prepare": "npm run build"
