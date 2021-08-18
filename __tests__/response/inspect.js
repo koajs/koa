@@ -30,7 +30,7 @@ describe('res.inspect()', () => {
       body: 'hello'
     };
 
-    assert.deepEqual(res.inspect(), expected);
-    assert.deepEqual(util.inspect(res), util.inspect(expected));
+    assert.deepStrictEqual(res.inspect(), expected);
+    assert.deepStrictEqual(util.inspect(res), util.inspect(expected));
   });
 });

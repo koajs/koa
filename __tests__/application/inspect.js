@@ -13,7 +13,7 @@ describe('app.inspect()', () => {
   });
 
   it('should return a json representation', () => {
-    assert.deepEqual(
+    assert.deepStrictEqual(
       { subdomainOffset: 2, proxy: false, env: 'test' },
       app.inspect()
     );

@@ -9,7 +9,7 @@ describe('app.toJSON()', () => {
     const app = new Koa();
     const obj = app.toJSON();
 
-    assert.deepEqual({
+    assert.deepStrictEqual({
       subdomainOffset: 2,
       proxy: false,
       env: 'test'

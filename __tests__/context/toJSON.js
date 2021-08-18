@@ -18,7 +18,7 @@ describe('ctx.toJSON()', () => {
     const req = obj.request;
     const res = obj.response;
 
-    assert.deepEqual({
+    assert.deepStrictEqual({
       method: 'POST',
       url: '/items',
       header: {
@@ -26,7 +26,7 @@ describe('ctx.toJSON()', () => {
       }
     }, req);
 
-    assert.deepEqual({
+    assert.deepStrictEqual({
       status: 200,
       message: 'OK',
       header: {

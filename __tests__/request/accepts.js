@@ -10,7 +10,7 @@ describe('ctx.accepts(types)', () => {
       it('should return all accepted types', () => {
         const ctx = context();
         ctx.req.headers.accept = 'application/*;q=0.2, image/jpeg;q=0.8, text/html, text/plain';
-        assert.deepEqual(ctx.accepts(), ['text/html', 'text/plain', 'image/jpeg', 'application/*']);
+        assert.deepStrictEqual(ctx.accepts(), ['text/html', 'text/plain', 'image/jpeg', 'application/*']);
       });
     });
   });

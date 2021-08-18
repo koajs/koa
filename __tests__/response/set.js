@@ -26,7 +26,7 @@ describe('ctx.set(name, val)', () => {
   it('should set a field value of array', () => {
     const ctx = context();
     ctx.set('x-foo', ['foo', 'bar', 123 ]);
-    assert.deepEqual(ctx.response.header['x-foo'], [ 'foo', 'bar', '123' ]);
+    assert.deepStrictEqual(ctx.response.header['x-foo'], [ 'foo', 'bar', '123' ]);
   });
 });
 

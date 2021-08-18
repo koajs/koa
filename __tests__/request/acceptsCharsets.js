@@ -10,7 +10,7 @@ describe('ctx.acceptsCharsets()', () => {
       it('should return accepted types', () => {
         const ctx = context();
         ctx.req.headers['accept-charset'] = 'utf-8, iso-8859-1;q=0.2, utf-7;q=0.5';
-        assert.deepEqual(ctx.acceptsCharsets(), ['utf-8', 'utf-7', 'iso-8859-1']);
+        assert.deepStrictEqual(ctx.acceptsCharsets(), ['utf-8', 'utf-7', 'iso-8859-1']);
       });
     });
   });

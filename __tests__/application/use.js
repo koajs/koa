@@ -37,7 +37,7 @@ describe('app.use(fn)', () => {
       .get('/')
       .expect(404);
 
-    assert.deepEqual(calls, [1, 2, 3, 4, 5, 6]);
+    assert.deepStrictEqual(calls, [1, 2, 3, 4, 5, 6]);
   });
 
   it('should compose mixed middleware', async() => {
@@ -71,7 +71,7 @@ describe('app.use(fn)', () => {
       .get('/')
       .expect(404);
 
-    assert.deepEqual(calls, [1, 2, 3, 4, 5, 6]);
+    assert.deepStrictEqual(calls, [1, 2, 3, 4, 5, 6]);
   });
 
   // https://github.com/koajs/koa/pull/530#issuecomment-148138051

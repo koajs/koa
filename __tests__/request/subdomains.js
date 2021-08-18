@@ -9,20 +9,20 @@ describe('req.subdomains', () => {
     const req = request();
     req.header.host = 'tobi.ferrets.example.com';
     req.app.subdomainOffset = 2;
-    assert.deepEqual(req.subdomains, ['ferrets', 'tobi']);
+    assert.deepStrictEqual(req.subdomains, ['ferrets', 'tobi']);
 
     req.app.subdomainOffset = 3;
-    assert.deepEqual(req.subdomains, ['tobi']);
+    assert.deepStrictEqual(req.subdomains, ['tobi']);
   });
 
   it('should work with no host present', () => {
     const req = request();
-    assert.deepEqual(req.subdomains, []);
+    assert.deepStrictEqual(req.subdomains, []);
   });
 
   it('should check if the host is an ip address, even with a port', () => {
     const req = request();
     req.header.host = '127.0.0.1:3000';
-    assert.deepEqual(req.subdomains, []);
+    assert.deepStrictEqual(req.subdomains, []);
   });
 });

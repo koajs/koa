@@ -8,7 +8,7 @@ describe('ctx.query', () => {
   describe('when missing', () => {
     it('should return an empty object', () => {
       const ctx = context({ url: '/' });
-      assert.deepEqual(ctx.query, {});
+      assert(!Object.keys(ctx.query).length);
     });
 
     it('should return the same object each time it\'s accessed', () => {

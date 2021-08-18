@@ -552,7 +552,7 @@ describe('app.respond', () => {
 
       const pkg = require('../../package');
       assert.strictEqual(res.headers.hasOwnProperty('content-length'), false);
-      assert.deepEqual(res.body, pkg);
+      assert.deepStrictEqual(res.body, pkg);
     });
 
     it('should strip content-length when overwriting', async() => {
@@ -572,7 +572,7 @@ describe('app.respond', () => {
 
       const pkg = require('../../package');
       assert.strictEqual(res.headers.hasOwnProperty('content-length'), false);
-      assert.deepEqual(res.body, pkg);
+      assert.deepStrictEqual(res.body, pkg);
     });
 
     it('should keep content-length if not overwritten', async() => {
@@ -592,7 +592,7 @@ describe('app.respond', () => {
 
       const pkg = require('../../package');
       assert.strictEqual(res.headers.hasOwnProperty('content-length'), true);
-      assert.deepEqual(res.body, pkg);
+      assert.deepStrictEqual(res.body, pkg);
     });
 
     it('should keep content-length if overwritten with the same stream',
@@ -615,7 +615,7 @@ describe('app.respond', () => {
 
         const pkg = require('../../package');
         assert.strictEqual(res.headers.hasOwnProperty('content-length'), true);
-        assert.deepEqual(res.body, pkg);
+        assert.deepStrictEqual(res.body, pkg);
       });
 
     it('should handle errors', done => {
