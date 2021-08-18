@@ -11,9 +11,8 @@
     "./": "./"
   },
   "scripts": {
-    "test": "egg-bin test test",
-    "test-cov": "egg-bin cov test",
-    "lint": "eslint lib test",
+    "test": "jest --forceExit",
+    "lint": "eslint --ignore-path .gitignore .",
     "authors": "git log --format='%aN <%aE>' | sort -u > AUTHORS",
     "build": "gen-esm-wrapper . ./dist/koa.mjs",
     "prepare": "npm run build"
@@ -55,7 +54,6 @@
     "vary": "^1.1.2"
   },
   "devDependencies": {
-    "egg-bin": "^4.13.0",
     "eslint": "^6.5.1",
     "eslint-config-koa": "^2.0.0",
     "eslint-config-standard": "^14.1.0",
@@ -64,7 +62,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "gen-esm-wrapper": "^1.0.6",
-    "mm": "^2.5.0",
+    "jest": "^27.0.6",
     "supertest": "^3.1.0"
   },
   "engines": {
@@ -73,5 +71,8 @@
   "files": [
     "dist",
     "lib"
-  ]
+  ],
+  "jest": {
+    "testEnvironment": "node"
+  }
 }

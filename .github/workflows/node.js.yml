@@ -23,5 +23,5 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm run lint
-    - run: npm run test-cov
+    - run: npm test -- --coverage --maxWorkers 2
     - run: npx codecov
