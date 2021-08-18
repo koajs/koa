@@ -89,7 +89,7 @@ describe('app.response', () => {
     app7.use((ctx, next) => {
       ctx.set('Transfer-Encoding', 'chunked')
       ctx.body = 'hello world'
-      assert.strictEqual(ctx.response.get('Content-Length'), '')
+      assert.strictEqual(ctx.response.get('Content-Length'), undefined)
     })
 
     return request(app7.listen())
