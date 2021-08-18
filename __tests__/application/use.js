@@ -41,7 +41,6 @@ describe('app.use(fn)', () => {
   })
 
   it('should compose mixed middleware', async () => {
-    process.once('deprecation', () => {}) // silence deprecation message
     const app = new Koa()
     const calls = []
 
@@ -52,9 +51,9 @@ describe('app.use(fn)', () => {
       })
     })
 
-    app.use(function * (next){
+    app.use(async (ctx, next) => {
       calls.push(2)
-      yield next
+      await next()
       calls.push(5)
     })
 
@@ -85,34 +84,11 @@ describe('app.use(fn)', () => {
       .expect(404)
   })
 
-  it('should accept both generator and function middleware', () => {
-    process.once('deprecation', () => {}) // silence deprecation message
-    const app = new Koa()
-
-    app.use((ctx, next) => next())
-    app.use(function * (next){ this.body = 'generator' })
-
-    return request(app.callback())
-      .get('/')
-      .expect(200)
-      .expect('generator')
-  })
-
   it('should throw error for non-function', () => {
     const app = new Koa();
 
     [null, undefined, 0, false, 'not a function'].forEach(v => {
       assert.throws(() => app.use(v), /middleware must be a function!/)
     })
-  })
-
-  it('should output deprecation message for generator functions', done => {
-    process.once('deprecation', message => {
-      assert(/Support for generators will be removed/.test(message))
-      done()
-    })
-
-    const app = new Koa()
-    app.use(function * (){})
   })
 })
