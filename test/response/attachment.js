@@ -12,7 +12,7 @@ describe('ctx.attachment([filename])', () => {
       const ctx = context();
       ctx.attachment('path/to/tobi.png');
       const str = 'attachment; filename="tobi.png"';
-      assert.equal(ctx.response.header['content-disposition'], str);
+      assert.strictEqual(ctx.response.header['content-disposition'], str);
     });
   });
 
@@ -20,7 +20,7 @@ describe('ctx.attachment([filename])', () => {
     it('should not set filename param', () => {
       const ctx = context();
       ctx.attachment();
-      assert.equal(ctx.response.header['content-disposition'], 'attachment');
+      assert.strictEqual(ctx.response.header['content-disposition'], 'attachment');
     });
   });
 
@@ -29,7 +29,7 @@ describe('ctx.attachment([filename])', () => {
       const ctx = context();
       ctx.attachment('path/to/include-no-ascii-char-中文名-ok.png');
       const str = 'attachment; filename="include-no-ascii-char-???-ok.png"; filename*=UTF-8\'\'include-no-ascii-char-%E4%B8%AD%E6%96%87%E5%90%8D-ok.png';
-      assert.equal(ctx.response.header['content-disposition'], str);
+      assert.strictEqual(ctx.response.header['content-disposition'], str);
     });
 
     it('should work with http client', () => {
@@ -61,7 +61,7 @@ describe('contentDisposition(filename, options)', () => {
     it('should default to true', () => {
       const ctx = context();
       ctx.attachment('€ rates.pdf');
-      assert.equal(ctx.response.header['content-disposition'],
+      assert.strictEqual(ctx.response.header['content-disposition'],
         'attachment; filename="? rates.pdf"; filename*=UTF-8\'\'%E2%82%AC%20rates.pdf');
     });
 
@@ -69,14 +69,14 @@ describe('contentDisposition(filename, options)', () => {
       it('should not generate ISO-8859-1 fallback', () => {
         const ctx = context();
         ctx.attachment('£ and € rates.pdf', { fallback: false });
-        assert.equal(ctx.response.header['content-disposition'],
+        assert.strictEqual(ctx.response.header['content-disposition'],
           'attachment; filename*=UTF-8\'\'%C2%A3%20and%20%E2%82%AC%20rates.pdf');
       });
 
       it('should keep ISO-8859-1 filename', () => {
         const ctx = context();
         ctx.attachment('£ rates.pdf', { fallback: false });
-        assert.equal(ctx.response.header['content-disposition'],
+        assert.strictEqual(ctx.response.header['content-disposition'],
           'attachment; filename="£ rates.pdf"');
       });
     });
@@ -85,14 +85,14 @@ describe('contentDisposition(filename, options)', () => {
       it('should generate ISO-8859-1 fallback', () => {
         const ctx = context();
         ctx.attachment('£ and € rates.pdf', { fallback: true });
-        assert.equal(ctx.response.header['content-disposition'],
+        assert.strictEqual(ctx.response.header['content-disposition'],
           'attachment; filename="£ and ? rates.pdf"; filename*=UTF-8\'\'%C2%A3%20and%20%E2%82%AC%20rates.pdf');
       });
 
       it('should pass through ISO-8859-1 filename', () => {
         const ctx = context();
         ctx.attachment('£ rates.pdf', { fallback: true });
-        assert.equal(ctx.response.header['content-disposition'],
+        assert.strictEqual(ctx.response.header['content-disposition'],
           'attachment; filename="£ rates.pdf"');
       });
     });
@@ -107,35 +107,35 @@ describe('contentDisposition(filename, options)', () => {
       it('should use as ISO-8859-1 fallback', () => {
         const ctx = context();
         ctx.attachment('£ and € rates.pdf', { fallback: '£ and EURO rates.pdf' });
-        assert.equal(ctx.response.header['content-disposition'],
+        assert.strictEqual(ctx.response.header['content-disposition'],
           'attachment; filename="£ and EURO rates.pdf"; filename*=UTF-8\'\'%C2%A3%20and%20%E2%82%AC%20rates.pdf');
       });
 
       it('should use as fallback even when filename is ISO-8859-1', () => {
         const ctx = context();
         ctx.attachment('"£ rates".pdf', { fallback: '£ rates.pdf' });
-        assert.equal(ctx.response.header['content-disposition'],
+        assert.strictEqual(ctx.response.header['content-disposition'],
           'attachment; filename="£ rates.pdf"; filename*=UTF-8\'\'%22%C2%A3%20rates%22.pdf');
       });
 
       it('should do nothing if equal to filename', () => {
         const ctx = context();
         ctx.attachment('plans.pdf', { fallback: 'plans.pdf' });
-        assert.equal(ctx.response.header['content-disposition'],
+        assert.strictEqual(ctx.response.header['content-disposition'],
           'attachment; filename="plans.pdf"');
       });
 
       it('should use the basename of the string', () => {
         const ctx = context();
         ctx.attachment('€ rates.pdf', { fallback: '/path/to/EURO rates.pdf' });
-        assert.equal(ctx.response.header['content-disposition'],
+        assert.strictEqual(ctx.response.header['content-disposition'],
           'attachment; filename="EURO rates.pdf"; filename*=UTF-8\'\'%E2%82%AC%20rates.pdf');
       });
 
       it('should do nothing without filename option', () => {
         const ctx = context();
         ctx.attachment(undefined, { fallback: 'plans.pdf' });
-        assert.equal(ctx.response.header['content-disposition'],
+        assert.strictEqual(ctx.response.header['content-disposition'],
           'attachment');
       });
     });
@@ -145,7 +145,7 @@ describe('contentDisposition(filename, options)', () => {
     it('should default to attachment', () => {
       const ctx = context();
       ctx.attachment();
-      assert.equal(ctx.response.header['content-disposition'],
+      assert.strictEqual(ctx.response.header['content-disposition'],
         'attachment');
     });
 
@@ -164,21 +164,21 @@ describe('contentDisposition(filename, options)', () => {
     it('should create a header with inline type', () => {
       const ctx = context();
       ctx.attachment(undefined, { type: 'inline' });
-      assert.equal(ctx.response.header['content-disposition'],
+      assert.strictEqual(ctx.response.header['content-disposition'],
         'inline');
     });
 
     it('should create a header with inline type and filename', () => {
       const ctx = context();
       ctx.attachment('plans.pdf', { type: 'inline' });
-      assert.equal(ctx.response.header['content-disposition'],
+      assert.strictEqual(ctx.response.header['content-disposition'],
         'inline; filename="plans.pdf"');
     });
 
     it('should normalize type', () => {
       const ctx = context();
       ctx.attachment(undefined, { type: 'INLINE' });
-      assert.equal(ctx.response.header['content-disposition'],
+      assert.strictEqual(ctx.response.header['content-disposition'],
         'inline');
     });
   });

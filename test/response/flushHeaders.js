@@ -14,7 +14,7 @@ describe('ctx.flushHeaders()', () => {
       ctx.body = 'Body';
       ctx.status = 200;
       ctx.flushHeaders();
-      assert.equal(ctx.res.headersSent, true);
+      assert.strictEqual(ctx.res.headersSent, true);
     });
 
     const server = app.listen();
@@ -80,8 +80,8 @@ describe('ctx.flushHeaders()', () => {
       .expect(401)
       .expect('Content-Type', 'text/plain');
 
-    assert.equal(res.headers['x-shouldnt-work'], undefined, 'header set after flushHeaders');
-    assert.equal(res.headers.vary, undefined, 'header set after flushHeaders');
+    assert.strictEqual(res.headers['x-shouldnt-work'], undefined, 'header set after flushHeaders');
+    assert.strictEqual(res.headers.vary, undefined, 'header set after flushHeaders');
   });
 
   it('should flush headers first and delay to send data', done => {

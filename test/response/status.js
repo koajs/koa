@@ -13,7 +13,7 @@ describe('res.status=', () => {
       it('should set the status', () => {
         const res = response();
         res.status = 403;
-        assert.equal(res.status, 403);
+        assert.strictEqual(res.status, 403);
       });
 
       it('should not throw', () => {
@@ -35,7 +35,7 @@ describe('res.status=', () => {
       it('should set the status', () => {
         const res = response();
         res.status = 700;
-        assert.equal(res.status, 700);
+        assert.strictEqual(res.status, 700);
       });
 
       it('should not throw', () => {
@@ -80,10 +80,10 @@ describe('res.status=', () => {
         .get('/')
         .expect(status);
 
-      assert.equal(res.headers.hasOwnProperty('content-type'), false);
-      assert.equal(res.headers.hasOwnProperty('content-length'), false);
-      assert.equal(res.headers.hasOwnProperty('content-encoding'), false);
-      assert.equal(res.text.length, 0);
+      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false);
+      assert.strictEqual(res.headers.hasOwnProperty('content-length'), false);
+      assert.strictEqual(res.headers.hasOwnProperty('content-encoding'), false);
+      assert.strictEqual(res.text.length, 0);
     });
 
     it('should strip content related header fields after status set', async() => {
@@ -101,10 +101,10 @@ describe('res.status=', () => {
         .get('/')
         .expect(status);
 
-      assert.equal(res.headers.hasOwnProperty('content-type'), false);
-      assert.equal(res.headers.hasOwnProperty('content-length'), false);
-      assert.equal(res.headers.hasOwnProperty('content-encoding'), false);
-      assert.equal(res.text.length, 0);
+      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false);
+      assert.strictEqual(res.headers.hasOwnProperty('content-length'), false);
+      assert.strictEqual(res.headers.hasOwnProperty('content-encoding'), false);
+      assert.strictEqual(res.text.length, 0);
     });
   }
 

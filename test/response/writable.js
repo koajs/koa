@@ -32,8 +32,8 @@ describe('res.writable', () => {
       const server = app.listen();
       requestTwice(server, (_, datas) => {
         const responses = Buffer.concat(datas).toString();
-        assert.equal(/request 1, writable: true/.test(responses), true);
-        assert.equal(/request 2, writable: true/.test(responses), true);
+        assert.strictEqual(/request 1, writable: true/.test(responses), true);
+        assert.strictEqual(/request 2, writable: true/.test(responses), true);
         done();
       });
     });

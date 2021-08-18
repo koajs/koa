@@ -28,7 +28,7 @@ describe('ctx.append(name, val)', () => {
 
     ctx.set('Link', '<http://127.0.0.1/>');
 
-    assert.equal(ctx.response.header.link, '<http://127.0.0.1/>');
+    assert.strictEqual(ctx.response.header.link, '<http://127.0.0.1/>');
   });
 
   it('should work with res.set(field, val) first', () => {

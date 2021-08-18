@@ -22,7 +22,7 @@ describe('ctx.cookies', () => {
         .expect(204);
 
       const cookie = res.headers['set-cookie'].some(cookie => /^name=/.test(cookie));
-      assert.equal(cookie, true);
+      assert.strictEqual(cookie, true);
     });
 
     describe('with .signed', () => {
@@ -62,8 +62,8 @@ describe('ctx.cookies', () => {
 
         const cookies = res.headers['set-cookie'];
 
-        assert.equal(cookies.some(cookie => /^name=/.test(cookie)), true);
-        assert.equal(cookies.some(cookie => /(,|^)name\.sig=/.test(cookie)), true);
+        assert.strictEqual(cookies.some(cookie => /^name=/.test(cookie)), true);
+        assert.strictEqual(cookies.some(cookie => /(,|^)name\.sig=/.test(cookie)), true);
       });
     });
 
@@ -87,9 +87,9 @@ describe('ctx.cookies', () => {
           .expect(204);
 
         const cookies = res.headers['set-cookie'];
-        assert.equal(cookies.some(cookie => /^name=/.test(cookie)), true);
-        assert.equal(cookies.some(cookie => /(,|^)name\.sig=/.test(cookie)), true);
-        assert.equal(cookies.every(cookie => /secure/.test(cookie)), true);
+        assert.strictEqual(cookies.some(cookie => /^name=/.test(cookie)), true);
+        assert.strictEqual(cookies.some(cookie => /(,|^)name\.sig=/.test(cookie)), true);
+        assert.strictEqual(cookies.every(cookie => /secure/.test(cookie)), true);
       });
     });
   });

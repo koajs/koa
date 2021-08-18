@@ -10,8 +10,8 @@ describe('ctx.redirect(url)', () => {
   it('should redirect to the given url', () => {
     const ctx = context();
     ctx.redirect('http://google.com');
-    assert.equal(ctx.response.header.location, 'http://google.com');
-    assert.equal(ctx.status, 302);
+    assert.strictEqual(ctx.response.header.location, 'http://google.com');
+    assert.strictEqual(ctx.status, 302);
   });
 
   it('should auto fix not encode url', done => {
@@ -25,8 +25,8 @@ describe('ctx.redirect(url)', () => {
       .get('/')
       .end((err, res) => {
         if (err) return done(err);
-        assert.equal(res.status, 302);
-        assert.equal(res.headers.location, 'http://google.com/%F0%9F%98%93');
+        assert.strictEqual(res.status, 302);
+        assert.strictEqual(res.headers.location, 'http://google.com/%F0%9F%98%93');
         done();
       });
   });
@@ -36,26 +36,26 @@ describe('ctx.redirect(url)', () => {
       const ctx = context();
       ctx.req.headers.referrer = '/login';
       ctx.redirect('back');
-      assert.equal(ctx.response.header.location, '/login');
+      assert.strictEqual(ctx.response.header.location, '/login');
     });
 
     it('should redirect to Referer', () => {
       const ctx = context();
       ctx.req.headers.referer = '/login';
       ctx.redirect('back');
-      assert.equal(ctx.response.header.location, '/login');
+      assert.strictEqual(ctx.response.header.location, '/login');
     });
 
     it('should default to alt', () => {
       const ctx = context();
       ctx.redirect('back', '/index.html');
-      assert.equal(ctx.response.header.location, '/index.html');
+      assert.strictEqual(ctx.response.header.location, '/index.html');
     });
 
     it('should default redirect to /', () => {
       const ctx = context();
       ctx.redirect('back');
-      assert.equal(ctx.response.header.location, '/');
+      assert.strictEqual(ctx.response.header.location, '/');
     });
   });
 
@@ -65,8 +65,8 @@ describe('ctx.redirect(url)', () => {
       const url = 'http://google.com';
       ctx.header.accept = 'text/html';
       ctx.redirect(url);
-      assert.equal(ctx.response.header['content-type'], 'text/html; charset=utf-8');
-      assert.equal(ctx.body, `Redirecting to <a href="${url}">${url}</a>.`);
+      assert.strictEqual(ctx.response.header['content-type'], 'text/html; charset=utf-8');
+      assert.strictEqual(ctx.body, `Redirecting to <a href="${url}">${url}</a>.`);
     });
 
     it('should escape the url', () => {
@@ -75,8 +75,8 @@ describe('ctx.redirect(url)', () => {
       ctx.header.accept = 'text/html';
       ctx.redirect(url);
       url = escape(url);
-      assert.equal(ctx.response.header['content-type'], 'text/html; charset=utf-8');
-      assert.equal(ctx.body, `Redirecting to <a href="${url}">${url}</a>.`);
+      assert.strictEqual(ctx.response.header['content-type'], 'text/html; charset=utf-8');
+      assert.strictEqual(ctx.body, `Redirecting to <a href="${url}">${url}</a>.`);
     });
   });
 
@@ -86,7 +86,7 @@ describe('ctx.redirect(url)', () => {
       const url = 'http://google.com';
       ctx.header.accept = 'text/plain';
       ctx.redirect(url);
-      assert.equal(ctx.body, `Redirecting to ${url}.`);
+      assert.strictEqual(ctx.body, `Redirecting to ${url}.`);
     });
   });
 
@@ -97,8 +97,8 @@ describe('ctx.redirect(url)', () => {
       ctx.status = 301;
       ctx.header.accept = 'text/plain';
       ctx.redirect('http://google.com');
-      assert.equal(ctx.status, 301);
-      assert.equal(ctx.body, `Redirecting to ${url}.`);
+      assert.strictEqual(ctx.status, 301);
+      assert.strictEqual(ctx.body, `Redirecting to ${url}.`);
     });
   });
 
@@ -109,8 +109,8 @@ describe('ctx.redirect(url)', () => {
       ctx.status = 304;
       ctx.header.accept = 'text/plain';
       ctx.redirect('http://google.com');
-      assert.equal(ctx.status, 302);
-      assert.equal(ctx.body, `Redirecting to ${url}.`);
+      assert.strictEqual(ctx.status, 302);
+      assert.strictEqual(ctx.body, `Redirecting to ${url}.`);
     });
   });
 
@@ -121,9 +121,9 @@ describe('ctx.redirect(url)', () => {
       const url = 'http://google.com';
       ctx.header.accept = 'text/plain';
       ctx.redirect('http://google.com');
-      assert.equal(ctx.status, 302);
-      assert.equal(ctx.body, `Redirecting to ${url}.`);
-      assert.equal(ctx.type, 'text/plain');
+      assert.strictEqual(ctx.status, 302);
+      assert.strictEqual(ctx.body, `Redirecting to ${url}.`);
+      assert.strictEqual(ctx.type, 'text/plain');
     });
   });
 });

@@ -8,6 +8,6 @@ describe('req.secure', () => {
   it('should return true when encrypted', () => {
     const req = request();
     req.req.socket = { encrypted: true };
-    assert.equal(req.secure, true);
+    assert.strictEqual(req.secure, true);
   });
 });

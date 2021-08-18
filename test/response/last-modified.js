@@ -9,14 +9,14 @@ describe('res.lastModified', () => {
     const res = response();
     const date = new Date();
     res.lastModified = date;
-    assert.equal(res.header['last-modified'], date.toUTCString());
+    assert.strictEqual(res.header['last-modified'], date.toUTCString());
   });
 
   it('should work with date strings', () => {
     const res = response();
     const date = new Date();
     res.lastModified = date.toString();
-    assert.equal(res.header['last-modified'], date.toUTCString());
+    assert.strictEqual(res.header['last-modified'], date.toUTCString());
   });
 
   it('should get the header as a Date', () => {
@@ -24,13 +24,13 @@ describe('res.lastModified', () => {
     const res = response();
     const date = new Date();
     res.lastModified = date;
-    assert.equal((res.lastModified.getTime() / 1000), Math.floor(date.getTime() / 1000));
+    assert.strictEqual((res.lastModified.getTime() / 1000), Math.floor(date.getTime() / 1000));
   });
 
   describe('when lastModified not set', () => {
     it('should get undefined', () => {
       const res = response();
-      assert.equal(res.lastModified, undefined);
+      assert.strictEqual(res.lastModified, undefined);
     });
   });
 });

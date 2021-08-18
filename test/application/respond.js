@@ -96,7 +96,7 @@ describe('app.respond', () => {
         .get('/')
         .expect(200);
 
-      assert.equal(res.headers.hasOwnProperty('Content-Type'), false);
+      assert.strictEqual(res.headers.hasOwnProperty('Content-Type'), false);
     });
   });
 
@@ -114,8 +114,8 @@ describe('app.respond', () => {
         .head('/')
         .expect(200);
 
-      assert.equal(res.headers['content-type'], 'text/plain; charset=utf-8');
-      assert.equal(res.headers['content-length'], '5');
+      assert.strictEqual(res.headers['content-type'], 'text/plain; charset=utf-8');
+      assert.strictEqual(res.headers['content-length'], '5');
       assert(!res.text);
     });
 
@@ -132,8 +132,8 @@ describe('app.respond', () => {
         .head('/')
         .expect(200);
 
-      assert.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-      assert.equal(res.headers['content-length'], '17');
+      assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8');
+      assert.strictEqual(res.headers['content-length'], '17');
       assert(!res.text);
     });
 
@@ -150,8 +150,8 @@ describe('app.respond', () => {
         .head('/')
         .expect(200);
 
-      assert.equal(res.headers['content-type'], 'text/plain; charset=utf-8');
-      assert.equal(res.headers['content-length'], '11');
+      assert.strictEqual(res.headers['content-type'], 'text/plain; charset=utf-8');
+      assert.strictEqual(res.headers['content-length'], '11');
       assert(!res.text);
     });
 
@@ -168,8 +168,8 @@ describe('app.respond', () => {
         .head('/')
         .expect(200);
 
-      assert.equal(res.headers['content-type'], 'application/octet-stream');
-      assert.equal(res.headers['content-length'], '11');
+      assert.strictEqual(res.headers['content-type'], 'application/octet-stream');
+      assert.strictEqual(res.headers['content-length'], '11');
       assert(!res.text);
     });
 
@@ -189,7 +189,7 @@ describe('app.respond', () => {
         .head('/')
         .expect(200);
 
-      assert.equal(res.header['content-length'], length);
+      assert.strictEqual(res.header['content-length'], length);
       assert(!res.text);
     });
 
@@ -329,7 +329,7 @@ describe('app.respond', () => {
           .expect(204)
           .expect('');
 
-        assert.equal(res.headers.hasOwnProperty('content-type'), false);
+        assert.strictEqual(res.headers.hasOwnProperty('content-type'), false);
       });
     });
 
@@ -348,7 +348,7 @@ describe('app.respond', () => {
           .expect(205)
           .expect('');
 
-        assert.equal(res.headers.hasOwnProperty('content-type'), false);
+        assert.strictEqual(res.headers.hasOwnProperty('content-type'), false);
       });
     });
 
@@ -367,7 +367,7 @@ describe('app.respond', () => {
           .expect(304)
           .expect('');
 
-        assert.equal(res.headers.hasOwnProperty('content-type'), false);
+        assert.strictEqual(res.headers.hasOwnProperty('content-type'), false);
       });
     });
 
@@ -387,7 +387,7 @@ describe('app.respond', () => {
           .expect(700)
           .expect('custom status');
 
-        assert.equal(res.res.statusMessage, 'custom status');
+        assert.strictEqual(res.res.statusMessage, 'custom status');
       });
     });
 
@@ -407,7 +407,7 @@ describe('app.respond', () => {
           .expect(200)
           .expect('ok');
 
-        assert.equal(res.res.statusMessage, 'ok');
+        assert.strictEqual(res.res.statusMessage, 'ok');
       });
     });
 
@@ -444,7 +444,7 @@ describe('app.respond', () => {
         .expect(204)
         .expect('');
 
-      assert.equal(res.headers.hasOwnProperty('content-type'), false);
+      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false);
     });
 
     it('should respond 204 with status=200', async() => {
@@ -462,7 +462,7 @@ describe('app.respond', () => {
         .expect(204)
         .expect('');
 
-      assert.equal(res.headers.hasOwnProperty('content-type'), false);
+      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false);
     });
 
     it('should respond 205 with status=205', async() => {
@@ -480,7 +480,7 @@ describe('app.respond', () => {
         .expect(205)
         .expect('');
 
-      assert.equal(res.headers.hasOwnProperty('content-type'), false);
+      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false);
     });
 
     it('should respond 304 with status=304', async() => {
@@ -498,7 +498,7 @@ describe('app.respond', () => {
         .expect(304)
         .expect('');
 
-      assert.equal(res.headers.hasOwnProperty('content-type'), false);
+      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false);
     });
   });
 
@@ -551,7 +551,7 @@ describe('app.respond', () => {
         .expect('Content-Type', 'application/json; charset=utf-8');
 
       const pkg = require('../../package');
-      assert.equal(res.headers.hasOwnProperty('content-length'), false);
+      assert.strictEqual(res.headers.hasOwnProperty('content-length'), false);
       assert.deepEqual(res.body, pkg);
     });
 
@@ -571,7 +571,7 @@ describe('app.respond', () => {
         .expect('Content-Type', 'application/json; charset=utf-8');
 
       const pkg = require('../../package');
-      assert.equal(res.headers.hasOwnProperty('content-length'), false);
+      assert.strictEqual(res.headers.hasOwnProperty('content-length'), false);
       assert.deepEqual(res.body, pkg);
     });
 
@@ -591,7 +591,7 @@ describe('app.respond', () => {
         .expect('Content-Type', 'application/json; charset=utf-8');
 
       const pkg = require('../../package');
-      assert.equal(res.headers.hasOwnProperty('content-length'), true);
+      assert.strictEqual(res.headers.hasOwnProperty('content-length'), true);
       assert.deepEqual(res.body, pkg);
     });
 
@@ -614,7 +614,7 @@ describe('app.respond', () => {
           .expect('Content-Type', 'application/json; charset=utf-8');
 
         const pkg = require('../../package');
-        assert.equal(res.headers.hasOwnProperty('content-length'), true);
+        assert.strictEqual(res.headers.hasOwnProperty('content-length'), true);
         assert.deepEqual(res.body, pkg);
       });
 
@@ -716,7 +716,7 @@ describe('app.respond', () => {
       });
 
       app.on('error', err => {
-        assert.equal(err.message, 'boom');
+        assert.strictEqual(err.message, 'boom');
         done();
       });
 
@@ -829,7 +829,7 @@ describe('app.respond', () => {
         .get('/')
         .expect(204);
 
-      assert.equal(res.headers.hasOwnProperty('content-type'), false);
+      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false);
     });
   });
 
@@ -866,7 +866,7 @@ describe('app.respond', () => {
         .expect('')
         .expect({});
 
-      assert.equal(res.headers.hasOwnProperty('content-type'), false);
+      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false);
     });
   });
 });

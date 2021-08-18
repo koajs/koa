@@ -8,13 +8,13 @@ describe('req.host', () => {
   it('should return host with port', () => {
     const req = request();
     req.header.host = 'foo.com:3000';
-    assert.equal(req.host, 'foo.com:3000');
+    assert.strictEqual(req.host, 'foo.com:3000');
   });
 
   describe('with no host present', () => {
     it('should return ""', () => {
       const req = request();
-      assert.equal(req.host, '');
+      assert.strictEqual(req.host, '');
     });
   });
 
@@ -26,7 +26,7 @@ describe('req.host', () => {
       });
       req.header[':authority'] = 'foo.com:3000';
       req.header.host = 'bar.com:8000';
-      assert.equal(req.host, 'bar.com:8000');
+      assert.strictEqual(req.host, 'bar.com:8000');
     });
   });
 
@@ -38,7 +38,7 @@ describe('req.host', () => {
       });
       req.header[':authority'] = 'foo.com:3000';
       req.header.host = 'bar.com:8000';
-      assert.equal(req.host, 'foo.com:3000');
+      assert.strictEqual(req.host, 'foo.com:3000');
     });
 
     it('should use host header as fallback', () => {
@@ -47,7 +47,7 @@ describe('req.host', () => {
         'httpVersion': '2.0'
       });
       req.header.host = 'bar.com:8000';
-      assert.equal(req.host, 'bar.com:8000');
+      assert.strictEqual(req.host, 'bar.com:8000');
     });
   });
 
@@ -57,7 +57,7 @@ describe('req.host', () => {
         const req = request();
         req.header['x-forwarded-host'] = 'bar.com';
         req.header.host = 'foo.com';
-        assert.equal(req.host, 'foo.com');
+        assert.strictEqual(req.host, 'foo.com');
       });
 
       it('should be ignored on HTTP/2', () => {
@@ -68,7 +68,7 @@ describe('req.host', () => {
         req.header['x-forwarded-host'] = 'proxy.com:8080';
         req.header[':authority'] = 'foo.com:3000';
         req.header.host = 'bar.com:8000';
-        assert.equal(req.host, 'foo.com:3000');
+        assert.strictEqual(req.host, 'foo.com:3000');
       });
     });
 
@@ -78,7 +78,7 @@ describe('req.host', () => {
         req.app.proxy = true;
         req.header['x-forwarded-host'] = 'bar.com, baz.com';
         req.header.host = 'foo.com';
-        assert.equal(req.host, 'bar.com');
+        assert.strictEqual(req.host, 'bar.com');
       });
 
       it('should be used on HTTP/2', () => {
@@ -90,7 +90,7 @@ describe('req.host', () => {
         req.header['x-forwarded-host'] = 'proxy.com:8080';
         req.header[':authority'] = 'foo.com:3000';
         req.header.host = 'bar.com:8000';
-        assert.equal(req.host, 'proxy.com:8080');
+        assert.strictEqual(req.host, 'proxy.com:8080');
       });
     });
   });

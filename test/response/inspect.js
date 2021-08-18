@@ -11,8 +11,8 @@ describe('res.inspect()', () => {
       const res = response();
       res.body = 'hello';
       delete res.res;
-      assert.equal(res.inspect(), null);
-      assert.equal(util.inspect(res), 'undefined');
+      assert.strictEqual(res.inspect(), null);
+      assert.strictEqual(util.inspect(res), 'undefined');
     });
   });
 

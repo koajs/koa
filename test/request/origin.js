@@ -17,9 +17,9 @@ describe('ctx.origin', () => {
       __proto__: Stream.Readable.prototype
     };
     const ctx = context(req);
-    assert.equal(ctx.origin, 'http://localhost');
+    assert.strictEqual(ctx.origin, 'http://localhost');
     // change it also work
     ctx.url = '/foo/users/1?next=/dashboard';
-    assert.equal(ctx.origin, 'http://localhost');
+    assert.strictEqual(ctx.origin, 'http://localhost');
   });
 });

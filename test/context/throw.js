@@ -11,8 +11,8 @@ describe('ctx.throw(msg)', () => {
     try {
       ctx.throw('boom');
     } catch (err) {
-      assert.equal(err.status, 500);
-      assert.equal(err.expose, false);
+      assert.strictEqual(err.status, 500);
+      assert.strictEqual(err.expose, false);
     }
   });
 });
@@ -25,9 +25,9 @@ describe('ctx.throw(err)', () => {
     try {
       ctx.throw(err);
     } catch (err) {
-      assert.equal(err.status, 500);
-      assert.equal(err.message, 'test');
-      assert.equal(err.expose, false);
+      assert.strictEqual(err.status, 500);
+      assert.strictEqual(err.message, 'test');
+      assert.strictEqual(err.expose, false);
     }
   });
 });
@@ -40,9 +40,9 @@ describe('ctx.throw(err, status)', () => {
     try {
       ctx.throw(error, 422);
     } catch (err) {
-      assert.equal(err.status, 422);
-      assert.equal(err.message, 'test');
-      assert.equal(err.expose, true);
+      assert.strictEqual(err.status, 422);
+      assert.strictEqual(err.message, 'test');
+      assert.strictEqual(err.expose, true);
     }
   });
 });
@@ -55,9 +55,9 @@ describe('ctx.throw(status, err)', () => {
     try {
       ctx.throw(422, error);
     } catch (err) {
-      assert.equal(err.status, 422);
-      assert.equal(err.message, 'test');
-      assert.equal(err.expose, true);
+      assert.strictEqual(err.status, 422);
+      assert.strictEqual(err.message, 'test');
+      assert.strictEqual(err.expose, true);
     }
   });
 });
@@ -69,9 +69,9 @@ describe('ctx.throw(msg, status)', () => {
     try {
       ctx.throw('name required', 400);
     } catch (err) {
-      assert.equal(err.message, 'name required');
-      assert.equal(err.status, 400);
-      assert.equal(err.expose, true);
+      assert.strictEqual(err.message, 'name required');
+      assert.strictEqual(err.status, 400);
+      assert.strictEqual(err.expose, true);
     }
   });
 });
@@ -83,9 +83,9 @@ describe('ctx.throw(status, msg)', () => {
     try {
       ctx.throw(400, 'name required');
     } catch (err) {
-      assert.equal(err.message, 'name required');
-      assert.equal(400, err.status);
-      assert.equal(true, err.expose);
+      assert.strictEqual(err.message, 'name required');
+      assert.strictEqual(400, err.status);
+      assert.strictEqual(true, err.expose);
     }
   });
 });
@@ -97,9 +97,9 @@ describe('ctx.throw(status)', () => {
     try {
       ctx.throw(400);
     } catch (err) {
-      assert.equal(err.message, 'Bad Request');
-      assert.equal(err.status, 400);
-      assert.equal(err.expose, true);
+      assert.strictEqual(err.message, 'Bad Request');
+      assert.strictEqual(err.status, 400);
+      assert.strictEqual(err.expose, true);
     }
   });
 
@@ -112,8 +112,8 @@ describe('ctx.throw(status)', () => {
         err.status = -1;
         ctx.throw(err);
       } catch (err) {
-        assert.equal(err.message, 'some error');
-        assert.equal(err.expose, false);
+        assert.strictEqual(err.message, 'some error');
+        assert.strictEqual(err.expose, false);
       }
     });
   });
@@ -126,10 +126,10 @@ describe('ctx.throw(status, msg, props)', () => {
     try {
       ctx.throw(400, 'msg', { prop: true });
     } catch (err) {
-      assert.equal(err.message, 'msg');
-      assert.equal(err.status, 400);
-      assert.equal(err.expose, true);
-      assert.equal(err.prop, true);
+      assert.strictEqual(err.message, 'msg');
+      assert.strictEqual(err.status, 400);
+      assert.strictEqual(err.expose, true);
+      assert.strictEqual(err.prop, true);
     }
   });
 
@@ -143,10 +143,10 @@ describe('ctx.throw(status, msg, props)', () => {
           status: -1
         });
       } catch (err) {
-        assert.equal(err.message, 'msg');
-        assert.equal(err.status, 400);
-        assert.equal(err.expose, true);
-        assert.equal(err.prop, true);
+        assert.strictEqual(err.message, 'msg');
+        assert.strictEqual(err.status, 400);
+        assert.strictEqual(err.expose, true);
+        assert.strictEqual(err.prop, true);
       }
     });
   });
@@ -159,10 +159,10 @@ describe('ctx.throw(msg, props)', () => {
     try {
       ctx.throw('msg', { prop: true });
     } catch (err) {
-      assert.equal(err.message, 'msg');
-      assert.equal(err.status, 500);
-      assert.equal(err.expose, false);
-      assert.equal(err.prop, true);
+      assert.strictEqual(err.message, 'msg');
+      assert.strictEqual(err.status, 500);
+      assert.strictEqual(err.expose, false);
+      assert.strictEqual(err.prop, true);
     }
   });
 });
@@ -174,10 +174,10 @@ describe('ctx.throw(status, props)', () => {
     try {
       ctx.throw(400, { prop: true });
     } catch (err) {
-      assert.equal(err.message, 'Bad Request');
-      assert.equal(err.status, 400);
-      assert.equal(err.expose, true);
-      assert.equal(err.prop, true);
+      assert.strictEqual(err.message, 'Bad Request');
+      assert.strictEqual(err.status, 400);
+      assert.strictEqual(err.expose, true);
+      assert.strictEqual(err.prop, true);
     }
   });
 });
@@ -189,10 +189,10 @@ describe('ctx.throw(err, props)', () => {
     try {
       ctx.throw(new Error('test'), { prop: true });
     } catch (err) {
-      assert.equal(err.message, 'test');
-      assert.equal(err.status, 500);
-      assert.equal(err.expose, false);
-      assert.equal(err.prop, true);
+      assert.strictEqual(err.message, 'test');
+      assert.strictEqual(err.status, 500);
+      assert.strictEqual(err.expose, false);
+      assert.strictEqual(err.prop, true);
     }
   });
 });

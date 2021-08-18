@@ -43,8 +43,8 @@ describe('ctx.onerror(err)', () => {
       .expect('Content-Type', 'text/plain; charset=utf-8')
       .expect('Content-Length', '4');
 
-    assert.equal(res.headers.hasOwnProperty('vary'), false);
-    assert.equal(res.headers.hasOwnProperty('x-csrf-token'), false);
+    assert.strictEqual(res.headers.hasOwnProperty('vary'), false);
+    assert.strictEqual(res.headers.hasOwnProperty('x-csrf-token'), false);
   });
 
   it('should set headers specified in the error', async() => {
@@ -72,16 +72,16 @@ describe('ctx.onerror(err)', () => {
       .expect('Content-Type', 'text/plain; charset=utf-8')
       .expect('X-New-Header', 'Value');
 
-    assert.equal(res.headers.hasOwnProperty('vary'), false);
-    assert.equal(res.headers.hasOwnProperty('x-csrf-token'), false);
+    assert.strictEqual(res.headers.hasOwnProperty('vary'), false);
+    assert.strictEqual(res.headers.hasOwnProperty('x-csrf-token'), false);
   });
 
   it('should ignore error after headerSent', done => {
     const app = new Koa();
 
     app.on('error', err => {
-      assert.equal(err.message, 'mock error');
-      assert.equal(err.headerSent, true);
+      assert.strictEqual(err.message, 'mock error');
+      assert.strictEqual(err.headerSent, true);
       done();
     });
 
@@ -269,14 +269,14 @@ describe('ctx.onerror(err)', () => {
 
       ctx.onerror(new Error('error'));
 
-      assert.equal(removed, 2);
+      assert.strictEqual(removed, 2);
     });
 
     it('should stringify error if it is an object', done => {
       const app = new Koa();
 
       app.on('error', err => {
-        assert.equal(err, 'Error: non-error thrown: {"key":"value"}');
+        assert.strictEqual(err, 'Error: non-error thrown: {"key":"value"}');
         done();
       });
 
