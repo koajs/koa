@@ -160,40 +160,6 @@ Learn more about the application object in the [Application API Reference](docs/
  - [FAQ](docs/faq.md)
  - [API documentation](docs/api/index.md)
 
-## Babel setup
-
-If you're not using `node v7.6+`, we recommend setting up `babel` with [`@babel/preset-env`](https://babeljs.io/docs/en/next/babel-preset-env):
-
-```bash
-$ npm install @babel/register @babel/preset-env @babel/cli --save-dev
-```
-
-In development, you'll want to use [`@babel/register`](https://babeljs.io/docs/en/next/babel-register):
-
-```bash
-node --require @babel/register <your-entry-file>
-```
-
-In production, you'll want to build your files with [`@babel/cli`](https://babeljs.io/docs/en/babel-cli). Suppose you are compiling a folder `src` and you wanted the output to go to a new folder `dist` with non-javascript files copied:
-
-```bash
-babel src --out-dir dist --copy-files
-```
-
-And have your `.babelrc` setup:
-
-```json
-{
-  "presets": [
-    ["@babel/preset-env", {
-      "targets": {
-        "node": true
-      }
-    }]
-  ]
-}
-```
-
 ## Troubleshooting
 
 Check the [Troubleshooting Guide](docs/troubleshooting.md) or [Debugging Koa](docs/guide.md#debugging-koa) in
@@ -207,9 +173,7 @@ $ npm test
 
 ## Reporting vulnerabilities
 
-To report a security vulnerability, please do not open an issue, as this notifies attackers
-of the vulnerability. Instead, please email [dead_horse](mailto:heyiyu.deadhorse@gmail.com) and [jonathanong](mailto:me@jongleberry.com) to
-disclose.
+To report a security vulnerability, please do not open an issue, as this notifies attackers of the vulnerability. Instead, please email [dead_horse](mailto:heyiyu.deadhorse@gmail.com), [jonathanong](mailto:me@jongleberry.com), and [niftylettuce](mailto:niftylettuce@gmail.com) to disclose.
 
 ## Authors
 
@@ -221,7 +185,6 @@ See [AUTHORS](AUTHORS).
  - [Examples](https://github.com/koajs/examples)
  - [Middleware](https://github.com/koajs/koa/wiki) list
  - [Wiki](https://github.com/koajs/koa/wiki)
- - [G+ Community](https://plus.google.com/communities/101845768320796750641)
  - [Reddit Community](https://www.reddit.com/r/koajs)
  - [Mailing list](https://groups.google.com/forum/#!forum/koajs)
  - [中文文档 v1.x](https://github.com/guo-yu/koa-guide)

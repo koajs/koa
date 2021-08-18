@@ -4,3 +4,4 @@ coverage
 npm-debug.log
 .idea
 *.iml
+dist

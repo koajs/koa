@@ -1,4 +1,75 @@
 
+3.0.0 /
+==================
+
+## Breaking Changes
+
+- Supports node@12+ only.
+- Removes generator deprecation messages. 
+  Generators are no longer supported.
+  Koa no longer asserts if generators are used.
+- Set `content-length: 0` if body is explicitly set to `null` @ognjenjevremovic #1528
+
+## Fixes
+
+- fix: Do not response Content-Length if Transfer-Encoding is defined #1562 @charlyzeng
+- fix: Set body to `null` if `ctx.type = json` and `ctx.body = null` #1059 @likegun
+
+2.13.1 / 2021-01-04
+==================
+
+**fixes**
+  * [[`b5472f4`](http://github.com/koajs/koa/commit/b5472f4cbb87349becae36b4a9ad5f76a825abb8)] - fix: make ESM transpiled CommonJS play nice for TS folks, fix #1513 (#1518) (miwnwski <<m@iwnw.ski>>)
+  * [[`68d97d6`](http://github.com/koajs/koa/commit/68d97d69e4536065504bf9ef1e348a66b3f35709)] - fix: fixed order of vulnerability disclosure addresses (niftylettuce <<niftylettuce@gmail.com>>)
+
+**others**
+  * [[`b4398f5`](http://github.com/koajs/koa/commit/b4398f5d68f9546167419f394a686afdcb5e10e2)] - correct verb tense in doc (#1512) (Matan Shavit <<71092861+matanshavit@users.noreply.github.com>>)
+  * [[`39e1a5a`](http://github.com/koajs/koa/commit/39e1a5a380aa2bbc4e2d164e8e4bf37cfd512516)] - fixed multiple grammatical errors in docs. (#1497) (Hridayesh Sharma <<vyasriday7@gmail.com>>)
+  * [[`aeb5d19`](http://github.com/koajs/koa/commit/aeb5d1984dcc5f8e3386f8f9724807ae6f3aa1c4)] - docs: added niftylettuce@gmail.com to vulnerability disclosure (niftylettuce <<niftylettuce@gmail.com>>)
+  * [[`6e1093b`](http://github.com/koajs/koa/commit/6e1093be27b41135c8e67fce108743d54e9cab67)] - docs: remove babel from readme (#1494) (miwnwski <<m@iwnw.ski>>)
+  * [[`38cb591`](http://github.com/koajs/koa/commit/38cb591254ff5f65a04e8fb57be293afe697c46e)] - docs: update specific for auto response status (AlbertAZ1992 <<ziyuximing@163.com>>)
+  * [[`2224cd9`](http://github.com/koajs/koa/commit/2224cd9b6a648e7ac2eb27eac332e7d6de7db26c)] -  docs: remove babel ref. (#1488) (Imed Jaberi <<imed_jebari@hotmail.fr>>)
+  * [[`d51f983`](http://github.com/koajs/koa/commit/d51f98328c3b84493cc6bda0732aabb69e20e3a1)] -  docs: fix assert example for response (#1489) (Imed Jaberi <<imed_jebari@hotmail.fr>>)
+  * [[`f8b49b8`](http://github.com/koajs/koa/commit/f8b49b859363ad6c3d9ea5c11ee62341407ceafd)] - chore: fix grammatical and spelling errors in comments and tests (#1490) (Matt Kubej <<mkubej@gmail.com>>)
+  * [[`d1c9263`](http://github.com/koajs/koa/commit/d1c92638c95d799df2fdff5576b96fc43a62813f)] -  deps: update depd  >> v2.0.0 (#1482) (imed jaberi <<imed_jebari@hotmail.fr>>)
+
+2.13.0 / 2020-06-21
+==================
+
+**features**
+  * [[`bbcde76`](http://github.com/koajs/koa/commit/bbcde76f5cb5b67bbcd3201791cf0ef648fd3a8b)] - feat: support esm (#1474) (ZYSzys <<zhangyongsheng@youzan.com>>)
+
+**others**
+  * [[`20e58cf`](http://github.com/koajs/koa/commit/20e58cf3e4f20fc5d5886df1d0ac6dd8c33bd202)] - test: imporve coverage to 100% (dead-horse <<dead_horse@qq.com>>)
+  * [[`4a40d63`](http://github.com/koajs/koa/commit/4a40d633c4b4a203c6656078f9952ccef65c5875)] - build: use prepare instead of prepublish (dead-horse <<dead_horse@qq.com>>)
+  * [[`226ba8c`](http://github.com/koajs/koa/commit/226ba8c8e81e83da48e7bf137be3f146d03f40b8)] - build: use prepublish instead of prepack (dead-horse <<dead_horse@qq.com>>)
+
+2.12.1 / 2020-06-13
+==================
+
+**fixes**
+  * [[`e2030c7`](http://github.com/koajs/koa/commit/e2030c7249c7ae24e28158d8eae405a02fefc9f8)] - fix: Improve checks for Error in onerror handlers (#1468) (Julien Wajsberg <<felash@gmail.com>>)
+
+**others**
+  * [[`5208c5e`](http://github.com/koajs/koa/commit/5208c5e15d35b3653fce6b8ed68d09865abea843)] - chore: Use single console.error() statement in error handler (#1471) (Mike Vosseller <<michael.vosseller@gmail.com>>)
+
+2.12.0 / 2020-05-18
+==================
+
+**features**
+  * [[`0d2f421`](http://github.com/koajs/koa/commit/0d2f421c265350d3d84e1bc261572954479f27d3)] - feat: error handler treat err.statusCode as the same as err.status (#1460) (Vijay Krishnavanshi <<vijaykrishnavanshi@gmail.com>>)
+  * [[`8d52105`](http://github.com/koajs/koa/commit/8d52105a34234be9e771ff3b76b43e4e30328943)] - feat: allow bodyless responses for non empty status codes (#1447) (ejose19 <<8742215+ejose19@users.noreply.github.com>>)
+
+**others**
+  * [[`faeaff5`](http://github.com/koajs/koa/commit/faeaff5c149a81a188ab8e5af0b994029e45acbb)] - fox: remove `error-inject` and fix error handling (#1409) (Konstantin Vyatkin <<tino@vtkn.io>>)
+  * [[`f7c732f`](http://github.com/koajs/koa/commit/f7c732fd06f724505e9090add4d977e667da55a8)] - docs: fixed incorrect onerror example (#1459) (Paul Annekov <<paul.annekov@gmail.com>>)
+  * [[`143d8f7`](http://github.com/koajs/koa/commit/143d8f72f2a232b4c97eac00e7811015911e4f7c)] - Always use strict equality. (#1225) (Yazan Medanat <<medanat@gmail.com>>)
+  * [[`6b6b0dd`](http://github.com/koajs/koa/commit/6b6b0ddf7aff073e65493c6efaffab8331c0331c)] - docs(api): add app.use chainability note (#1449) (Zac Anger <<zac@zacanger.com>>)
+  * [[`8ddab48`](http://github.com/koajs/koa/commit/8ddab48cbdbca1e6d1cc8c3ddae45491db524d51)] - docs: Document response status with empty body (#1445) (Marc-Aurèle DARCHE <<152407+madarche@users.noreply.github.com>>)
+  * [[`7deedb2`](http://github.com/koajs/koa/commit/7deedb235274223f1b9da46dee296545b23598de)] - docs: Updating context.md with the latest cookies opts (#1433) (Brad Ito <<phlogisticfugu@users.noreply.github.com>>)
+  * [[`3e97a10`](http://github.com/koajs/koa/commit/3e97a106bb846d9337737011bb85149ddd797229)] - docs(links): remove Google+ link (#1439) (laffachan <<45162759+laffachan@users.noreply.github.com>>)
+  * [[`eda2760`](http://github.com/koajs/koa/commit/eda27608f7d39ede86d7b402aae64b1867ce31c6)] - build: Drop unused Travis sudo: false directive (#1416) (Olle Jonsson <<olle.jonsson@gmail.com>>)
+
 2.11.0 / 2019-10-28
 ==================
 
