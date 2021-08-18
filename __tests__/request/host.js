@@ -21,8 +21,8 @@ describe('req.host', () => {
   describe('when less then HTTP/2', () => {
     it('should not use :authority header', () => {
       const req = request({
-        'httpVersionMajor': 1,
-        'httpVersion': '1.1'
+        httpVersionMajor: 1,
+        httpVersion: '1.1'
       });
       req.header[':authority'] = 'foo.com:3000';
       req.header.host = 'bar.com:8000';
@@ -33,8 +33,8 @@ describe('req.host', () => {
   describe('when HTTP/2', () => {
     it('should use :authority header', () => {
       const req = request({
-        'httpVersionMajor': 2,
-        'httpVersion': '2.0'
+        httpVersionMajor: 2,
+        httpVersion: '2.0'
       });
       req.header[':authority'] = 'foo.com:3000';
       req.header.host = 'bar.com:8000';
@@ -43,8 +43,8 @@ describe('req.host', () => {
 
     it('should use host header as fallback', () => {
       const req = request({
-        'httpVersionMajor': 2,
-        'httpVersion': '2.0'
+        httpVersionMajor: 2,
+        httpVersion: '2.0'
       });
       req.header.host = 'bar.com:8000';
       assert.strictEqual(req.host, 'bar.com:8000');
@@ -62,8 +62,8 @@ describe('req.host', () => {
 
       it('should be ignored on HTTP/2', () => {
         const req = request({
-          'httpVersionMajor': 2,
-          'httpVersion': '2.0'
+          httpVersionMajor: 2,
+          httpVersion: '2.0'
         });
         req.header['x-forwarded-host'] = 'proxy.com:8080';
         req.header[':authority'] = 'foo.com:3000';
@@ -83,8 +83,8 @@ describe('req.host', () => {
 
       it('should be used on HTTP/2', () => {
         const req = request({
-          'httpVersionMajor': 2,
-          'httpVersion': '2.0'
+          httpVersionMajor: 2,
+          httpVersion: '2.0'
         });
         req.app.proxy = true;
         req.header['x-forwarded-host'] = 'proxy.com:8080';

@@ -91,7 +91,7 @@ describe('ctx.flushHeaders()', () => {
     app.use(ctx => {
       ctx.type = 'json';
       ctx.status = 200;
-      ctx.headers['Link'] = '</css/mycss.css>; as=style; rel=preload, <https://img.craftflair.com>; rel=preconnect; crossorigin';
+      ctx.headers.Link = '</css/mycss.css>; as=style; rel=preload, <https://img.craftflair.com>; rel=preconnect; crossorigin';
       const stream = ctx.body = new PassThrough();
       ctx.flushHeaders();
 
@@ -134,7 +134,7 @@ describe('ctx.flushHeaders()', () => {
     app.use(ctx => {
       ctx.type = 'json';
       ctx.status = 200;
-      ctx.headers['Link'] = '</css/mycss.css>; as=style; rel=preload, <https://img.craftflair.com>; rel=preconnect; crossorigin';
+      ctx.headers.Link = '</css/mycss.css>; as=style; rel=preload, <https://img.craftflair.com>; rel=preconnect; crossorigin';
       ctx.length = 20;
       ctx.flushHeaders();
       const stream = ctx.body = new PassThrough();
