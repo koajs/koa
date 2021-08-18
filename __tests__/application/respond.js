@@ -866,7 +866,47 @@ describe('app.respond', () => {
         .expect('')
         .expect({})
 
-      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false)
+      assert.equal(res.headers.hasOwnProperty('transfer-encoding'), false)
+      assert.equal(res.headers.hasOwnProperty('content-type'), false)
+      assert.equal(res.headers.hasOwnProperty('content-length'), true)
+    })
+
+    it('should return content-length equal to 0', async () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        ctx.body = null
+        ctx.status = 401
+      })
+
+      const server = app.listen()
+
+      const res = await request(server)
+        .get('/')
+        .expect(401)
+        .expect('')
+        .expect({})
+
+      assert.equal(res.headers['content-length'], 0)
+    })
+    it('should not overwrite the content-length', async () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        ctx.body = null
+        ctx.length = 10
+        ctx.status = 404
+      })
+
+      const server = app.listen()
+
+      const res = await request(server)
+        .get('/')
+        .expect(404)
+        .expect('')
+        .expect({})
+
+      assert.equal(res.headers['content-length'], 0)
     })
   })
 })

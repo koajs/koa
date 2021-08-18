@@ -8,6 +8,7 @@
 - Removes generator deprecation messages. 
   Generators are no longer supported.
   Koa no longer asserts if generators are used.
+- Set `content-length: 0` if body is explicitly set to `null` @ognjenjevremovic #1528
 
 ## Fixes
 
