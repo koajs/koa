@@ -13,6 +13,7 @@
 ## Fixes
 
 - fix: Do not response Content-Length if Transfer-Encoding is defined #1562 @charlyzeng
+- fix: Set body to `null` if `ctx.type = json` and `ctx.body = null` #1059 @likegun
 
 2.13.1 / 2021-01-04
 ==================
