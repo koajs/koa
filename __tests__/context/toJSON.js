@@ -1,22 +1,22 @@
 
-'use strict';
+'use strict'
 
-const assert = require('assert');
-const context = require('../../test-helpers/context');
+const assert = require('assert')
+const context = require('../../test-helpers/context')
 
 describe('ctx.toJSON()', () => {
   it('should return a json representation', () => {
-    const ctx = context();
+    const ctx = context()
 
-    ctx.req.method = 'POST';
-    ctx.req.url = '/items';
-    ctx.req.headers['content-type'] = 'text/plain';
-    ctx.status = 200;
-    ctx.body = '<p>Hey</p>';
+    ctx.req.method = 'POST'
+    ctx.req.url = '/items'
+    ctx.req.headers['content-type'] = 'text/plain'
+    ctx.status = 200
+    ctx.body = '<p>Hey</p>'
 
-    const obj = JSON.parse(JSON.stringify(ctx));
-    const req = obj.request;
-    const res = obj.response;
+    const obj = JSON.parse(JSON.stringify(ctx))
+    const req = obj.request
+    const res = obj.response
 
     assert.deepStrictEqual({
       method: 'POST',
@@ -24,7 +24,7 @@ describe('ctx.toJSON()', () => {
       header: {
         'content-type': 'text/plain'
       }
-    }, req);
+    }, req)
 
     assert.deepStrictEqual({
       status: 200,
@@ -33,6 +33,6 @@ describe('ctx.toJSON()', () => {
         'content-type': 'text/html; charset=utf-8',
         'content-length': '10'
       }
-    }, res);
-  });
-});
+    }, res)
+  })
+})

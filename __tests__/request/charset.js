@@ -1,36 +1,36 @@
 
-'use strict';
+'use strict'
 
-const request = require('../../test-helpers/context').request;
-const assert = require('assert');
+const request = require('../../test-helpers/context').request
+const assert = require('assert')
 
 describe('req.charset', () => {
   describe('with no content-type present', () => {
     it('should return ""', () => {
-      const req = request();
-      assert('' === req.charset);
-    });
-  });
+      const req = request()
+      assert(req.charset === '')
+    })
+  })
 
   describe('with charset present', () => {
     it('should return ""', () => {
-      const req = request();
-      req.header['content-type'] = 'text/plain';
-      assert('' === req.charset);
-    });
-  });
+      const req = request()
+      req.header['content-type'] = 'text/plain'
+      assert(req.charset === '')
+    })
+  })
 
   describe('with a charset', () => {
     it('should return the charset', () => {
-      const req = request();
-      req.header['content-type'] = 'text/plain; charset=utf-8';
-      assert.strictEqual(req.charset, 'utf-8');
-    });
+      const req = request()
+      req.header['content-type'] = 'text/plain; charset=utf-8'
+      assert.strictEqual(req.charset, 'utf-8')
+    })
 
     it('should return "" if content-type is invalid', () => {
-      const req = request();
-      req.header['content-type'] = 'application/json; application/text; charset=utf-8';
-      assert.strictEqual(req.charset, '');
-    });
-  });
-});
+      const req = request()
+      req.header['content-type'] = 'application/json; application/text; charset=utf-8'
+      assert.strictEqual(req.charset, '')
+    })
+  })
+})
