@@ -78,6 +78,12 @@ describe('app', () => {
     assert.strictEqual(app.subdomainOffset, subdomainOffset)
   })
 
+  it('should set compose from the constructor', () => {
+    const compose = () => (ctx) => {}
+    const app = new Koa({ compose })
+    assert.strictEqual(app.compose, compose)
+  })
+
   it('should have a static property exporting `HttpError` from http-errors library', () => {
     const CreateError = require('http-errors')
 
