@@ -141,6 +141,10 @@ ctx.request.charset;
 }
 ```
 
+### request.searchParams
+
+  Gets the parsed URLSearchParams object representing the query parameters.
+
 ### request.query=
 
   Set query-string to the given object. Note that this
