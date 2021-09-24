@@ -8,7 +8,10 @@
       "require": "./lib/application.js",
       "import": "./dist/koa.mjs"
     },
-    "./": "./"
+    "./*": "./*.js",
+    "./*.js": "./*.js",
+    "./package": "./package.json",
+    "./package.json": "./package.json"
   },
   "scripts": {
     "test": "jest --forceExit",
