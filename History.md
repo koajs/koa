@@ -1,4 +1,28 @@
 
+2.13.2 / 2021-09-24
+==================
+
+**fixes**
+  * [[`04acf02`](http://github.com/koajs/koa/commit/04acf0281a5dcb3fd463d4c8537984c686d0b96f)] - fix: nodejs deprecated api <DEP0148> (#1585) (#1588) (hyj1991 <<yeekwanvong@gmail.com>>)
+
+**others**
+  * [[`3435e78`](http://github.com/koajs/koa/commit/3435e7864a59cca2835ebaad96c4eda801b99b24)] - lint++ (jongleberry <<jonathanrichardong@gmail.com>>)
+  * [[`2cd6618`](http://github.com/koajs/koa/commit/2cd66182f46965f1d824c24826e85df251cca3d2)] - Fix grammar mistake (#1527) (Matheus Souza <<37983247+souzasmatheus@users.noreply.github.com>>)
+  * [[`16ab46e`](http://github.com/koajs/koa/commit/16ab46e9f2b5411fd1c50312ac03719f0a90df61)] - chore: upgrade koa-convert dependency to ^2.0.0 (#1535) (Christian Rodemeyer <<atombrenner@users.noreply.github.com>>)
+  * [[`65113ca`](http://github.com/koajs/koa/commit/65113ca38af634e4b1002d5bc40917cc09a7b7c6)] - Fix jsdoc types for constructor (#1541) (Piotr Kuczynski <<piotr.kuczynski@gmail.com>>)
+  * [[`03e6317`](http://github.com/koajs/koa/commit/03e6317df24d2dce0c1f08869326149f766f1e41)] - :arrow_up: debug (jongleberry <<jonathanrichardong@gmail.com>>)
+  * [[`b37a2d0`](http://github.com/koajs/koa/commit/b37a2d09c137d9a553a0bdf8589b60c7f6425160)] - :arrow_up: eslint dependencies (jongleberry <<jonathanrichardong@gmail.com>>)
+  * [[`4a410cc`](http://github.com/koajs/koa/commit/4a410cc2fbd923868cac6a622f12cc652586abee)] - migrate assert.deepEqual => .deepStrictEqual (jongleberry <<jonathanrichardong@gmail.com>>)
+  * [[`4545b59`](http://github.com/koajs/koa/commit/4545b59aa521e377a4ebb0ccbb8abec01981fbf4)] - test: switch tests to jest (jongleberry <<jonathanrichardong@gmail.com>>)
+  * [[`596cfd5`](http://github.com/koajs/koa/commit/596cfd542ccd1d89d97453e29cf499d49a82e743)] - migrate assert.strict => .strictEqual (jongleberry <<jonathanrichardong@gmail.com>>)
+  * [[`be3e8b6`](http://github.com/koajs/koa/commit/be3e8b68ab58d469f0f450284528dbef32e2d7ba)] - test: switch to github actions (jongleberry <<jonathanrichardong@gmail.com>>)
+  * [[`a2570e3`](http://github.com/koajs/koa/commit/a2570e3ee622cfa5214c2f756ea03b3b7143dbf7)] - package: update bench scripts (jongleberry <<jonathanrichardong@gmail.com>>)
+  * [[`000acf0`](http://github.com/koajs/koa/commit/000acf06ab3e37006569addc8ace5c0a4365daa1)] - npm: enable package-lock (jongleberry <<jonathanrichardong@gmail.com>>)
+  * [[`47fdbca`](http://github.com/koajs/koa/commit/47fdbca8b1c3999c5726f54531f8b47640a65a6f)] - delete benchmarks (jongleberry <<jonathanrichardong@gmail.com>>)
+  * [[`0056f90`](http://github.com/koajs/koa/commit/0056f901e89fd0781067b2c9592fd5909f9ba94a)] - Create dependabot.yml (jongleberry <<jonathanrichardong@gmail.com>>)
+  * [[`698ce0a`](http://github.com/koajs/koa/commit/698ce0afbfac6480400625729a4b8fc4b4203fdc)] - test: fix typo in status.js (Ikko Ashimine <<eltociear@gmail.com>>)
+  * [[`eb51cf5`](http://github.com/koajs/koa/commit/eb51cf5fb35b39592a050b25fd261a574f547cfa)] - doc: app.keys needs to be long enought and random (#1520) (Yiyu He <<dead_horse@qq.com>>)
+
 2.13.1 / 2021-01-04
 ==================
 
