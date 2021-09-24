@@ -1,4 +1,10 @@
 
+2.13.3 / 2021-09-24
+==================
+
+**fixes**
+  * [[`a37a2e5`](http://github.com/koajs/koa/commit/a37a2e5eec8997661a35ca10210f1d9950976041)] - fix: compatible with node-v12.19.0 & earlier (#1590) (hyj1991 <<yeekwanvong@gmail.com>>)
+
 2.13.2 / 2021-09-24
 ==================
 
