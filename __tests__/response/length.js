@@ -64,3 +64,18 @@ describe('res.length', () => {
     });
   });
 });
+
+describe('res.length=', () => {
+  it('should set when Transfer-Encoding not present', () => {
+    const res = response();
+    res.length = 100;
+    assert.strictEqual(res.length, 100);
+  });
+
+  it('should not set when Transfer-Encoding present', () => {
+    const res = response();
+    res.set('Transfer-Encoding', 'chunked');
+    res.length = 100;
+    assert.strictEqual(res.length, undefined);
+  });
+});
