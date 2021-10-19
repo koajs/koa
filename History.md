@@ -1,4 +1,10 @@
 
+2.13.4 / 2021-10-19
+==================
+
+**fixes**
+  * [[`dbc9c5a`](http://github.com/koajs/koa/commit/dbc9c5a47e2b2799cab403186fdb010df5df6f67)] - fix: Do not response Content-Length if Transfer-Encoding is defined (#1602) (Yiyu He <<dead_horse@qq.com>>)
+
 2.13.3 / 2021-09-24
 ==================
 
