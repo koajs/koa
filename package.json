@@ -14,7 +14,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "test": "jest --forceExit",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --forceExit",
     "lint": "eslint --ignore-path .gitignore .",
     "authors": "git log --format='%aN <%aE>' | sort -u > AUTHORS",
     "build": "gen-esm-wrapper . ./dist/koa.mjs",
