@@ -179,6 +179,10 @@ To report a security vulnerability, please do not open an issue, as this notifie
 
 See [AUTHORS](AUTHORS).
 
+## Contributors
+
+[![](https://ergatejs.implements.io/badges/contributors/koajs/koa.svg?owner=koajs&repo=koa&size=48)](https://github.com/koajs/koa/graphs/contributors)
+
 ## Community
 
  - [KoaJS Slack Grou](https://join.slack.com/t/koa-js/shared_invite/zt-5pjgthmb-1JeKDbByqqcARtlPbtf~vQ)
