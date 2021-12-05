@@ -181,7 +181,7 @@ See [AUTHORS](AUTHORS).
 
 ## Contributors
 
-[![](https://ergatejs.implements.io/badges/contributors/koajs/koa.svg?owner=koajs&repo=koa&size=48)](https://github.com/koajs/koa/graphs/contributors)
+[![](https://ergatejs.implements.io/badges/contributors/koajs/koa.svg)](https://github.com/koajs/koa/graphs/contributors)
 
 ## Community
 
