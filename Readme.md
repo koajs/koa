@@ -181,7 +181,7 @@ See [AUTHORS](AUTHORS).
 
 ## Community
 
- - [KoaJS Slack Grou](https://join.slack.com/t/koa-js/shared_invite/zt-5pjgthmb-1JeKDbByqqcARtlPbtf~vQ)
+ - [KoaJS Slack Group](https://join.slack.com/t/koa-js/shared_invite/zt-5pjgthmb-1JeKDbByqqcARtlPbtf~vQ)
  - [Badgeboard](https://koajs.github.io/badgeboard) and list of official modules
  - [Examples](https://github.com/koajs/examples)
  - [Middleware](https://github.com/koajs/koa/wiki) list
