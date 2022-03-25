@@ -2,18 +2,23 @@ name: Node.js CI
 
 on:
   push:
-    branch: master
+    paths-ignore:
+      - 'docs/**'
+      - '*.md'
   pull_request:
-    branch: master
+    paths-ignore:
+      - 'docs/**'
+      - '*.md'
 
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
         node-version: [12.x, 14.x, 16.x]
+        os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
     - uses: actions/checkout@v2

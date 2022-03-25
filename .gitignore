@@ -5,3 +5,4 @@ npm-debug.log
 .idea
 *.iml
 dist
+yarn.lock
