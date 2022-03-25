@@ -11,11 +11,11 @@
 
 | Feature           | Koa | Express | Connect |
 |------------------:|-----|---------|---------|
-| Middleware Kernel | ✓   | ✓       | ✓       |
-| Routing           |     | ✓       |         |
-| Templating        |     | ✓       |         |
-| Sending Files     |     | ✓       |         |
-| JSONP             |     | ✓       |         |
+| Middleware Kernel | ✓ built-in    | ✓       | ✓       |
+| Routing           | via middleware | ✓       |         |
+| Templating        | via middleware | ✓       |         |
+| Sending Files     | via middleware | ✓       |         |
+| JSONP             | via middleware | ✓       |         |
 
 
   Thus, if you'd like to be closer to node.js and traditional node.js-style coding, you probably want to stick to Connect/Express or similar frameworks.
