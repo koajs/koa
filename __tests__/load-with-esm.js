@@ -39,7 +39,7 @@ describe.skip('Load with esm', () => {
 
   it('CommonJS exports default property', async () => {
     const required = require('../')
-    assert.strictEqual(required.hasOwnProperty('default'), true)
+    assert.strictEqual(Object.prototype.hasOwnProperty.call(required, 'default'), true)
   })
 
   it('CommonJS exports default property referencing self', async () => {

@@ -80,9 +80,9 @@ describe('res.status=', () => {
         .get('/')
         .expect(status)
 
-      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false)
-      assert.strictEqual(res.headers.hasOwnProperty('content-length'), false)
-      assert.strictEqual(res.headers.hasOwnProperty('content-encoding'), false)
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'Content-Type'), false)
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'content-length'), false)
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'content-encoding'), false)
       assert.strictEqual(res.text.length, 0)
     })
 
@@ -101,9 +101,9 @@ describe('res.status=', () => {
         .get('/')
         .expect(status)
 
-      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false)
-      assert.strictEqual(res.headers.hasOwnProperty('content-length'), false)
-      assert.strictEqual(res.headers.hasOwnProperty('content-encoding'), false)
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'Content-Type'), false)
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'content-length'), false)
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'content-encoding'), false)
       assert.strictEqual(res.text.length, 0)
     })
   }
