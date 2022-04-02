@@ -1,1 +1,3 @@
 extends: standard
+parserOptions:
+  ecmaVersion: 2021

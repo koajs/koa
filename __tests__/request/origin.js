@@ -13,7 +13,7 @@ describe('ctx.origin', () => {
       headers: {
         host: 'localhost'
       },
-      socket: socket,
+      socket,
       __proto__: Stream.Readable.prototype
     }
     const ctx = context(req)
