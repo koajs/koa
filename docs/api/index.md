@@ -10,29 +10,6 @@ $ npm i koa
 $ node my-koa-app.js
 ```
 
-## Async Functions with Babel
-
-To use `async` functions in Koa in versions of node < 7.6, we recommend using [babel's require hook](http://babeljs.io/docs/usage/babel-register/).
-
-```js
-require('babel-register');
-// require the rest of the app that needs to be transpiled after the hook
-const app = require('./app');
-```
-
-To parse and transpile async functions,
-you should at a minimum have the [transform-async-to-generator](http://babeljs.io/docs/plugins/transform-async-to-generator/)
-or [transform-async-to-module-method](http://babeljs.io/docs/plugins/transform-async-to-module-method/) plugins.
-For example, in your `.babelrc` file, you should have:
-
-```json
-{
-  "plugins": ["transform-async-to-generator"]
-}
-```
-
-You can also use the [env preset](http://babeljs.io/docs/plugins/preset-env/) with a target option `"node": "current"` instead.
-
 # Application
 
   A Koa application is an object containing an array of middleware functions
@@ -69,8 +46,7 @@ app.listen(3000);
   control flows back "upstream".
 
   The following example responds with "Hello World", however first the request flows through
-  the `x-response-time` and `logging` middleware to mark when the request started, then continue
-  to yield control through the response middleware. When a middleware invokes `next()`
+  the `x-response-time` and `logging` middleware to mark when the request started, then yields control through the response middleware. When a middleware invokes `next()`
   the function suspends and passes control to the next middleware defined. After there are no more
   middleware to execute downstream, the stack will unwind and each middleware is resumed to perform
   its upstream behaviour.
@@ -194,16 +170,18 @@ app.use(someMiddleware)
 
 ## app.keys=
 
- Set signed cookie keys.
+  Set signed cookie keys.
 
- These are passed to [KeyGrip](https://github.com/crypto-utils/keygrip),
- however you may also pass your own `KeyGrip` instance. For
- example the following are acceptable:
+  These are passed to [KeyGrip](https://github.com/crypto-utils/keygrip),
+  however you may also pass your own `KeyGrip` instance. For
+  example the following are acceptable:
 
 ```js
-app.keys = ['im a newer secret', 'i like turtle'];
-app.keys = new KeyGrip(['im a newer secret', 'i like turtle'], 'sha256');
+app.keys = ['OEK5zjaAMPc3L6iK7PyUjCOziUH3rsrMKB9u8H07La1SkfwtuBoDnHaaPCkG5Brg', 'MNKeIebviQnCPo38ufHcSfw3FFv8EtnAe1xE02xkN1wkCV1B2z126U44yk2BQVK7'];
+app.keys = new KeyGrip(['OEK5zjaAMPc3L6iK7PyUjCOziUH3rsrMKB9u8H07La1SkfwtuBoDnHaaPCkG5Brg', 'MNKeIebviQnCPo38ufHcSfw3FFv8EtnAe1xE02xkN1wkCV1B2z126U44yk2BQVK7'], 'sha256');
 ```
+
+  For security reasons, please ensure that the key is long enough and random.
 
   These keys may be rotated and are used when signing cookies
   with the `{ signed: true }` option:
