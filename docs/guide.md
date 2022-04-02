@@ -5,14 +5,16 @@
 
 ## Table of Contents
 
-- [Writing Middleware](#writing-middleware)
-- [Middleware Best Practices](#middleware-best-practices)
-  - [Middleware options](#middleware-options)
-  - [Named middleware](#named-middleware)
-  - [Combining multiple middleware with koa-compose](#combining-multiple-middleware-with-koa-compose)
-  - [Response Middleware](#response-middleware)
-- [Async operations](#async-operations)
-- [Debugging Koa](#debugging-koa)
+- [Guide](#guide)
+  - [Table of Contents](#table-of-contents)
+  - [Writing Middleware](#writing-middleware)
+  - [Middleware Best Practices](#middleware-best-practices)
+    - [Middleware options](#middleware-options)
+    - [Named middleware](#named-middleware)
+    - [Combining multiple middleware with koa-compose](#combining-multiple-middleware-with-koa-compose)
+    - [Response Middleware](#response-middleware)
+  - [Async operations](#async-operations)
+  - [Debugging Koa](#debugging-koa)
 
 ## Writing Middleware
 
@@ -59,7 +61,7 @@ app.use(responseTime);
 
 ### Middleware options
 
-  When creating public middleware it's useful to conform to the convention of
+  When creating a public middleware, it's useful to conform to the convention of
   wrapping the middleware in a function that accepts options, allowing users to
   extend functionality. Even if your middleware accepts _no_ options, this is still
   a good idea to keep things uniform.

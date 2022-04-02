@@ -1,1 +1,1 @@
-extends: koa
+extends: standard

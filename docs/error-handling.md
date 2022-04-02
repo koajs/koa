@@ -18,9 +18,9 @@
 
 ### Default Error Handler
 
-  The default error handler is essentially a try-catch at
+  The default error handler is essentially a `try-catch` at
   the very beginning of the middleware chain. To use a
-  different error handler, simply put another try-catch at
+  different error handler, simply put another `try-catch` at
   the beginning of the middleware chain, and handle the error
   there. However, the default error handler is good enough for
   most use cases. It will use a status code of `err.status`,
@@ -29,7 +29,7 @@
   error code will be used (e.g. for the code 500 the message
   "Internal Server Error" will be used). All headers will be
   cleared from the request, but any headers in `err.headers`
-  will then be set. You can use a try-catch, as specified
+  will then be set. You can use a `try-catch`, as specified
   above, to add a header to this list.
 
   Here is an example of creating your own error handler:
@@ -52,7 +52,7 @@ app.use(async (ctx, next) => {
 
   Error event listeners can be specified with `app.on('error')`.
   If no error listener is specified, a default error listener
-  is used. Error listener receive all errors that make their
+  is used. Error listeners receive all errors that make their
   way back through the middleware chain, if an error is caught
   and not thrown again, it will not be passed to the error
   listener. If no error event listener is specified, then
