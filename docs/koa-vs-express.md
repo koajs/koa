@@ -39,7 +39,7 @@
 ## Does Koa replace Connect?
 
   No, just a different take on similar functionality
-  now that generators allow us to write code with less
+  now that generators allow us to write code with fewer
   callbacks. Connect is equally capable, and some may still prefer it,
   it's up to what you prefer.
 
@@ -51,7 +51,7 @@
   the entire application, so we thought it would be more appropriate
   to create a new library.
 
-## How is Koa different than Connect/Express?
+## How is Koa different from Connect/Express?
 
 ### Promises-based control flow
 
