@@ -374,7 +374,7 @@ describe('app.respond', () => {
     describe('with custom status=700', () => {
       it('should respond with the associated status message', async () => {
         const app = new Koa()
-        statuses['700'] = 'custom status'
+        statuses.message['700'] = 'custom status'
 
         app.use(ctx => {
           ctx.status = 700
