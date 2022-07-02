@@ -40,4 +40,22 @@ describe('ctx.query=', () => {
     assert.strictEqual(ctx.originalUrl, '/store/shoes')
     assert.strictEqual(ctx.request.originalUrl, '/store/shoes')
   })
+
+  it('should change array into query string and search with bracket form', () => {
+    const ctx = context({ url: '/store/shoes' })
+    ctx.query = { colors: ['black', 'mustard'] }
+    assert.strictEqual(ctx.url, encodeURI('/store/shoes?colors[]=black&colors[]=mustard'))
+    assert.strictEqual(ctx.querystring, encodeURI('colors[]=black&colors[]=mustard'))
+    assert.strictEqual(ctx.search, encodeURI('?colors[]=black&colors[]=mustard'))
+    assert.strictEqual(JSON.stringify(ctx.query), JSON.stringify({ colors: ['black', 'mustard'] }))
+  })
+
+  it('should change single element array into query string and search with bracket form', () => {
+    const ctx = context({ url: '/store/shoes' })
+    ctx.query = { colors: ['black'] }
+    assert.strictEqual(ctx.url, encodeURI('/store/shoes?colors[]=black'))
+    assert.strictEqual(ctx.querystring, encodeURI('colors[]=black'))
+    assert.strictEqual(ctx.search, encodeURI('?colors[]=black'))
+    assert.strictEqual(JSON.stringify(ctx.query), JSON.stringify({ colors: ['black'] }))
+  })
 })
