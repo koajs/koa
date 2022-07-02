@@ -58,7 +58,7 @@
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-standard": "^5.0.0",
     "gen-esm-wrapper": "^1.0.6",
     "jest": "^28.1.2",
