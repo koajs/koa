@@ -150,6 +150,18 @@ ctx.request.charset;
 ctx.query = { next: '/login' };
 ```
 
+### request.params
+
+  Get parsed route parameters, which are named URL segments. Key in the object (`request.params`) is the name of the parameter.
+  Value is the captured value specified at the position of the parameter in the route path.
+
+  For example, if the route path is `/:id` and it is hit as `/123`, then `request.params` will have following value:
+```js
+{
+  id: '123'
+}
+```
+
 ### request.fresh
 
   Check if a request cache is "fresh", aka the contents have not changed. This
