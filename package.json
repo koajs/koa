@@ -61,7 +61,7 @@
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-standard": "^5.0.0",
     "gen-esm-wrapper": "^1.0.6",
-    "jest": "^28.1.2",
+    "jest": "^29.0.1",
     "supertest": "^6.2.4"
   },
   "engines": {
