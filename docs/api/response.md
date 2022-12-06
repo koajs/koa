@@ -1,6 +1,6 @@
 # Response
 
-  A Koa `Response` object is an abstraction on top of node's vanilla response object,
+  A Koa `Response` object is an abstraction on top of Node's vanilla response object,
   providing additional functionality that is useful for every day HTTP server
   development.
 
@@ -21,7 +21,7 @@
 
 ### response.status
 
-  Get response status. By default, `response.status` is set to `404` unlike node's `res.statusCode` which defaults to `200`.
+  Get response status. By default, `response.status` is set to `404` unlike Node's `res.statusCode` which defaults to `200`.
 
 ### response.status=
 
