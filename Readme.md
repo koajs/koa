@@ -2,7 +2,7 @@
 
   [![gitter][gitter-image]][gitter-url]
   [![NPM version][npm-image]][npm-url]
-  [![build status][travis-image]][travis-url]
+  [![build status][github-action-image]][github-action-url]
   [![Test coverage][coveralls-image]][coveralls-url]
   [![OpenCollective Backers][backers-image]](#backers)
   [![OpenCollective Sponsors][sponsors-image]](#sponsors)
@@ -17,7 +17,7 @@
 
 ## Installation
 
-Koa requires __node v12__ or higher for ES2015 and async function support.
+Koa requires __node v12.17.0__ or higher for ES2015 and async function support.
 
 ```
 $ npm install koa
@@ -275,8 +275,8 @@ Become a sponsor and get your logo on our README on Github with a link to your s
 
 [npm-image]: https://img.shields.io/npm/v/koa.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/koa
-[travis-image]: https://img.shields.io/travis/koajs/koa/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/koajs/koa
+[github-action-image]: https://github.com/koajs/koa/actions/workflows/node.js.yml/badge.svg
+[github-action-url]: https://github.com/koajs/koa/actions/workflows/node.js.yml
 [coveralls-image]: https://img.shields.io/codecov/c/github/koajs/koa.svg?style=flat-square
 [coveralls-url]: https://codecov.io/github/koajs/koa?branch=master
 [backers-image]: https://opencollective.com/koajs/backers/badge.svg?style=flat-square
