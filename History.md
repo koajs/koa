@@ -1,4 +1,10 @@
 
+2.14.0 / 2022-12-06
+==================
+
+**features**
+  * [[`a293122`](http://github.com/koajs/koa/commit/a29312212839c6f0418152d2a2cd3bf3fd3ee5e4)] - feat: support asyncLocalStorage (#1721) (fengmk2 <<fengmk2@gmail.com>>)
+
 2.13.4 / 2021-10-19
 ==================
 
