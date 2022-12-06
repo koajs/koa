@@ -1,14 +1,18 @@
 
-3.0.0 /
+3.0.0-alpha.0 / 2022-12-06
 ==================
 
 ## Breaking Changes
 
 - Supports node@12+ only.
-- Removes generator deprecation messages. 
+- Removes generator deprecation messages.
   Generators are no longer supported.
   Koa no longer asserts if generators are used.
 - Set `content-length: 0` if body is explicitly set to `null` @ognjenjevremovic #1528
+
+## Features
+
+- Use asyncLocalStorage to get current context from app, e.g.: `const ctx = app.currentContext`.
 
 ## Fixes
 
