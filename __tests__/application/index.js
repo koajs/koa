@@ -92,4 +92,9 @@ describe('app', () => {
     assert.deepStrictEqual(Koa.HttpError, CreateError.HttpError)
     assert.throws(() => { throw new CreateError(500, 'test error') }, Koa.HttpError)
   })
+
+  it('should export createAsyncCtxStorageMiddleware function', () => {
+    const app = new Koa()
+    assert.strictEqual(typeof app.createAsyncCtxStorageMiddleware, 'function')
+  })
 })
