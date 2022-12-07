@@ -1,4 +1,10 @@
 
+2.14.1 / 2022-12-07
+==================
+
+**fixes**
+  * [[`cb92bc9`](http://github.com/koajs/koa/commit/cb92bc98939bd71fd3c01e2dc681caf6545baa38)] - fix: should export createAsyncCtxStorageMiddleware function on application (#1724) (fengmk2 <<fengmk2@gmail.com>>)
+
 2.14.0 / 2022-12-06
 ==================
 
