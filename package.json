@@ -1,6 +1,9 @@
 {
   "name": "koa",
-  "version": "2.13.1",
+  "version": "3.0.0-alpha.0",
+  "publishConfig": {
+    "tag": "experimental"
+  },
   "description": "Koa web app framework",
   "main": "lib/application.js",
   "exports": {
