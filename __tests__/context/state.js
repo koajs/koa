@@ -10,7 +10,7 @@ describe('ctx.state', () => {
     const app = new Koa()
 
     app.use(ctx => {
-      assert.deepStrictEqual(ctx.state, {})
+      assert.deepStrictEqual(ctx.state, this.state || {})
     })
 
     const server = app.listen()
