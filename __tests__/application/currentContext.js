@@ -61,4 +61,50 @@ describe('app.currentContext', () => {
 
     await request(app.callback()).get('/').expect('ok');
   });
+
+  it('should get currentContext return context in error handler when asyncLocalStorage enable', async() => {
+    const app = new Koa({ asyncLocalStorage: true });
+
+    app.use(async() => {
+      throw new Error('error message');
+    });
+
+    const handleError = new Promise((resolve, reject) => {
+      app.on('error', (err, ctx) => {
+        try {
+          assert.strictEqual(err.message, 'error message');
+          assert.strictEqual(app.currentContext, ctx);
+          resolve();
+        } catch (e) {
+          reject(e);
+        }
+      });
+    });
+
+    await request(app.callback()).get('/').expect('Internal Server Error');
+    await handleError;
+  });
+
+  it('should get currentContext return undefined in error handler when asyncLocalStorage disable', async() => {
+    const app = new Koa();
+
+    app.use(async() => {
+      throw new Error('error message');
+    });
+
+    const handleError = new Promise((resolve, reject) => {
+      app.on('error', (err, ctx) => {
+        try {
+          assert.strictEqual(err.message, 'error message');
+          assert.strictEqual(app.currentContext, undefined);
+          resolve();
+        } catch (e) {
+          reject(e);
+        }
+      });
+    });
+
+    await request(app.callback()).get('/').expect('Internal Server Error');
+    await handleError;
+  });
 });
