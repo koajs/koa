@@ -1,4 +1,10 @@
 
+2.14.2 / 2023-04-12
+==================
+
+**fixes**
+  * [[`6b60fa6`](http://github.com/koajs/koa/commit/6b60fa6031dfa826c3268e655f193dab78f0705b)] - fix: can not get currentContext in error handler (#1757) (Gxkl <<gxkl203@gmail.com>>)
+
 2.14.1 / 2022-12-07
 ==================
 
