@@ -5,7 +5,7 @@
   You can quickly install a supported version of Node with your favorite version manager:
 
 ```bash
-$ nvm install 7
+$ nvm install 12
 $ npm i koa
 $ node my-koa-app.js
 ```
