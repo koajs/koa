@@ -185,6 +185,7 @@ Koa uses [http-assert](https://github.com/jshttp/http-assert) for assertions.
 
   - `ctx.body`
   - `ctx.body=`
+  - `ctx.has()`
   - `ctx.status`
   - `ctx.status=`
   - `ctx.message`
@@ -193,6 +194,7 @@ Koa uses [http-assert](https://github.com/jshttp/http-assert) for assertions.
   - `ctx.length`
   - `ctx.type=`
   - `ctx.type`
+  - `ctx.vary()`
   - `ctx.headerSent`
   - `ctx.redirect()`
   - `ctx.attachment()`
@@ -201,3 +203,4 @@ Koa uses [http-assert](https://github.com/jshttp/http-assert) for assertions.
   - `ctx.remove()`
   - `ctx.lastModified=`
   - `ctx.etag=`
+  - `ctx.writable`
