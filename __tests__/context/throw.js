@@ -38,7 +38,7 @@ describe('ctx.throw(err, status)', () => {
     const error = new Error('test')
 
     try {
-      ctx.throw(error, 422)
+      ctx.throw(422, error)
     } catch (err) {
       assert.strictEqual(err.status, 422)
       assert.strictEqual(err.message, 'test')
@@ -67,7 +67,7 @@ describe('ctx.throw(msg, status)', () => {
     const ctx = context()
 
     try {
-      ctx.throw('name required', 400)
+      ctx.throw(400, 'name required')
     } catch (err) {
       assert.strictEqual(err.message, 'name required')
       assert.strictEqual(err.status, 400)
