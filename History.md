@@ -1,4 +1,10 @@
 
+2.15.0 / 2023-12-29
+==================
+
+**features**
+  * [[`1684a8f`](http://github.com/koajs/koa/commit/1684a8fd869d8fa5dfb5db4775c99cfc654bc003)] - feat: bump cookies v0.9.0 for CHIPS (#1791) (Noah Gao <<noahgaocn@outlook.com>>)
+
 2.14.2 / 2023-04-12
 ==================
 
