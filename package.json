@@ -9,7 +9,8 @@
   "exports": {
     ".": {
       "require": "./lib/application.js",
-      "import": "./dist/koa.mjs"
+      "import": "./dist/koa.mjs",
+      "default": "./dist/koa.mjs"
     },
     "./*": "./*.js",
     "./*.js": "./*.js",
