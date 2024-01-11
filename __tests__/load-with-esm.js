@@ -3,7 +3,7 @@ const assert = require('assert')
 let importESM = () => {}
 
 describe.skip('Load with esm', () => {
-  beforeAll(function (){
+  beforeAll(function () {
     // ESM support is flagged on v12.x.
     const majorVersion = +process.version.split('.')[0].slice(1)
     if (majorVersion < 12) {
