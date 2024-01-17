@@ -1,4 +1,3 @@
-
 'use strict'
 
 const response = require('../../test-helpers/context').response

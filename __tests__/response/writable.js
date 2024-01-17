@@ -1,4 +1,3 @@
-
 'use strict'
 
 const assert = require('assert')
@@ -7,7 +6,7 @@ const net = require('net')
 
 describe('res.writable', () => {
   describe('when continuous requests in one persistent connection', () => {
-    function requestTwice (server, done){
+    function requestTwice (server, done) {
       const port = server.address().port
       const buf = Buffer.from('GET / HTTP/1.1\r\nHost: localhost:' + port + '\r\nConnection: keep-alive\r\n\r\n')
       const client = net.connect(port)
@@ -40,7 +39,7 @@ describe('res.writable', () => {
   })
 
   describe('when socket closed before response sent', () => {
-    function requestClosed (server){
+    function requestClosed (server) {
       const port = server.address().port
       const buf = Buffer.from('GET / HTTP/1.1\r\nHost: localhost:' + port + '\r\nConnection: keep-alive\r\n\r\n')
       const client = net.connect(port)
@@ -65,7 +64,7 @@ describe('res.writable', () => {
   })
 
   describe('when response finished', () => {
-    function request (server){
+    function request (server) {
       const port = server.address().port
       const buf = Buffer.from('GET / HTTP/1.1\r\nHost: localhost:' + port + '\r\nConnection: keep-alive\r\n\r\n')
       const client = net.connect(port)
@@ -90,6 +89,6 @@ describe('res.writable', () => {
   })
 })
 
-function sleep (time){
+function sleep (time) {
   return new Promise(resolve => setTimeout(resolve, time))
 }
