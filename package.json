@@ -40,7 +40,7 @@
     "cache-content-type": "^1.0.0",
     "content-disposition": "~0.5.2",
     "content-type": "^1.0.4",
-    "cookies": "~0.8.0",
+    "cookies": "~0.9.1",
     "debug": "^4.3.2",
     "delegates": "^1.0.0",
     "destroy": "^1.0.4",
