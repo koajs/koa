@@ -1,4 +1,3 @@
-
 'use strict'
 
 const assert = require('assert')
@@ -100,7 +99,7 @@ describe('ctx.cookies', () => {
 
       app.use((ctx, next) => {
         ctx.cookies = {
-          set (key, value){
+          set (key, value) {
             ctx.set(key, value)
           }
         }

@@ -1,4 +1,3 @@
-
 'use strict'
 
 const request = require('supertest')
@@ -100,7 +99,7 @@ describe('ctx.flushHeaders()', () => {
       }, 10000)
     })
 
-    app.listen(function (err){
+    app.listen(function (err) {
       if (err) return done(err)
 
       const port = this.address().port

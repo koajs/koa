@@ -18,7 +18,8 @@
   },
   "scripts": {
     "test": "jest --forceExit",
-    "lint": "eslint --ignore-path .gitignore .",
+    "lint": "standard",
+    "lint:pretty": "standard | snazzy",
     "authors": "git log --format='%aN <%aE>' | sort -u > AUTHORS",
     "build": "gen-esm-wrapper . ./dist/koa.mjs",
     "prepare": "npm run build"
@@ -57,14 +58,10 @@
     "vary": "^1.1.2"
   },
   "devDependencies": {
-    "eslint": "^7.32.0",
-    "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0",
-    "eslint-plugin-standard": "^5.0.0",
     "gen-esm-wrapper": "^1.0.6",
     "jest": "^28.1.2",
+    "snazzy": "^9.0.0",
+    "standard": "^17.1.0",
     "supertest": "^6.2.4"
   },
   "engines": {
@@ -74,6 +71,11 @@
     "dist",
     "lib"
   ],
+  "standard": {
+    "env": [
+      "jest"
+    ]
+  },
   "jest": {
     "testEnvironment": "node"
   }

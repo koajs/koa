@@ -1,4 +1,3 @@
-
 'use strict'
 
 const request = require('supertest')
@@ -37,7 +36,7 @@ describe('app.compose', () => {
     const calls = []
     let count = 0
     const app = new Koa({
-      compose (fns){
+      compose (fns) {
         return async (ctx) => {
           const dispatch = async () => {
             count++
