@@ -1,4 +1,10 @@
 
+2.15.1 / 2024-03-15
+==================
+
+**fixes**
+  * [[`2510b0b`](http://github.com/koajs/koa/commit/2510b0b12285b96b5d3bbe375c7fd283df4b2a9d)] - fix: formatting redirect url on http(s) protocol url (#1803) (fengmk2 <<fengmk2@gmail.com>>)
+
 2.15.0 / 2023-12-29
 ==================
 
