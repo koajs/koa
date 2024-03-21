@@ -1,4 +1,10 @@
 
+2.15.2 / 2024-03-21
+==================
+
+**fixes**
+  * [[`94e8def`](http://github.com/koajs/koa/commit/94e8def4bf6a2bdabe96583de989f03d75106648)] - fix: handle upper case protocol like HTTP or HTTPS (#1806) (fengmk2 <<suqian.yf@antgroup.com>>)
+
 2.15.1 / 2024-03-15
 ==================
 
