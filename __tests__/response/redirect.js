@@ -20,6 +20,13 @@ describe('ctx.redirect(url)', () => {
     assert.strictEqual(ctx.status, 302)
   })
 
+  it('should formatting url before redirect', () => {
+    const ctx = context()
+    ctx.redirect('HTTP://google.com\\@apple.com')
+    assert.strictEqual(ctx.response.header.location, 'http://google.com/@apple.com')
+    assert.strictEqual(ctx.status, 302)
+  })
+
   it('should auto fix not encode url', done => {
     const app = new Koa()
 
