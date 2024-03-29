@@ -44,7 +44,7 @@
     "debug": "^4.3.2",
     "delegates": "^1.0.0",
     "destroy": "^1.0.4",
-    "encodeurl": "^1.0.2",
+    "encodeurl": "^2.0.0",
     "escape-html": "^1.0.3",
     "fresh": "~0.5.2",
     "http-assert": "^1.3.0",
