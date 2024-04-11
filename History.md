@@ -1,4 +1,10 @@
 
+2.15.3 / 2024-04-11
+==================
+
+**fixes**
+  * [[`1fad597`](http://github.com/koajs/koa/commit/1fad5974dc2b7c5baef3e7438679911826ec7398)] - fix: require URL from 'url' module (#1809) (fengmk2 <<suqian.yf@antgroup.com>>)
+
 2.15.2 / 2024-03-21
 ==================
 
