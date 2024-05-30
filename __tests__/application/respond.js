@@ -501,6 +501,42 @@ describe('app.respond', () => {
     })
   })
 
+  describe('when .body is undefined', () => {
+    it('should respond 204 by default', async () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        ctx.body = undefined
+      })
+
+      const server = app.listen()
+
+      const res = await request(server)
+        .get('/')
+        .expect(204)
+        .expect('')
+
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'Content-Type'), false)
+    })
+
+    it('should respond 204 with status=200', async () => {
+      const app = new Koa()
+      app.use(ctx => {
+        ctx.status = 200
+        ctx.body = undefined
+      })
+
+      const server = app.listen()
+
+      const res = await request(server)
+        .get('/')
+        .expect(204)
+        .expect('')
+
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'Content-Type'), false)
+    })
+  })
+
   describe('when .body is a string', () => {
     it('should respond', () => {
       const app = new Koa()
