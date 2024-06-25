@@ -142,7 +142,15 @@ describe('res.body=', () => {
     })
   })
 
-  describe('When a Blob is given', () => {
+  describe('when a ReadableStream is given', () => {
+    it('should default to an octet stream', () => {
+      const res = response()
+      res.body = new ReadableStream()
+      assert.strictEqual('application/octet-stream', res.header['content-type'])
+    })
+  })
+
+  describe('when a Blob is given', () => {
     it('should default to an octet stream', () => {
       const res = response()
       res.body = new Blob([new Uint8Array([1, 2, 3])], { type: 'application/octet-stream' })
@@ -156,7 +164,7 @@ describe('res.body=', () => {
     })
   })
 
-  describe('When a response is given', () => {
+  describe('when a response is given', () => {
     it('should set the status', () => {
       const res = response()
       res.body = new Response(null, { status: 201 })
@@ -172,7 +180,7 @@ describe('res.body=', () => {
 
     it('should redirect', () => {
       const res = response()
-      res.body = Response.redirect('https://www.example.com', 301)
+      res.body = Response.redirect('https://www.example.com/', 301)
       assert.strictEqual(301, res.status)
       assert.strictEqual('https://www.example.com/', res.header.location)
     })
