@@ -570,6 +570,93 @@ describe('app.respond', () => {
     })
   })
 
+  describe('when .body is a Blob', () => {
+    it('should respond', async () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        ctx.body = new Blob(['Hello'])
+      })
+
+      const expectedBlob = new Blob(['Hello'])
+
+      const server = app.listen()
+
+      const res = await request(server)
+        .get('/')
+        .expect(200)
+
+      assert.deepStrictEqual(res.body, Buffer.from(await expectedBlob.arrayBuffer()))
+    })
+
+    it('should keep Blob headers', async () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        ctx.body = new Blob(['hello world'])
+      })
+
+      const server = app.listen()
+
+      return request(server)
+        .head('/')
+        .expect(200)
+        .expect('content-type', 'application/octet-stream')
+        .expect('content-length', '11')
+    })
+  })
+
+  describe('when .body is a ReadableStream', () => {
+    it('should respond', async () => {
+      const app = new Koa()
+
+      app.use(async ctx => {
+        ctx.body = new ReadableStream()
+      })
+
+      const server = app.listen()
+
+      return request(server)
+        .head('/')
+        .expect(200)
+        .expect('content-type', 'application/octet-stream')
+    })
+  })
+
+  describe('when .body is a Response', () => {
+    it('should keep Response headers', () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        ctx.body = new Response(null, { status: 201, statusText: 'OK', headers: { 'Content-Type': 'text/plain' } })
+      })
+
+      const server = app.listen()
+
+      return request(server)
+        .head('/')
+        .expect(201)
+        .expect('content-type', 'text/plain')
+        .expect('content-length', '2')
+    })
+
+    it('should default to octet-stream', () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        ctx.body = new Response(null, { status: 200, statusText: 'OK' })
+      })
+
+      const server = app.listen()
+
+      return request(server)
+        .head('/')
+        .expect(200)
+        .expect('content-type', 'application/octet-stream')
+        .expect('content-length', '2')
+    })
+  })
+
   describe('when .body is a Stream', () => {
     it('should respond', async () => {
       const app = new Koa()

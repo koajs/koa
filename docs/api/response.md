@@ -351,3 +351,7 @@ ctx.response.etag = crypto.createHash('md5').update(ctx.body).digest('hex');
 ### response.flushHeaders()
 
   Flush any set headers, and begin the body.
+
+### response.writable
+
+  A boolean that indicates whether the response is still writable
