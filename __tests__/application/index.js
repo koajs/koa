@@ -3,6 +3,8 @@
 const request = require('supertest')
 const assert = require('assert')
 const Koa = require('../..')
+const fs = require('node:fs')
+const path = require('node:path')
 
 describe('app', () => {
   // ignore test on Node.js v18
@@ -90,5 +92,38 @@ describe('app', () => {
     assert.notEqual(Koa.HttpError, undefined)
     assert.deepStrictEqual(Koa.HttpError, CreateError.HttpError)
     assert.throws(() => { throw new CreateError(500, 'test error') }, Koa.HttpError)
+  })
+
+  it('should start http2 server', async () => {
+    const app = new Koa()
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0 // ignore self-signed certificate
+    const server = app.listenHttp2({
+      key: fs.readFileSync(path.resolve(__dirname, '../../test-helpers/localhost-privkey.pem')),
+      cert: fs.readFileSync(path.resolve(__dirname, '../../test-helpers/localhost-cert.pem')),
+      allowHTTP1: true
+    })
+
+    await request(server)
+      .get('/')
+      .expect(404)
+  })
+
+  it('http2 server should respond', async () => {
+    const app = new Koa()
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0 // ignore self-signed certificate
+    const server = app.listenHttp2({
+      key: fs.readFileSync(path.resolve(__dirname, '../../test-helpers/localhost-privkey.pem')),
+      cert: fs.readFileSync(path.resolve(__dirname, '../../test-helpers/localhost-cert.pem')),
+      allowHTTP1: true
+    })
+
+    app.use((ctx) => {
+      ctx.body = 'Hello World'
+    })
+
+    await request(server)
+      .get('/')
+      .expect(200)
+      .expect('Hello World')
   })
 })
