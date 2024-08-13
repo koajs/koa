@@ -2,6 +2,7 @@
 
 const { describe, it } = require('node:test')
 const response = require('../../test-helpers/context').response
+const CustomStream = require('../../test-helpers/stream')
 const assert = require('assert')
 const fs = require('fs')
 const Stream = require('stream')
@@ -107,6 +108,12 @@ describe('res.body=', () => {
     it('should default to an octet stream', () => {
       const res = response()
       res.body = fs.createReadStream('LICENSE')
+      assert.strictEqual('application/octet-stream', res.header['content-type'])
+    })
+
+    it('should support custom stream', () => {
+      const res = response()
+      res.body = new CustomStream.Readable()
       assert.strictEqual('application/octet-stream', res.header['content-type'])
     })
 
