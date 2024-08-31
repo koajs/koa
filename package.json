@@ -61,7 +61,7 @@
     "jest": "^28.1.2",
     "snazzy": "^9.0.0",
     "standard": "^17.1.0",
-    "supertest": "^6.2.4"
+    "supertest": "^7.0.0"
   },
   "engines": {
     "node": ">= 18"
