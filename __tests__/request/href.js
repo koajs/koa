@@ -1,4 +1,3 @@
-
 'use strict'
 
 const assert = require('assert')
@@ -15,7 +14,7 @@ describe('ctx.href', () => {
       headers: {
         host: 'localhost'
       },
-      socket: socket,
+      socket,
       __proto__: Stream.Readable.prototype
     }
     const ctx = context(req)
@@ -30,7 +29,7 @@ describe('ctx.href', () => {
     app.use(ctx => {
       ctx.body = ctx.href
     })
-    app.listen(function (){
+    app.listen(function () {
       const address = this.address()
       http.get({
         host: 'localhost',

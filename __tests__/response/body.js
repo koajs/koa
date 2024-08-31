@@ -1,4 +1,3 @@
-
 'use strict'
 
 const response = require('../../test-helpers/context').response
@@ -140,6 +139,50 @@ describe('res.body=', () => {
       const res = response()
       res.body = { foo: 'bar' }
       assert.strictEqual('application/json; charset=utf-8', res.header['content-type'])
+    })
+  })
+
+  describe('when a ReadableStream is given', () => {
+    it('should default to an octet stream', () => {
+      const res = response()
+      res.body = new ReadableStream()
+      assert.strictEqual('application/octet-stream', res.header['content-type'])
+    })
+  })
+
+  describe('when a Blob is given', () => {
+    it('should default to an octet stream', () => {
+      const res = response()
+      res.body = new Blob([new Uint8Array([1, 2, 3])], { type: 'application/octet-stream' })
+      assert.strictEqual('application/octet-stream', res.header['content-type'])
+    })
+
+    it('should set length', () => {
+      const res = response()
+      res.body = new Blob([new Uint8Array([1, 2, 3])], { type: 'application/octet-stream' })
+      assert.strictEqual('3', res.header['content-length'])
+    })
+  })
+
+  describe('when a response is given', () => {
+    it('should set the status', () => {
+      const res = response()
+      res.body = new Response(null, { status: 201 })
+      assert.strictEqual(201, res.status)
+    })
+
+    it('should set headers', () => {
+      const res = response()
+      res.body = new Response(null, { status: 200, headers: { 'x-fizz': 'buzz', 'x-foo': 'bar' } })
+      assert.strictEqual('buzz', res.header['x-fizz'])
+      assert.strictEqual('bar', res.header['x-foo'])
+    })
+
+    it('should redirect', () => {
+      const res = response()
+      res.body = Response.redirect('https://www.example.com/', 301)
+      assert.strictEqual(301, res.status)
+      assert.strictEqual('https://www.example.com/', res.header.location)
     })
   })
 })

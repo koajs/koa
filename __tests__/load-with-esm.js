@@ -3,7 +3,7 @@ const assert = require('assert')
 let importESM = () => {}
 
 describe.skip('Load with esm', () => {
-  beforeAll(function (){
+  beforeAll(function () {
     // ESM support is flagged on v12.x.
     const majorVersion = +process.version.split('.')[0].slice(1)
     if (majorVersion < 12) {
@@ -39,7 +39,7 @@ describe.skip('Load with esm', () => {
 
   it('CommonJS exports default property', async () => {
     const required = require('../')
-    assert.strictEqual(required.hasOwnProperty('default'), true)
+    assert.strictEqual(Object.prototype.hasOwnProperty.call(required, 'default'), true)
   })
 
   it('CommonJS exports default property referencing self', async () => {

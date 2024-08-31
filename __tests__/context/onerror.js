@@ -43,8 +43,8 @@ describe('ctx.onerror(err)', () => {
       .expect('Content-Type', 'text/plain; charset=utf-8')
       .expect('Content-Length', '4')
 
-    assert.strictEqual(res.headers.hasOwnProperty('vary'), false)
-    assert.strictEqual(res.headers.hasOwnProperty('x-csrf-token'), false)
+    assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'vary'), false)
+    assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'x-csrf-token'), false)
   })
 
   it('should set headers specified in the error', async () => {
@@ -72,8 +72,8 @@ describe('ctx.onerror(err)', () => {
       .expect('Content-Type', 'text/plain; charset=utf-8')
       .expect('X-New-Header', 'Value')
 
-    assert.strictEqual(res.headers.hasOwnProperty('vary'), false)
-    assert.strictEqual(res.headers.hasOwnProperty('x-csrf-token'), false)
+    assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'vary'), false)
+    assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'x-csrf-token'), false)
   })
 
   it('should ignore error after headerSent', done => {

@@ -1,4 +1,3 @@
-
 'use strict'
 
 const response = require('../../test-helpers/context').response
@@ -61,7 +60,7 @@ describe('res.status=', () => {
     })
   })
 
-  function strip (status){
+  function strip (status) {
     it('should strip content related header fields', async () => {
       const app = new Koa()
 
@@ -80,9 +79,9 @@ describe('res.status=', () => {
         .get('/')
         .expect(status)
 
-      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false)
-      assert.strictEqual(res.headers.hasOwnProperty('content-length'), false)
-      assert.strictEqual(res.headers.hasOwnProperty('content-encoding'), false)
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'Content-Type'), false)
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'content-length'), false)
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'content-encoding'), false)
       assert.strictEqual(res.text.length, 0)
     })
 
@@ -101,9 +100,9 @@ describe('res.status=', () => {
         .get('/')
         .expect(status)
 
-      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false)
-      assert.strictEqual(res.headers.hasOwnProperty('content-length'), false)
-      assert.strictEqual(res.headers.hasOwnProperty('content-encoding'), false)
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'Content-Type'), false)
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'content-length'), false)
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'content-encoding'), false)
       assert.strictEqual(res.text.length, 0)
     })
   }

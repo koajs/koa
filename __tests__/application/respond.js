@@ -1,4 +1,3 @@
-
 'use strict'
 
 const request = require('supertest')
@@ -96,7 +95,7 @@ describe('app.respond', () => {
         .get('/')
         .expect(200)
 
-      assert.strictEqual(res.headers.hasOwnProperty('Content-Type'), false)
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'Content-Type'), false)
     })
   })
 
@@ -329,7 +328,7 @@ describe('app.respond', () => {
           .expect(204)
           .expect('')
 
-        assert.strictEqual(res.headers.hasOwnProperty('content-type'), false)
+        assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'Content-Type'), false)
       })
     })
 
@@ -348,7 +347,7 @@ describe('app.respond', () => {
           .expect(205)
           .expect('')
 
-        assert.strictEqual(res.headers.hasOwnProperty('content-type'), false)
+        assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'Content-Type'), false)
       })
     })
 
@@ -367,7 +366,7 @@ describe('app.respond', () => {
           .expect(304)
           .expect('')
 
-        assert.strictEqual(res.headers.hasOwnProperty('content-type'), false)
+        assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'Content-Type'), false)
       })
     })
 
@@ -444,7 +443,7 @@ describe('app.respond', () => {
         .expect(204)
         .expect('')
 
-      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false)
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'Content-Type'), false)
     })
 
     it('should respond 204 with status=200', async () => {
@@ -462,7 +461,7 @@ describe('app.respond', () => {
         .expect(204)
         .expect('')
 
-      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false)
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'Content-Type'), false)
     })
 
     it('should respond 205 with status=205', async () => {
@@ -480,7 +479,7 @@ describe('app.respond', () => {
         .expect(205)
         .expect('')
 
-      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false)
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'Content-Type'), false)
     })
 
     it('should respond 304 with status=304', async () => {
@@ -498,7 +497,43 @@ describe('app.respond', () => {
         .expect(304)
         .expect('')
 
-      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false)
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'Content-Type'), false)
+    })
+  })
+
+  describe('when .body is undefined', () => {
+    it('should respond 204 by default', async () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        ctx.body = undefined
+      })
+
+      const server = app.listen()
+
+      const res = await request(server)
+        .get('/')
+        .expect(204)
+        .expect('')
+
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'Content-Type'), false)
+    })
+
+    it('should respond 204 with status=200', async () => {
+      const app = new Koa()
+      app.use(ctx => {
+        ctx.status = 200
+        ctx.body = undefined
+      })
+
+      const server = app.listen()
+
+      const res = await request(server)
+        .get('/')
+        .expect(204)
+        .expect('')
+
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'Content-Type'), false)
     })
   })
 
@@ -535,6 +570,93 @@ describe('app.respond', () => {
     })
   })
 
+  describe('when .body is a Blob', () => {
+    it('should respond', async () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        ctx.body = new Blob(['Hello'])
+      })
+
+      const expectedBlob = new Blob(['Hello'])
+
+      const server = app.listen()
+
+      const res = await request(server)
+        .get('/')
+        .expect(200)
+
+      assert.deepStrictEqual(res.body, Buffer.from(await expectedBlob.arrayBuffer()))
+    })
+
+    it('should keep Blob headers', async () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        ctx.body = new Blob(['hello world'])
+      })
+
+      const server = app.listen()
+
+      return request(server)
+        .head('/')
+        .expect(200)
+        .expect('content-type', 'application/octet-stream')
+        .expect('content-length', '11')
+    })
+  })
+
+  describe('when .body is a ReadableStream', () => {
+    it('should respond', async () => {
+      const app = new Koa()
+
+      app.use(async ctx => {
+        ctx.body = new ReadableStream()
+      })
+
+      const server = app.listen()
+
+      return request(server)
+        .head('/')
+        .expect(200)
+        .expect('content-type', 'application/octet-stream')
+    })
+  })
+
+  describe('when .body is a Response', () => {
+    it('should keep Response headers', () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        ctx.body = new Response(null, { status: 201, statusText: 'OK', headers: { 'Content-Type': 'text/plain' } })
+      })
+
+      const server = app.listen()
+
+      return request(server)
+        .head('/')
+        .expect(201)
+        .expect('content-type', 'text/plain')
+        .expect('content-length', '2')
+    })
+
+    it('should default to octet-stream', () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        ctx.body = new Response(null, { status: 200, statusText: 'OK' })
+      })
+
+      const server = app.listen()
+
+      return request(server)
+        .head('/')
+        .expect(200)
+        .expect('content-type', 'application/octet-stream')
+        .expect('content-length', '2')
+    })
+  })
+
   describe('when .body is a Stream', () => {
     it('should respond', async () => {
       const app = new Koa()
@@ -551,7 +673,7 @@ describe('app.respond', () => {
         .expect('Content-Type', 'application/json; charset=utf-8')
 
       const pkg = require('../../package')
-      assert.strictEqual(res.headers.hasOwnProperty('content-length'), false)
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'content-length'), false)
       assert.deepStrictEqual(res.body, pkg)
     })
 
@@ -571,7 +693,7 @@ describe('app.respond', () => {
         .expect('Content-Type', 'application/json; charset=utf-8')
 
       const pkg = require('../../package')
-      assert.strictEqual(res.headers.hasOwnProperty('content-length'), false)
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'content-length'), false)
       assert.deepStrictEqual(res.body, pkg)
     })
 
@@ -591,7 +713,7 @@ describe('app.respond', () => {
         .expect('Content-Type', 'application/json; charset=utf-8')
 
       const pkg = require('../../package')
-      assert.strictEqual(res.headers.hasOwnProperty('content-length'), true)
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'content-length'), true)
       assert.deepStrictEqual(res.body, pkg)
     })
 
@@ -614,7 +736,7 @@ describe('app.respond', () => {
           .expect('Content-Type', 'application/json; charset=utf-8')
 
         const pkg = require('../../package')
-        assert.strictEqual(res.headers.hasOwnProperty('content-length'), true)
+        assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'content-length'), true)
         assert.deepStrictEqual(res.body, pkg)
       })
 
@@ -829,7 +951,7 @@ describe('app.respond', () => {
         .get('/')
         .expect(204)
 
-      assert.strictEqual(res.headers.hasOwnProperty('content-type'), false)
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'Content-Type'), false)
     })
   })
 
@@ -866,9 +988,9 @@ describe('app.respond', () => {
         .expect('')
         .expect({})
 
-      assert.equal(res.headers.hasOwnProperty('transfer-encoding'), false)
-      assert.equal(res.headers.hasOwnProperty('content-type'), false)
-      assert.equal(res.headers.hasOwnProperty('content-length'), true)
+      assert.equal(Object.prototype.hasOwnProperty.call(res.headers, 'transfer-encoding'), false)
+      assert.equal(Object.prototype.hasOwnProperty.call(res.headers, 'Content-Type'), false)
+      assert.equal(Object.prototype.hasOwnProperty.call(res.headers, 'content-length'), true)
     })
 
     it('should return content-length equal to 0', async () => {

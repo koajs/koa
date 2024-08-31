@@ -1,14 +1,24 @@
 
-3.0.0 /
+3.0.0-alpha.1 / 2023-04-12
+==================
+
+**fixes**
+  * [[`e98b8d1`](http://github.com/koajs/koa/commit/e98b8d1918376dc2957aa62906bf5893bef66c4c)] - fix: can not get currentContext in error handler (#1758) (Gxkl <<gxkl203@gmail.com>>)
+
+3.0.0-alpha.0 / 2023-01-02
 ==================
 
 ## Breaking Changes
 
 - Supports node@12+ only.
-- Removes generator deprecation messages. 
+- Removes generator deprecation messages.
   Generators are no longer supported.
   Koa no longer asserts if generators are used.
 - Set `content-length: 0` if body is explicitly set to `null` @ognjenjevremovic #1528
+
+## Features
+
+- Use asyncLocalStorage to get current context from app, e.g.: `const ctx = app.currentContext`.
 
 ## Fixes
 

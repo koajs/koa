@@ -36,7 +36,7 @@
 ## What custom properties do the Koa objects have?
 
   Koa uses its own custom objects: `ctx`, `ctx.request`, and `ctx.response`.
-  These objects abstract node's `req` and `res` objects with convenience methods and getters/setters.
+  These objects abstract Node's `req` and `res` objects with convenience methods and getters/setters.
   Generally, properties added to these objects must obey the following rules:
 
   - They must be either very commonly used and/or must do something useful

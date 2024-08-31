@@ -1,4 +1,3 @@
-
 'use strict'
 
 const request = require('supertest')
@@ -6,7 +5,8 @@ const assert = require('assert')
 const Koa = require('../..')
 
 describe('app', () => {
-  it('should handle socket errors', done => {
+  // ignore test on Node.js v18
+  (/^v18\./.test(process.version) ? it.skip : it)('should handle socket errors', done => {
     const app = new Koa()
 
     app.use((ctx, next) => {
@@ -76,6 +76,12 @@ describe('app', () => {
     const subdomainOffset = 3
     const app = new Koa({ subdomainOffset })
     assert.strictEqual(app.subdomainOffset, subdomainOffset)
+  })
+
+  it('should set compose from the constructor', () => {
+    const compose = () => (ctx) => {}
+    const app = new Koa({ compose })
+    assert.strictEqual(app.compose, compose)
   })
 
   it('should have a static property exporting `HttpError` from http-errors library', () => {

@@ -15,10 +15,11 @@
     - [Response Middleware](#response-middleware)
   - [Async operations](#async-operations)
   - [Debugging Koa](#debugging-koa)
+  - [HTTP2](#http2)
 
 ## Writing Middleware
 
-  Koa middleware are simple functions which return a `MiddlewareFunction` with signature (ctx, next). When
+  Koa middleware are simple functions with the signature `(ctx, next)` (i.e. a `MiddlewareFunction`). When
   the middleware is run, it must manually invoke `next()` to run the "downstream" middleware.
 
   For example if you wanted to track how long it takes for a request to propagate through Koa by adding an
@@ -198,7 +199,7 @@ app.use(async function (ctx, next) {
 
 
 ```js
-const fs = require('mz/fs');
+const fs = require('fs').promises;
 
 app.use(async function (ctx, next) {
   const paths = await fs.readdir('docs');
@@ -245,4 +246,24 @@ app.use(publicFiles);
 
 ```
   koa:application use static /public +0ms
+```
+
+## HTTP2
+
+Example of setting up an HTTP2 server with Koa using the HTTP compatibility layer:
+
+```js
+import Koa from 'koa'
+import http2 from 'node:http2'
+import fs from 'node:fs'
+
+const app = new Koa();
+
+const onRequestHandler = app.callback();
+const serverOptions = {
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+}
+
+const server = http2.createSecureServer(serverOptions, onRequestHandler);
 ```
