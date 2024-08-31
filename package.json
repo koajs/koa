@@ -52,7 +52,7 @@
     "koa-compose": "^4.1.0",
     "on-finished": "^2.3.0",
     "parseurl": "^1.3.2",
-    "statuses": "^1.5.0",
+    "statuses": "^2.0.1",
     "type-is": "^1.6.16",
     "vary": "^1.1.2"
   },
