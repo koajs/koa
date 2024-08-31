@@ -17,6 +17,7 @@
 | Sending Files     |     | ✓       |         |
 | JSONP             |     | ✓       |         |
 
+> NOTE: this doesn't mean Koa is incapable of supporting these features, these features are simply supported by other modules (middleware, plugins, etc.) versus the framework itself.
 
   Thus, if you'd like to be closer to Node.js and traditional Node.js-style coding, you probably want to stick to Connect/Express or similar frameworks.
   If you want to get rid of callbacks, use Koa.
