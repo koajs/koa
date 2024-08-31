@@ -58,7 +58,7 @@
   },
   "devDependencies": {
     "gen-esm-wrapper": "^1.0.6",
-    "jest": "^28.1.2",
+    "jest": "^29.7.0",
     "snazzy": "^9.0.0",
     "standard": "^17.1.0",
     "supertest": "^7.0.0"
