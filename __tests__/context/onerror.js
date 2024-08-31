@@ -15,9 +15,7 @@ describe('ctx.onerror(err)', () => {
       ctx.throw(418, 'boom')
     })
 
-    const server = app.listen()
-
-    return request(server)
+    return request(app.callback())
       .get('/')
       .expect(418)
       .expect('Content-Type', 'text/plain; charset=utf-8')
@@ -35,9 +33,7 @@ describe('ctx.onerror(err)', () => {
       ctx.throw(418, 'boom')
     })
 
-    const server = app.listen()
-
-    const res = await request(server)
+    const res = await request(app.callback())
       .get('/')
       .expect(418)
       .expect('Content-Type', 'text/plain; charset=utf-8')
@@ -64,9 +60,7 @@ describe('ctx.onerror(err)', () => {
       })
     })
 
-    const server = app.listen()
-
-    const res = await request(server)
+    const res = await request(app.callback())
       .get('/')
       .expect(418)
       .expect('Content-Type', 'text/plain; charset=utf-8')
@@ -109,9 +103,7 @@ describe('ctx.onerror(err)', () => {
       throw err
     })
 
-    const server = app.listen()
-
-    return request(server)
+    return request(app.callback())
       .get('/')
       .expect(404)
       .expect('Content-Type', 'text/plain; charset=utf-8')
@@ -130,9 +122,7 @@ describe('ctx.onerror(err)', () => {
           throw err
         })
 
-        const server = app.listen()
-
-        return request(server)
+        return request(app.callback())
           .get('/')
           .expect(500)
           .expect('Content-Type', 'text/plain; charset=utf-8')
@@ -153,9 +143,7 @@ describe('ctx.onerror(err)', () => {
           throw err
         })
 
-        const server = app.listen()
-
-        return request(server)
+        return request(app.callback())
           .get('/')
           .expect(500)
           .expect('Content-Type', 'text/plain; charset=utf-8')
@@ -173,9 +161,7 @@ describe('ctx.onerror(err)', () => {
           throw err
         })
 
-        const server = app.listen()
-
-        return request(server)
+        return request(app.callback())
           .get('/')
           .expect(404)
           .expect('Content-Type', 'text/plain; charset=utf-8')
@@ -193,9 +179,7 @@ describe('ctx.onerror(err)', () => {
           throw err
         })
 
-        const server = app.listen()
-
-        return request(server)
+        return request(app.callback())
           .get('/')
           .expect(500)
           .expect('Content-Type', 'text/plain; charset=utf-8')
@@ -217,8 +201,6 @@ describe('ctx.onerror(err)', () => {
         throw error
       })
 
-      const server = app.listen()
-
       const gotRightErrorPromise = new Promise((resolve, reject) => {
         app.on('error', receivedError => {
           try {
@@ -230,7 +212,7 @@ describe('ctx.onerror(err)', () => {
         })
       })
 
-      await request(server)
+      await request(app.callback())
         .get('/')
         .expect(418)
 
@@ -246,9 +228,7 @@ describe('ctx.onerror(err)', () => {
         throw 'string error' // eslint-disable-line no-throw-literal
       })
 
-      const server = app.listen()
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(500)
         .expect('Content-Type', 'text/plain; charset=utf-8')

@@ -14,9 +14,7 @@ describe('ctx.cookies', () => {
         ctx.status = 204
       })
 
-      const server = app.listen()
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect(204)
 
@@ -53,9 +51,7 @@ describe('ctx.cookies', () => {
           ctx.status = 204
         })
 
-        const server = app.listen()
-
-        const res = await request(server)
+        const res = await request(app.callback())
           .get('/')
           .expect(204)
 
@@ -78,9 +74,7 @@ describe('ctx.cookies', () => {
           ctx.status = 204
         })
 
-        const server = app.listen()
-
-        const res = await request(server)
+        const res = await request(app.callback())
           .get('/')
           .set('x-forwarded-proto', 'https') // mock secure
           .expect(204)
@@ -107,9 +101,7 @@ describe('ctx.cookies', () => {
         ctx.status = 204
       })
 
-      const server = app.listen()
-
-      await request(server)
+      await request(app.callback())
         .get('/')
         .expect('name', 'jon')
         .expect(204)

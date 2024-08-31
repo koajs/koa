@@ -20,7 +20,7 @@ describe('app.response', () => {
       ctx.status = 204
     })
 
-    return request(app1.listen())
+    return request(app1.callback())
       .get('/')
       .expect(204)
   })
@@ -31,7 +31,7 @@ describe('app.response', () => {
       ctx.status = 204
     })
 
-    return request(app2.listen())
+    return request(app2.callback())
       .get('/')
       .expect(204)
   })
@@ -41,7 +41,7 @@ describe('app.response', () => {
       ctx.req.httpVersionMajor = 2
       ctx.status = 404
     })
-    const response = await request(app3.listen())
+    const response = await request(app3.callback())
       .get('/')
       .expect(404)
     assert.strictEqual(response.text, '404')
@@ -53,7 +53,7 @@ describe('app.response', () => {
       assert.strictEqual(ctx.response._explicitNullBody, true)
     })
 
-    return request(app4.listen())
+    return request(app4.callback())
       .get('/')
       .expect(204)
   })
@@ -68,7 +68,7 @@ describe('app.response', () => {
       assert.strictEqual(ctx.response._explicitNullBody, undefined)
     })
 
-    return request(app5.listen())
+    return request(app5.callback())
       .get('/')
       .expect(204)
   })
@@ -78,7 +78,7 @@ describe('app.response', () => {
       ctx.body = 'hello world'
     })
 
-    return request(app6.listen())
+    return request(app6.callback())
       .get('/')
       .expect('Content-Length', '11')
       .expect(200)
@@ -91,7 +91,7 @@ describe('app.response', () => {
       assert.strictEqual(ctx.response.get('Content-Length'), undefined)
     })
 
-    return request(app7.listen())
+    return request(app7.callback())
       .get('/')
       .expect('Transfer-Encoding', 'chunked')
       .expect(200)

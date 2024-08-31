@@ -12,9 +12,7 @@ describe('ctx.state', () => {
       assert.deepStrictEqual(ctx.state, {})
     })
 
-    const server = app.listen()
-
-    return request(server)
+    return request(app.callback())
       .get('/')
       .expect(404)
   })

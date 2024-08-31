@@ -16,9 +16,7 @@ describe('ctx.flushHeaders()', () => {
       assert.strictEqual(ctx.res.headersSent, true)
     })
 
-    const server = app.listen()
-
-    return request(server)
+    return request(app.callback())
       .get('/')
       .expect(200)
       .expect('Body')
@@ -34,8 +32,7 @@ describe('ctx.flushHeaders()', () => {
       ctx.body = 'Body'
     })
 
-    const server = app.listen()
-    return request(server)
+    return request(app.callback())
       .get('/')
       .expect(200)
       .expect('Content-Type', 'text/plain')
@@ -52,8 +49,7 @@ describe('ctx.flushHeaders()', () => {
       ctx.body = 'Body'
     })
 
-    const server = app.listen()
-    return request(server)
+    return request(app.callback())
       .get('/')
       .expect(401)
       .expect('Content-Type', 'text/plain')
@@ -73,8 +69,7 @@ describe('ctx.flushHeaders()', () => {
       ctx.vary('Content-Type')
     })
 
-    const server = app.listen()
-    const res = await request(server)
+    const res = await request(app.callback())
       .get('/')
       .expect(401)
       .expect('Content-Type', 'text/plain')
@@ -102,6 +97,7 @@ describe('ctx.flushHeaders()', () => {
     app.listen(function (err) {
       if (err) return done(err)
 
+      const server = this
       const port = this.address().port
 
       http.request({
@@ -115,6 +111,7 @@ describe('ctx.flushHeaders()', () => {
           setTimeout(() => {
             res.removeListener('data', onData)
             done()
+            server.close()
           }, 1000)
         })
         .on('error', done)
@@ -143,8 +140,6 @@ describe('ctx.flushHeaders()', () => {
       }, 100)
     })
 
-    const server = app.listen()
-
-    request(server).get('/').end()
+    request(app.callback()).get('/').end()
   })
 })
