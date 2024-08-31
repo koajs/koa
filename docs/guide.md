@@ -15,6 +15,7 @@
     - [Response Middleware](#response-middleware)
   - [Async operations](#async-operations)
   - [Debugging Koa](#debugging-koa)
+  - [HTTP2](#http2)
 
 ## Writing Middleware
 
@@ -245,4 +246,24 @@ app.use(publicFiles);
 
 ```
   koa:application use static /public +0ms
+```
+
+## HTTP2
+
+Example of setting up an HTTP2 server with Koa using the HTTP compatibility layer:
+
+```js
+import Koa from 'koa'
+import http2 from 'node:http2'
+import fs from 'node:fs'
+
+const app = new Koa();
+
+const onRequestHandler = app.callback();
+const serverOptions = {
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+}
+
+const server = http2.createSecureServer(serverOptions, onRequestHandler);
 ```
