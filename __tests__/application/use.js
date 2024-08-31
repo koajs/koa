@@ -30,9 +30,7 @@ describe('app.use(fn)', () => {
       })
     })
 
-    const server = app.listen()
-
-    await request(server)
+    await request(app.callback())
       .get('/')
       .expect(404)
 
@@ -63,9 +61,7 @@ describe('app.use(fn)', () => {
       })
     })
 
-    const server = app.listen()
-
-    await request(server)
+    await request(app.callback())
       .get('/')
       .expect(404)
 

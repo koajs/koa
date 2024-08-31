@@ -24,9 +24,7 @@ describe('app.respond', () => {
         })
       })
 
-      const server = app.listen()
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(200)
         .expect('lol')
@@ -46,9 +44,7 @@ describe('app.respond', () => {
         ctx.set('foo', 'bar')
       })
 
-      const server = app.listen()
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(200)
         .expect('lol')
@@ -71,9 +67,7 @@ describe('app.respond', () => {
         ctx.status = 201
       })
 
-      const server = app.listen()
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(200)
         .expect('lol')
@@ -89,9 +83,7 @@ describe('app.respond', () => {
         ctx.type = null
       })
 
-      const server = app.listen()
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect(200)
 
@@ -107,9 +99,7 @@ describe('app.respond', () => {
         ctx.body = 'Hello'
       })
 
-      const server = app.listen()
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .head('/')
         .expect(200)
 
@@ -125,9 +115,7 @@ describe('app.respond', () => {
         ctx.body = { hello: 'world' }
       })
 
-      const server = app.listen()
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .head('/')
         .expect(200)
 
@@ -143,9 +131,7 @@ describe('app.respond', () => {
         ctx.body = 'hello world'
       })
 
-      const server = app.listen()
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .head('/')
         .expect(200)
 
@@ -161,9 +147,7 @@ describe('app.respond', () => {
         ctx.body = Buffer.from('hello world')
       })
 
-      const server = app.listen()
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .head('/')
         .expect(200)
 
@@ -182,9 +166,7 @@ describe('app.respond', () => {
         ctx.body = fs.createReadStream('package.json')
       })
 
-      const server = app.listen()
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .head('/')
         .expect(200)
 
@@ -199,9 +181,7 @@ describe('app.respond', () => {
 
       })
 
-      const server = app.listen()
-
-      return request(server)
+      return request(app.callback())
         .head('/')
         .expect(404)
     })
@@ -213,9 +193,7 @@ describe('app.respond', () => {
         ctx.body = ''
       })
 
-      const server = app.listen()
-
-      return request(server)
+      return request(app.callback())
         .head('/')
         .expect(200)
     })
@@ -228,9 +206,7 @@ describe('app.respond', () => {
         ctx.type = 'application/javascript'
       })
 
-      const server = app.listen()
-
-      return request(server)
+      return request(app.callback())
         .head('/')
         .expect('content-type', /application\/javascript/)
         .expect(200)
@@ -241,9 +217,7 @@ describe('app.respond', () => {
     it('should 404', () => {
       const app = new Koa()
 
-      const server = app.listen()
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(404)
     })
@@ -262,9 +236,7 @@ describe('app.respond', () => {
 
       app.on('error', err => { throw err })
 
-      const server = app.listen()
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(200)
     })
@@ -285,9 +257,7 @@ describe('app.respond', () => {
         })
       })
 
-      const server = app.listen()
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(200)
         .expect('HelloGoodbye')
@@ -303,9 +273,7 @@ describe('app.respond', () => {
           ctx.status = 400
         })
 
-        const server = app.listen()
-
-        return request(server)
+        return request(app.callback())
           .get('/')
           .expect(400)
           .expect('Content-Length', '11')
@@ -321,9 +289,7 @@ describe('app.respond', () => {
           ctx.status = 204
         })
 
-        const server = app.listen()
-
-        const res = await request(server)
+        const res = await request(app.callback())
           .get('/')
           .expect(204)
           .expect('')
@@ -340,9 +306,7 @@ describe('app.respond', () => {
           ctx.status = 205
         })
 
-        const server = app.listen()
-
-        const res = await request(server)
+        const res = await request(app.callback())
           .get('/')
           .expect(205)
           .expect('')
@@ -359,9 +323,7 @@ describe('app.respond', () => {
           ctx.status = 304
         })
 
-        const server = app.listen()
-
-        const res = await request(server)
+        const res = await request(app.callback())
           .get('/')
           .expect(304)
           .expect('')
@@ -379,9 +341,7 @@ describe('app.respond', () => {
           ctx.status = 700
         })
 
-        const server = app.listen()
-
-        const res = await request(server)
+        const res = await request(app.callback())
           .get('/')
           .expect(700)
           .expect('custom status')
@@ -399,9 +359,7 @@ describe('app.respond', () => {
           ctx.message = 'ok'
         })
 
-        const server = app.listen()
-
-        const res = await request(server)
+        const res = await request(app.callback())
           .get('/')
           .expect(200)
           .expect('ok')
@@ -418,9 +376,7 @@ describe('app.respond', () => {
           ctx.res.statusCode = 701
         })
 
-        const server = app.listen()
-
-        return request(server)
+        return request(app.callback())
           .get('/')
           .expect(701)
           .expect('701')
@@ -436,9 +392,7 @@ describe('app.respond', () => {
         ctx.body = null
       })
 
-      const server = app.listen()
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect(204)
         .expect('')
@@ -454,9 +408,7 @@ describe('app.respond', () => {
         ctx.body = null
       })
 
-      const server = app.listen()
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect(204)
         .expect('')
@@ -472,9 +424,7 @@ describe('app.respond', () => {
         ctx.body = null
       })
 
-      const server = app.listen()
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect(205)
         .expect('')
@@ -490,9 +440,7 @@ describe('app.respond', () => {
         ctx.body = null
       })
 
-      const server = app.listen()
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect(304)
         .expect('')
@@ -509,9 +457,7 @@ describe('app.respond', () => {
         ctx.body = undefined
       })
 
-      const server = app.listen()
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect(204)
         .expect('')
@@ -526,9 +472,7 @@ describe('app.respond', () => {
         ctx.body = undefined
       })
 
-      const server = app.listen()
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect(204)
         .expect('')
@@ -545,9 +489,7 @@ describe('app.respond', () => {
         ctx.body = 'Hello'
       })
 
-      const server = app.listen()
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect('Hello')
     })
@@ -561,9 +503,7 @@ describe('app.respond', () => {
         ctx.body = Buffer.from('Hello')
       })
 
-      const server = app.listen()
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(200)
         .expect(Buffer.from('Hello'))
@@ -580,9 +520,7 @@ describe('app.respond', () => {
 
       const expectedBlob = new Blob(['Hello'])
 
-      const server = app.listen()
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect(200)
 
@@ -596,9 +534,7 @@ describe('app.respond', () => {
         ctx.body = new Blob(['hello world'])
       })
 
-      const server = app.listen()
-
-      return request(server)
+      return request(app.callback())
         .head('/')
         .expect(200)
         .expect('content-type', 'application/octet-stream')
@@ -614,9 +550,7 @@ describe('app.respond', () => {
         ctx.body = new ReadableStream()
       })
 
-      const server = app.listen()
-
-      return request(server)
+      return request(app.callback())
         .head('/')
         .expect(200)
         .expect('content-type', 'application/octet-stream')
@@ -631,9 +565,7 @@ describe('app.respond', () => {
         ctx.body = new Response(null, { status: 201, statusText: 'OK', headers: { 'Content-Type': 'text/plain' } })
       })
 
-      const server = app.listen()
-
-      return request(server)
+      return request(app.callback())
         .head('/')
         .expect(201)
         .expect('content-type', 'text/plain')
@@ -647,9 +579,7 @@ describe('app.respond', () => {
         ctx.body = new Response(null, { status: 200, statusText: 'OK' })
       })
 
-      const server = app.listen()
-
-      return request(server)
+      return request(app.callback())
         .head('/')
         .expect(200)
         .expect('content-type', 'application/octet-stream')
@@ -666,9 +596,7 @@ describe('app.respond', () => {
         ctx.set('Content-Type', 'application/json; charset=utf-8')
       })
 
-      const server = app.listen()
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect('Content-Type', 'application/json; charset=utf-8')
 
@@ -686,9 +614,7 @@ describe('app.respond', () => {
         ctx.set('Content-Type', 'application/json; charset=utf-8')
       })
 
-      const server = app.listen()
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect('Content-Type', 'application/json; charset=utf-8')
 
@@ -706,9 +632,7 @@ describe('app.respond', () => {
         ctx.set('Content-Type', 'application/json; charset=utf-8')
       })
 
-      const server = app.listen()
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect('Content-Type', 'application/json; charset=utf-8')
 
@@ -729,9 +653,7 @@ describe('app.respond', () => {
           ctx.set('Content-Type', 'application/json; charset=utf-8')
         })
 
-        const server = app.listen()
-
-        const res = await request(server)
+        const res = await request(app.callback())
           .get('/')
           .expect('Content-Type', 'application/json; charset=utf-8')
 
@@ -748,9 +670,7 @@ describe('app.respond', () => {
         ctx.body = fs.createReadStream('does not exist')
       })
 
-      const server = app.listen()
-
-      request(server)
+      request(app.callback())
         .get('/')
         .expect('Content-Type', 'text/plain; charset=utf-8')
         .expect(404)
@@ -765,9 +685,7 @@ describe('app.respond', () => {
         ctx.body = fs.createReadStream('does not exist')
       })
 
-      const server = app.listen()
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(204)
     })
@@ -781,9 +699,7 @@ describe('app.respond', () => {
         ctx.body = fs.createReadStream('does not exist')
       })
 
-      const server = app.listen()
-
-      request(server)
+      request(app.callback())
         .get('/')
         .expect(404)
         .end(done)
@@ -798,9 +714,7 @@ describe('app.respond', () => {
         ctx.body = { hello: 'world' }
       })
 
-      const server = app.listen()
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect('Content-Type', 'application/json; charset=utf-8')
         .expect('{"hello":"world"}')
@@ -817,9 +731,7 @@ describe('app.respond', () => {
           ctx.body = { hello: 'world' }
         })
 
-        const server = app.listen()
-
-        return request(server)
+        return request(app.callback())
           .get('/')
           .expect('Content-Type', 'application/json; charset=utf-8')
           .expect('Content-Length', '17')
@@ -887,9 +799,7 @@ describe('app.respond', () => {
         throw new Error('boom!')
       })
 
-      const server = app.listen()
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(500, 'Internal Server Error')
     })
@@ -909,9 +819,7 @@ describe('app.respond', () => {
         throw new Error('boom!')
       })
 
-      const server = app.listen()
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(200, 'Got error')
     })
@@ -927,9 +835,7 @@ describe('app.respond', () => {
         ctx.status = 200
       })
 
-      const server = app.listen()
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(200)
         .expect('hello')
@@ -945,9 +851,7 @@ describe('app.respond', () => {
         ctx.status = 204
       })
 
-      const server = app.listen()
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect(204)
 
@@ -964,9 +868,7 @@ describe('app.respond', () => {
         ctx.status = 404
       })
 
-      const server = app.listen()
-
-      return request(server)
+      return request(app.callback())
         .get('/')
         .expect(404)
         .expect('')
@@ -980,9 +882,7 @@ describe('app.respond', () => {
         ctx.status = 401
       })
 
-      const server = app.listen()
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect(401)
         .expect('')
@@ -1001,9 +901,7 @@ describe('app.respond', () => {
         ctx.status = 401
       })
 
-      const server = app.listen()
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect(401)
         .expect('')
@@ -1020,9 +918,7 @@ describe('app.respond', () => {
         ctx.status = 404
       })
 
-      const server = app.listen()
-
-      const res = await request(server)
+      const res = await request(app.callback())
         .get('/')
         .expect(404)
         .expect('')

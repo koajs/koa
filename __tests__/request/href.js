@@ -30,6 +30,7 @@ describe('ctx.href', () => {
       ctx.body = ctx.href
     })
     app.listen(function () {
+      const server = this
       const address = this.address()
       http.get({
         host: 'localhost',
@@ -43,6 +44,7 @@ describe('ctx.href', () => {
         res.on('end', () => {
           assert.strictEqual(buf, 'http://example.com/foo')
           done()
+          server.close()
         })
       })
     })

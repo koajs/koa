@@ -23,9 +23,7 @@ describe('app.compose', () => {
       })
     })
 
-    const server = app.listen()
-
-    await request(server)
+    await request(app.callback())
       .get('/')
       .expect(404)
 
@@ -59,9 +57,7 @@ describe('app.compose', () => {
       calls.push(3)
     })
 
-    const server = app.listen()
-
-    await request(server)
+    await request(app.callback())
       .get('/')
 
     assert.deepStrictEqual(calls, [1, 2, 3, 4])

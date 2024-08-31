@@ -15,7 +15,7 @@ describe('app.context', () => {
       ctx.status = 204
     })
 
-    return request(app1.listen())
+    return request(app1.callback())
       .get('/')
       .expect(204)
   })
@@ -26,7 +26,7 @@ describe('app.context', () => {
       ctx.status = 204
     })
 
-    return request(app2.listen())
+    return request(app2.callback())
       .get('/')
       .expect(204)
   })
