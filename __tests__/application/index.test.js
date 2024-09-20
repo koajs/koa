@@ -59,7 +59,7 @@ describe('app', () => {
 
   it('should set compose from the constructor', () => {
     const compose = () => (ctx) => {}
-    const app = new Koa({ compose })
+    const app = new Koa.default({ compose }) // eslint-disable-line new-cap
     assert.strictEqual(app.compose, compose)
   })
 

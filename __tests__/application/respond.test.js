@@ -556,6 +556,20 @@ describe('app.respond', () => {
         .expect(200)
         .expect('content-type', 'application/octet-stream')
     })
+
+    it('should respond hello', async () => {
+      const app = new Koa()
+
+      app.use(async ctx => {
+        ctx.body = new Blob(['hello']).stream()
+      })
+
+      return request(app.callback())
+        .get('/')
+        .expect(200)
+        .expect('content-type', 'application/octet-stream')
+        .expect(Buffer.from('hello'))
+    })
   })
 
   describe('when .body is a Response', () => {
@@ -578,13 +592,14 @@ describe('app.respond', () => {
 
       app.use(ctx => {
         ctx.body = new Response(null, { status: 200, statusText: 'OK' })
+        console.log(ctx)
       })
 
       return request(app.callback())
-        .head('/')
+        .get('/')
         .expect(200)
         .expect('content-type', 'application/octet-stream')
-        .expect('content-length', '2')
+        .expect(Buffer.from([]))
     })
   })
 
