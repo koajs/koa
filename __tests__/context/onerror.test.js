@@ -71,6 +71,30 @@ describe('ctx.onerror(err)', () => {
     assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'x-csrf-token'), false)
   })
 
+  it('should ignore error after headerSent', (t, done) => {
+    const app = new Koa()
+
+    app.on('error', (err, { res }) => {
+      assert.strictEqual(err.message, 'mock error')
+      assert.strictEqual(err.headerSent, true)
+      res.end()
+      done()
+    })
+
+    app.use(async ctx => {
+      ctx.status = 200
+      ctx.set('X-Foo', 'Bar')
+      ctx.flushHeaders()
+      await Promise.reject(new Error('mock error'))
+      ctx.body = 'response'
+    })
+
+    request(app.callback())
+      .get('/')
+      .expect('X-Foo', 'Bar')
+      .expect(200, () => {})
+  })
+
   it('should set status specified in the error using statusCode', () => {
     const app = new Koa()
 

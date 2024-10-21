@@ -4,11 +4,9 @@ const { describe, it } = require('node:test')
 const assert = require('assert')
 const Koa = require('../..')
 
-process.env.NODE_ENV = 'test'
-
 describe('app.toJSON()', () => {
   it('should work', () => {
-    const app = new Koa()
+    const app = new Koa({ env: 'test' })
     const obj = app.toJSON()
 
     assert.deepStrictEqual({

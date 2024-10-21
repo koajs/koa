@@ -118,7 +118,6 @@ describe('ctx.flushHeaders()', () => {
     })
   })
 
-  // TODO
   it('should catch stream error', (t, done) => {
     const PassThrough = require('stream').PassThrough
     const app = new Koa()
