@@ -18,7 +18,8 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "test": "jest",
+    "test": "node --test",
+    "test:coverage": "node --test --experimental-test-coverage",
     "lint": "standard",
     "lint:pretty": "standard | snazzy",
     "authors": "git log --format='%aN <%aE>' | sort -u > AUTHORS",
@@ -59,7 +60,6 @@
   },
   "devDependencies": {
     "gen-esm-wrapper": "^1.0.6",
-    "jest": "^29.7.0",
     "snazzy": "^9.0.0",
     "standard": "^17.1.0",
     "supertest": "^7.0.0"
@@ -70,13 +70,5 @@
   "files": [
     "dist",
     "lib"
-  ],
-  "standard": {
-    "env": [
-      "jest"
-    ]
-  },
-  "jest": {
-    "testEnvironment": "node"
-  }
+  ]
 }
