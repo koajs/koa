@@ -1,4 +1,32 @@
 
+3.0.0-alpha.2 / 2024-11-04
+==================
+
+**breaking changes**
+- Update `http-errors` to `v2.0.0` [#1486](https://github.com/koajs/koa/pull/1486)
+  - `ctx.throw` now requires a format of `ctx.throw(status, error, properties)`. See: https://www.npmjs.com/package/http-errors
+- Remove `res.redirect('back')`, add `back()` method to `ctx` [#1115](https://github.com/koajs/koa/pull/1115)
+- Replace node querystring with `URLSearchParams` [#1828](https://github.com/koajs/koa/pull/1828)
+- Remove obsolete `createAsyncCtxStorageMiddleware` [#1817](https://github.com/koajs/koa/pull/1817)
+
+**features**
+- Add support for web WHATWG [#1830](https://github.com/koajs/koa/pull/1830)
+
+**updates**
+- Update `cookies` to `~0.9.1` [#1846](https://github.com/koajs/koa/pull/1846)
+- Update `statuses` to `^2.0.1`
+- Update `supertest` to `^7.0.0` [#1841](https://github.com/koajs/koa/pull/1841)
+
+**fixes**
+- Fix `exports.defaults` in `package.json` [#1630](https://github.com/koajs/koa/pull/1630)
+- Fix leaky handles in tests [#1838](https://github.com/koajs/koa/pull/1838)
+- Fix body null checks [#1814](https://github.com/koajs/koa/pull/1814)
+- Fix reformatting redirect URLs [#1805](https://github.com/koajs/koa/pull/1805) [#1804](https://github.com/koajs/koa/pull/1804)
+- Fix passing `ctx` in error handler [#1758](https://github.com/koajs/koa/pull/1758)
+
+**migrations**
+- Migrate from `jest` to the native node test runner [#1845](https://github.com/koajs/koa/pull/1845)
+
 3.0.0-alpha.1 / 2023-04-12
 ==================
 
