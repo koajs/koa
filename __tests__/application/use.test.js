@@ -73,11 +73,9 @@ describe('app.use(fn)', () => {
   it('should catch thrown errors in non-async functions', () => {
     const app = new Koa()
 
-    app.use(ctx => ctx.throw('Not Found', 404))
+    app.use(ctx => ctx.throw(404, 'Not Found'))
 
-    return request(app.callback())
-      .get('/')
-      .expect(404)
+    return request(app.callback()).get('/').expect(404)
   })
 
   it('should throw error for non-function', () => {
