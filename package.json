@@ -19,7 +19,7 @@
   },
   "scripts": {
     "test": "node --test",
-    "test:coverage": "node --test --experimental-test-coverage",
+    "test:coverage": "node --test-reporter=node-monocart-coverage --test",
     "lint": "standard",
     "lint:pretty": "standard | snazzy",
     "authors": "git log --format='%aN <%aE>' | sort -u > AUTHORS",
@@ -60,6 +60,7 @@
   },
   "devDependencies": {
     "gen-esm-wrapper": "^1.0.6",
+    "node-monocart-coverage": "^1.0.2",
     "snazzy": "^9.0.0",
     "standard": "^17.1.0",
     "supertest": "^7.0.0"
