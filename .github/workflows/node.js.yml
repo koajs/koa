@@ -24,5 +24,10 @@ jobs:
     - run: npm ci
     - run: npm run lint
     - run: npm run test:coverage
-    - run: npx codecov
-      continue-on-error: true
+    - name: Codecov
+      if: ${{ contains(matrix.node-version, '22') }}
+      uses: codecov/codecov-action@v4
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        disable_search: true
+        files: ./coverage-reports/codecov.json
