@@ -1,9 +1,15 @@
 'use strict'
 
-const Stream = require('stream')
-const Koa = require('../lib/application')
+import Stream from 'stream'
+import Koa from '../dist/application.js'
 
-module.exports = (req, res, app) => {
+/**
+ * @param {import('../lib/request.types.ts').Request=} req
+ * @param {import('../lib/response.types.ts').Response=} res
+ * @param {import('../lib/application.ts').default=} app
+ * @returns {import('../lib/context.types.ts').Context}
+ */
+const ctx = (req, res, app) => {
   const socket = new Stream.Duplex()
   req = Object.assign({ headers: {}, socket }, Stream.Readable.prototype, req)
   res = Object.assign({ _headers: {}, socket }, Stream.Writable.prototype, res)
@@ -15,6 +21,26 @@ module.exports = (req, res, app) => {
   return app.createContext(req, res)
 }
 
-module.exports.request = (req, res, app) => module.exports(req, res, app).request
+/**
+ *
+ * @param {import('../lib/request.types.ts').Request=} req
+ * @param {import('../lib/response.types.ts').Response=} res
+ * @param {import('../lib/application.ts').default=} app
+ * @returns {import('../lib/request.types.ts').Request}
+ */
+export const request = (req, res, app) => ctx(req, res, app).request
 
-module.exports.response = (req, res, app) => module.exports(req, res, app).response
+ctx.request = request
+
+/**
+ *
+ * @param {import('../lib/request.types.ts').Request=} req
+ * @param {import('../lib/response.types.ts').Response=} res
+ * @param {import('../lib/application.ts').default=} app
+ * @returns {import('../lib/response.types.ts').Response}
+ */
+export const response = (req, res, app) => ctx(req, res, app).response
+
+ctx.response = response
+
+export default ctx

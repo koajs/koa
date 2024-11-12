@@ -1,9 +1,9 @@
 'use strict'
 
-const { describe, it } = require('node:test')
-const Accept = require('accepts')
-const assert = require('assert')
-const context = require('../../test-helpers/context')
+import { describe, it } from 'node:test'
+import Accept from 'accepts'
+import assert from 'assert'
+import context from '../../test-helpers/context.js'
 
 describe('ctx.accept', () => {
   it('should return an Accept instance', () => {

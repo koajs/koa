@@ -1,8 +1,9 @@
 'use strict'
 
-const { describe, it, mock } = require('node:test')
-const assert = require('assert')
-const Koa = require('../..')
+import { describe, it, mock } from 'node:test'
+import assert from 'assert'
+import Koa from '../../dist/application.js'
+import vm from 'node:vm'
 
 describe('app.onerror(err)', () => {
   it('should throw an error if a non-error is given', () => {
@@ -14,7 +15,7 @@ describe('app.onerror(err)', () => {
   })
 
   it('should accept errors coming from other scopes', () => {
-    const ExternError = require('vm').runInNewContext('Error')
+    const ExternError = vm.runInNewContext('Error')
 
     const app = new Koa()
     const error = Object.assign(new ExternError('boom'), {

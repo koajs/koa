@@ -1,11 +1,11 @@
 'use strict'
 
-const { describe, it } = require('node:test')
-const assert = require('assert')
-const request = require('supertest')
-const Koa = require('../..')
-const context = require('../../test-helpers/context')
-
+import { describe, it } from 'node:test'
+import assert from 'assert'
+import request from 'supertest'
+import Koa from '../../dist/application.js'
+import context from '../../test-helpers/context.js'
+import vm from 'node:vm'
 describe('ctx.onerror(err)', () => {
   it('should respond', () => {
     const app = new Koa()
@@ -192,8 +192,7 @@ describe('ctx.onerror(err)', () => {
 
   describe('when error from another scope thrown', () => {
     it('should handle it like a normal error', async () => {
-      const ExternError = require('vm').runInNewContext('Error')
-
+      const ExternError = vm.runInNewContext('Error')
       const app = new Koa()
       const error = Object.assign(new ExternError('boom'), {
         status: 418,

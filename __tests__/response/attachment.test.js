@@ -1,10 +1,10 @@
 'use strict'
 
-const { describe, it } = require('node:test')
-const assert = require('assert')
-const context = require('../../test-helpers/context')
-const request = require('supertest')
-const Koa = require('../..')
+import { describe, it } from 'node:test'
+import assert from 'assert'
+import context from '../../test-helpers/context.js'
+import request from 'supertest'
+import Koa from '../../dist/application.js'
 
 describe('ctx.attachment([filename])', () => {
   describe('when given a filename', () => {

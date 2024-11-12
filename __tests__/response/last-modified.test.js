@@ -1,8 +1,8 @@
 'use strict'
 
-const { describe, it } = require('node:test')
-const assert = require('assert')
-const response = require('../../test-helpers/context').response
+import { describe, it } from 'node:test'
+import assert from 'assert'
+import { response } from '../../test-helpers/context.js'
 
 describe('res.lastModified', () => {
   it('should set the header as a UTCString', () => {

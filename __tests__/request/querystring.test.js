@@ -1,9 +1,9 @@
 'use strict'
 
-const { describe, it } = require('node:test')
-const assert = require('assert')
-const context = require('../../test-helpers/context')
-const parseurl = require('parseurl')
+import { describe, it } from 'node:test'
+import assert from 'assert'
+import context from '../../test-helpers/context.js'
+import parseurl from 'parseurl'
 
 describe('ctx.querystring', () => {
   it('should return the querystring', () => {

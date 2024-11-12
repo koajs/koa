@@ -1,8 +1,8 @@
 'use strict'
 
-const { describe, it } = require('node:test')
-const request = require('../../test-helpers/context').request
-const assert = require('assert')
+import { describe, it } from 'node:test'
+import { request } from '../../test-helpers/context.js'
+import assert from 'assert'
 
 describe('req.host', () => {
   it('should return host with port', () => {

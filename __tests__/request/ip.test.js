@@ -1,10 +1,10 @@
 'use strict'
 
-const { describe, it } = require('node:test')
-const assert = require('assert')
-const Stream = require('stream')
-const Koa = require('../..')
-const Request = require('../../test-helpers/context').request
+import { describe, it } from 'node:test'
+import assert from 'assert'
+import Stream from 'stream'
+import Koa from '../../dist/application.js'
+import { request as Request } from '../../test-helpers/context.js'
 
 describe('req.ip', () => {
   describe('with req.ips present', () => {

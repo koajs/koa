@@ -1,9 +1,9 @@
 'use strict'
 
-const { describe, it } = require('node:test')
-const request = require('supertest')
-const assert = require('assert')
-const Koa = require('../..')
+import { describe, it } from 'node:test'
+import request from 'supertest'
+import assert from 'assert'
+import Koa from '../../dist/application.js'
 
 describe('app.use(fn)', () => {
   it('should compose middleware', async () => {

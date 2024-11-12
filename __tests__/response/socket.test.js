@@ -1,9 +1,9 @@
 'use strict'
 
-const { describe, it } = require('node:test')
-const assert = require('assert')
-const response = require('../../test-helpers/context').response
-const Stream = require('stream')
+import { describe, it } from 'node:test'
+import assert from 'assert'
+import { response } from '../../test-helpers/context.js'
+import Stream from 'stream'
 
 describe('res.socket', () => {
   it('should return the request socket object', () => {

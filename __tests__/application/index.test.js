@@ -1,9 +1,10 @@
 'use strict'
 
-const { describe, it } = require('node:test')
-const request = require('supertest')
-const assert = require('assert')
-const Koa = require('../..')
+import { describe, it } from 'node:test'
+import request from 'supertest'
+import assert from 'assert'
+import Koa from '../../dist/application.js'
+import CreateError from 'http-errors'
 
 describe('app', () => {
   // ignore test on Node.js v18
@@ -64,8 +65,6 @@ describe('app', () => {
   })
 
   it('should have a static property exporting `HttpError` from http-errors library', () => {
-    const CreateError = require('http-errors')
-
     assert.notEqual(Koa.HttpError, undefined)
     assert.deepStrictEqual(Koa.HttpError, CreateError.HttpError)
     assert.throws(() => { throw new CreateError(500, 'test error') }, Koa.HttpError)

@@ -1,11 +1,11 @@
 'use strict'
 
-const { describe, it, beforeEach } = require('node:test')
-const response = require('../../test-helpers/context').response
-const request = require('supertest')
-const statuses = require('statuses')
-const assert = require('assert')
-const Koa = require('../..')
+import { describe, it, beforeEach } from 'node:test'
+import { response } from '../../test-helpers/context.js'
+import request from 'supertest'
+import statuses from 'statuses'
+import assert from 'assert'
+import Koa from '../../dist/application.js'
 
 describe('res.status=', () => {
   describe('when a status code', () => {
