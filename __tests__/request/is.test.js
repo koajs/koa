@@ -1,8 +1,8 @@
 'use strict'
 
-const { describe, it } = require('node:test')
-const context = require('../../test-helpers/context')
-const assert = require('assert')
+import { describe, it } from 'node:test'
+import context from '../../test-helpers/context.js'
+import assert from 'assert'
 
 describe('ctx.is(type)', () => {
   it('should ignore params', () => {

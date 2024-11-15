@@ -1,8 +1,8 @@
 'use strict'
 
-const { describe, it } = require('node:test')
-const assert = require('assert')
-const context = require('../../test-helpers/context')
+import { describe, it } from 'node:test'
+import assert from 'assert'
+import context from '../../test-helpers/context.js'
 
 describe('ctx.vary(field)', () => {
   describe('when Vary is not set', () => {

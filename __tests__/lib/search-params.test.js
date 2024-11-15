@@ -1,6 +1,6 @@
-const { describe, it } = require('node:test')
-const sp = require('../../lib/search-params')
-const assert = require('assert')
+import { describe, it } from 'node:test'
+import sp from '../../dist/search-params.js'
+import assert from 'assert'
 
 describe('search-params', () => {
   describe('stringify', () => {

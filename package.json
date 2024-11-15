@@ -1,32 +1,7 @@
 {
   "name": "koa",
   "version": "3.0.0-alpha.2",
-  "publishConfig": {
-    "tag": "experimental"
-  },
   "description": "Koa web app framework",
-  "main": "lib/application.js",
-  "exports": {
-    ".": {
-      "require": "./lib/application.js",
-      "import": "./dist/koa.mjs",
-      "default": "./dist/koa.mjs"
-    },
-    "./*": "./*.js",
-    "./*.js": "./*.js",
-    "./package": "./package.json",
-    "./package.json": "./package.json"
-  },
-  "scripts": {
-    "test": "node --test",
-    "test:coverage": "node --test --experimental-test-coverage",
-    "lint": "standard",
-    "lint:pretty": "standard | snazzy",
-    "authors": "git log --format='%aN <%aE>' | sort -u > AUTHORS",
-    "build": "gen-esm-wrapper . ./dist/koa.mjs",
-    "prepare": "npm run build"
-  },
-  "repository": "koajs/koa",
   "keywords": [
     "web",
     "app",
@@ -36,7 +11,37 @@
     "middleware",
     "rack"
   ],
+  "repository": "koajs/koa",
   "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/application.js"
+    },
+    "./*": "./*.js",
+    "./*.js": "./*.js",
+    "./package": "./package.json",
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/application.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "authors": "git log --format='%aN <%aE>' | sort -u > AUTHORS",
+    "build": "npm run clean && tsc -p tsconfig.build.json",
+    "clean": "rimraf dist",
+    "format": "standard --fix && xo --fix",
+    "lint": "standard && xo",
+    "lint:pretty": "standard | snazzy",
+    "test": "node --test",
+    "test:coverage": "node --test --experimental-test-coverage"
+  },
+  "prettier": {
+    "plugins": [
+      "prettier-plugin-packagejson"
+    ]
+  },
   "dependencies": {
     "accepts": "^1.3.5",
     "cache-content-type": "^1.0.0",
@@ -45,6 +50,7 @@
     "cookies": "~0.9.1",
     "debug": "^4.3.2",
     "delegates": "^1.0.0",
+    "depd": "^2.0.0",
     "destroy": "^1.0.4",
     "encodeurl": "^2.0.0",
     "escape-html": "^1.0.3",
@@ -55,20 +61,50 @@
     "on-finished": "^2.3.0",
     "parseurl": "^1.3.2",
     "statuses": "^2.0.1",
+    "type-fest": "^4.26.1",
     "type-is": "^1.6.16",
     "vary": "^1.1.2"
   },
   "devDependencies": {
-    "gen-esm-wrapper": "^1.0.6",
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@types/accepts": "^1.3.7",
+    "@types/content-disposition": "^0.5.8",
+    "@types/content-type": "^1.1.8",
+    "@types/cookies": "^0.9.0",
+    "@types/debug": "^4.1.12",
+    "@types/delegates": "^1.0.3",
+    "@types/depd": "^1.1.37",
+    "@types/destroy": "^1.0.3",
+    "@types/encodeurl": "^1.0.2",
+    "@types/escape-html": "^1.0.4",
+    "@types/fresh": "^0.5.2",
+    "@types/http-assert": "^1.5.6",
+    "@types/http-errors": "^2.0.4",
+    "@types/mime-types": "^2.1.4",
+    "@types/node": "~22.9.0",
+    "@types/on-finished": "^2.3.4",
+    "@types/parseurl": "^1.3.3",
+    "@types/statuses": "^2.0.5",
+    "@types/supertest": "^6.0.2",
+    "@types/type-is": "^1.6.6",
+    "@types/vary": "^1.1.3",
+    "expect-type": "^1.1.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "prettier-plugin-packagejson": "^2.5.3",
+    "rimraf": "^6.0.1",
     "snazzy": "^9.0.0",
-    "standard": "^17.1.0",
-    "supertest": "^7.0.0"
+    "standard": "^17.1.2",
+    "supertest": "^7.0.0",
+    "typescript": "~5.6.3",
+    "xo": "^0.59.3"
   },
   "engines": {
     "node": ">= 18"
   },
-  "files": [
-    "dist",
-    "lib"
-  ]
+  "publishConfig": {
+    "tag": "experimental"
+  }
 }

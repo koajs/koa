@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "target": "ES2023",
+    "module": "Node16",
+    "rootDir": ".",
+    "strict": true,
+    "declaration": true,
+    "sourceMap": true,
+    "paths": {
+      "koa-compose": ["./lib/types/koa-compose.d.ts"],
+      "cache-content-type": ["./lib/types/cache-content-type.d.ts"]
+    }
+  }
+}

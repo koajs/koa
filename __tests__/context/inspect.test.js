@@ -1,10 +1,10 @@
 'use strict'
 
-const { describe, it } = require('node:test')
-const prototype = require('../../lib/context')
-const assert = require('assert')
-const util = require('util')
-const context = require('../../test-helpers/context')
+import { describe, it } from 'node:test'
+import prototype from '../../dist/context.js'
+import assert from 'assert'
+import util from 'util'
+import context from '../../test-helpers/context.js'
 
 describe('ctx.inspect()', () => {
   it('should return a json representation', () => {

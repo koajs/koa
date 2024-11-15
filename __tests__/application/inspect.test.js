@@ -1,9 +1,9 @@
 'use strict'
 
-const { describe, it } = require('node:test')
-const assert = require('assert')
-const util = require('util')
-const Koa = require('../..')
+import { describe, it } from 'node:test'
+import assert from 'assert'
+import util from 'util'
+import Koa from '../../dist/application.js'
 
 process.env.NODE_ENV = 'test'
 const app = new Koa()

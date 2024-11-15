@@ -1,11 +1,11 @@
 'use strict'
 
-const { describe, it } = require('node:test')
-const assert = require('assert')
-const Stream = require('stream')
-const http = require('http')
-const Koa = require('../../')
-const context = require('../../test-helpers/context')
+import { describe, it } from 'node:test'
+import assert from 'assert'
+import Stream from 'stream'
+import http from 'http'
+import Koa from '../../dist/application.js'
+import context from '../../test-helpers/context.js'
 
 describe('ctx.href', () => {
   it('should return the full request url', () => {
