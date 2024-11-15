@@ -6,9 +6,12 @@ import statuses from 'statuses'
 import assert from 'assert'
 import Koa from '../../dist/application.js'
 import fs from 'fs'
-import path from 'path'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const pkg = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, '..', '..', 'package.json')))
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'package.json')))
 
 describe('app.respond', () => {
   describe('when ctx.respond === false', () => {
