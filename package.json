@@ -70,5 +70,6 @@
   "files": [
     "dist",
     "lib"
-  ]
+  ],
+  "homepage": "https://github.com/koajs/koa/blob/master/Readme.md"
 }
