@@ -34,8 +34,8 @@
     "format": "standard --fix && xo --fix",
     "lint": "standard && xo",
     "lint:pretty": "standard | snazzy",
-    "test": "node --test",
-    "test:coverage": "node --test --experimental-test-coverage"
+    "test": "node --enable-source-maps --test",
+    "test:coverage": "node --enable-source-maps --test --experimental-test-coverage"
   },
   "prettier": {
     "plugins": [

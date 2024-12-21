@@ -2,13 +2,12 @@ name: Node.js CI
 
 on:
   push:
-    branch: master
+    branches: [master]
   pull_request:
-    branch: master
+    branches: [master]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -16,13 +15,18 @@ jobs:
         node-version: [18.x, 20.x, 22.x]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run lint
-    - run: npm run test:coverage
-    - run: npx codecov
-      continue-on-error: true
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+      # https://github.com/nodejs/node/issues/55054 multiple issues with experimental code coverage
+      # with source maps make test coverage unusable.
+      # TODO: use code coverage when it is fixed by node core teams
+      - run: npm run test
+      # - run: npm run test:coverage
+      # - run: npx codecov
+      #   continue-on-error: true

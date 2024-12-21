@@ -1,22 +1,8 @@
-/**
- * Minimal TypeScript configuration for Node.js
- * - To choose between native ESM or CJS modules, simply change the "type" option in package.json.
- *   ESM is the default option for the spence-s-starter-template, but the tscofig is set up to use commonjs when the package.json field is changed to "type": "commonjs", or removed.
- */
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "target": "ES2022",
-    "module": "Node16",
-    "rootDir": "./lib",
-    "strict": true,
-    "declaration": true,
-    "sourceMap": true,
-    "paths": {
-      "koa-compose": ["./lib/types/koa-compose.d.ts"],
-      "cache-content-type": ["./lib/types/cache-content-type.d.ts"],
-      "delegates": ["./lib/types/delegates.d.ts"]
-    }
+    "rootDir": "./lib"
   },
   "include": ["**/*"]
 }
