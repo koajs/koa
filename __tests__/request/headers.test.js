@@ -1,8 +1,8 @@
 'use strict'
 
-const { describe, it } = require('node:test')
-const assert = require('assert')
-const request = require('../../test-helpers/context').request
+import { describe, it } from 'node:test'
+import assert from 'assert'
+import { request } from '../../test-helpers/context.js'
 
 describe('req.headers', () => {
   it('should return the request header object', () => {

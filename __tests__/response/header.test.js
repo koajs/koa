@@ -1,10 +1,10 @@
 'use strict'
 
-const { describe, it } = require('node:test')
-const assert = require('assert')
-const request = require('supertest')
-const response = require('../../test-helpers/context').response
-const Koa = require('../..')
+import { describe, it } from 'node:test'
+import assert from 'assert'
+import request from 'supertest'
+import { response } from '../../test-helpers/context.js'
+import Koa from '../../dist/application.js'
 
 describe('res.header', () => {
   it('should return the response header object', () => {

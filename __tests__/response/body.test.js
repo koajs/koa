@@ -1,10 +1,10 @@
 'use strict'
 
-const { describe, it } = require('node:test')
-const response = require('../../test-helpers/context').response
-const assert = require('assert')
-const fs = require('fs')
-const Stream = require('stream')
+import { describe, it } from 'node:test'
+import { response } from '../../test-helpers/context.js'
+import assert from 'assert'
+import fs from 'fs'
+import Stream from 'stream'
 
 describe('res.body=', () => {
   describe('when Content-Type is set', () => {

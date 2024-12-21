@@ -1,10 +1,10 @@
 'use strict'
 
-const { describe, it } = require('node:test')
-const assert = require('assert')
-const request = require('supertest')
-const context = require('../../test-helpers/context')
-const Koa = require('../..')
+import { describe, it } from 'node:test'
+import assert from 'assert'
+import request from 'supertest'
+import context from '../../test-helpers/context.js'
+import Koa from '../../dist/application.js'
 
 describe('ctx.redirect(url)', () => {
   it('should redirect to the given url', () => {

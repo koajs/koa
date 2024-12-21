@@ -1,20 +1,12 @@
 'use strict'
 
-const { describe, it } = require('node:test')
-const request = require('supertest')
-const assert = require('assert')
-const Koa = require('../..')
+import { describe, it } from 'node:test'
+import request from 'supertest'
+import assert from 'assert'
+import Koa from '../../dist/application.js'
 
 describe('app.currentContext', () => {
-  it('should throw error if AsyncLocalStorage not support', () => {
-    if (require('async_hooks').AsyncLocalStorage) return
-    assert.throws(() => new Koa({ asyncLocalStorage: true }),
-      /Requires node 12\.17\.0 or higher to enable asyncLocalStorage/)
-  })
-
   it('should get currentContext return context when asyncLocalStorage enable', async () => {
-    if (!require('async_hooks').AsyncLocalStorage) return
-
     const app = new Koa({ asyncLocalStorage: true })
 
     app.use(async ctx => {

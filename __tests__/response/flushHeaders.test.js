@@ -1,11 +1,11 @@
 'use strict'
 
-const { describe, it } = require('node:test')
-const request = require('supertest')
-const assert = require('assert')
-const Koa = require('../..')
-const http = require('http')
-
+import { describe, it } from 'node:test'
+import request from 'supertest'
+import assert from 'assert'
+import Koa from '../../dist/application.js'
+import http from 'http'
+import { PassThrough } from 'stream'
 describe('ctx.flushHeaders()', () => {
   it('should set headersSent', () => {
     const app = new Koa()
@@ -80,7 +80,6 @@ describe('ctx.flushHeaders()', () => {
   })
 
   it('should flush headers first and delay to send data', (t, done) => {
-    const PassThrough = require('stream').PassThrough
     const app = new Koa()
 
     app.use(ctx => {
@@ -119,7 +118,6 @@ describe('ctx.flushHeaders()', () => {
   })
 
   it('should catch stream error', (t, done) => {
-    const PassThrough = require('stream').PassThrough
     const app = new Koa()
     app.once('error', err => {
       assert(err.message === 'mock error')

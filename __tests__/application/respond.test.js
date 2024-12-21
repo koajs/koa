@@ -1,11 +1,17 @@
 'use strict'
 
-const { describe, it } = require('node:test')
-const request = require('supertest')
-const statuses = require('statuses')
-const assert = require('assert')
-const Koa = require('../..')
-const fs = require('fs')
+import { describe, it } from 'node:test'
+import request from 'supertest'
+import statuses from 'statuses'
+import assert from 'assert'
+import Koa from '../../dist/application.js'
+import fs from 'fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'package.json')))
 
 describe('app.respond', () => {
   describe('when ctx.respond === false', () => {
@@ -616,7 +622,6 @@ describe('app.respond', () => {
         .get('/')
         .expect('Content-Type', 'application/json; charset=utf-8')
 
-      const pkg = require('../../package')
       assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'content-length'), false)
       assert.deepStrictEqual(res.body, pkg)
     })
@@ -634,7 +639,6 @@ describe('app.respond', () => {
         .get('/')
         .expect('Content-Type', 'application/json; charset=utf-8')
 
-      const pkg = require('../../package')
       assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'content-length'), false)
       assert.deepStrictEqual(res.body, pkg)
     })
@@ -652,7 +656,6 @@ describe('app.respond', () => {
         .get('/')
         .expect('Content-Type', 'application/json; charset=utf-8')
 
-      const pkg = require('../../package')
       assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'content-length'), true)
       assert.deepStrictEqual(res.body, pkg)
     })
@@ -673,7 +676,6 @@ describe('app.respond', () => {
           .get('/')
           .expect('Content-Type', 'application/json; charset=utf-8')
 
-        const pkg = require('../../package')
         assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'content-length'), true)
         assert.deepStrictEqual(res.body, pkg)
       })

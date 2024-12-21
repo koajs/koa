@@ -1,9 +1,10 @@
+// @ts-check
 'use strict'
 
-const { describe, it } = require('node:test')
-const assert = require('assert')
-const Koa = require('../../')
-const net = require('net')
+import { describe, it } from 'node:test'
+import assert from 'assert'
+import Koa from '../../dist/application.js'
+import net from 'net'
 
 describe('res.writable', () => {
   describe('when continuous requests in one persistent connection', () => {
