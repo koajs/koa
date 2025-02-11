@@ -1,13 +1,13 @@
 # Koa vs Express
 
-  Philosophically, Koa aims to "fix and replace node", whereas Express "augments node".
+  Philosophically, Koa aims to "fix and replace Node", whereas Express "augments Node".
   Koa uses promises and async functions to rid apps of callback hell and simplify error handling.
-  It exposes its own `ctx.request` and `ctx.response` objects instead of node's `req` and `res` objects.
+  It exposes its own `ctx.request` and `ctx.response` objects instead of Node's `req` and `res` objects.
 
-  Express, on the other hand, augments node's `req` and `res` objects with additional properties and methods
+  Express, on the other hand, augments Node's `req` and `res` objects with additional properties and methods
   and includes many other "framework" features, such as routing and templating, which Koa does not.
 
-  Thus, Koa can be viewed as an abstraction of node.js's `http` modules, where as Express is an application framework for node.js.
+  Thus, Koa can be viewed as an abstraction of Node.js's `http` modules, where as Express is an application framework for Node.js.
 
 | Feature           | Koa | Express | Connect |
 |------------------:|-----|---------|---------|
@@ -17,11 +17,12 @@
 | Sending Files     |     | ✓       |         |
 | JSONP             |     | ✓       |         |
 
+> NOTE: this doesn't mean Koa is incapable of supporting these features, these features are simply supported by other modules (middleware, plugins, etc.) versus the framework itself.
 
-  Thus, if you'd like to be closer to node.js and traditional node.js-style coding, you probably want to stick to Connect/Express or similar frameworks.
+  Thus, if you'd like to be closer to Node.js and traditional Node.js-style coding, you probably want to stick to Connect/Express or similar frameworks.
   If you want to get rid of callbacks, use Koa.
 
-  As result of this different philosophy is that traditional node.js "middleware", i.e. functions of the form `(req, res, next)`, are incompatible with Koa. Your application will essentially have to be rewritten from the ground, up.
+  As result of this different philosophy is that traditional Node.js "middleware", i.e. functions of the form `(req, res, next)`, are incompatible with Koa. Your application will essentially have to be rewritten from the ground, up.
 
 ## Does Koa replace Express?
 
@@ -34,12 +35,12 @@
   Typically many middleware would
   re-implement similar features, or even worse incorrectly implement them,
   when features like signed cookie secrets among others are typically application-specific,
-  not middleware specific.
+  not middleware-specific.
 
 ## Does Koa replace Connect?
 
   No, just a different take on similar functionality
-  now that generators allow us to write code with less
+  now that generators allow us to write code with fewer
   callbacks. Connect is equally capable, and some may still prefer it,
   it's up to what you prefer.
 
@@ -51,7 +52,7 @@
   the entire application, so we thought it would be more appropriate
   to create a new library.
 
-## How is Koa different than Connect/Express?
+## How is Koa different from Connect/Express?
 
 ### Promises-based control flow
 
@@ -75,18 +76,18 @@
 
   For example, instead of a "body parsing" middleware, you would instead use a body parsing function.
 
-### Koa abstracts node's request/response
+### Koa abstracts Node's request/response
 
   Less hackery.
 
   Better user experience.
 
   Proper stream handling.
-  
+
 ### Koa routing (third party libraries support)
 
   Since Express comes with its own routing, but Koa does not have
-  any in-built routing, there are third party libraries available such as
+  any built-in routing, there are third party libraries available such as
   koa-router and koa-route.
   Similarly, just like we have helmet for security in Express, for Koa
   we have koa-helmet available and the list goes on for Koa available third

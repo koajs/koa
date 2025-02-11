@@ -1,6 +1,6 @@
 # Request
 
-  A Koa `Request` object is an abstraction on top of node's vanilla request object,
+  A Koa `Request` object is an abstraction on top of Node's vanilla request object,
   providing additional functionality that is useful for every day HTTP server
   development.
 
@@ -9,7 +9,7 @@
 ### request.header
 
  Request header object.  This is the same as the [`headers`](https://nodejs.org/api/http.html#http_message_headers) field
- on node's [`http.IncomingMessage`](https://nodejs.org/api/http.html#http_class_http_incomingmessage).
+ on Node's [`http.IncomingMessage`](https://nodejs.org/api/http.html#http_class_http_incomingmessage).
 
 ### request.header=
 

@@ -1,6 +1,6 @@
 # Context
 
-  A Koa Context encapsulates node's `request` and `response` objects
+  A Koa Context encapsulates Node's `request` and `response` objects
   into a single object which provides many helpful methods for writing
   web applications and APIs.
   These operations are used so frequently in HTTP server development
@@ -35,7 +35,7 @@ app.use(async ctx => {
 
   Node's `response` object.
 
-  Bypassing Koa's response handling is __not supported__. Avoid using the following node properties:
+  Bypassing Koa's response handling is __not supported__. Avoid using the following Node properties:
 
 - `res.statusCode`
 - `res.writeHead()`
@@ -84,6 +84,8 @@ Koa uses the [cookies](https://github.com/pillarjs/cookies) module where options
 * `domain`: a string indicating the domain of the cookie (no default).
 * `secure`: a boolean indicating whether the cookie is only to be sent over HTTPS (`false` by default for HTTP, `true` by default for HTTPS). [Read more about this option](https://github.com/pillarjs/cookies#secure-cookies).
 * `httpOnly`: a boolean indicating whether the cookie is only to be sent over HTTP(S), and not made available to client JavaScript (`true` by default).
+* `partitioned`: a boolean indicating whether to partition the cookie in Chrome for the [CHIPS Update](https://developers.google.com/privacy-sandbox/3pcd/chips) (`false` by default). If this is true, Cookies from embedded sites will be partitioned and only readable from the same top level site from which it was created.
+* `priority`: a string indicating the cookie priority. This can be set to `'low'`, `'medium'`, or `'high'`.
 * `sameSite`: a boolean or string indicating whether the cookie is a "same site" cookie (`false` by default). This can be set to `'strict'`, `'lax'`, `'none'`, or `true` (which maps to `'strict'`).
 * `signed`: a boolean indicating whether the cookie is to be signed (`false` by default). If this is true, another cookie of the same name with the `.sig` suffix appended will also be sent, with a 27-byte url-safe base64 SHA1 value representing the hash of _cookie-name_=_cookie-value_ against the first [Keygrip](https://www.npmjs.com/package/keygrip) key. This signature key is used to detect tampering the next time a cookie is received.
 * `overwrite`: a boolean indicating whether to overwrite previously set cookies of the same name (`false` by default). If this is true, all cookies set during the same request with the same name (regardless of path or domain) are filtered out of the Set-Cookie header when setting this cookie.
@@ -128,7 +130,7 @@ Koa uses [http-errors](https://github.com/jshttp/http-errors) to create errors. 
 ### ctx.assert(value, [status], [msg], [properties])
 
   Helper method to throw an error similar to `.throw()`
-  when `!value`. Similar to node's [assert()](http://nodejs.org/api/assert.html)
+  when `!value`. Similar to Node's [assert()](http://nodejs.org/api/assert.html)
   method.
 
 ```js
@@ -185,6 +187,7 @@ Koa uses [http-assert](https://github.com/jshttp/http-assert) for assertions.
 
   - `ctx.body`
   - `ctx.body=`
+  - `ctx.has()`
   - `ctx.status`
   - `ctx.status=`
   - `ctx.message`
@@ -193,6 +196,7 @@ Koa uses [http-assert](https://github.com/jshttp/http-assert) for assertions.
   - `ctx.length`
   - `ctx.type=`
   - `ctx.type`
+  - `ctx.vary()`
   - `ctx.headerSent`
   - `ctx.redirect()`
   - `ctx.attachment()`
@@ -201,3 +205,4 @@ Koa uses [http-assert](https://github.com/jshttp/http-assert) for assertions.
   - `ctx.remove()`
   - `ctx.lastModified=`
   - `ctx.etag=`
+  - `ctx.writable`
