@@ -1,4 +1,10 @@
 
+3.0.0-alpha.3 / 2025-02-11
+==================
+
+**fixes**
+- Avoid redos on host and protocol getter
+
 3.0.0-alpha.2 / 2024-11-04
 ==================
 
