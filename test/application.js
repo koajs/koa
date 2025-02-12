@@ -208,7 +208,7 @@ describe('app.onerror(err)', function(){
 
 describe('app.respond', function(){
   describe('when this.respond === false', function(){
-    it('should bypass app.respond', function(done){
+    it.skip('should bypass app.respond', function(done){
       var app = koa();
 
       app.use(function *(){

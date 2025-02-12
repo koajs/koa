@@ -8,10 +8,6 @@ ifeq ($(findstring io.js, $(shell which node)),)
 	BIN = node
 endif
 
-ifeq (node, $(BIN))
-	FLAGS = --harmony-generators
-endif
-
 TESTS = test/application \
 	test/context/* \
 	test/request/* \

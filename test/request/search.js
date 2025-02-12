@@ -14,10 +14,7 @@ describe('ctx.search=', function(){
     ctx.search = '?page=2&color=blue';
     ctx.url.should.equal('/store/shoes?page=2&color=blue');
     ctx.querystring.should.equal('page=2&color=blue');
-    ctx.query.should.eql({
-      page: '2',
-      color: 'blue'
-    });
+    JSON.stringify(ctx.query).should.equal('{"page":"2","color":"blue"}');
   })
 
   it('should change .url but not .originalUrl', function(){
