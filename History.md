@@ -1,4 +1,9 @@
 
+> [!IMPORTANT]
+> Moving forwards we are using the GitHub releases page at <https://github.com/koajs/koa/releases> in combination with [np](https://www.npmjs.com/package/np) for publishing releases and their changelogs.
+
+---
+
 3.0.0-alpha.3 / 2025-02-11
 ==================
 
