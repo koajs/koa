@@ -1,28 +1,15 @@
-const { describe, it, beforeAll } = require('node:test')
+const { describe, it } = require('node:test')
 const assert = require('assert')
 
-let importESM = () => {}
-
-describe.skip('Load with esm', () => {
-  beforeAll(function () {
-    // ESM support is flagged on v12.x.
-    const majorVersion = +process.version.split('.')[0].slice(1)
-    if (majorVersion < 12) {
-      this.skip()
-    } else {
-      // eslint-disable-next-line no-eval
-      importESM = eval('(specifier) => import(specifier)')
-    }
-  })
-
+describe('Load with esm', () => {
   it('should default export koa', async () => {
-    const exported = await importESM('koa')
+    const exported = await import('koa')
     const required = require('../')
     assert.strictEqual(exported.default, required)
   })
 
   it('should match exports own property names', async () => {
-    const exported = new Set(Object.getOwnPropertyNames(await importESM('koa')))
+    const exported = new Set(Object.getOwnPropertyNames(await import('koa')))
     const required = new Set(Object.getOwnPropertyNames(require('../')))
 
     // Remove constructor properties + default export.
