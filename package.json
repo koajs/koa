@@ -19,7 +19,7 @@
   },
   "scripts": {
     "test": "node --test",
-    "test:coverage": "node --test --experimental-test-coverage --test-coverage-exclude '__tests__/**'",
+    "test:coverage": "node --test --experimental-test-coverage",
     "lint": "standard",
     "lint:pretty": "standard | snazzy",
     "authors": "git log --format='%aN <%aE>' | sort -u > AUTHORS",
