@@ -26,3 +26,5 @@ jobs:
     - run: npm run test:coverage
     - run: npx codecov
       continue-on-error: true
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
