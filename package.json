@@ -70,5 +70,6 @@
   "files": [
     "dist",
     "lib"
-  ]
+  ],
+  "homepage": "https://koajs.com"
 }
