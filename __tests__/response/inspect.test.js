@@ -25,7 +25,7 @@ describe('res.inspect()', () => {
       message: 'OK',
       header: {
         'content-type': 'text/plain; charset=utf-8',
-        'content-length': '5'
+        'content-length': 5
       },
       body: 'hello'
     }

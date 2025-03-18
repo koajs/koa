@@ -11,7 +11,7 @@ describe('res.header', () => {
     const res = response()
     res.set('X-Foo', 'bar')
     res.set('X-Number', 200)
-    assert.deepStrictEqual(res.header, { 'x-foo': 'bar', 'x-number': '200' })
+    assert.deepStrictEqual(res.header, { 'x-foo': 'bar', 'x-number': 200 })
   })
 
   it('should use res.getHeaders() accessor when available', () => {
