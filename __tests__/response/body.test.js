@@ -45,7 +45,7 @@ describe('res.body=', () => {
     it('should set length', () => {
       const res = response()
       res.body = 'Tobi'
-      assert.strictEqual('4', res.header['content-length'])
+      assert.strictEqual(4, res.header['content-length'])
     })
 
     describe('and contains a non-leading <', () => {
@@ -131,7 +131,7 @@ describe('res.body=', () => {
     it('should set length', () => {
       const res = response()
       res.body = Buffer.from('Tobi')
-      assert.strictEqual('4', res.header['content-length'])
+      assert.strictEqual(4, res.header['content-length'])
     })
   })
 
@@ -161,7 +161,7 @@ describe('res.body=', () => {
     it('should set length', () => {
       const res = response()
       res.body = new Blob([new Uint8Array([1, 2, 3])], { type: 'application/octet-stream' })
-      assert.strictEqual('3', res.header['content-length'])
+      assert.strictEqual(3, res.header['content-length'])
     })
   })
 
