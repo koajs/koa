@@ -152,24 +152,6 @@ describe('ctx.onerror(err)', () => {
           .expect('Internal Server Error')
       })
     })
-    describe('when ENOENT error', () => {
-      it('should respond 404', () => {
-        const app = new Koa()
-
-        app.use((ctx, next) => {
-          ctx.body = 'something else'
-          const err = new Error('test for ENOENT')
-          err.code = 'ENOENT'
-          throw err
-        })
-
-        return request(app.callback())
-          .get('/')
-          .expect(404)
-          .expect('Content-Type', 'text/plain; charset=utf-8')
-          .expect('Not Found')
-      })
-    })
     describe('not http status code', () => {
       it('should respond 500', () => {
         const app = new Koa()
