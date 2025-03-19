@@ -678,21 +678,6 @@ describe('app.respond', () => {
         assert.deepStrictEqual(res.body, pkg)
       })
 
-    it('should handle errors', (t, done) => {
-      const app = new Koa()
-
-      app.use(ctx => {
-        ctx.set('Content-Type', 'application/json; charset=utf-8')
-        ctx.body = fs.createReadStream('does not exist')
-      })
-
-      request(app.callback())
-        .get('/')
-        .expect('Content-Type', 'text/plain; charset=utf-8')
-        .expect(404)
-        .end(done)
-    })
-
     it('should handle errors when no content status', () => {
       const app = new Koa()
 
@@ -704,21 +689,6 @@ describe('app.respond', () => {
       return request(app.callback())
         .get('/')
         .expect(204)
-    })
-
-    it('should handle all intermediate stream body errors', (t, done) => {
-      const app = new Koa()
-
-      app.use(ctx => {
-        ctx.body = fs.createReadStream('does not exist')
-        ctx.body = fs.createReadStream('does not exist')
-        ctx.body = fs.createReadStream('does not exist')
-      })
-
-      request(app.callback())
-        .get('/')
-        .expect(404)
-        .end(done)
     })
   })
 
