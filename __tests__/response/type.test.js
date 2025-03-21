@@ -66,4 +66,12 @@ describe('ctx.type', () => {
       assert.strictEqual(ctx.type, 'application/json')
     })
   })
+
+  describe('when setting to +json content type', () => {
+    it('should set the content type to json', () => {
+      const ctx = context()
+      ctx.type = 'application/vnd.myapi.v1+json'
+      assert.strictEqual(ctx.type, 'application/vnd.myapi.v1+json')
+    })
+  })
 })
