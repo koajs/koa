@@ -1,7 +1,7 @@
 'use strict'
 
 const { describe, it } = require('node:test')
-const assert = require('assert')
+const assert = require('node:assert/strict')
 const response = require('../../test-helpers/context').response
 const Stream = require('stream')
 

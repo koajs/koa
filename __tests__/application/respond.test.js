@@ -3,7 +3,7 @@
 const { describe, it } = require('node:test')
 const request = require('supertest')
 const statuses = require('statuses')
-const assert = require('assert')
+const assert = require('node:assert/strict')
 const Koa = require('../..')
 const fs = require('fs')
 
@@ -893,7 +893,7 @@ describe('app.respond', () => {
         .expect('')
         .expect({})
 
-      assert.equal(res.headers['content-length'], 0)
+      assert.equal(res.headers['content-length'], '0')
     })
     it('should not overwrite the content-length', async () => {
       const app = new Koa()
@@ -910,7 +910,7 @@ describe('app.respond', () => {
         .expect('')
         .expect({})
 
-      assert.equal(res.headers['content-length'], 0)
+      assert.equal(res.headers['content-length'], '0')
     })
   })
 })

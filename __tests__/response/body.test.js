@@ -3,7 +3,7 @@
 const { describe, it } = require('node:test')
 const response = require('../../test-helpers/context').response
 const CustomStream = require('../../test-helpers/stream')
-const assert = require('assert')
+const assert = require('node:assert/strict')
 const fs = require('fs')
 const Stream = require('stream')
 

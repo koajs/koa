@@ -2,7 +2,7 @@
 
 const { describe, it } = require('node:test')
 const context = require('../../test-helpers/context')
-const assert = require('assert')
+const assert = require('node:assert/strict')
 
 describe('ctx.throw(msg)', () => {
   it('should set .status to 500', () => {

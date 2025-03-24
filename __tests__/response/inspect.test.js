@@ -2,7 +2,7 @@
 
 const { describe, it } = require('node:test')
 const response = require('../../test-helpers/context').response
-const assert = require('assert')
+const assert = require('node:assert/strict')
 const util = require('util')
 
 describe('res.inspect()', () => {

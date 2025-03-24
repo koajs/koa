@@ -4,7 +4,7 @@ const { describe, it, beforeEach } = require('node:test')
 const response = require('../../test-helpers/context').response
 const request = require('supertest')
 const statuses = require('statuses')
-const assert = require('assert')
+const assert = require('node:assert/strict')
 const Koa = require('../..')
 
 describe('res.status=', () => {
