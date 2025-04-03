@@ -2,7 +2,7 @@
 
 const { describe, it } = require('node:test')
 const prototype = require('../../lib/context')
-const assert = require('assert')
+const assert = require('node:assert/strict')
 const util = require('util')
 const context = require('../../test-helpers/context')
 

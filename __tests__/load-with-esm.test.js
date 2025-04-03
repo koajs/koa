@@ -1,5 +1,5 @@
 const { describe, it } = require('node:test')
-const assert = require('assert')
+const assert = require('node:assert/strict')
 
 describe('Load with esm', () => {
   it('should default export koa', async () => {

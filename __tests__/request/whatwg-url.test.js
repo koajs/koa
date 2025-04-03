@@ -2,7 +2,7 @@
 
 const { describe, it } = require('node:test')
 const request = require('../../test-helpers/context').request
-const assert = require('assert')
+const assert = require('node:assert/strict')
 
 describe('req.URL', () => {
   it('should not throw when host is void', () => {

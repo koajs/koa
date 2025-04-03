@@ -2,7 +2,7 @@
 
 const { describe, it } = require('node:test')
 const request = require('../../test-helpers/context').request
-const assert = require('assert')
+const assert = require('node:assert/strict')
 
 describe('req.host', () => {
   it('should return host with port', () => {

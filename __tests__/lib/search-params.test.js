@@ -1,6 +1,6 @@
 const { describe, it } = require('node:test')
 const sp = require('../../lib/search-params')
-const assert = require('assert')
+const assert = require('node:assert/strict')
 
 describe('search-params', () => {
   describe('stringify', () => {

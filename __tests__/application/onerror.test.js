@@ -1,7 +1,7 @@
 'use strict'
 
 const { describe, it, mock } = require('node:test')
-const assert = require('assert')
+const assert = require('node:assert/strict')
 const Koa = require('../..')
 
 describe('app.onerror(err)', () => {

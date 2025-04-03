@@ -2,7 +2,7 @@
 
 const { describe, it } = require('node:test')
 const request = require('supertest')
-const assert = require('assert')
+const assert = require('node:assert/strict')
 const Koa = require('../..')
 
 describe('app.request', () => {

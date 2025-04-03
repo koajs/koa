@@ -1,7 +1,7 @@
 'use strict'
 
 const { describe, it } = require('node:test')
-const assert = require('assert')
+const assert = require('node:assert/strict')
 const context = require('../../test-helpers/context')
 
 describe('ctx.acceptsCharsets()', () => {

@@ -1,7 +1,7 @@
 'use strict'
 
 const { describe, it } = require('node:test')
-const assert = require('assert')
+const assert = require('node:assert/strict')
 const request = require('supertest')
 const response = require('../../test-helpers/context').response
 const Koa = require('../..')
