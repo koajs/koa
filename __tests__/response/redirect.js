@@ -80,7 +80,7 @@ describe('ctx.redirect(url)', () => {
       ctx.header.accept = 'text/html';
       ctx.redirect(url);
       assert.strictEqual(ctx.response.header['content-type'], 'text/html; charset=utf-8');
-      assert.strictEqual(ctx.body, `Redirecting to <a href="${url}/">${url}/</a>.`);
+      assert.strictEqual(ctx.body, `Redirecting to ${url}/.`);
     });
 
     it('should escape the url', () => {
@@ -90,7 +90,7 @@ describe('ctx.redirect(url)', () => {
       ctx.redirect(url);
       url = escape(url);
       assert.strictEqual(ctx.response.header['content-type'], 'text/html; charset=utf-8');
-      assert.strictEqual(ctx.body, `Redirecting to <a href="${url}">${url}</a>.`);
+      assert.strictEqual(ctx.body, `Redirecting to ${url}.`);
     });
   });
 
