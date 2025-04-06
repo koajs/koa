@@ -25,3 +25,4 @@ jobs:
     - run: npm run lint
     - run: npm test -- --coverage --maxWorkers 2
     - run: npx codecov
+      continue-on-error: true
