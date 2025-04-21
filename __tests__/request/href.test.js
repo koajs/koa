@@ -25,28 +25,30 @@ describe('ctx.href', () => {
     assert.strictEqual(ctx.href, 'http://localhost/users/1?next=/dashboard')
   })
 
-  it('should work with `GET http://example.com/foo`', (t, done) => {
+  it('should work with `GET http://example.com/foo`', async () => {
     const app = new Koa()
     app.use(ctx => {
       ctx.body = ctx.href
     })
-    app.listen(function () {
-      const server = this
-      const address = this.address()
-      http.get({
-        host: 'localhost',
-        path: 'http://example.com/foo',
-        port: address.port
-      }, res => {
-        assert.strictEqual(res.statusCode, 200)
-        let buf = ''
-        res.setEncoding('utf8')
-        res.on('data', s => { buf += s })
-        res.on('end', () => {
-          assert.strictEqual(buf, 'http://example.com/foo')
-          done()
-          server.close()
-        })
+
+    const server = app.listen(() => {
+      return server
+    })
+
+    const address = server.address()
+
+    http.get({
+      host: 'localhost',
+      path: 'http://example.com/foo',
+      port: address.port
+    }, res => {
+      assert.strictEqual(res.statusCode, 200)
+      let buf = ''
+      res.setEncoding('utf8')
+      res.on('data', s => { buf += s })
+      res.on('end', () => {
+        assert.strictEqual(buf, 'http://example.com/foo')
+        server.close()
       })
     })
   })

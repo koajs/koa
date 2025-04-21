@@ -19,7 +19,7 @@
   },
   "scripts": {
     "test": "node --test",
-    "test:coverage": "node --test --experimental-test-coverage",
+    "test:coverage": "c8 --reporter=lcov --reporter=text-summary node --test",
     "lint": "standard",
     "lint:pretty": "standard | snazzy",
     "authors": "git log --format='%aN <%aE>' | sort -u > AUTHORS",
@@ -59,6 +59,7 @@
     "vary": "^1.1.2"
   },
   "devDependencies": {
+    "c8": "^8.0.1",
     "gen-esm-wrapper": "^1.0.6",
     "snazzy": "^9.0.0",
     "standard": "^17.1.0",

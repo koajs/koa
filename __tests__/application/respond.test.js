@@ -592,7 +592,6 @@ describe('app.respond', () => {
 
       app.use(ctx => {
         ctx.body = new Response(null, { status: 200, statusText: 'OK' })
-        console.log(ctx)
       })
 
       return request(app.callback())
@@ -728,7 +727,7 @@ describe('app.respond', () => {
   })
 
   describe('when an error occurs', () => {
-    it('should emit "error" on the app', (t, done) => {
+    it('should emit "error" on the app', async () => {
       const app = new Koa()
 
       app.use(ctx => {
@@ -737,12 +736,11 @@ describe('app.respond', () => {
 
       app.on('error', err => {
         assert.strictEqual(err.message, 'boom')
-        done()
       })
 
-      request(app.callback())
+      await request(app.callback())
         .get('/')
-        .end(() => {})
+        .expect(500)
     })
 
     describe('with an .expose property', () => {

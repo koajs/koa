@@ -1,10 +1,8 @@
-'use strict'
-
+const http = require('http')
 const { describe, it } = require('node:test')
 const request = require('supertest')
 const assert = require('node:assert/strict')
 const Koa = require('../..')
-const http = require('http')
 
 describe('ctx.flushHeaders()', () => {
   it('should set headersSent', () => {
@@ -79,9 +77,10 @@ describe('ctx.flushHeaders()', () => {
     assert.strictEqual(res.headers.vary, undefined, 'header set after flushHeaders')
   })
 
-  it('should flush headers first and delay to send data', (t, done) => {
+  it('should flush headers first and delay to send data', async () => {
     const PassThrough = require('stream').PassThrough
     const app = new Koa()
+    let res, onData
 
     app.use(ctx => {
       ctx.type = 'json'
@@ -89,38 +88,26 @@ describe('ctx.flushHeaders()', () => {
       ctx.headers.Link = '</css/mycss.css>; as=style; rel=preload, <https://img.craftflair.com>; rel=preconnect; crossorigin'
       const stream = ctx.body = new PassThrough()
       ctx.flushHeaders()
-      setTimeout(() => {
-        stream.end(JSON.stringify({ message: 'hello!' }))
-      })
+      setTimeout(() => stream.end(JSON.stringify({ message: 'hello!' })))
     })
 
-    app.listen(async function (err) {
-      if (err) return done(err)
+    const server = app.listen()
+    const port = server.address().port
 
-      const server = this
-      const port = this.address().port
-
-      http.request({
-        port
-      })
-        .on('response', res => {
-          const onData = () => done(new Error('boom'))
-          res.on('data', onData)
-
-          // shouldn't receive any data for a while
-          res.removeListener('data', onData)
-          res.destroy()
-          done()
-          server.close()
-        })
-        .on('error', done)
-        .end()
+    http.get(`http://localhost:${port}`, response => {
+      res = response
+      onData = () => {}
+      res.on('data', onData)
+      res.removeListener('data', onData)
+      res.destroy()
+      server.close()
     })
   })
 
-  it('should catch stream error', (t, done) => {
+  it('should catch stream error', async () => {
     const PassThrough = require('stream').PassThrough
     const app = new Koa()
+
     app.once('error', err => {
       assert(err.message === 'mock error')
     })
@@ -139,9 +126,10 @@ describe('ctx.flushHeaders()', () => {
       })
     })
 
-    request(app.callback()).get('/').end((err) => {
-      assert(err.message === 'aborted')
-      done()
-    })
+    await request(app.callback())
+      .get('/')
+      .catch(err => {
+        assert.strictEqual(err.message, 'aborted')
+      })
   })
 })
