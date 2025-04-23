@@ -7,7 +7,7 @@ const net = require('net')
 
 describe('res.writable', () => {
   describe('when continuous requests in one persistent connection', () => {
-    it('should always be writable and respond to all requests', () => {
+    it('should always be writable and respond to all requests', (t, done) => {
       const app = new Koa()
       let count = 0
       app.use(ctx => {
@@ -17,56 +17,57 @@ describe('res.writable', () => {
 
       const server = app.listen()
 
-      const port = server.address().port
-      const buf = Buffer.from('GET / HTTP/1.1\r\nHost: localhost:' + port + '\r\nConnection: keep-alive\r\n\r\n')
-      const client = net.connect(port)
-      const datas = []
-      client
-        .on('error', err => {
-          // Handle error and close server
-          server.close()
-          throw err
-        })
-        .on('data', data => datas.push(data))
-        .on('end', () => {
-          try {
-            const responses = Buffer.concat(datas).toString()
-            assert.strictEqual(/request 1, writable: true/.test(responses), true)
-            assert.strictEqual(/request 2, writable: true/.test(responses), true)
-            server.close()
-          } catch (err) {
-            server.close()
-            throw err
-          }
-        })
+      requestTwice(server, (_, datas) => {
+        const responses = Buffer.concat(datas).toString()
+        assert.strictEqual(/request 1, writable: true/.test(responses), true)
+        assert.strictEqual(/request 2, writable: true/.test(responses), true)
+        done()
+        server.close()
+      })
 
-      client.write(buf)
-      client.write(buf)
-      client.end()
+      function requestTwice (server, done) {
+        const port = server.address().port
+        const buf = Buffer.from('GET / HTTP/1.1\r\nHost: localhost:' + port + '\r\nConnection: keep-alive\r\n\r\n')
+        const client = net.connect(port)
+        const datas = []
+        client
+          .on('error', done)
+          .on('data', data => datas.push(data))
+          .on('end', () => done(null, datas))
+        setImmediate(() => {
+          client.write(buf)
+          client.write(buf)
+          setImmediate(() => client.end())
+        })
+      }
     })
   })
 
   describe('when socket closed before response sent', () => {
-    it('should not be writable', async () => {
+    it('should not be writable', (t, done) => {
       const app = new Koa()
       let callback
       const promise = new Promise(resolve => { callback = resolve })
-
-      app.use(async ctx => {
-        await promise
-        await new Promise(resolve => setTimeout(resolve, 10))
-        assert.strictEqual(ctx.writable, false, 'ctx.writable should not be true')
+      app.use(ctx => {
+        promise.then(() => {
+          if (ctx.writable) return done(new Error('ctx.writable should not be true'))
+          done()
+          server.close()
+        })
       })
 
       const server = app.listen()
-      const port = server.address().port
-      const buf = Buffer.from('GET / HTTP/1.1\r\nHost: localhost:' + port + '\r\nConnection: keep-alive\r\n\r\n')
 
-      const client = net.connect(port)
-      client.on('error', () => {}) // Handle ECONNRESET error
+      requestClosed(server)
 
-      client.write(buf)
-      client.end(() => server.close(callback))
+      function requestClosed (server) {
+        const port = server.address().port
+        const buf = Buffer.from('GET / HTTP/1.1\r\nHost: localhost:' + port + '\r\nConnection: keep-alive\r\n\r\n')
+        const client = net.connect(port, () => {
+          client.write(buf)
+          client.end(() => setTimeout(callback))
+        })
+      }
     })
   })
 
@@ -84,14 +85,14 @@ describe('res.writable', () => {
       }, 100)
     }
 
-    it('should not be writable', async () => {
+    it('should not be writable', (t, done) => {
       const app = new Koa()
-
       app.use(ctx => {
         ctx.res.end()
-        assert.strictEqual(ctx.writable, false, 'ctx.writable should not be true')
+        if (ctx.writable) return done(new Error('ctx.writable should not be true'))
+        done()
       })
-      await request(app.listen())
+      request(app.listen())
     })
   })
 })

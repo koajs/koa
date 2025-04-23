@@ -28,18 +28,21 @@ describe('ctx.redirect(url)', () => {
     assert.strictEqual(ctx.status, 302)
   })
 
-  it('should auto fix not encode url', async () => {
+  it('should auto fix not encode url', (t, done) => {
     const app = new Koa()
 
     app.use(ctx => {
       ctx.redirect('http://google.com/😓')
     })
 
-    const res = await request(app.callback())
+    request(app.callback())
       .get('/')
-      .expect(302)
-
-    assert.strictEqual(res.headers.location, 'http://google.com/%F0%9F%98%93')
+      .end((err, res) => {
+        if (err) return done(err)
+        assert.strictEqual(res.status, 302)
+        assert.strictEqual(res.headers.location, 'http://google.com/%F0%9F%98%93')
+        done()
+      })
   })
 
   describe('with "back"', () => {

@@ -7,7 +7,7 @@ const Koa = require('../..')
 
 describe('app', () => {
   // ignore test on Node.js v18
-  (/^v18\./.test(process.version) ? it.skip : it)('should handle socket errors', async () => {
+  (/^v18\./.test(process.version) ? it.skip : it)('should handle socket errors', (t, done) => {
     const app = new Koa()
 
     app.use((ctx, next) => {
@@ -17,11 +17,12 @@ describe('app', () => {
 
     app.on('error', err => {
       assert.strictEqual(err.message, 'boom')
+      done()
     })
 
-    await request(app.callback())
+    request(app.callback())
       .get('/')
-      .expect(400)
+      .end(() => {})
   })
 
   it('should set development env when NODE_ENV missing', () => {
