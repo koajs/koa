@@ -2,9 +2,9 @@ name: Node.js CI
 
 on:
   push:
-    branch: master
+    branches: [master]
   pull_request:
-    branch: master
+    branches: [master]
 
 jobs:
   build:
@@ -24,7 +24,7 @@ jobs:
     - run: npm ci
     - run: npm run lint
     - run: npm run test:coverage
-    - run: npx codecov
-      continue-on-error: true
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
