@@ -728,21 +728,24 @@ describe('app.respond', () => {
   })
 
   describe('when an error occurs', () => {
-    it('should emit "error" on the app', (t, done) => {
+    it('should emit "error" on the app', async () => {
       const app = new Koa()
-
-      app.use(ctx => {
-        throw new Error('boom')
-      })
+      let errorCaught = false
 
       app.on('error', err => {
-        assert.strictEqual(err.message, 'boom')
-        done()
+        errorCaught = true
+        assert.strictEqual(err.message, 'test error')
       })
 
-      request(app.callback())
+      app.use(ctx => {
+        throw new Error('test error')
+      })
+
+      await request(app.callback())
         .get('/')
-        .end(() => {})
+        .expect(500)
+
+      assert.strictEqual(errorCaught, true)
     })
 
     describe('with an .expose property', () => {

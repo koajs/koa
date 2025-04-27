@@ -1,28 +1,34 @@
 'use strict'
 
 const { describe, it } = require('node:test')
-const request = require('supertest')
 const assert = require('node:assert/strict')
+const { once } = require('node:events')
 const Koa = require('../..')
 
 describe('app', () => {
-  // ignore test on Node.js v18
-  (/^v18\./.test(process.version) ? it.skip : it)('should handle socket errors', (t, done) => {
+  it('should handle socket errors', async () => {
     const app = new Koa()
 
-    app.use((ctx, next) => {
-      // triggers ctx.socket.writable == false
-      ctx.socket.emit('error', new Error('boom'))
+    app.use((ctx) => {
+      ctx.socket.destroy(new Error('boom'))
     })
 
     app.on('error', err => {
       assert.strictEqual(err.message, 'boom')
-      done()
     })
 
-    request(app.callback())
-      .get('/')
-      .end(() => {})
+    const server = app.listen()
+
+    try {
+      const req = require('http').get({
+        port: server.address().port
+      })
+      req.on('error', () => {})
+
+      await once(app, 'error')
+    } finally {
+      server.close()
+    }
   })
 
   it('should set development env when NODE_ENV missing', () => {

@@ -79,7 +79,7 @@ describe('ctx.flushHeaders()', () => {
     assert.strictEqual(res.headers.vary, undefined, 'header set after flushHeaders')
   })
 
-  it('should flush headers first and delay to send data', (t, done) => {
+  it('should flush headers first and delay to send data', async () => {
     const PassThrough = require('stream').PassThrough
     const app = new Koa()
 
@@ -94,8 +94,8 @@ describe('ctx.flushHeaders()', () => {
       })
     })
 
-    app.listen(async function (err) {
-      if (err) return done(err)
+    app.listen(function (err) {
+      if (err) throw err
 
       const server = this
       const port = this.address().port
@@ -104,21 +104,24 @@ describe('ctx.flushHeaders()', () => {
         port
       })
         .on('response', res => {
-          const onData = () => done(new Error('boom'))
+          const onData = () => {
+            process.nextTick(() => res.emit('error', new Error('boom')))
+          }
           res.on('data', onData)
 
           // shouldn't receive any data for a while
           res.removeListener('data', onData)
           res.destroy()
-          done()
           server.close()
         })
-        .on('error', done)
+        .on('error', err => {
+          process.nextTick(() => { throw err })
+        })
         .end()
     })
   })
 
-  it('should catch stream error', (t, done) => {
+  it('should catch stream error', async () => {
     const PassThrough = require('stream').PassThrough
     const app = new Koa()
     app.once('error', err => {
@@ -139,9 +142,12 @@ describe('ctx.flushHeaders()', () => {
       })
     })
 
-    request(app.callback()).get('/').end((err) => {
-      assert(err.message === 'aborted')
-      done()
-    })
+    await request(app.callback()).get('/')
+      .then(() => {
+        throw new Error('should not successfully end')
+      })
+      .catch(err => {
+        assert(err.message === 'aborted')
+      })
   })
 })
