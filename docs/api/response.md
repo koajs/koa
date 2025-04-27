@@ -287,17 +287,11 @@ app.use(async (ctx, next) => {
 });
 ```
 
-### response.redirect(url, [alt])
+### response.redirect(url)
 
   Perform a [302] redirect to `url`.
 
-  The string "back" is special-cased
-  to provide Referrer support, when Referrer
-  is not present `alt` or "/" is used.
-
 ```js
-ctx.redirect('back');
-ctx.redirect('back', '/index.html');
 ctx.redirect('/login');
 ctx.redirect('http://google.com');
 ```
@@ -310,6 +304,11 @@ ctx.status = 301;
 ctx.redirect('/cart');
 ctx.body = 'Redirecting to shopping cart';
 ```
+
+### response.back(url)
+
+  Similar to `.redirect(url)`, but first checks the `referer` header to redirect.
+  This is new in v3 as `.redirect(url, alt)` removes the special case `url = 'back'` option.
 
 ### response.attachment([filename], [options])
 

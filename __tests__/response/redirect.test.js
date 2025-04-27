@@ -45,34 +45,6 @@ describe('ctx.redirect(url)', () => {
       })
   })
 
-  describe('with "back"', () => {
-    it('should redirect to Referrer', () => {
-      const ctx = context()
-      ctx.req.headers.referrer = '/login'
-      ctx.redirect('back')
-      assert.strictEqual(ctx.response.header.location, '/login')
-    })
-
-    it('should redirect to Referer', () => {
-      const ctx = context()
-      ctx.req.headers.referer = '/login'
-      ctx.redirect('back')
-      assert.strictEqual(ctx.response.header.location, '/login')
-    })
-
-    it('should default to alt', () => {
-      const ctx = context()
-      ctx.redirect('back', '/index.html')
-      assert.strictEqual(ctx.response.header.location, '/index.html')
-    })
-
-    it('should default redirect to /', () => {
-      const ctx = context()
-      ctx.redirect('back')
-      assert.strictEqual(ctx.response.header.location, '/')
-    })
-  })
-
   describe('when html is accepted', () => {
     it('should respond with html', () => {
       const ctx = context()
