@@ -93,7 +93,7 @@ app.listen(3000);
   - `app.subdomainOffset` offset of `.subdomains` to ignore, default to 2
   - `app.proxyIpHeader` proxy ip header, default to `X-Forwarded-For`
   - `app.maxIpsCount` max ips read from proxy ip header, default to 0 (means infinity)
-  - `app.asyncLocalStorage` 
+  - `app.asyncLocalStorage<Boolean|asyncLocalStorage>` - pass `true` or an instance of `AsyncLocalStorage` to enable async local storage. See below for details.
 
   You can pass the settings to the constructor:
   ```js
@@ -213,6 +213,41 @@ Note:
 
 - Many properties on `ctx` are defined using getters, setters, and `Object.defineProperty()`. You can only edit these properties (not recommended) by using `Object.defineProperty()` on `app.context`. See https://github.com/koajs/koa/issues/652.
 - Mounted apps currently use their parent's `ctx` and settings. Thus, mounted apps are really just groups of middleware.
+
+## app.currentContext
+
+> New in Koa v3.
+
+If `asyncLocalStorage` is enabled, this will return the current context for the request. For example:
+
+```js
+const app = new Koa({ asyncLocalStorage: true })
+
+app.use(async (ctx, next) => {
+  callSomeFunction()
+})
+
+function callSomeFunction () {
+  app.currentContext = {} /* ctx of the middleware above */ 
+}
+```
+
+Starting in v3.1.0, you can also pass your own AsyncLocalStorage instance:
+
+```js
+const asyncLocalStorage = new AsyncLocalStorage()
+const app = new Koa({ asyncLocalStorage })
+
+app.use(async (ctx, next) => {
+  callSomeFunction()
+})
+
+function callSomeFunction () {
+  const ctx = asyncLocalStorage.getStore()
+}
+```
+
+Use this to pass key request details like request ID or the user to your internal services.
 
 ## Error Handling
 
