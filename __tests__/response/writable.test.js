@@ -46,7 +46,10 @@ describe('res.writable', () => {
     it('should not be writable', async () => {
       const app = new Koa()
       app.use(ctx => {
+        let assertionRan = false
         assert(!ctx.writable)
+        assertionRan = true
+        assert(assertionRan)
       })
 
       const server = app.listen()
@@ -68,7 +71,10 @@ describe('res.writable', () => {
       const app = new Koa()
       app.use(ctx => {
         ctx.res.end()
+        let assertionRan = false
         assert(!ctx.writable)
+        assertionRan = true
+        assert(assertionRan)
       })
 
       const server = app.listen()

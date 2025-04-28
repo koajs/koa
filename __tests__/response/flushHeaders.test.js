@@ -5,6 +5,7 @@ const request = require('supertest')
 const assert = require('node:assert/strict')
 const Koa = require('../..')
 const http = require('http')
+const { once } = require('node:events')
 
 describe('ctx.flushHeaders()', () => {
   it('should set headersSent', () => {
@@ -83,42 +84,31 @@ describe('ctx.flushHeaders()', () => {
     const PassThrough = require('stream').PassThrough
     const app = new Koa()
 
-    app.use(ctx => {
+    app.use(async ctx => {
       ctx.type = 'json'
       ctx.status = 200
       ctx.headers.Link = '</css/mycss.css>; as=style; rel=preload, <https://img.craftflair.com>; rel=preconnect; crossorigin'
       const stream = ctx.body = new PassThrough()
       ctx.flushHeaders()
-      setTimeout(() => {
-        stream.end(JSON.stringify({ message: 'hello!' }))
-      })
+      await stream.end(JSON.stringify({ message: 'hello!' }))
     })
 
-    app.listen(function (err) {
-      if (err) throw err
+    const server = app.listen()
+    const port = server.address().port
 
-      const server = this
-      const port = this.address().port
-
-      http.request({
-        port
-      })
-        .on('response', res => {
-          const onData = () => {
-            process.nextTick(() => res.emit('error', new Error('boom')))
-          }
-          res.on('data', onData)
-
-          // shouldn't receive any data for a while
-          res.removeListener('data', onData)
-          res.destroy()
-          server.close()
-        })
-        .on('error', err => {
-          process.nextTick(() => { throw err })
-        })
-        .end()
-    })
+    try {
+      const req = http.request({ port })
+      req.end()
+      const [res] = await once(req, 'response')
+      const onData = () => {
+        process.nextTick(() => res.emit('error', new Error('boom')))
+      }
+      res.on('data', onData)
+      res.removeListener('data', onData)
+      res.destroy()
+    } finally {
+      await server.close()
+    }
   })
 
   it('should catch stream error', async () => {

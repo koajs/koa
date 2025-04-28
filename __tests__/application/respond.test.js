@@ -733,8 +733,8 @@ describe('app.respond', () => {
       let errorCaught = false
 
       app.on('error', err => {
-        errorCaught = true
         assert.strictEqual(err.message, 'test error')
+        errorCaught = true
       })
 
       app.use(ctx => {

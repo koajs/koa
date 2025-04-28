@@ -8,12 +8,14 @@ const Koa = require('../..')
 describe('app', () => {
   it('should handle socket errors', async () => {
     const app = new Koa()
+    let errorCaught = false
 
     app.use((ctx) => {
       ctx.socket.destroy(new Error('boom'))
     })
 
     app.on('error', err => {
+      errorCaught = true
       assert.strictEqual(err.message, 'boom')
     })
 
@@ -27,8 +29,9 @@ describe('app', () => {
 
       const [err] = await once(app, 'error')
       assert.strictEqual(err.message, 'boom')
+      assert.strictEqual(errorCaught, true)
     } finally {
-      server.close()
+      await server.close()
     }
   })
 
