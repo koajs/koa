@@ -12,6 +12,24 @@ As announced in Koa v2.x, support for the old middleware signature (generator fu
 
 If you were still using generator middleware with `koa-convert`, you'll need to update all middleware to use async functions or functions that return promises.
 
+```js
+// Old way (using koa-convert with generator middleware)
+const convert = require('koa-convert');
+
+app.use(convert(function* (next) {
+  const data = yield fetchData();
+  yield next;
+  this.body = data;
+}));
+
+// New way (using async/await)
+app.use(async (ctx, next) => {
+  const data = await fetchData();
+  await next();
+  ctx.body = data;
+});
+```
+
 ### HTTP Errors Update
 
 Koa v3 updates `http-errors` to v2.0.0, which changes the signature of `ctx.throw()`:
@@ -42,11 +60,30 @@ ctx.back()
 
 Node's querystring module has been replaced with `URLSearchParams`. This should be mostly transparent to users, but might cause subtle differences in query string parsing.
 
+```js
+// Old way (Koa v2.x using querystring)
+const qs = require('querystring');
+app.use(async (ctx, next) => {
+  const query = qs.parse(ctx.querystring);
+  // query['user[]'] = ['john', 'jane']
+  // query['items[0]'] = 'book'
+  await next();
+});
+
+// New way (Koa v3.x using URLSearchParams)
+app.use(async (ctx, next) => {
+  const query = new URLSearchParams(ctx.querystring);
+  // query.getAll('user') => ['john', 'jane']
+  // query.get('items') => 'book'
+  await next();
+});
+```
+
 ## New Features
 
 ### AsyncLocalStorage Support
 
-Koa v3 adds support for AsyncLocalStorage, which allows you to access the current context from anywhere in your application:
+Koa v3 adds support for [AsyncLocalStorage](https://nodejs.org/api/async_context.html#class-asynclocalstorage), which allows you to access the current context from anywhere in your application:
 
 ```js
 // Enable AsyncLocalStorage
@@ -85,7 +122,7 @@ function callSomeFunction() {
 
 ### Web WHATWG Support
 
-Koa v3 adds support for Web WHATWG standards, including:
+Koa v3 adds support for [Web WHATWG standards](https://spec.whatwg.org/), including:
 
 - Support for `Blob` objects as response bodies
 - Support for `ReadableStream` objects as response bodies
@@ -114,7 +151,38 @@ app.use(async ctx => {
 ## Upgrading Guide
 
 1. Update your Node.js version to v18.0.0 or higher
-2. Update all generator middleware to use async functions
-3. Update any calls to `ctx.throw()` to use the new signature
+2. Update all generator middleware to use async functions:
+
+   ```js
+   // Old way (generator middleware)
+   app.use(function* (next) {
+     const start = Date.now()
+     yield next
+     const ms = Date.now() - start
+     console.log(`${this.method} ${this.url} - ${ms}ms`)
+   })
+
+   // New way (async middleware)
+   app.use(async (ctx, next) => {
+     const start = Date.now()
+     await next()
+     const ms = Date.now() - start
+     console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+   })
+   ```
+3. Update any calls to `ctx.throw()` to use the new signature:
+
+   ```js
+   // Old way (Koa v2.x)
+   ctx.throw(404, 'User not found', { user: 'john' });
+
+   // New way (Koa v3.x)
+   const error = new Error('User not found');
+   ctx.throw(404, error, { user: 'john' });
+
+   // You can also throw HTTP errors directly
+   const createError = require('http-errors');
+   ctx.throw(createError(404, 'User not found', { user: 'john' }));
+   ```
 4. Replace `ctx.response.redirect('back')` with `ctx.back()`
 5. Test your application thoroughly to ensure compatibility
