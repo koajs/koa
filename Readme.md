@@ -83,7 +83,7 @@ The middleware signature changed between v1.x and v2.x.  The older signature is 
 
 **Old signature middleware support has been removed in v3**
 
-Please see the [Migration Guide from v1.x to v2.x](docs/migration.md) for information on upgrading from v1.x to v2.x, and the [Migration Guide from v2.x to v3.x](docs/migration-v2-to-v3.md) for information on upgrading from v2.x to v3.x.
+Please see the [Migration Guide from v2.x to v3.x](docs/migration-v2-to-v3.md) for information on upgrading from v2.x to v3.x, and the [Migration Guide from v1.x to v2.x](docs/migration-v1-to-v2.md) for information on upgrading from v1.x to v2.x.
 
 ## Context, Request and Response
 
