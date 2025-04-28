@@ -15,6 +15,7 @@ describe('ctx.flushHeaders()', () => {
       ctx.body = 'Body'
       ctx.status = 200
       ctx.flushHeaders()
+      assert.strictEqual(ctx.headerSent, true)
       assert.strictEqual(ctx.res.headersSent, true)
     })
 

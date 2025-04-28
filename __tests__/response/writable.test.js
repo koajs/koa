@@ -36,6 +36,7 @@ describe('res.writable', () => {
       const responses = Buffer.concat(datas).toString()
       assert.strictEqual(/request 1, writable: true/.test(responses), true)
       assert.strictEqual(/request 2, writable: true/.test(responses), true)
+      assert.strictEqual(count, 2) // Add assertion for request count
 
       server.close()
       await once(server, 'close')

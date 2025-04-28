@@ -8,12 +8,16 @@ describe('ctx.assert(value, status)', () => {
   it('should throw an error', () => {
     const ctx = context()
 
+    let assertionRan = false
     try {
-      ctx.assert(false, 404)
-      throw new Error('asdf')
+      ctx.assert(false, 404, 'custom message')
+      throw new Error('should not reach here')
     } catch (err) {
+      assertionRan = true
       assert.strictEqual(err.status, 404)
+      assert.strictEqual(err.message, 'custom message')
       assert.strictEqual(err.expose, true)
     }
+    assert(assertionRan)
   })
 })

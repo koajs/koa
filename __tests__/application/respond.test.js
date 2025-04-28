@@ -592,7 +592,6 @@ describe('app.respond', () => {
 
       app.use(ctx => {
         ctx.body = new Response(null, { status: 200, statusText: 'OK' })
-        console.log(ctx)
       })
 
       return request(app.callback())

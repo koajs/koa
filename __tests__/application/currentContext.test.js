@@ -4,17 +4,10 @@ const { describe, it } = require('node:test')
 const request = require('supertest')
 const assert = require('node:assert/strict')
 const Koa = require('../..')
+const { AsyncLocalStorage } = require('async_hooks')
 
 describe('app.currentContext', () => {
-  it('should throw error if AsyncLocalStorage not support', () => {
-    if (require('async_hooks').AsyncLocalStorage) return
-    assert.throws(() => new Koa({ asyncLocalStorage: true }),
-      /Requires node 12\.17\.0 or higher to enable asyncLocalStorage/)
-  })
-
   it('should get currentContext return context when asyncLocalStorage enable', async () => {
-    if (!require('async_hooks').AsyncLocalStorage) return
-
     const app = new Koa({ asyncLocalStorage: true })
 
     app.use(async ctx => {
@@ -106,5 +99,18 @@ describe('app.currentContext', () => {
 
     await request(app.callback()).get('/').expect('Internal Server Error')
     await handleError
+  })
+
+  it('should support a custom asyncLocalStorage', async () => {
+    const asyncLocalStorage = new AsyncLocalStorage()
+    const app = new Koa({ asyncLocalStorage })
+    assert(app.currentContext === undefined)
+    app.use(async ctx => {
+      assert(ctx === app.currentContext)
+      assert(asyncLocalStorage.getStore() === ctx)
+      ctx.body = 'ok'
+    })
+    await request(app.callback()).get('/').expect('ok')
+    assert(app.currentContext === undefined)
   })
 })
