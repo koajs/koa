@@ -1,6 +1,6 @@
 # Installation
 
-  Koa requires __node v18__ or higher for ES2015 and async function support.
+  Koa requires __node v18.0.0__ or higher for ES2015 and async function support.
 
   You can quickly install a supported version of Node with your favorite version manager:
 
@@ -228,7 +228,7 @@ app.use(async (ctx, next) => {
 })
 
 function callSomeFunction () {
-  app.currentContext = {} /* ctx of the middleware above */ 
+  app.currentContext = {} /* ctx of the middleware above */
 }
 ```
 
