@@ -5,7 +5,7 @@
   You can quickly install a supported version of Node with your favorite version manager:
 
 ```bash
-$ nvm install 12
+$ nvm install 22
 $ npm i koa
 $ node my-koa-app.js
 ```
@@ -93,6 +93,7 @@ app.listen(3000);
   - `app.subdomainOffset` offset of `.subdomains` to ignore, default to 2
   - `app.proxyIpHeader` proxy ip header, default to `X-Forwarded-For`
   - `app.maxIpsCount` max ips read from proxy ip header, default to 0 (means infinity)
+  - `app.asyncLocalStorage` 
 
   You can pass the settings to the constructor:
   ```js

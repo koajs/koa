@@ -416,7 +416,7 @@ ctx.acceptsLanguages();
 
 ### request.idempotent
 
-  Check if the request is idempotent.
+  Check if the request is idempotent (e.g. a `GET`, `HEAD`, etc. request).
 
 ### request.socket
 

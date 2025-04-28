@@ -349,8 +349,8 @@ ctx.response.etag = crypto.createHash('md5').update(ctx.body).digest('hex');
 
 ### response.flushHeaders()
 
-  Flush any set headers, and begin the body.
+  Flush any set headers to the client. This is a proxy for [`res.flushHeaders()`](https://nodejs.org/api/http.html#requestflushheaders)
 
 ### response.writable
 
-  A boolean that indicates whether the response is still writable
+  A boolean that indicates whether the response is still writable. 
