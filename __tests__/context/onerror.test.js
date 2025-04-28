@@ -242,7 +242,7 @@ describe('ctx.onerror(err)', () => {
         let assertionRan = false
         assert.strictEqual(err.message, 'non-error thrown: {"key":"value"}')
         assertionRan = true
-        assert(assertionRan, 'assertion was not executed')  
+        assert(assertionRan, 'assertion was not executed')
       })
 
       app.use(async ctx => {
