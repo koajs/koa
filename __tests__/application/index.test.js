@@ -25,7 +25,8 @@ describe('app', () => {
       })
       req.on('error', () => {})
 
-      await once(app, 'error')
+      const [err] = await once(app, 'error')
+      assert.strictEqual(err.message, 'boom')
     } finally {
       server.close()
     }
