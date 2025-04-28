@@ -81,10 +81,9 @@ app.use((ctx, next) => {
 
 The middleware signature changed between v1.x and v2.x.  The older signature is deprecated.
 
-**Old signature middleware support will be removed in v3**
+**Old signature middleware support has been removed in v3**
 
-Please see the [Migration Guide](docs/migration.md) for more information on upgrading from v1.x and
-using v1.x middleware with v2.x.
+Please see the [Migration Guide from v1.x to v2.x](docs/migration.md) for information on upgrading from v1.x to v2.x, and the [Migration Guide from v2.x to v3.x](docs/migration-v2-to-v3.md) for information on upgrading from v2.x to v3.x.
 
 ## Context, Request and Response
 
@@ -96,7 +95,7 @@ as the parameter name for the context object.
 app.use(async (ctx, next) => { await next(); });
 ```
 
-Koa provides a `Request` object as the `request` property of the `Context`.  
+Koa provides a `Request` object as the `request` property of the `Context`.
 Koa's `Request` object provides helpful methods for working with
 http requests which delegate to an [IncomingMessage](https://nodejs.org/api/http.html#http_class_http_incomingmessage)
 from the node `http` module.
@@ -112,10 +111,10 @@ app.use(async (ctx, next) => {
 });
 ```
 
-Koa provides a `Response` object as the `response` property of the `Context`.  
+Koa provides a `Response` object as the `response` property of the `Context`.
 Koa's `Response` object provides helpful methods for working with
 http responses which delegate to a [ServerResponse](https://nodejs.org/api/http.html#http_class_http_serverresponse)
-.  
+.
 
 Koa's pattern of delegating to Node's request and response objects rather than extending them
 provides a cleaner interface and reduces conflicts between different middleware and with Node

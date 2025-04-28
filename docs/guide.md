@@ -267,6 +267,7 @@ const serverOptions = {
 }
 
 const server = http2.createSecureServer(serverOptions, onRequestHandler);
+server.listen(3000);
 ```
 
 ## Server-Side Events
@@ -274,7 +275,7 @@ const server = http2.createSecureServer(serverOptions, onRequestHandler);
 An example of using server-side events with Koa:
 
 ```js
-import PassThrough from 'stream'
+import { PassThrough } from 'node:stream'
 import OpenAI from 'openai'
 import Koa from 'koa'
 
@@ -287,9 +288,9 @@ const app = new Koa()
 app.use(async (ctx, next) => { // TODO: use your favorite routing library
   const { message } = await ctx.request.json() // this example uses koa-body-parsers
 
-  const stream = await client.chat.completions.create({
+  const stream = await openai.chat.completions.create({
     model: 'gpt-4o-mini',
-    messages: [{ role: 'user', content: messages }],
+    messages: [{ role: 'user', content: message }],
     stream: true,
   })
 
@@ -306,10 +307,11 @@ app.use(async (ctx, next) => { // TODO: use your favorite routing library
         delta: {
           content: chunk.choices[0].delta.content || ''
         }
-      })}}\n\n`)
-
-      body.end()
+      })}\n\n`)
     }
+    body.end()
   })().catch((err) => app.emit('error', err))
 })
+
+app.listen(3000)
 ```
