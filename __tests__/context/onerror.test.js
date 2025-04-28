@@ -239,7 +239,10 @@ describe('ctx.onerror(err)', () => {
       const app = new Koa()
 
       app.on('error', err => {
+        let assertionRan = false
         assert.strictEqual(err.message, 'non-error thrown: {"key":"value"}')
+        assertionRan = true
+        assert(assertionRan, 'assertion was not executed')  
       })
 
       app.use(async ctx => {
