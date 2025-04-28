@@ -1,6 +1,6 @@
 {
   "name": "koa",
-  "version": "3.0.0-alpha.5",
+  "version": "3.0.0",
   "publishConfig": {
     "tag": "experimental"
   },
