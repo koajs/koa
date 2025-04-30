@@ -85,30 +85,32 @@ describe('ctx.flushHeaders()', () => {
     const PassThrough = require('stream').PassThrough
     const app = new Koa()
 
-    app.use(async ctx => {
+    app.use(ctx => {
       ctx.type = 'json'
       ctx.status = 200
       ctx.headers.Link = '</css/mycss.css>; as=style; rel=preload, <https://img.craftflair.com>; rel=preconnect; crossorigin'
       const stream = ctx.body = new PassThrough()
       ctx.flushHeaders()
-      await stream.end(JSON.stringify({ message: 'hello!' }))
+      setTimeout(() => {
+        stream.end(JSON.stringify({ message: 'hello!' }))
+      })
     })
 
     const server = app.listen()
+    await once(server, 'listening')
     const port = server.address().port
 
     try {
       const req = http.request({ port })
       req.end()
+
       const [res] = await once(req, 'response')
-      const onData = () => {
-        process.nextTick(() => res.emit('error', new Error('boom')))
-      }
+      const onData = () => { throw new Error('boom') }
       res.on('data', onData)
       res.removeListener('data', onData)
       res.destroy()
     } finally {
-      await server.close()
+      server.close()
     }
   })
 

@@ -15,8 +15,8 @@ describe('app', () => {
     })
 
     app.on('error', err => {
-      errorCaught = true
       assert.strictEqual(err.message, 'boom')
+      errorCaught = true
     })
 
     const server = app.listen()
