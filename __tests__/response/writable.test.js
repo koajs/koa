@@ -46,36 +46,43 @@ describe('res.writable', () => {
   describe('when socket closed before response sent', () => {
     it('should not be writable', async () => {
       const app = new Koa()
-      app.use(ctx => {
-        let assertionRan = false
-        assert(!ctx.writable)
+      let ctx
+      let assertionRan = false
+      app.on('error', () => {})
+
+      app.use(c => {
+        ctx = c
         assertionRan = true
-        assert(assertionRan)
       })
 
       const server = app.listen()
       const port = server.address().port
       const buf = Buffer.from('GET / HTTP/1.1\r\nHost: localhost:' + port + '\r\nConnection: keep-alive\r\n\r\n')
-
       const client = net.connect(port)
       await once(client, 'connect')
       client.write(buf)
+
+      await new Promise(resolve => setTimeout(resolve, 5))
       client.destroy()
 
       server.close()
       await once(server, 'close')
+
+      assert(ctx)
+      assert(assertionRan)
+      assert(!ctx.writable)
     })
   })
 
   describe('when response finished', () => {
     it('should not be writable', async () => {
       const app = new Koa()
+      let assertionRan = false
+
       app.use(ctx => {
         ctx.res.end()
-        let assertionRan = false
         assert(!ctx.writable)
         assertionRan = true
-        assert(assertionRan)
       })
 
       const server = app.listen()
@@ -85,10 +92,15 @@ describe('res.writable', () => {
       const client = net.connect(port)
       await once(client, 'connect')
       client.write(buf)
+
+      await new Promise(resolve => setTimeout(resolve, 5))
+
       client.destroy()
 
       server.close()
       await once(server, 'close')
+
+      assert(assertionRan)
     })
   })
 })

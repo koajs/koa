@@ -84,6 +84,8 @@ describe('ctx.flushHeaders()', () => {
   it('should flush headers first and delay to send data', async () => {
     const PassThrough = require('stream').PassThrough
     const app = new Koa()
+    let headersFlushed = false
+    let dataReceived = false
 
     app.use(ctx => {
       ctx.type = 'json'
@@ -91,9 +93,10 @@ describe('ctx.flushHeaders()', () => {
       ctx.headers.Link = '</css/mycss.css>; as=style; rel=preload, <https://img.craftflair.com>; rel=preconnect; crossorigin'
       const stream = ctx.body = new PassThrough()
       ctx.flushHeaders()
+      headersFlushed = true
       setTimeout(() => {
         stream.end(JSON.stringify({ message: 'hello!' }))
-      })
+      }, 10)
     })
 
     const server = app.listen()
@@ -105,10 +108,22 @@ describe('ctx.flushHeaders()', () => {
       req.end()
 
       const [res] = await once(req, 'response')
-      const onData = () => { throw new Error('boom') }
-      res.on('data', onData)
-      res.removeListener('data', onData)
+      assert(headersFlushed, 'Headers should be flushed')
+
+      const dataPromise = new Promise(resolve => {
+        res.once('data', chunk => {
+          dataReceived = true
+          resolve(chunk)
+        })
+      })
+
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Timeout waiting for data')), 10)
+      )
+
+      await Promise.race([dataPromise, timeoutPromise])
       res.destroy()
+      assert(dataReceived, 'Data should be received after headers')
     } finally {
       server.close()
     }

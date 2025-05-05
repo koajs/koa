@@ -561,7 +561,8 @@ describe('app.respond', () => {
       const app = new Koa()
 
       app.use(async ctx => {
-        ctx.body = new Blob(['hello']).stream()
+        const blob = new Blob(['hello'])
+        ctx.body = blob.stream()
       })
 
       return request(app.callback())
