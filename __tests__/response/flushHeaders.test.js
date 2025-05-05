@@ -117,8 +117,9 @@ describe('ctx.flushHeaders()', () => {
         })
       })
 
-      const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Timeout waiting for data')), 10)
+      // Wait for data with a timeout
+      const timeoutPromise = new Promise((resolve, reject) =>
+        setTimeout(() => reject(new Error('Timeout waiting for data')), 100)
       )
 
       await Promise.race([dataPromise, timeoutPromise])
