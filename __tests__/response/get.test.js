@@ -34,4 +34,10 @@ describe('ctx.get(name)', () => {
     assert.ok(ctx.response.get('foo-NULL') === null)
     assert.ok(typeof ctx.response.get('FOO-undefined') === 'undefined')
   })
+
+  it('should return undefined for non-existent headers', () => {
+    const ctx = context()
+    assert.strictEqual(ctx.response.get('nonexistent'), undefined)
+    assert.strictEqual(ctx.response.get(''), undefined)
+  })
 })

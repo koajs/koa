@@ -5,6 +5,7 @@ const request = require('supertest')
 const assert = require('node:assert/strict')
 const Koa = require('../..')
 const http = require('http')
+const { once } = require('node:events')
 
 describe('ctx.flushHeaders()', () => {
   it('should set headersSent', () => {
@@ -14,6 +15,7 @@ describe('ctx.flushHeaders()', () => {
       ctx.body = 'Body'
       ctx.status = 200
       ctx.flushHeaders()
+      assert.strictEqual(ctx.headerSent, true)
       assert.strictEqual(ctx.res.headersSent, true)
     })
 
@@ -79,9 +81,11 @@ describe('ctx.flushHeaders()', () => {
     assert.strictEqual(res.headers.vary, undefined, 'header set after flushHeaders')
   })
 
-  it('should flush headers first and delay to send data', (t, done) => {
+  it('should flush headers first and delay to send data', async () => {
     const PassThrough = require('stream').PassThrough
     const app = new Koa()
+    let headersFlushed = false
+    let dataReceived = false
 
     app.use(ctx => {
       ctx.type = 'json'
@@ -89,36 +93,44 @@ describe('ctx.flushHeaders()', () => {
       ctx.headers.Link = '</css/mycss.css>; as=style; rel=preload, <https://img.craftflair.com>; rel=preconnect; crossorigin'
       const stream = ctx.body = new PassThrough()
       ctx.flushHeaders()
+      headersFlushed = true
       setTimeout(() => {
         stream.end(JSON.stringify({ message: 'hello!' }))
-      })
+      }, 10)
     })
 
-    app.listen(async function (err) {
-      if (err) return done(err)
+    const server = app.listen()
+    await once(server, 'listening')
+    const port = server.address().port
 
-      const server = this
-      const port = this.address().port
+    try {
+      const req = http.request({ port })
+      req.end()
 
-      http.request({
-        port
-      })
-        .on('response', res => {
-          const onData = () => done(new Error('boom'))
-          res.on('data', onData)
+      const [res] = await once(req, 'response')
+      assert(headersFlushed, 'Headers should be flushed')
 
-          // shouldn't receive any data for a while
-          res.removeListener('data', onData)
-          res.destroy()
-          done()
-          server.close()
+      const dataPromise = new Promise(resolve => {
+        res.once('data', chunk => {
+          dataReceived = true
+          resolve(chunk)
         })
-        .on('error', done)
-        .end()
-    })
+      })
+
+      // Wait for data with a timeout
+      const timeoutPromise = new Promise((resolve, reject) =>
+        setTimeout(() => reject(new Error('Timeout waiting for data')), 100)
+      )
+
+      await Promise.race([dataPromise, timeoutPromise])
+      res.destroy()
+      assert(dataReceived, 'Data should be received after headers')
+    } finally {
+      server.close()
+    }
   })
 
-  it('should catch stream error', (t, done) => {
+  it('should catch stream error', async () => {
     const PassThrough = require('stream').PassThrough
     const app = new Koa()
     app.once('error', err => {
@@ -139,9 +151,12 @@ describe('ctx.flushHeaders()', () => {
       })
     })
 
-    request(app.callback()).get('/').end((err) => {
-      assert(err.message === 'aborted')
-      done()
-    })
+    await request(app.callback()).get('/')
+      .then(() => {
+        throw new Error('should not successfully end')
+      })
+      .catch(err => {
+        assert(err.message === 'aborted')
+      })
   })
 })

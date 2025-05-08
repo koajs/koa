@@ -71,14 +71,13 @@ describe('ctx.onerror(err)', () => {
     assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'x-csrf-token'), false)
   })
 
-  it('should ignore error after headerSent', (t, done) => {
+  it('should ignore error after headerSent', async () => {
     const app = new Koa()
 
     app.on('error', (err, { res }) => {
       assert.strictEqual(err.message, 'mock error')
       assert.strictEqual(err.headerSent, true)
       res.end()
-      done()
     })
 
     app.use(async ctx => {
@@ -89,10 +88,10 @@ describe('ctx.onerror(err)', () => {
       ctx.body = 'response'
     })
 
-    request(app.callback())
+    await request(app.callback())
       .get('/')
       .expect('X-Foo', 'Bar')
-      .expect(200, () => {})
+      .expect(200)
   })
 
   it('should set status specified in the error using statusCode', () => {
@@ -236,22 +235,24 @@ describe('ctx.onerror(err)', () => {
       assert.strictEqual(removed, 2)
     })
 
-    it('should stringify error if it is an object', (t, done) => {
+    it('should stringify error if it is an object', async () => {
       const app = new Koa()
 
       app.on('error', err => {
+        let assertionRan = false
         assert.strictEqual(err.message, 'non-error thrown: {"key":"value"}')
-        done()
+        assertionRan = true
+        assert(assertionRan, 'assertion was not executed')
       })
 
       app.use(async ctx => {
         throw { key: 'value' } // eslint-disable-line no-throw-literal
       })
 
-      request(app.callback())
+      await request(app.callback())
         .get('/')
         .expect(500)
-        .expect('Internal Server Error', () => {})
+        .expect('Internal Server Error')
     })
   })
 })
