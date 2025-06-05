@@ -213,13 +213,13 @@ app.use(async function (ctx, next) {
 
 ## Debugging Koa
 
-  Koa along with many of the libraries it's built with support the __DEBUG__ environment variable from [debug](https://github.com/visionmedia/debug) which provides simple conditional logging.
+  Koa, along with many of the libraries it's built, can be debugged using Node.js's built-in util.debuglog, which provides simple conditional logging via the __NODE_DEBUG__ environment variable.
 
   For example
-  to see all Koa-specific debugging information just pass `DEBUG=koa*` and upon boot you'll see the list of middleware used, among other things.
+  to see all Koa-specific debugging information just pass `NODE_DEBUG=koa*` and upon boot you'll see the list of middleware used, among other things.
 
 ```
-$ DEBUG=koa* node --harmony examples/simple
+$ NODE_DEBUG=koa* node --harmony examples/simple
   koa:application use responseTime +0ms
   koa:application use logger +4ms
   koa:application use contentLength +0ms
@@ -234,7 +234,7 @@ $ DEBUG=koa* node --harmony examples/simple
   For example:
 
 ```js
-const path = require('path');
+const path = require('node:path');
 const serve = require('koa-static');
 
 const publicFiles = serve(path.join(__dirname, 'public'));
@@ -248,6 +248,8 @@ app.use(publicFiles);
 ```
   koa:application use static /public +0ms
 ```
+
+This lets you use Koa’s internal debug logs without any third-party dependencies by relying on node:util's built-in debuglog.
 
 ## HTTP2
 
