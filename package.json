@@ -18,6 +18,7 @@
     "test": "node --test",
     "test:coverage": "c8 --reporter=lcov --reporter=text-summary node --test",
     "lint": "standard",
+    "lint:fix": "standard --fix",
     "lint:pretty": "standard | snazzy",
     "authors": "git log --format='%aN <%aE>' | sort -u > AUTHORS",
     "build": "gen-esm-wrapper . ./dist/koa.mjs",
@@ -36,7 +37,6 @@
   "license": "MIT",
   "dependencies": {
     "accepts": "^1.3.8",
-    "cache-content-type": "^1.0.0",
     "content-disposition": "~0.5.4",
     "content-type": "^1.0.5",
     "cookies": "~0.9.1",
@@ -48,15 +48,18 @@
     "http-assert": "^1.5.0",
     "http-errors": "^2.0.0",
     "koa-compose": "^4.1.0",
+    "mime-types": "^3.0.1",
     "on-finished": "^2.4.1",
     "parseurl": "^1.3.3",
     "statuses": "^2.0.1",
     "type-is": "^2.0.1",
-    "vary": "^1.1.2"
+    "vary": "^1.1.2",
+    "ylru": "^2.0.0"
   },
   "devDependencies": {
     "c8": "^10.1.3",
     "gen-esm-wrapper": "^1.1.3",
+    "mm": "^4.0.2",
     "snazzy": "^9.0.0",
     "standard": "^17.1.2",
     "supertest": "^7.1.1"
