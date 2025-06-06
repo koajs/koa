@@ -571,6 +571,50 @@ describe('app.respond', () => {
         .expect('content-type', 'application/octet-stream')
         .expect(Buffer.from('hello'))
     })
+
+    it('should respond with multiple chunks from stream', async () => {
+      const app = new Koa()
+
+      app.use(async ctx => {
+        const encoder = new TextEncoder()
+        ctx.body = new ReadableStream({
+          start (controller) {
+            controller.enqueue(encoder.encode('hello '))
+            controller.enqueue(encoder.encode('world'))
+            controller.close()
+          }
+        })
+      })
+
+      return request(app.callback())
+        .get('/')
+        .expect(200)
+        .expect('content-type', 'application/octet-stream')
+        .expect(Buffer.from('hello world'))
+    })
+
+    it('should handle mixed data types in ReadableStream', async () => {
+      const app = new Koa()
+
+      app.use(async ctx => {
+        const textEncoder = new TextEncoder()
+        ctx.body = new ReadableStream({
+          start (controller) {
+            controller.enqueue(textEncoder.encode('hello '))
+            const binaryData = new Uint8Array([87, 79, 82, 76, 68]) // ASCII for 'WORLD'
+            controller.enqueue(binaryData)
+
+            controller.close()
+          }
+        })
+      })
+
+      return request(app.callback())
+        .get('/')
+        .expect(200)
+        .expect('content-type', 'application/octet-stream')
+        .expect(Buffer.from('hello WORLD'))
+    })
   })
 
   describe('when .body is a Response', () => {
@@ -600,6 +644,48 @@ describe('app.respond', () => {
         .expect(200)
         .expect('content-type', 'application/octet-stream')
         .expect(Buffer.from([]))
+    })
+
+    it('should respond with text content', async () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        ctx.body = new Response('Hello World', {
+          status: 200,
+          headers: { 'Content-Type': 'text/plain' }
+        })
+      })
+
+      return request(app.callback())
+        .get('/')
+        .expect(200)
+        .expect('content-type', 'text/plain')
+        .expect('Hello World')
+    })
+
+    it('should respond with ReadableStream content', async () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        const encoder = new TextEncoder()
+        const stream = new ReadableStream({
+          start (controller) {
+            controller.enqueue(encoder.encode('Hello from Response with ReadableStream'))
+            controller.close()
+          }
+        })
+
+        ctx.body = new Response(stream, {
+          status: 200,
+          headers: { 'Content-Type': 'text/plain' }
+        })
+      })
+
+      return request(app.callback())
+        .get('/')
+        .expect(200)
+        .expect('content-type', 'text/plain')
+        .expect('Hello from Response with ReadableStream')
     })
   })
 
