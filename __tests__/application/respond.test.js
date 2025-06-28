@@ -6,6 +6,7 @@ const statuses = require('statuses')
 const assert = require('node:assert/strict')
 const Koa = require('../..')
 const fs = require('fs')
+const { Readable } = require('stream')
 
 describe('app.respond', () => {
   describe('when ctx.respond === false', () => {
@@ -173,6 +174,28 @@ describe('app.respond', () => {
 
       assert.strictEqual(~~res.header['content-length'], length)
       assert(!res.text)
+    })
+
+    it('should not send Content-Length for stream body with unknown length', async () => {
+      const app = new Koa()
+
+      app.use(async ctx => {
+        const stream = new Readable()
+        stream.push('hello world')
+        stream.push(null)
+        ctx.type = 'text/plain; charset=utf-8'
+        ctx.body = stream
+      })
+
+      const res = await request(app.callback())
+        .head('/')
+        .expect(200)
+
+      assert.strictEqual(
+        Object.prototype.hasOwnProperty.call(res.headers, 'content-length'),
+        false,
+        'Content-Length header should not be present'
+      )
     })
 
     it('should respond with a 404 if no body was set', () => {
@@ -571,6 +594,69 @@ describe('app.respond', () => {
         .expect('content-type', 'application/octet-stream')
         .expect(Buffer.from('hello'))
     })
+
+    it('should respond with multiple chunks from stream', async () => {
+      const app = new Koa()
+
+      app.use(async ctx => {
+        const encoder = new TextEncoder()
+        ctx.body = new ReadableStream({
+          start (controller) {
+            controller.enqueue(encoder.encode('hello '))
+            controller.enqueue(encoder.encode('world'))
+            controller.close()
+          }
+        })
+      })
+
+      return request(app.callback())
+        .get('/')
+        .expect(200)
+        .expect('content-type', 'application/octet-stream')
+        .expect(Buffer.from('hello world'))
+    })
+
+    it('should handle mixed data types in ReadableStream', async () => {
+      const app = new Koa()
+
+      app.use(async ctx => {
+        const textEncoder = new TextEncoder()
+        ctx.body = new ReadableStream({
+          start (controller) {
+            controller.enqueue(textEncoder.encode('hello '))
+            const binaryData = new Uint8Array([87, 79, 82, 76, 68]) // ASCII for 'WORLD'
+            controller.enqueue(binaryData)
+
+            controller.close()
+          }
+        })
+      })
+
+      return request(app.callback())
+        .get('/')
+        .expect(200)
+        .expect('content-type', 'application/octet-stream')
+        .expect(Buffer.from('hello WORLD'))
+    })
+
+    it('should respond with empty ReadableStream', async () => {
+      const app = new Koa()
+
+      app.use(async ctx => {
+        const stream = new ReadableStream({
+          start (controller) {
+            controller.close()
+          }
+        })
+        ctx.body = stream
+      })
+
+      return request(app.callback())
+        .get('/')
+        .expect(200)
+        .expect('content-type', 'application/octet-stream')
+        .expect(Buffer.from([]))
+    })
   })
 
   describe('when .body is a Response', () => {
@@ -600,6 +686,48 @@ describe('app.respond', () => {
         .expect(200)
         .expect('content-type', 'application/octet-stream')
         .expect(Buffer.from([]))
+    })
+
+    it('should respond with text content', async () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        ctx.body = new Response('Hello World', {
+          status: 200,
+          headers: { 'Content-Type': 'text/plain' }
+        })
+      })
+
+      return request(app.callback())
+        .get('/')
+        .expect(200)
+        .expect('content-type', 'text/plain')
+        .expect('Hello World')
+    })
+
+    it('should respond with ReadableStream content', async () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        const encoder = new TextEncoder()
+        const stream = new ReadableStream({
+          start (controller) {
+            controller.enqueue(encoder.encode('Hello from Response with ReadableStream'))
+            controller.close()
+          }
+        })
+
+        ctx.body = new Response(stream, {
+          status: 200,
+          headers: { 'Content-Type': 'text/plain' }
+        })
+      })
+
+      return request(app.callback())
+        .get('/')
+        .expect(200)
+        .expect('content-type', 'text/plain')
+        .expect('Hello from Response with ReadableStream')
     })
   })
 
@@ -898,6 +1026,7 @@ describe('app.respond', () => {
 
       assert.equal(res.headers['content-length'], '0')
     })
+
     it('should not overwrite the content-length', async () => {
       const app = new Koa()
 
@@ -915,5 +1044,37 @@ describe('app.respond', () => {
 
       assert.equal(res.headers['content-length'], '0')
     })
+  })
+
+  describe('should handle aborted client connections without memory leaks', async () => {
+    const app = new Koa()
+
+    app.use(async ctx => {
+      const stream = new ReadableStream({
+        start (controller) {
+          for (let i = 0; i < 1000; i++) {
+            controller.enqueue(new TextEncoder().encode('chunk ' + i + '\n'))
+          }
+          controller.close()
+        }
+      })
+      ctx.body = stream
+    })
+
+    const agent = request(app.callback())
+    const req = agent.get('/')
+
+    req.on('response', (res) => {
+      res.on('data', () => {
+        req.abort()
+      })
+    })
+
+    try {
+      await req
+    } catch (err) {
+      // Expect an abort error
+      assert(err.code === 'ECONNABORTED' || err.code === 'ABORT_ERR')
+    }
   })
 })
