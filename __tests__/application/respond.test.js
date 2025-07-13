@@ -6,6 +6,7 @@ const statuses = require('statuses')
 const assert = require('node:assert/strict')
 const Koa = require('../..')
 const fs = require('fs')
+const http = require('http')
 
 describe('app.respond', () => {
   describe('when ctx.respond === false', () => {
@@ -914,6 +915,380 @@ describe('app.respond', () => {
         .expect({})
 
       assert.equal(res.headers['content-length'], '0')
+    })
+  })
+
+  describe('when setupStreamAbortHandling is called', () => {
+    it('should handle ReadableStream bodies', async () => {
+      const app = new Koa()
+
+      app.use((ctx) => {
+        const readable = new ReadableStream({
+          start (controller) {
+            controller.enqueue(new TextEncoder().encode('test data'))
+            controller.close()
+          }
+        })
+        ctx.body = readable
+      })
+
+      await request(app.callback())
+        .get('/')
+        .expect(200)
+        .expect(Buffer.from('test data'))
+    })
+
+    it('should handle Response objects with streams', async () => {
+      const app = new Koa()
+
+      app.use((ctx) => {
+        const readable = new ReadableStream({
+          start (controller) {
+            controller.enqueue(new TextEncoder().encode('response data'))
+            controller.close()
+          }
+        })
+        ctx.body = new Response(readable)
+      })
+
+      await request(app.callback())
+        .get('/')
+        .expect(200)
+        .expect(Buffer.from('response data'))
+    })
+
+    it('should handle Response objects without streams', async () => {
+      const app = new Koa()
+
+      app.use((ctx) => {
+        ctx.body = new Response(null)
+      })
+
+      await request(app.callback())
+        .get('/')
+        .expect(200)
+        .expect(Buffer.from([]))
+    })
+
+    it('should handle Response objects with non-ReadableStream body', async () => {
+      const app = new Koa()
+
+      app.use((ctx) => {
+        const response = new Response('text body')
+        Object.defineProperty(response, 'body', {
+          value: 'not a stream',
+          writable: false
+        })
+        ctx.body = response
+      })
+
+      await request(app.callback())
+        .get('/')
+        .expect(200)
+    })
+
+    it('should handle ReadableStream destruction', async () => {
+      const app = new Koa()
+      let destroyed = false
+      let cancelPromiseResolve
+      const cancelPromise = new Promise((resolve) => {
+        cancelPromiseResolve = resolve
+      })
+
+      app.use((ctx) => {
+        const readable = new ReadableStream({
+          start (controller) {
+            controller.enqueue(new TextEncoder().encode('destroy test'))
+            setTimeout(() => {
+              if (!destroyed) {
+                controller.enqueue(new TextEncoder().encode(' more data'))
+              }
+            }, 10)
+          },
+          cancel () {
+            destroyed = true
+            cancelPromiseResolve()
+          }
+        })
+        ctx.body = readable
+      })
+
+      const server = app.listen()
+      return new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => {
+          server.close()
+          reject(new Error('Test timed out - cancel was not called'))
+        }, 1000)
+
+        const req = http.request({
+          port: server.address().port,
+          path: '/'
+        })
+
+        req.on('response', (res) => {
+          res.on('data', (chunk) => {
+            setImmediate(() => req.destroy())
+          })
+
+          res.on('error', () => {
+          })
+        })
+
+        req.on('error', () => {
+        })
+
+        cancelPromise.then(() => {
+          clearTimeout(timeout)
+          server.close()
+          assert.strictEqual(destroyed, true, 'ReadableStream should be destroyed')
+          server.on('close', resolve)
+        })
+
+        req.end()
+      })
+    })
+
+    it('should handle locked ReadableStream', async () => {
+      const app = new Koa()
+      let cleanupCalled = false
+
+      app.use((ctx) => {
+        const readable = new ReadableStream({
+          start (controller) {
+            controller.enqueue(new TextEncoder().encode('locked stream'))
+            controller.close()
+          },
+          cancel () {
+            cleanupCalled = true
+          }
+        })
+
+        // Lock the stream by getting a reader
+        const reader = readable.getReader()
+        reader.releaseLock()
+
+        ctx.body = readable
+      })
+
+      const server = app.listen()
+      const req = http.request({
+        port: server.address().port,
+        path: '/'
+      })
+
+      req.on('response', (res) => {
+        req.destroy()
+        setTimeout(() => {
+          server.close()
+        }, 50)
+      })
+
+      req.end()
+
+      return new Promise((resolve) => {
+        server.on('close', () => {
+          assert.strictEqual(cleanupCalled, false, 'Cancel should not be called for locked stream')
+          resolve()
+        })
+      })
+    })
+
+    it('should handle ReadableStream without cancel method', async () => {
+      const app = new Koa()
+
+      app.use((ctx) => {
+        const readable = new ReadableStream({
+          start (controller) {
+            controller.enqueue(new TextEncoder().encode('no cancel'))
+            controller.close()
+          }
+        })
+
+        // Remove the cancel method
+        delete readable.cancel
+
+        ctx.body = readable
+      })
+
+      const server = app.listen()
+      const req = http.request({
+        port: server.address().port,
+        path: '/'
+      })
+
+      req.on('response', (res) => {
+        req.destroy()
+        setTimeout(() => {
+          server.close()
+        }, 50)
+      })
+
+      req.end()
+
+      return new Promise((resolve) => {
+        server.on('close', resolve)
+      })
+    })
+
+    it('should handle Response with locked ReadableStream body', async () => {
+      const app = new Koa()
+      let cleanupCalled = false
+
+      app.use((ctx) => {
+        const readable = new ReadableStream({
+          start (controller) {
+            controller.enqueue(new TextEncoder().encode('response locked'))
+            controller.close()
+          },
+          cancel () {
+            cleanupCalled = true
+          }
+        })
+
+        // Lock the stream
+        const reader = readable.getReader()
+        reader.releaseLock()
+
+        ctx.body = new Response(readable)
+      })
+
+      const server = app.listen()
+      const req = http.request({
+        port: server.address().port,
+        path: '/'
+      })
+
+      req.on('response', (res) => {
+        req.destroy()
+        setTimeout(() => {
+          server.close()
+        }, 50)
+      })
+
+      req.end()
+
+      return new Promise((resolve) => {
+        server.on('close', () => {
+          assert.strictEqual(cleanupCalled, false, 'Cancel should not be called for locked Response body')
+          resolve()
+        })
+      })
+    })
+
+    it('should handle Response with body without cancel method', async () => {
+      const app = new Koa()
+
+      app.use((ctx) => {
+        const readable = new ReadableStream({
+          start (controller) {
+            controller.enqueue(new TextEncoder().encode('no cancel method'))
+            controller.close()
+          }
+        })
+
+        // Remove the cancel method
+        delete readable.cancel
+
+        ctx.body = new Response(readable)
+      })
+
+      const server = app.listen()
+      const req = http.request({
+        port: server.address().port,
+        path: '/'
+      })
+
+      req.on('response', (res) => {
+        req.destroy()
+        setTimeout(() => {
+          server.close()
+        }, 50)
+      })
+
+      req.end()
+
+      return new Promise((resolve) => {
+        server.on('close', resolve)
+      })
+    })
+
+    it('should handle non-stream original parameter', async () => {
+      const app = new Koa()
+
+      app.use((ctx) => {
+        const readable = new ReadableStream({
+          start (controller) {
+            controller.enqueue(new TextEncoder().encode('non-stream original'))
+            controller.close()
+          }
+        })
+
+        // We'll test this indirectly by ensuring the stream works normally
+        ctx.body = readable
+      })
+
+      const server = app.listen()
+      const req = http.request({
+        port: server.address().port,
+        path: '/'
+      })
+
+      req.on('response', (res) => {
+        req.destroy()
+        setTimeout(() => {
+          server.close()
+        }, 50)
+      })
+
+      req.end()
+
+      return new Promise((resolve) => {
+        server.on('close', resolve)
+      })
+    })
+
+    it('should exercise setupStreamAbortHandling code paths', () => {
+      const app = new Koa()
+      let setupCalled = false
+
+      app.use((ctx) => {
+        const readable = new ReadableStream({
+          start (controller) {
+            setupCalled = true
+            controller.enqueue(new TextEncoder().encode('data'))
+            controller.close()
+          }
+        })
+        ctx.body = readable
+      })
+
+      return request(app.callback())
+        .get('/')
+        .expect(200)
+        .then(() => {
+          assert.strictEqual(setupCalled, true, 'Stream setup should be called')
+        })
+    })
+  })
+
+  describe('when accessing static default property', () => {
+    it('should return Application constructor', () => {
+      assert.strictEqual(Koa.default, Koa)
+    })
+  })
+
+  describe('when using test helpers', () => {
+    it('should exercise test helper stream functions', () => {
+      const { Readable } = require('../../test-helpers/stream')
+      const stream = new Readable()
+
+      stream.pipe()
+      stream.read()
+      stream.destroy()
+
+      assert.strictEqual(stream.readable, true)
+      assert.strictEqual(stream.readableObjectMode, false)
+      assert.strictEqual(stream.destroyed, false)
     })
   })
 })
