@@ -601,6 +601,21 @@ describe('app.respond', () => {
         .expect('content-type', 'application/octet-stream')
         .expect(Buffer.from([]))
     })
+
+    it('should respond with body content', async () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        ctx.body = new Response('Hello World', { status: 200, headers: { 'Content-Type': 'text/plain' } })
+      })
+
+      const res = await request(app.callback())
+        .get('/')
+        .expect(200)
+        .expect('content-type', 'text/plain')
+
+      assert.strictEqual(res.text, 'Hello World')
+    })
   })
 
   describe('when .body is a Stream', () => {
@@ -914,6 +929,91 @@ describe('app.respond', () => {
         .expect({})
 
       assert.equal(res.headers['content-length'], '0')
+    })
+  })
+
+  describe('ctx.body preservation for empty status codes', () => {
+    it('should preserve ctx.body when status is 204 (No Content)', async () => {
+      const app = new Koa()
+      let capturedBody = null
+
+      app.use(async ctx => {
+        ctx.body = { message: 'test data', timestamp: Date.now() }
+        const originalBody = ctx.body
+        ctx.status = 204
+        capturedBody = ctx.body
+        assert.strictEqual(ctx.body, originalBody)
+      })
+
+      await request(app.callback())
+        .get('/')
+        .expect(204)
+
+      assert.notStrictEqual(capturedBody, null)
+      assert.strictEqual(typeof capturedBody, 'object')
+      assert.strictEqual(capturedBody.message, 'test data')
+    })
+
+    it('should remove content headers for empty status codes', async () => {
+      const app = new Koa()
+
+      app.use(async ctx => {
+        ctx.body = { data: 'test' }
+        ctx.type = 'application/json'
+        ctx.status = 204
+      })
+
+      const res = await request(app.callback())
+        .get('/')
+        .expect(204)
+
+      assert.strictEqual(res.headers['content-type'], undefined)
+      assert.strictEqual(res.headers['content-length'], undefined)
+      assert.strictEqual(res.headers['transfer-encoding'], undefined)
+    })
+
+    it('should preserve ctx.body for other empty status codes (304)', async () => {
+      const app = new Koa()
+      let capturedBody = null
+
+      app.use(async ctx => {
+        ctx.body = { cached: true, data: 'not modified' }
+        ctx.status = 304
+        capturedBody = ctx.body
+      })
+
+      await request(app.callback())
+        .get('/')
+        .expect(304)
+
+      assert.notStrictEqual(capturedBody, null)
+      assert.strictEqual(capturedBody.cached, true)
+    })
+
+    it('should preserve ctx.body when status is 205 (Reset Content)', async () => {
+      const app = new Koa()
+      let capturedBody = null
+
+      app.use(async ctx => {
+        ctx.body = { form: 'data', fields: ['name', 'email'] }
+        const originalBody = ctx.body
+        ctx.status = 205
+        capturedBody = ctx.body
+        assert.strictEqual(ctx.body, originalBody)
+      })
+
+      const res = await request(app.callback())
+        .get('/')
+        .expect(205)
+
+      assert.notStrictEqual(capturedBody, null)
+      assert.strictEqual(typeof capturedBody, 'object')
+      assert.strictEqual(capturedBody.form, 'data')
+      assert.deepStrictEqual(capturedBody.fields, ['name', 'email'])
+
+      assert.strictEqual(res.headers['content-type'], undefined)
+      assert.strictEqual(res.headers['content-length'], undefined)
+      assert.strictEqual(res.headers['transfer-encoding'], undefined)
     })
   })
 })
