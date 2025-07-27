@@ -14,6 +14,7 @@ describe('app.response', () => {
   const app5 = new Koa()
   const app6 = new Koa()
   const app7 = new Koa()
+  const app8 = new Koa()
 
   it('should merge properties', () => {
     app1.use((ctx, next) => {
@@ -95,6 +96,23 @@ describe('app.response', () => {
     return request(app7.callback())
       .get('/')
       .expect('Transfer-Encoding', 'chunked')
+      .expect(200)
+  })
+
+  it('should hold the first value when the Content-Type parameter is an Array', () => {
+    app8.use((ctx, next) => {
+      ctx.set('Content-Type', ['image/jpg', 'application/json'])
+      assert.strictEqual(ctx.response.type, 'application/json')
+      ctx.body = {}
+    })
+
+    return request(app8.callback())
+      .get('/')
+      .expect(ctx => {
+        const rawHeaders = ctx.res.rawHeaders
+        const collection = new Set(rawHeaders.filter((_, ind, arr) => (ind % 2 === 1) && arr[ind - 1] === 'Content-Type'))
+        return collection.has('image/jpg') && collection.has('application/json')
+      })
       .expect(200)
   })
 })
