@@ -12,6 +12,22 @@ describe('ctx.back([alt])', () => {
     assert.equal(ctx.response.header.location, '/login')
   })
 
+  it('should redirect to the same origin referrer', () => {
+    const ctx = context()
+    ctx.req.headers.host = 'example.com'
+    ctx.req.headers.referrer = 'https://example.com/login'
+    ctx.back()
+    assert.equal(ctx.response.header.location, 'https://example.com/login')
+  })
+
+  it('should redirect to root if the same origin referrer is not present', () => {
+    const ctx = context()
+    ctx.req.headers.host = 'example.com'
+    ctx.req.headers.referrer = 'https://other.com/login'
+    ctx.back()
+    assert.equal(ctx.response.header.location, '/')
+  })
+
   it('should redirect to Referer', () => {
     const ctx = context()
     ctx.req.headers.referer = '/login'
