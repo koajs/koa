@@ -678,12 +678,12 @@ describe('app.respond', () => {
         assert.deepStrictEqual(res.body, pkg)
       })
 
-    it('should handle errors when no content status', () => {
+    it('should not handle errors when no content status, but let user do it self', () => {
       const app = new Koa()
 
       app.use(ctx => {
         ctx.status = 204
-        ctx.body = fs.createReadStream('does not exist')
+        ctx.body = fs.createReadStream('does not exist').on('error', (err) => {})
       })
 
       return request(app.callback())
