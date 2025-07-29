@@ -71,6 +71,22 @@ describe('ctx.redirect(url)', () => {
       ctx.redirect('back');
       assert.strictEqual(ctx.response.header.location, '/');
     });
+
+    it('should redirect to the same origin referrer', () => {
+      const ctx = context();
+      ctx.req.headers.host = 'example.com';
+      ctx.req.headers.referrer = 'https://example.com/login';
+      ctx.redirect('back');
+      assert.strictEqual(ctx.response.header.location, 'https://example.com/login');
+    });
+
+    it('should redirect to root if the same origin referrer is not present', () => {
+      const ctx = context();
+      ctx.req.headers.host = 'example.com';
+      ctx.req.headers.referrer = 'https://other.com/login';
+      ctx.redirect('back');
+      assert.strictEqual(ctx.response.header.location, '/');
+    });
   });
 
   describe('when html is accepted', () => {
