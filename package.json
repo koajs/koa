@@ -1,6 +1,10 @@
 {
   "name": "koa",
   "version": "2.16.1",
+  "publishConfig": {
+    "access": "public",
+    "tag": "latest-2"
+  },
   "description": "Koa web app framework",
   "main": "lib/application.js",
   "exports": {
