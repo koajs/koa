@@ -17,14 +17,14 @@ describe('ctx.redirect(url)', () => {
   it('should formatting url before redirect', () => {
     const ctx = context()
     ctx.redirect('http://google.com\\@apple.com')
-    assert.strictEqual(ctx.response.header.location, 'http://google.com/@apple.com')
+    assert.strictEqual(ctx.response.header.location, 'http://google.com%5C@apple.com/')
     assert.strictEqual(ctx.status, 302)
   })
 
   it('should formatting url before redirect', () => {
     const ctx = context()
     ctx.redirect('HTTP://google.com\\@apple.com')
-    assert.strictEqual(ctx.response.header.location, 'http://google.com/@apple.com')
+    assert.strictEqual(ctx.response.header.location, 'http://google.com%5C@apple.com/')
     assert.strictEqual(ctx.status, 302)
   })
 
@@ -111,6 +111,12 @@ describe('ctx.redirect(url)', () => {
   })
 
   describe('security: URL validation bypass', () => {
+    it('should properly handle http\\://evil.com - GHSA-c5vw-j4hf-j526', () => {
+      const ctx = context()
+      ctx.redirect('http\\://evil.com')
+      assert.strictEqual(ctx.response.header.location, 'http%5C://evil.com')
+    })
+
     it('should properly encode URLs with backslash before colon', () => {
       const ctx = context()
       ctx.redirect('http\\://evil.com')
