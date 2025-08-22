@@ -109,6 +109,56 @@ describe('ctx.redirect(url)', () => {
       assert.strictEqual(ctx.type, 'text/plain')
     })
   })
+
+  describe('security: URL validation bypass', () => {
+    it('should properly encode URLs with backslash before colon', () => {
+      const ctx = context()
+      ctx.redirect('http\\://evil.com')
+      assert.strictEqual(ctx.response.header.location, 'http%5C://evil.com')
+    })
+
+    it('should properly encode URLs with missing slashes after colon', () => {
+      const ctx = context()
+      ctx.redirect('http:evil.com')
+      assert.strictEqual(ctx.response.header.location, 'http:evil.com')
+    })
+
+    it('should properly encode URLs with single slash after colon', () => {
+      const ctx = context()
+      ctx.redirect('http:/evil.com')
+      assert.strictEqual(ctx.response.header.location, 'http:/evil.com')
+    })
+
+    it('should properly encode javascript: URLs', () => {
+      const ctx = context()
+      ctx.redirect('javascript:alert(1)')
+      assert.strictEqual(ctx.response.header.location, 'javascript:alert(1)')
+    })
+
+    it('should properly encode data: URLs', () => {
+      const ctx = context()
+      ctx.redirect('data:text/html,<script>alert(1)</script>')
+      assert.strictEqual(ctx.response.header.location, 'data:text/html,%3Cscript%3Ealert(1)%3C/script%3E')
+    })
+
+    it('should properly encode URLs with tab characters', () => {
+      const ctx = context()
+      ctx.redirect('http:\t//evil.com')
+      assert.strictEqual(ctx.response.header.location, 'http:%09//evil.com')
+    })
+
+    it('should properly encode URLs with newline characters', () => {
+      const ctx = context()
+      ctx.redirect('http:\n//evil.com')
+      assert.strictEqual(ctx.response.header.location, 'http:%0A//evil.com')
+    })
+
+    it('should properly encode URLs with carriage return characters', () => {
+      const ctx = context()
+      ctx.redirect('http:\r//evil.com')
+      assert.strictEqual(ctx.response.header.location, 'http:%0D//evil.com')
+    })
+  })
 })
 
 function escape (html) {
