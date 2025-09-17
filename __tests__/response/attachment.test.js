@@ -7,6 +7,28 @@ const request = require('supertest')
 const Koa = require('../..')
 
 describe('ctx.attachment([filename])', () => {
+  describe('security: prevent Content-Type override (GHSA-c5vw-j4hf-j526)', () => {
+    it('should NOT override Content-Type when already set', () => {
+      const ctx = context()
+      ctx.response.set('Content-Type', 'application/octet-stream')
+      ctx.attachment('malicious.html')
+      assert.strictEqual(ctx.response.get('Content-Type'), 'application/octet-stream')
+      assert.strictEqual(ctx.response.header['content-disposition'], 'attachment; filename="malicious.html"')
+    })
+
+    it('should preserve safe Content-Type for SVG files', () => {
+      const ctx = context()
+      ctx.response.set('Content-Type', 'application/octet-stream')
+      ctx.attachment('image.svg')
+      assert.strictEqual(ctx.response.get('Content-Type'), 'application/octet-stream')
+    })
+
+    it('should set Content-Type when not previously set', () => {
+      const ctx = context()
+      ctx.attachment('document.pdf')
+      assert.strictEqual(ctx.response.get('Content-Type'), 'application/pdf')
+    })
+  })
   describe('when given a filename', () => {
     it('should set the filename param', () => {
       const ctx = context()
