@@ -1,0 +1,43 @@
+name: NPM Publish
+
+# Trigger only when tags matching semver format are pushed
+# Patterns match common semver formats:
+#   - v1.0.0 (standard)
+#   - v1.0.0-alpha (pre-release)
+#   - v1.0.0-beta.1 (pre-release with number)
+#
+# Note: GitHub Actions uses glob patterns (not full regex), which limits
+# complex semver matching. These patterns cover most npm publishing scenarios.
+# For complex dotted pre-releases (v1.0.0-alpha.beta.1), use simpler formats
+# like v1.0.0-alphabeta1 or create the workflow manually.
+"on":
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+-[a-zA-Z0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+-[a-zA-Z0-9]+.[0-9]+'
+
+# Permissions for NPM trusted publishing with provenance
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 #v6
+        with:
+          node-version: 22
+
+      - name: Install npm@latest
+        run: npm install -g npm@latest
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Publish to NPM
+        run: npm publish
