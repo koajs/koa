@@ -1,7 +1,15 @@
 name: NPM Publish
 
 # Trigger only when tags matching semver format are pushed
-# Patterns match: v1.0.0, v1.0.0-alpha, v1.0.0-beta.1, etc.
+# Patterns match common semver formats:
+#   - v1.0.0 (standard)
+#   - v1.0.0-alpha (pre-release)
+#   - v1.0.0-beta.1 (pre-release with number)
+#
+# Note: GitHub Actions uses glob patterns (not full regex), which limits
+# complex semver matching. These patterns cover most npm publishing scenarios.
+# For complex dotted pre-releases (v1.0.0-alpha.beta.1), use simpler formats
+# like v1.0.0-alphabeta1 or create the workflow manually.
 "on":
   push:
     tags:
