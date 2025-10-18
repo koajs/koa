@@ -62,5 +62,4 @@ describe('ctx.back([alt])', () => {
     ctx.back('/home')
     assert.equal(ctx.response.header.location, '/home')
   })
-
 })
