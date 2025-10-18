@@ -28,7 +28,7 @@ describe('ctx.back([alt])', () => {
     assert.equal(ctx.response.header.location, '/')
   })
 
-  it('should redirect to Referer a relative path', () => {
+  it('should redirect to Referer to a relative path', () => {
     const ctx = context({ url: '/', headers: { host: 'example.com' } })
     ctx.req.headers.referer = '/login'
     ctx.back()
