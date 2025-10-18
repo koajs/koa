@@ -1,6 +1,6 @@
 {
   "name": "koa",
-  "version": "2.16.2",
+  "version": "2.16.3",
   "publishConfig": {
     "access": "public",
     "tag": "latest-2"
