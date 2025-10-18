@@ -6,7 +6,7 @@ const context = require('../../test-helpers/context')
 
 describe('ctx.back([alt])', () => {
   it('should redirect to Referrer', () => {
-    const ctx = context()
+    const ctx = context({ url: '/', headers: { host: 'example.com' } })
     ctx.req.headers.referrer = '/login'
     ctx.back()
     assert.equal(ctx.response.header.location, '/login')
@@ -28,11 +28,17 @@ describe('ctx.back([alt])', () => {
     assert.equal(ctx.response.header.location, '/')
   })
 
-  it('should redirect to Referer', () => {
-    const ctx = context()
+  it('should redirect to Referer a relative path', () => {
+    const ctx = context({ url: '/', headers: { host: 'example.com' } })
     ctx.req.headers.referer = '/login'
     ctx.back()
     assert.equal(ctx.response.header.location, '/login')
+  })
+
+  it('should redirect to Referer a same origin url', () => {
+    const ctx = context({ url: '/', headers: { host: 'example.com', referer: 'https://example.com/login' } })
+    ctx.back()
+    assert.equal(ctx.response.header.location, 'https://example.com/login')
   })
 
   it('should default to alt', () => {
@@ -46,4 +52,15 @@ describe('ctx.back([alt])', () => {
     ctx.back()
     assert.equal(ctx.response.header.location, '/')
   })
+
+  it('should fix Trailing Double-Slash security issue', () => {
+    const ctx = context({ url: '/', headers: { host: 'example.com' } })
+    ctx.req.headers.referrer = '//evil.com/login/'
+    ctx.back()
+    assert.equal(ctx.response.header.location, '/')
+
+    ctx.back('/home')
+    assert.equal(ctx.response.header.location, '/home')
+  })
+
 })
