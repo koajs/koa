@@ -47,45 +47,46 @@ describe('ctx.redirect(url)', () => {
 
   describe('with "back"', () => {
     it('should redirect to Referrer', () => {
-      const ctx = context();
+      const ctx = context({ url: '/', headers: { host: 'example.com' } });
       ctx.req.headers.referrer = '/login';
       ctx.redirect('back');
       assert.strictEqual(ctx.response.header.location, '/login');
     });
 
-    it('should redirect to Referer', () => {
-      const ctx = context();
-      ctx.req.headers.referer = '/login';
-      ctx.redirect('back');
-      assert.strictEqual(ctx.response.header.location, '/login');
-    });
-
     it('should default to alt', () => {
-      const ctx = context();
+      const ctx = context({ url: '/', headers: { host: 'example.com' } });
       ctx.redirect('back', '/index.html');
       assert.strictEqual(ctx.response.header.location, '/index.html');
     });
 
     it('should default redirect to /', () => {
-      const ctx = context();
+      const ctx = context({ url: '/', headers: { host: 'example.com' } });
       ctx.redirect('back');
       assert.strictEqual(ctx.response.header.location, '/');
     });
 
     it('should redirect to the same origin referrer', () => {
-      const ctx = context();
-      ctx.req.headers.host = 'example.com';
+      const ctx = context({ url: '/', headers: { host: 'example.com' } });
       ctx.req.headers.referrer = 'https://example.com/login';
       ctx.redirect('back');
       assert.strictEqual(ctx.response.header.location, 'https://example.com/login');
     });
 
     it('should redirect to root if the same origin referrer is not present', () => {
-      const ctx = context();
-      ctx.req.headers.host = 'example.com';
+      const ctx = context({ url: '/', headers: { host: 'example.com' } });
       ctx.req.headers.referrer = 'https://other.com/login';
       ctx.redirect('back');
       assert.strictEqual(ctx.response.header.location, '/');
+    });
+
+    it('should fix Trailing Double-Slash security issue', () => {
+      const ctx = context({ url: '/', headers: { host: 'example.com' } });
+      ctx.req.headers.referrer = '//evil.com/login/';
+      ctx.redirect('back');
+      assert.equal(ctx.response.header.location, '/');
+
+      ctx.redirect('back', '/home');
+      assert.equal(ctx.response.header.location, '/home');
     });
   });
 
