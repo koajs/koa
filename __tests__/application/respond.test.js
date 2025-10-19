@@ -571,6 +571,48 @@ describe('app.respond', () => {
         .expect('content-type', 'application/octet-stream')
         .expect(Buffer.from('hello'))
     })
+
+    it('should handle ReadableStream with chunks', async () => {
+      const app = new Koa()
+
+      app.use(async ctx => {
+        const stream = new ReadableStream({
+          start (controller) {
+            controller.enqueue(new TextEncoder().encode('Hello '))
+            controller.enqueue(new TextEncoder().encode('World'))
+            controller.close()
+          }
+        })
+        ctx.body = stream
+      })
+
+      return request(app.callback())
+        .get('/')
+        .expect(200)
+        .expect('content-type', 'application/octet-stream')
+        .expect(Buffer.from('Hello World'))
+    })
+
+    it('should handle ReadableStream with custom headers', async () => {
+      const app = new Koa()
+
+      app.use(async ctx => {
+        ctx.type = 'text/plain'
+        ctx.body = new ReadableStream({
+          start (controller) {
+            controller.enqueue(new TextEncoder().encode('test content'))
+            controller.close()
+          }
+        })
+      })
+
+      const res = await request(app.callback())
+        .get('/')
+        .expect(200)
+        .expect('content-type', 'text/plain; charset=utf-8')
+
+      assert.strictEqual(res.text, 'test content')
+    })
   })
 
   describe('when .body is a Response', () => {
@@ -600,6 +642,98 @@ describe('app.respond', () => {
         .expect(200)
         .expect('content-type', 'application/octet-stream')
         .expect(Buffer.from([]))
+    })
+
+    it('should respond with body content', async () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        ctx.body = new Response('Hello World', { status: 200, headers: { 'Content-Type': 'text/plain' } })
+      })
+
+      const res = await request(app.callback())
+        .get('/')
+        .expect(200)
+        .expect('content-type', 'text/plain')
+
+      assert.strictEqual(res.text, 'Hello World')
+    })
+
+    it('should handle Response from fetch() with JSON', async () => {
+      const app = new Koa()
+
+      app.use(async ctx => {
+        const jsonData = JSON.stringify({ message: 'Hello from fetch', timestamp: Date.now() })
+        const response = new Response(jsonData, {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Custom-Header': 'custom-value'
+          }
+        })
+        ctx.body = response
+      })
+
+      const res = await request(app.callback())
+        .get('/')
+        .expect(200)
+        .expect('content-type', 'application/json')
+
+      const body = JSON.parse(res.text)
+      assert.strictEqual(body.message, 'Hello from fetch')
+      assert(body.timestamp)
+    })
+
+    it('should handle Response from fetch() with streaming body', async () => {
+      const app = new Koa()
+
+      app.use(async ctx => {
+        const stream = new ReadableStream({
+          start (controller) {
+            controller.enqueue(new TextEncoder().encode('Streaming '))
+            controller.enqueue(new TextEncoder().encode('response '))
+            controller.enqueue(new TextEncoder().encode('from fetch'))
+            controller.close()
+          }
+        })
+
+        const response = new Response(stream, {
+          status: 200,
+          headers: {
+            'Content-Type': 'text/plain'
+          }
+        })
+        ctx.body = response
+      })
+
+      const res = await request(app.callback())
+        .get('/')
+        .expect(200)
+        .expect('content-type', 'text/plain')
+
+      assert.strictEqual(res.text, 'Streaming response from fetch')
+    })
+
+    it('should handle Response from fetch() with Blob body', async () => {
+      const app = new Koa()
+
+      app.use(async ctx => {
+        const blob = new Blob(['Hello from Blob'], { type: 'text/plain' })
+        const response = new Response(blob, {
+          status: 200,
+          headers: {
+            'Content-Type': 'text/plain'
+          }
+        })
+        ctx.body = response
+      })
+
+      const res = await request(app.callback())
+        .get('/')
+        .expect(200)
+        .expect('content-type', 'text/plain')
+
+      assert.strictEqual(res.text, 'Hello from Blob')
     })
   })
 
@@ -689,6 +823,125 @@ describe('app.respond', () => {
       return request(app.callback())
         .get('/')
         .expect(204)
+    })
+  })
+
+  describe('when using pipeline for streams', () => {
+    it('should handle stream errors when error listener exists', async () => {
+      const app = new Koa()
+      const PassThrough = require('stream').PassThrough
+
+      let errorCaught = false
+      app.once('error', err => {
+        assert(err.message === 'stream error')
+        errorCaught = true
+      })
+
+      app.use(ctx => {
+        const stream = new PassThrough()
+        ctx.body = stream
+
+        setImmediate(() => {
+          stream.emit('error', new Error('stream error'))
+        })
+      })
+
+      await request(app.callback())
+        .get('/')
+        .catch(() => {})
+
+      await new Promise(resolve => setTimeout(resolve, 50))
+      assert(errorCaught, 'Error should have been caught')
+    })
+
+    it('should not crash when stream errors and no error listener exists', async () => {
+      const app = new Koa()
+      const PassThrough = require('stream').PassThrough
+
+      app.use(ctx => {
+        const stream = new PassThrough()
+        ctx.body = stream
+
+        setImmediate(() => {
+          stream.emit('error', new Error('stream error'))
+        })
+      })
+
+      await request(app.callback())
+        .get('/')
+        .catch(() => {})
+
+      await new Promise(resolve => setTimeout(resolve, 50))
+    })
+
+    it('should handle ReadableStream errors when error listener exists', async () => {
+      const app = new Koa()
+
+      let errorCaught = false
+      app.once('error', err => {
+        assert(err.message === 'readable stream error')
+        errorCaught = true
+      })
+
+      app.use(ctx => {
+        const readable = new ReadableStream({
+          start (controller) {
+            controller.enqueue(new TextEncoder().encode('data'))
+            controller.error(new Error('readable stream error'))
+          }
+        })
+        ctx.body = readable
+      })
+
+      await request(app.callback())
+        .get('/')
+        .catch(() => {})
+
+      await new Promise(resolve => setTimeout(resolve, 50))
+      assert(errorCaught, 'Error should have been caught')
+    })
+
+    it('should cleanup streams on client abort', async () => {
+      const app = new Koa()
+      const PassThrough = require('stream').PassThrough
+      const http = require('http')
+
+      let streamDestroyed = false
+
+      app.use(ctx => {
+        const stream = new PassThrough()
+        stream.on('close', () => {
+          streamDestroyed = true
+        })
+        ctx.body = stream
+
+        setImmediate(() => {
+          stream.write('some data')
+        })
+      })
+
+      const server = app.listen()
+
+      await new Promise((resolve) => {
+        const req = http.request({
+          port: server.address().port,
+          path: '/'
+        })
+
+        req.on('response', (res) => {
+          res.on('data', () => {
+            req.destroy()
+            setTimeout(() => {
+              server.close()
+              resolve()
+            }, 50)
+          })
+        })
+
+        req.end()
+      })
+
+      assert(streamDestroyed, 'Stream should be destroyed on client abort')
     })
   })
 
@@ -914,6 +1167,91 @@ describe('app.respond', () => {
         .expect({})
 
       assert.equal(res.headers['content-length'], '0')
+    })
+  })
+
+  describe('ctx.body preservation for empty status codes', () => {
+    it('should preserve ctx.body when status is 204 (No Content)', async () => {
+      const app = new Koa()
+      let capturedBody = null
+
+      app.use(async ctx => {
+        ctx.body = { message: 'test data', timestamp: Date.now() }
+        const originalBody = ctx.body
+        ctx.status = 204
+        capturedBody = ctx.body
+        assert.strictEqual(ctx.body, originalBody)
+      })
+
+      await request(app.callback())
+        .get('/')
+        .expect(204)
+
+      assert.notStrictEqual(capturedBody, null)
+      assert.strictEqual(typeof capturedBody, 'object')
+      assert.strictEqual(capturedBody.message, 'test data')
+    })
+
+    it('should remove content headers for empty status codes', async () => {
+      const app = new Koa()
+
+      app.use(async ctx => {
+        ctx.body = { data: 'test' }
+        ctx.type = 'application/json'
+        ctx.status = 204
+      })
+
+      const res = await request(app.callback())
+        .get('/')
+        .expect(204)
+
+      assert.strictEqual(res.headers['content-type'], undefined)
+      assert.strictEqual(res.headers['content-length'], undefined)
+      assert.strictEqual(res.headers['transfer-encoding'], undefined)
+    })
+
+    it('should preserve ctx.body for other empty status codes (304)', async () => {
+      const app = new Koa()
+      let capturedBody = null
+
+      app.use(async ctx => {
+        ctx.body = { cached: true, data: 'not modified' }
+        ctx.status = 304
+        capturedBody = ctx.body
+      })
+
+      await request(app.callback())
+        .get('/')
+        .expect(304)
+
+      assert.notStrictEqual(capturedBody, null)
+      assert.strictEqual(capturedBody.cached, true)
+    })
+
+    it('should preserve ctx.body when status is 205 (Reset Content)', async () => {
+      const app = new Koa()
+      let capturedBody = null
+
+      app.use(async ctx => {
+        ctx.body = { form: 'data', fields: ['name', 'email'] }
+        const originalBody = ctx.body
+        ctx.status = 205
+        capturedBody = ctx.body
+        assert.strictEqual(ctx.body, originalBody)
+      })
+
+      const res = await request(app.callback())
+        .get('/')
+        .expect(205)
+
+      assert.notStrictEqual(capturedBody, null)
+      assert.strictEqual(typeof capturedBody, 'object')
+      assert.strictEqual(capturedBody.form, 'data')
+      assert.deepStrictEqual(capturedBody.fields, ['name', 'email'])
+
+      assert.strictEqual(res.headers['content-type'], undefined)
+      assert.strictEqual(res.headers['content-length'], undefined)
+      assert.strictEqual(res.headers['transfer-encoding'], undefined)
     })
   })
 })
