@@ -126,6 +126,111 @@ describe('res.body=', () => {
       res.body = body
       assert.strictEqual(body.listenerCount('error'), 0)
     })
+
+    it('should cleanup original stream when replaced by new stream', () => {
+      const res = response()
+      const stream1 = new Stream.PassThrough()
+      const stream2 = new Stream.PassThrough()
+
+      res.body = stream1
+      res.body = stream2
+
+      assert.strictEqual(stream1.destroyed, true)
+    })
+
+    it('should cleanup original stream when replaced by null', () => {
+      const res = response()
+      const stream = new Stream.PassThrough()
+
+      res.body = stream
+      res.body = null
+
+      assert.strictEqual(stream.destroyed, true)
+    })
+
+    it('should not throw unhandled errors when replacing failing stream', async () => {
+      const res = response()
+
+      const stream1 = new Stream.Readable({
+        read () {
+        }
+      })
+
+      const stream2 = new Stream.PassThrough()
+
+      res.body = stream1
+      res.body = stream2
+
+      await new Promise((resolve) => {
+        process.nextTick(() => {
+          stream1.emit('error', new Error('stream1 error'))
+          setTimeout(resolve, 10)
+        })
+      })
+    })
+
+    it('should handle multiple sequential stream replacements', () => {
+      const res = response()
+      const stream1 = new Stream.PassThrough()
+      const stream2 = new Stream.PassThrough()
+      const stream3 = new Stream.PassThrough()
+
+      res.body = stream1
+      res.body = stream2
+      res.body = stream3
+
+      assert.strictEqual(stream1.destroyed, true)
+      assert.strictEqual(stream2.destroyed, true)
+      assert.strictEqual(stream3.destroyed, false)
+    })
+
+    it('should handle four sequential stream replacements', () => {
+      const res = response()
+      const stream1 = new Stream.PassThrough()
+      const stream2 = new Stream.PassThrough()
+      const stream3 = new Stream.PassThrough()
+      const stream4 = new Stream.PassThrough()
+
+      res.body = stream1
+      res.body = stream2
+      res.body = stream3
+      res.body = stream4
+
+      assert.strictEqual(stream1.destroyed, true)
+      assert.strictEqual(stream2.destroyed, true)
+      assert.strictEqual(stream3.destroyed, true)
+      assert.strictEqual(stream4.destroyed, false)
+    })
+
+    it('should cleanup stream when replaced by string', () => {
+      const res = response()
+      const stream = new Stream.PassThrough()
+
+      res.body = stream
+      res.body = 'hello'
+
+      assert.strictEqual(stream.destroyed, true)
+    })
+
+    it('should cleanup stream when replaced by buffer', () => {
+      const res = response()
+      const stream = new Stream.PassThrough()
+
+      res.body = stream
+      res.body = Buffer.from('hello')
+
+      assert.strictEqual(stream.destroyed, true)
+    })
+
+    it('should cleanup stream when replaced by object', () => {
+      const res = response()
+      const stream = new Stream.PassThrough()
+
+      res.body = stream
+      res.body = { foo: 'bar' }
+
+      assert.strictEqual(stream.destroyed, true)
+    })
   })
 
   describe('when a buffer is given', () => {
