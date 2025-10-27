@@ -127,7 +127,7 @@ describe('res.body=', () => {
       assert.strictEqual(body.listenerCount('error'), 0)
     })
 
-    it('should cleanup original stream when replaced by new stream', () => {
+    it('should NOT cleanup original stream when replaced by new stream (to support wrapping middleware)', () => {
       const res = response()
       const stream1 = new Stream.PassThrough()
       const stream2 = new Stream.PassThrough()
@@ -135,7 +135,8 @@ describe('res.body=', () => {
       res.body = stream1
       res.body = stream2
 
-      assert.strictEqual(stream1.destroyed, true)
+      assert.strictEqual(stream1.destroyed, false)
+      assert.strictEqual(stream2.destroyed, false)
     })
 
     it('should cleanup original stream when replaced by null', () => {
@@ -179,8 +180,8 @@ describe('res.body=', () => {
       res.body = stream2
       res.body = stream3
 
-      assert.strictEqual(stream1.destroyed, true)
-      assert.strictEqual(stream2.destroyed, true)
+      assert.strictEqual(stream1.destroyed, false)
+      assert.strictEqual(stream2.destroyed, false)
       assert.strictEqual(stream3.destroyed, false)
     })
 
@@ -196,9 +197,9 @@ describe('res.body=', () => {
       res.body = stream3
       res.body = stream4
 
-      assert.strictEqual(stream1.destroyed, true)
-      assert.strictEqual(stream2.destroyed, true)
-      assert.strictEqual(stream3.destroyed, true)
+      assert.strictEqual(stream1.destroyed, false)
+      assert.strictEqual(stream2.destroyed, false)
+      assert.strictEqual(stream3.destroyed, false)
       assert.strictEqual(stream4.destroyed, false)
     })
 
@@ -230,6 +231,32 @@ describe('res.body=', () => {
       res.body = { foo: 'bar' }
 
       assert.strictEqual(stream.destroyed, true)
+    })
+
+    it('should support wrapping stream middleware (like koa-compress)', async () => {
+      const res = response()
+      const sourceStream = new Stream.Readable({
+        read () {
+          this.push('hello world')
+          this.push(null)
+        }
+      })
+
+      res.body = sourceStream
+
+      const wrappedStream = new Stream.PassThrough()
+      sourceStream.pipe(wrappedStream)
+      res.body = wrappedStream
+
+      assert.strictEqual(sourceStream.destroyed, false)
+      assert.strictEqual(wrappedStream.destroyed, false)
+
+      const chunks = []
+      for await (const chunk of wrappedStream) {
+        chunks.push(chunk)
+      }
+      const result = Buffer.concat(chunks).toString()
+      assert.strictEqual(result, 'hello world')
     })
   })
 
