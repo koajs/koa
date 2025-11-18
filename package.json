@@ -37,7 +37,7 @@
   "license": "MIT",
   "dependencies": {
     "accepts": "^1.3.8",
-    "content-disposition": "~0.5.4",
+    "content-disposition": "~1.0.1",
     "content-type": "^1.0.5",
     "cookies": "~0.9.1",
     "delegates": "^1.0.0",
