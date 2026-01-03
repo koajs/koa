@@ -16,7 +16,7 @@
   - [Async operations](#async-operations)
   - [Debugging Koa](#debugging-koa)
   - [HTTP2](#http2)
-  - [Server-Side Events](#server-side-events)
+  - [Server-Sent Events](#server-sent-events)
 
 ## Writing Middleware
 
@@ -272,9 +272,9 @@ const server = http2.createSecureServer(serverOptions, onRequestHandler);
 server.listen(3000);
 ```
 
-## Server-Side Events
+## Server-Sent Events
 
-An example of using server-side events with Koa:
+An example of using server-sent events with Koa:
 
 ```js
 import { PassThrough } from 'node:stream'
