@@ -14,6 +14,7 @@ describe('app.response', () => {
   const app5 = new Koa()
   const app6 = new Koa()
   const app7 = new Koa()
+  const app8 = new Koa()
 
   it('should merge properties', () => {
     app1.use((ctx, next) => {
@@ -95,6 +96,19 @@ describe('app.response', () => {
     return request(app7.callback())
       .get('/')
       .expect('Transfer-Encoding', 'chunked')
+      .expect(200)
+  })
+
+  it('should not assign multiple content-type for response header', () => {
+    app8.use((ctx, next) => {
+      assert.throws(() => {
+        ctx.set('Content-Type', ['image/jpg', 'application/json'])
+      }, Error)
+      ctx.body = {}
+    })
+
+    return request(app8.callback())
+      .get('/')
       .expect(200)
   })
 })
