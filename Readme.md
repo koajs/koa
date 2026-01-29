@@ -189,14 +189,6 @@ See [AUTHORS](AUTHORS).
  - [中文文档 v2.x](https://github.com/demopark/koa-docs-Zh-CN)
  - __[#koajs]__ on freenode
 
-## Job Board
-
-Looking for a career upgrade?
-
-<a href="https://astro.netlify.com/automattic"><img src="https://astro.netlify.com/static/automattic.png"></a>
-<a href="https://astro.netlify.com/segment"><img src="https://astro.netlify.com/static/segment.png"></a>
-<a href="https://astro.netlify.com/auth0"><img src="https://astro.netlify.com/static/auth0.png"/></a>
-
 ## Backers
 
 Support us with a monthly donation and help us continue our activities.
