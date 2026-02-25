@@ -56,7 +56,7 @@
     "vary": "^1.1.2"
   },
   "devDependencies": {
-    "c8": "^10.1.3",
+    "c8": "^11.0.0",
     "gen-esm-wrapper": "^1.1.3",
     "snazzy": "^9.0.0",
     "standard": "^17.1.2",
