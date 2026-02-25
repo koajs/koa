@@ -1,6 +1,8 @@
 name: NPM Publish
 
-# Trigger only when tags matching semver format are pushed
+# Trigger when tags matching semver format are pushed, or manually via workflow_dispatch.
+# Manual triggers allow selecting a specific tag to publish (e.g. tags from the v2.x branch).
+#
 # Patterns match common semver formats:
 #   - v1.0.0 (standard)
 #   - v1.0.0-alpha (pre-release)
@@ -16,6 +18,12 @@ name: NPM Publish
       - 'v[0-9]+.[0-9]+.[0-9]+'
       - 'v[0-9]+.[0-9]+.[0-9]+-[a-zA-Z0-9]+'
       - 'v[0-9]+.[0-9]+.[0-9]+-[a-zA-Z0-9]+.[0-9]+'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Git tag to checkout and publish (e.g. v2.15.4)'
+        required: true
+        type: string
 
 # Permissions for NPM trusted publishing with provenance
 permissions:
@@ -27,6 +35,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+        with:
+          ref: ${{ inputs.tag || github.ref }}
       
       - name: Setup Node.js
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 #v6
