@@ -94,4 +94,48 @@ describe('req.host', () => {
       });
     });
   });
+
+  describe('with Host header containing @', () => {
+    it('should correctly parse host from userinfo@host format', () => {
+      const req = request();
+      req.header.host = 'evil.com:fake@legitimate.com';
+      assert.strictEqual(req.host, 'legitimate.com');
+    });
+
+    it('should correctly parse host from user@host format', () => {
+      const req = request();
+      req.header.host = 'user@example.com';
+      assert.strictEqual(req.host, 'example.com');
+    });
+
+    it('should correctly parse host with port from userinfo@host:port format', () => {
+      const req = request();
+      req.header.host = 'user:pass@example.com:8080';
+      assert.strictEqual(req.host, 'example.com:8080');
+    });
+
+    it('should correctly parse @ in X-Forwarded-Host when proxy is trusted', () => {
+      const req = request();
+      req.app.proxy = true;
+      req.header['x-forwarded-host'] = 'evil.com:fake@legitimate.com';
+      req.header.host = 'foo.com';
+      assert.strictEqual(req.host, 'legitimate.com');
+    });
+
+    it('should correctly parse @ in :authority on HTTP/2', () => {
+      const req = request({
+        httpVersionMajor: 2,
+        httpVersion: '2.0'
+      });
+      req.header[':authority'] = 'evil.com:fake@legitimate.com';
+      req.header.host = 'foo.com';
+      assert.strictEqual(req.host, 'legitimate.com');
+    });
+
+    it('should return empty string for invalid host with @', () => {
+      const req = request();
+      req.header.host = 'user@';
+      assert.strictEqual(req.host, '');
+    });
+  });
 });

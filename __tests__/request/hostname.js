@@ -70,4 +70,32 @@ describe('req.hostname', () => {
       });
     });
   });
+
+  describe('with Host header containing @', () => {
+    it('should correctly parse hostname from userinfo@host format', () => {
+      const req = request();
+      req.header.host = 'evil.com:fake@legitimate.com';
+      assert.strictEqual(req.hostname, 'legitimate.com');
+    });
+
+    it('should correctly parse hostname from user@host format', () => {
+      const req = request();
+      req.header.host = 'user@example.com';
+      assert.strictEqual(req.hostname, 'example.com');
+    });
+
+    it('should correctly parse hostname with port from userinfo@host:port format', () => {
+      const req = request();
+      req.header.host = 'user:pass@example.com:8080';
+      assert.strictEqual(req.hostname, 'example.com');
+    });
+
+    it('should correctly parse @ in X-Forwarded-Host when proxy is trusted', () => {
+      const req = request();
+      req.app.proxy = true;
+      req.header['x-forwarded-host'] = 'evil.com:fake@legitimate.com';
+      req.header.host = 'foo.com';
+      assert.strictEqual(req.hostname, 'legitimate.com');
+    });
+  });
 });
