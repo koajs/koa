@@ -304,6 +304,51 @@ describe('res.body=', () => {
     })
   })
 
+  describe('when an async iterable is given', () => {
+    it('should default to an octet stream', () => {
+      const res = response()
+      async function * generate () {
+        yield 'data'
+      }
+      res.body = generate()
+      assert.strictEqual('application/octet-stream', res.header['content-type'])
+    })
+
+    it('should not override Content-Type if already set', () => {
+      const res = response()
+      res.type = 'text/plain'
+      async function * generate () {
+        yield 'data'
+      }
+      res.body = generate()
+      assert.strictEqual('text/plain; charset=utf-8', res.header['content-type'])
+    })
+
+    it('should strip Content-Length when overwriting body', () => {
+      const res = response()
+      res.body = 'hello'
+      assert.strictEqual(5, res.header['content-length'])
+      async function * generate () {
+        yield 'data'
+      }
+      res.body = generate()
+      assert.strictEqual(res.header['content-length'], undefined)
+    })
+
+    it('should cleanup previous stream when replaced by async iterable', () => {
+      const res = response()
+      const stream = new Stream.PassThrough()
+
+      res.body = stream
+      async function * generate () {
+        yield 'data'
+      }
+      res.body = generate()
+
+      assert.strictEqual(stream.destroyed, true)
+    })
+  })
+
   describe('when a response is given', () => {
     it('should set the status', () => {
       const res = response()
