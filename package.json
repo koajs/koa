@@ -45,7 +45,6 @@
     "encodeurl": "^2.0.0",
     "escape-html": "^1.0.3",
     "fresh": "~0.5.2",
-    "http-assert": "^1.5.0",
     "http-errors": "^2.0.0",
     "koa-compose": "^4.1.0",
     "mime-types": "^3.0.1",

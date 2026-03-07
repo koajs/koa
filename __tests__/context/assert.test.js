@@ -21,3 +21,21 @@ describe('ctx.assert(value, status)', () => {
     assert(assertionRan)
   })
 })
+
+describe('ctx.assert instanceof HttpError', () => {
+  it('thrown error should be instanceof HttpError', () => {
+    const ctx = context()
+    const { HttpError } = require('../../')
+
+    let caught
+    try {
+      ctx.assert(false, 401, 'Unauthorized')
+    } catch (err) {
+      caught = err
+    }
+
+    assert.ok(caught instanceof HttpError, 'error should be instanceof HttpError')
+    assert.strictEqual(caught.status, 401)
+    assert.strictEqual(caught.message, 'Unauthorized')
+  })
+})
