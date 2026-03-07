@@ -20,6 +20,13 @@ describe('ctx.assert(value, status)', () => {
     }
     assert(assertionRan)
   })
+
+  it('should not throw when value is truthy', () => {
+    const ctx = context()
+    ctx.assert(true, 404, 'should not throw')
+    ctx.assert(1, 404)
+    ctx.assert('ok', 404)
+  })
 })
 
 describe('ctx.assert instanceof HttpError', () => {
@@ -37,5 +44,54 @@ describe('ctx.assert instanceof HttpError', () => {
     assert.ok(caught instanceof HttpError, 'error should be instanceof HttpError')
     assert.strictEqual(caught.status, 401)
     assert.strictEqual(caught.message, 'Unauthorized')
+  })
+})
+
+describe('ctx.assert named methods', () => {
+  it('assert.equal should throw when values are not loosely equal', () => {
+    const ctx = context()
+    assert.throws(() => ctx.assert.equal(1, 2, 400), { status: 400 })
+    ctx.assert.equal(1, '1', 400)
+  })
+
+  it('assert.notEqual should throw when values are loosely equal', () => {
+    const ctx = context()
+    assert.throws(() => ctx.assert.notEqual(1, '1', 400), { status: 400 })
+    ctx.assert.notEqual(1, 2, 400)
+  })
+
+  it('assert.ok should throw when value is falsy', () => {
+    const ctx = context()
+    assert.throws(() => ctx.assert.ok(false, 400), { status: 400 })
+    ctx.assert.ok(true, 400)
+  })
+
+  it('assert.strictEqual should throw when values are not strictly equal', () => {
+    const ctx = context()
+    assert.throws(() => ctx.assert.strictEqual(1, '1', 400), { status: 400 })
+    ctx.assert.strictEqual(1, 1, 400)
+  })
+
+  it('assert.notStrictEqual should throw when values are strictly equal', () => {
+    const ctx = context()
+    assert.throws(() => ctx.assert.notStrictEqual(1, 1, 400), { status: 400 })
+    ctx.assert.notStrictEqual(1, '1', 400)
+  })
+
+  it('assert.deepEqual should throw when values are not deeply equal', () => {
+    const ctx = context()
+    assert.throws(() => ctx.assert.deepEqual({ a: 1 }, { a: 2 }, 400), { status: 400 })
+    ctx.assert.deepEqual({ a: 1 }, { a: 1 }, 400)
+  })
+
+  it('assert.notDeepEqual should throw when values are deeply equal', () => {
+    const ctx = context()
+    assert.throws(() => ctx.assert.notDeepEqual({ a: 1 }, { a: 1 }, 400), { status: 400 })
+    ctx.assert.notDeepEqual({ a: 1 }, { a: 2 }, 400)
+  })
+
+  it('assert.fail should always throw', () => {
+    const ctx = context()
+    assert.throws(() => ctx.assert.fail(400, 'always fails'), { status: 400, message: 'always fails' })
   })
 })
