@@ -288,6 +288,14 @@ describe('res.body=', () => {
       res.body = new ReadableStream()
       assert.strictEqual('application/octet-stream', res.header['content-type'])
     })
+
+    it('should remove stale Content-Length when replacing a body', () => {
+      const res = response()
+      res.body = 'hello'
+      assert.strictEqual(5, res.length)
+      res.body = new ReadableStream()
+      assert.strictEqual(undefined, res.header['content-length'])
+    })
   })
 
   describe('when a Blob is given', () => {
@@ -323,6 +331,14 @@ describe('res.body=', () => {
       res.body = Response.redirect('https://www.example.com/', 301)
       assert.strictEqual(301, res.status)
       assert.strictEqual('https://www.example.com/', res.header.location)
+    })
+
+    it('should remove stale Content-Length when replacing a body', () => {
+      const res = response()
+      res.body = 'hello'
+      assert.strictEqual(5, res.length)
+      res.body = new Response('different body')
+      assert.strictEqual(undefined, res.header['content-length'])
     })
   })
 })
