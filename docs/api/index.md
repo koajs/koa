@@ -90,10 +90,11 @@ app.listen(3000);
   - `app.env` defaulting to the __NODE_ENV__ or "development"
   - `app.keys` array of signed cookie keys
   - `app.proxy` when true proxy header fields will be trusted
-  - `app.subdomainOffset` offset of `.subdomains` to ignore, default to 2
-  - `app.proxyIpHeader` proxy ip header, default to `X-Forwarded-For`
-  - `app.maxIpsCount` max ips read from proxy ip header, default to 0 (means infinity)
-  - `app.asyncLocalStorage<Boolean|asyncLocalStorage>` - pass `true` or an instance of `AsyncLocalStorage` to enable async local storage. See below for details.
+  - `app.subdomainOffset` offset of `.subdomains` to ignore, defaults to 2
+  - `app.proxyIpHeader` proxy ip header, defaults to `X-Forwarded-For`
+  - `app.maxIpsCount` max ips read from proxy ip header, defaults to 0 (means infinity)
+  - `app.compose` - function to handle middleware composition
+  - `app.asyncLocalStorage` pass `true` or an instance of `AsyncLocalStorage` to enable async local storage. See below for details.
 
   You can pass the settings to the constructor:
   ```js
@@ -232,7 +233,7 @@ function callSomeFunction () {
 }
 ```
 
-Starting in v3.1.0, you can also pass your own AsyncLocalStorage instance:
+Starting in v3.1.0, you can also pass your own `AsyncLocalStorage` instance:
 
 ```js
 const asyncLocalStorage = new AsyncLocalStorage()
