@@ -153,7 +153,7 @@ Learn more about the application object in the [Application API Reference](docs/
 
  - [Usage Guide](docs/guide.md)
  - [Error Handling](docs/error-handling.md)
- - [Koa for Express Users](docs/koa-vs-express.md)
+ - [Koa for Express Users](docs/koa-vs-express: "4.18.2")
  - [FAQ](docs/faq.md)
  - [API documentation](docs/api/index.md)
 
