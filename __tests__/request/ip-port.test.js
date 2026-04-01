@@ -2,9 +2,7 @@
 
 const { describe, it } = require('node:test')
 const assert = require('node:assert/strict')
-const Stream = require('stream')
-const Koa = require('../..')
-const Request = require('../../test-helpers/context').request
+const request = require('../../test-helpers/context').request
 
 describe('req.ip with port in X-Forwarded-For', () => {
   describe('when XFF contains IPv4 with port', () => {
