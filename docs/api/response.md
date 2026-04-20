@@ -305,9 +305,18 @@ ctx.redirect('/cart');
 ctx.body = 'Redirecting to shopping cart';
 ```
 
-### response.back(url)
+### response.back([alt])
 
-  Similar to `.redirect(url)`, but first checks the `referer` header to redirect.
+  Redirect back to the URL in the `Referrer` header (only when it points to the
+  same host as the current request). When the `Referrer` header is missing, or
+  refers to a different host, redirects to `alt` instead, falling back to `/`
+  when `alt` is not provided.
+
+```js
+ctx.back();
+ctx.back('/index.html');
+```
+
   This is new in v3 as `.redirect(url, alt)` removes the special case `url = 'back'` option.
 
 ### response.attachment([filename], [options])
