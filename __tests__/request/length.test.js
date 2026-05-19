@@ -24,13 +24,13 @@ describe('ctx.length', () => {
 
   it('should handle Content-Length > 2GB (2147483648)', () => {
     const req = request()
-    req.header['content-length'] = '2147483648'  // 2GB + 1 byte
+    req.header['content-length'] = '2147483648' // 2GB + 1 byte
     assert.strictEqual(req.length, 2147483648)
   })
 
   it('should handle very large Content-Length (10GB)', () => {
     const req = request()
-    req.header['content-length'] = '10000000000'  // 10 billion bytes
+    req.header['content-length'] = '10000000000' // 10 billion bytes
     assert.strictEqual(req.length, 10000000000)
   })
 
