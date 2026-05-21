@@ -39,7 +39,7 @@ jobs:
           ref: ${{ inputs.tag || github.ref }}
       
       - name: Setup Node.js
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 #v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e #v6
         with:
           node-version: 24
 
