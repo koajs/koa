@@ -1,6 +1,7 @@
 'use strict'
 
-const { describe, it } = require('node:test')
+const { describe, it, beforeEach, afterEach } = require('node:test')
+const v8 = require('node:v8')
 const request = require('supertest')
 const assert = require('node:assert/strict')
 const Koa = require('../..')
@@ -112,5 +113,86 @@ describe('app.currentContext', () => {
     })
     await request(app.callback()).get('/').expect('ok')
     assert(app.currentContext === undefined)
+  })
+
+  describe('v8 startup snapshot', () => {
+    let originalStartupSnapshot
+
+    beforeEach(() => {
+      originalStartupSnapshot = v8.startupSnapshot
+    })
+
+    afterEach(() => {
+      v8.startupSnapshot = originalStartupSnapshot
+    })
+
+    it('should defer AsyncLocalStorage creation when building snapshot', () => {
+      let deserializeCallback
+      v8.startupSnapshot = {
+        isBuildingSnapshot: () => true,
+        addDeserializeCallback: (cb, data) => {
+          deserializeCallback = { cb, data }
+        }
+      }
+
+      const app = new Koa({ asyncLocalStorage: true })
+      assert.strictEqual(app.ctxStorage, null)
+      assert(deserializeCallback, 'deserialize callback should be registered')
+
+      // simulate snapshot deserialization
+      deserializeCallback.cb(deserializeCallback.data)
+      assert(app.ctxStorage instanceof AsyncLocalStorage)
+    })
+
+    it('should defer with custom AsyncLocalStorage when building snapshot', () => {
+      const customStorage = new AsyncLocalStorage()
+      let deserializeCallback
+      v8.startupSnapshot = {
+        isBuildingSnapshot: () => true,
+        addDeserializeCallback: (cb, data) => {
+          deserializeCallback = { cb, data }
+        }
+      }
+
+      const app = new Koa({ asyncLocalStorage: customStorage })
+      assert.strictEqual(app.ctxStorage, null)
+
+      // simulate snapshot deserialization
+      deserializeCallback.cb(deserializeCallback.data)
+      assert(app.ctxStorage instanceof AsyncLocalStorage)
+      assert.strictEqual(app.ctxStorage, customStorage)
+    })
+
+    it('should work normally after deserialization', async () => {
+      let deserializeCallback
+      v8.startupSnapshot = {
+        isBuildingSnapshot: () => true,
+        addDeserializeCallback: (cb, data) => {
+          deserializeCallback = { cb, data }
+        }
+      }
+
+      const app = new Koa({ asyncLocalStorage: true })
+
+      // simulate snapshot deserialization
+      deserializeCallback.cb(deserializeCallback.data)
+
+      app.use(async ctx => {
+        assert(ctx === app.currentContext)
+        ctx.body = 'ok'
+      })
+
+      await request(app.callback()).get('/').expect('ok')
+      assert(app.currentContext === undefined)
+    })
+
+    it('should not defer when not building snapshot', () => {
+      v8.startupSnapshot = {
+        isBuildingSnapshot: () => false
+      }
+
+      const app = new Koa({ asyncLocalStorage: true })
+      assert(app.ctxStorage instanceof AsyncLocalStorage)
+    })
   })
 })
