@@ -228,7 +228,7 @@ app.use(async (ctx, next) => {
 })
 
 function callSomeFunction () {
-  app.currentContext = {} /* ctx of the middleware above */
+  const ctx = app.currentContext /* ctx of the middleware above */
 }
 ```
 
