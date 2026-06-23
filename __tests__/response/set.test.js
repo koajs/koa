@@ -43,3 +43,21 @@ describe('ctx.set(object)', () => {
     assert.strictEqual(ctx.response.header.bar, '2')
   })
 })
+
+describe('ctx.set(object) Content-Type singleton guard', () => {
+  it('should throw when Content-Type is set to an array via the object form', () => {
+    const ctx = context()
+    assert.throws(
+      () => ctx.set({ 'Content-Type': ['text/html', 'text/plain'] }),
+      { message: 'Assign multiple Content-Type for response header is not allowed' }
+    )
+  })
+
+  it('should throw regardless of header name casing in the object form', () => {
+    const ctx = context()
+    assert.throws(
+      () => ctx.set({ 'content-type': ['application/json', 'text/plain'] }),
+      { message: 'Assign multiple Content-Type for response header is not allowed' }
+    )
+  })
+})
