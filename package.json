@@ -62,6 +62,11 @@
     "standard": "^17.1.2",
     "supertest": "^7.1.1"
   },
+  "overrides": {
+    "c8": {
+      "yargs": "^18.0.0"
+    }
+  },
   "engines": {
     "node": ">= 18"
   },
