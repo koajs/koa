@@ -95,4 +95,18 @@ describe('ctx.assert(value, status)', () => {
       assert.strictEqual(err.expose, false)
     }
   })
+
+  it('should preserve custom properties on the error', () => {
+    const ctx = context()
+
+    try {
+      ctx.assert(false, 418, 'teapot', { code: 'TEAPOT', details: { a: 1 } })
+      throw new Error('should not reach here')
+    } catch (err) {
+      assert.ok(err instanceof Koa.HttpError, 'err should be instanceof Koa.HttpError')
+      assert.strictEqual(err.status, 418)
+      assert.strictEqual(err.code, 'TEAPOT')
+      assert.deepStrictEqual(err.details, { a: 1 })
+    }
+  })
 })
