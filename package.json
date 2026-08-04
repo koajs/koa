@@ -69,5 +69,8 @@
     "dist",
     "lib"
   ],
-  "homepage": "https://koajs.com"
+  "homepage": "https://github.com/koajs/koa",
+  "bugs": {
+    "url": "https://github.com/koajs/koa/issues"
+  }
 }
