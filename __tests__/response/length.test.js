@@ -24,6 +24,24 @@ describe('res.length', () => {
 
   describe('when Content-Length is not defined', () => {
     describe('and a .body is set', () => {
+      for (const body of [new ReadableStream(), new Response('hello')]) {
+        it(`should leave the length of a ${body.constructor.name} unknown`, () => {
+          const res = response()
+          res.body = body
+          assert.strictEqual(res.length, undefined)
+
+          res.length = 5
+          assert.strictEqual(res.length, 5)
+        })
+      }
+
+      it('should use the Blob size when the header is removed', () => {
+        const res = response()
+        res.body = new Blob(['hello'])
+        res.remove('Content-Length')
+        assert.strictEqual(res.length, 5)
+      })
+
       it('should return a number', () => {
         const res = response()
 
