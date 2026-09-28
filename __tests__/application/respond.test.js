@@ -199,6 +199,21 @@ describe('app.respond', () => {
         .expect(200)
     })
 
+    it('should keep json headers for a falsy json body', async () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        ctx.body = false
+      })
+
+      const res = await request(app.callback())
+        .head('/')
+        .expect(200)
+
+      assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8')
+      assert.strictEqual(res.headers['content-length'], '5')
+    })
+
     it('should not overwrite the content-type', () => {
       const app = new Koa()
 
