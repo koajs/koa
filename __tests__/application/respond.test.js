@@ -157,6 +157,23 @@ describe('app.respond', () => {
       assert(!res.text)
     })
 
+    for (const body of [new ReadableStream(), new Response('hello')]) {
+      it(`should not guess the length of a ${body.constructor.name}`, async () => {
+        const app = new Koa()
+
+        app.use(ctx => {
+          ctx.body = body
+        })
+
+        const res = await request(app.callback())
+          .head('/')
+          .expect(200)
+
+        assert.strictEqual(res.headers['content-length'], undefined)
+        assert(!res.text)
+      })
+    }
+
     it('should keep stream header if set manually', async () => {
       const app = new Koa()
 
@@ -620,14 +637,14 @@ describe('app.respond', () => {
       const app = new Koa()
 
       app.use(ctx => {
-        ctx.body = new Response(null, { status: 201, statusText: 'OK', headers: { 'Content-Type': 'text/plain' } })
+        ctx.body = new Response(null, { status: 201, statusText: 'OK', headers: { 'Content-Type': 'text/plain', 'Content-Length': '0' } })
       })
 
       return request(app.callback())
         .head('/')
         .expect(201)
         .expect('content-type', 'text/plain')
-        .expect('content-length', '2')
+        .expect('content-length', '0')
     })
 
     it('should default to octet-stream', () => {
