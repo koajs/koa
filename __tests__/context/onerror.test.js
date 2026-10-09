@@ -56,6 +56,9 @@ describe('ctx.onerror(err)', () => {
         status: 418,
         expose: true,
         headers: {
+          'Content-Length': ['1', '2'],
+          'cOnTeNt-TyPe': ['text/plain', 'application/json'],
+          'Set-Cookie': ['first=1', 'second=2'],
           'X-New-Header': 'Value'
         }
       })
@@ -63,12 +66,15 @@ describe('ctx.onerror(err)', () => {
 
     const res = await request(app.callback())
       .get('/')
-      .expect(418)
+      .timeout({ deadline: 1000 })
+      .expect(418, 'boom')
       .expect('Content-Type', 'text/plain; charset=utf-8')
+      .expect('Content-Length', '4')
       .expect('X-New-Header', 'Value')
 
     assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'vary'), false)
     assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'x-csrf-token'), false)
+    assert.deepStrictEqual(res.headers['set-cookie'], ['first=1', 'second=2'])
   })
 
   it('should ignore error after headerSent', async () => {
