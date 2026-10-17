@@ -331,6 +331,18 @@ describe('res.body=', () => {
       assert.strictEqual('bar', res.header['x-foo'])
     })
 
+    it('should keep each Set-Cookie header separate', () => {
+      const res = response()
+      const headers = new Headers()
+      headers.append('Set-Cookie', 'a=1; Path=/; Expires=Wed, 21 Oct 2015 07:28:00 GMT')
+      headers.append('Set-Cookie', 'b=2; Path=/')
+      res.body = new Response(null, { status: 200, headers })
+      assert.deepStrictEqual(res.header['set-cookie'], [
+        'a=1; Path=/; Expires=Wed, 21 Oct 2015 07:28:00 GMT',
+        'b=2; Path=/'
+      ])
+    })
+
     it('should redirect', () => {
       const res = response()
       res.body = Response.redirect('https://www.example.com/', 301)
