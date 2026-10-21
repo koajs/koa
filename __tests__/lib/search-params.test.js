@@ -6,10 +6,12 @@ describe('search-params', () => {
   describe('stringify', () => {
     it('Should stringify a simple object', () => {
       assert.deepStrictEqual(sp.stringify({ a: 1, b: 'b' }), 'a=1&b=b')
+      assert.strictEqual(sp.stringify({ a: true, b: false }), 'a=true&b=false')
     })
 
     it('Should stringify an object with an array', () => {
       assert.deepStrictEqual(sp.stringify({ a: [1, 2] }), 'a=1&a=2')
+      assert.strictEqual(sp.stringify({ a: [true, false, 0, '', true] }), 'a=true&a=false&a=0&a=&a=true')
     })
 
     it('Should stringify an object with an array with a single value', () => {
