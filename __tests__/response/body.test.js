@@ -149,6 +149,34 @@ describe('res.body=', () => {
       assert.strictEqual(stream.destroyed, true)
     })
 
+    it('should cleanup a JSON stream when replaced by null', () => {
+      const res = response()
+      const stream = new Stream.PassThrough()
+
+      res.type = 'json'
+      res.body = stream
+      res.body = null
+
+      assert.strictEqual(res.body, 'null')
+      assert.strictEqual(res.status, 200)
+      assert.strictEqual(res.type, 'application/json')
+      assert.strictEqual(stream.destroyed, true)
+    })
+
+    it('should cleanup a JSON stream when replaced by undefined', () => {
+      const res = response()
+      const stream = new Stream.PassThrough()
+
+      res.type = 'json'
+      res.body = stream
+      res.body = undefined
+
+      assert.strictEqual(res.body, 'null')
+      assert.strictEqual(res.status, 200)
+      assert.strictEqual(res.type, 'application/json')
+      assert.strictEqual(stream.destroyed, true)
+    })
+
     it('should not throw unhandled errors when replacing failing stream', async () => {
       const res = response()
 
