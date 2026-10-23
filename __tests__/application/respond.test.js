@@ -824,6 +824,44 @@ describe('app.respond', () => {
         .get('/')
         .expect(204)
     })
+
+    it('should handle errors emitted before the stream is piped', async () => {
+      const app = new Koa()
+      const errors = []
+
+      app.on('error', err => errors.push(err))
+
+      app.use(async ctx => {
+        ctx.body = fs.createReadStream('does not exist')
+        await new Promise(resolve => setTimeout(resolve, 50))
+      })
+
+      await request(app.callback())
+        .get('/')
+        .expect(500)
+
+      assert.strictEqual(errors.length, 1)
+      assert.strictEqual(errors[0].code, 'ENOENT')
+    })
+
+    it('should handle errors when the stream is not piped for HEAD', async () => {
+      const app = new Koa()
+      const errors = []
+
+      app.on('error', err => errors.push(err))
+
+      app.use(ctx => {
+        ctx.body = fs.createReadStream('does not exist')
+      })
+
+      await request(app.callback())
+        .head('/')
+        .expect(200)
+
+      await new Promise(resolve => setTimeout(resolve, 50))
+      assert.strictEqual(errors.length, 1)
+      assert.strictEqual(errors[0].code, 'ENOENT')
+    })
   })
 
   describe('when using pipeline for streams', () => {
