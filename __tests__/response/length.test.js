@@ -76,6 +76,15 @@ describe('res.length', () => {
         res.body = null
         assert.strictEqual(res.length, 4)
       })
+
+      it('should replace a previous Content-Length', () => {
+        const res = response()
+
+        res.body = 'hello world'
+        res.type = 'json'
+        res.body = null
+        assert.strictEqual(res.length, 4)
+      })
     })
   })
 })
