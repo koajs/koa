@@ -448,6 +448,57 @@ describe('app.respond', () => {
 
       assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'Content-Type'), false)
     })
+
+    describe('and .type is json', () => {
+      it('should respond 200 with a null body', async () => {
+        const app = new Koa()
+
+        app.use(ctx => {
+          ctx.type = 'json'
+          ctx.body = null
+        })
+
+        await request(app.callback())
+          .get('/')
+          .expect(200)
+          .expect('Content-Type', 'application/json; charset=utf-8')
+          .expect('Content-Length', '4')
+          .expect('null')
+      })
+
+      it('should keep an explicit status', async () => {
+        const app = new Koa()
+
+        app.use(ctx => {
+          ctx.status = 404
+          ctx.type = 'json'
+          ctx.body = null
+        })
+
+        await request(app.callback())
+          .get('/')
+          .expect(404)
+          .expect('Content-Type', 'application/json; charset=utf-8')
+          .expect('null')
+      })
+
+      it('should replace a previous Content-Length', async () => {
+        const app = new Koa()
+
+        app.use(ctx => {
+          ctx.body = 'hello world'
+          ctx.type = 'json'
+          ctx.body = null
+        })
+
+        await request(app.callback())
+          .get('/')
+          .timeout(2000)
+          .expect(200)
+          .expect('Content-Length', '4')
+          .expect('null')
+      })
+    })
   })
 
   describe('when .body is undefined', () => {
