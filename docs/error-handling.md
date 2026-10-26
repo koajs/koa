@@ -28,7 +28,7 @@
   will be the reply. Otherwise, a message generated from the
   error code will be used (e.g. for the code 500 the message
   "Internal Server Error" will be used). All headers will be
-  cleared from the request, but any headers in `err.headers`
+  cleared from the response, but any headers in `err.headers`
   will then be set. You can use a `try-catch`, as specified
   above, to add a header to this list.
 

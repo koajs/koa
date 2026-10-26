@@ -86,9 +86,8 @@
   - 510 "not extended"
   - 511 "network authentication required"
 
-__NOTE__: don't worry too much about memorizing these strings,
-if you have a typo an error will be thrown, displaying this list
-so you can make a correction.
+__NOTE__: the status must be an integer between 100 and 999,
+otherwise an error is thrown.
 
   Since `response.status` default is set to `404`, to send a response
   without a body and with a different status is to be done like this:
@@ -132,7 +131,7 @@ ctx.response.status = 204;
   - `Object` || `Array` json-stringified
   - `null` || `undefined` no content response
 
-If `response.status` has not been set, Koa will automatically set the status to `200` or `204` depending on `response.body`. Specifically, if `response.body` has not been set or has been set as `null` or `undefined`, Koa will automatically set `response.status` to `204`. If you really want to send no content response with other status, you should override the `204` status as the following way:
+If `response.status` has not been set, Koa will automatically set the status to `200` or `204` depending on `response.body`. Specifically, if `response.body` has been set as `null` or `undefined`, Koa will automatically set `response.status` to `204`. If `response.body` has not been set at all, the status stays at the default `404`. If you really want to send no content response with other status, you should override the `204` status as the following way:
 
 ```js
 // This must be always set first before status, since null | undefined
@@ -337,7 +336,7 @@ ctx.response.lastModified = new Date();
 ### response.etag=
 
   Set the ETag of a response including the wrapped `"`s.
-  Note that there is no corresponding `response.etag` getter.
+  The current value can be read back with `response.etag`.
 
 ```js
 ctx.response.etag = crypto.createHash('md5').update(ctx.body).digest('hex');
