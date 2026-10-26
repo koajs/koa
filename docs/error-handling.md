@@ -29,7 +29,10 @@
   error code will be used (e.g. for the code 500 the message
   "Internal Server Error" will be used). All headers will be
   cleared from the response, but any headers in `err.headers`
-  will then be set. You can use a `try-catch`, as specified
+  will then be set, except `Content-Type` and `Content-Length`.
+  If the headers have already been sent, or the response is no
+  longer writable, the error is only emitted and the response is
+  left as it is. You can use a `try-catch`, as specified
   above, to add a header to this list.
 
   Here is an example of creating your own error handler:

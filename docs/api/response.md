@@ -87,7 +87,8 @@
   - 511 "network authentication required"
 
 __NOTE__: the status must be an integer between 100 and 999,
-otherwise an error is thrown.
+otherwise an error is thrown. Once the response headers have been
+sent, setting the status has no effect.
 
   Since `response.status` default is set to `404`, to send a response
   without a body and with a different status is to be done like this:
@@ -131,7 +132,7 @@ ctx.response.status = 204;
   - `Object` || `Array` json-stringified
   - `null` || `undefined` no content response
 
-If `response.status` has not been set, Koa will automatically set the status to `200` or `204` depending on `response.body`. Specifically, if `response.body` has been set as `null` or `undefined`, Koa will automatically set `response.status` to `204`. If `response.body` has not been set at all, the status stays at the default `404`. If you really want to send no content response with other status, you should override the `204` status as the following way:
+If `response.status` has not been set, Koa will automatically set the status to `200` or `204` depending on `response.body`. Specifically, if `response.body` has been set as `null` or `undefined`, Koa will automatically set `response.status` to `204`, unless `response.type` is `application/json`, in which case the body becomes the string `"null"` and the status is left as it is. If `response.body` has not been set at all, the status stays at the default `404`. If you really want to send no content response with other status, you should override the `204` status as the following way:
 
 ```js
 // This must be always set first before status, since null | undefined
