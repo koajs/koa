@@ -96,6 +96,20 @@ describe('ctx.assert(value, status)', () => {
   })
 })
 
+describe('Koa.HttpError instanceof', () => {
+  it('should still match an HttpError whose status was reassigned', () => {
+    const err = new Koa.createHttpError.NotFound()
+    err.status = 418
+
+    assert.notStrictEqual(err.status, err.statusCode)
+    assert.strictEqual(err instanceof Koa.HttpError, true)
+  })
+
+  it('should not match a plain Error', () => {
+    assert.strictEqual(new Error('boom') instanceof Koa.HttpError, false)
+  })
+})
+
 describe('ctx.assert named methods', () => {
   ASSERT_METHOD_FAILURES.forEach(({ method, args }) => {
     it(`ctx.assert.${method}() should throw an error that is instanceof Koa.HttpError`, () => {
