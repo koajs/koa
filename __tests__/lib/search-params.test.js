@@ -41,3 +41,38 @@ describe('search-params', () => {
     })
   })
 })
+
+describe('parse prototype keys', () => {
+  const prototypeKeys = ['__proto__', '%5F%5Fproto%5F%5F', 'constructor', 'prototype']
+
+  prototypeKeys.forEach(key => {
+    it(`Should preserve repeated ${key} as an own property`, () => {
+      const query = sp.parse(`${key}=a&${key}=b&x=1`)
+      const name = decodeURIComponent(key)
+      assert.strictEqual(Object.getPrototypeOf(query), Object.prototype)
+      assert.strictEqual(Object.hasOwn(query, name), true)
+      assert.deepStrictEqual(query[name], ['a', 'b'])
+      assert.deepStrictEqual(Object.keys(query), [name, 'x'])
+      for (const field in query) {
+        assert.strictEqual(Object.hasOwn(query, field), true)
+      }
+      assert.strictEqual(query.x, '1')
+    })
+  })
+
+  it('Should preserve a single __proto__ value as a mutable own property', () => {
+    const query = sp.parse('__proto__=a')
+    const name = '__proto__'
+    assert.deepStrictEqual(Object.getOwnPropertyDescriptor(query, name), {
+      value: 'a',
+      writable: true,
+      enumerable: true,
+      configurable: true
+    })
+    query[name] = 'b'
+    assert.strictEqual(query[name], 'b')
+    assert.strictEqual(Object.getPrototypeOf(query), Object.prototype)
+    assert.strictEqual(delete query[name], true)
+    assert.strictEqual(Object.hasOwn(query, name), false)
+  })
+})
