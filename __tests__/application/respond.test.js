@@ -943,6 +943,212 @@ describe('app.respond', () => {
 
       assert(streamDestroyed, 'Stream should be destroyed on client abort')
     })
+
+    it('should not emit error on premature close from client disconnect', async () => {
+      const app = new Koa()
+      const PassThrough = require('stream').PassThrough
+      const http = require('http')
+
+      let errorEmitted = false
+      app.on('error', () => {
+        errorEmitted = true
+      })
+
+      app.use(ctx => {
+        const stream = new PassThrough()
+        ctx.body = stream
+
+        setImmediate(() => {
+          stream.write('some data')
+        })
+      })
+
+      const server = app.listen()
+
+      await new Promise((resolve) => {
+        const req = http.request({
+          port: server.address().port,
+          path: '/'
+        })
+
+        req.on('response', (res) => {
+          res.on('data', () => {
+            req.destroy()
+            setTimeout(() => {
+              server.close()
+              resolve()
+            }, 50)
+          })
+        })
+
+        req.end()
+      })
+
+      assert.strictEqual(errorEmitted, false, 'ERR_STREAM_PREMATURE_CLOSE should not be emitted as an error')
+    })
+  })
+
+  describe('when .body is an AsyncIterable', () => {
+    it('should respond with async generator content', async () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        ctx.type = 'text/plain'
+        async function * generate () {
+          yield 'Hello '
+          yield 'World'
+        }
+        ctx.body = generate()
+      })
+
+      const res = await request(app.callback())
+        .get('/')
+        .expect(200)
+
+      assert.strictEqual(res.text, 'Hello World')
+    })
+
+    it('should respond with async iterable content', async () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        ctx.type = 'text/plain'
+        const iterable = {
+          [Symbol.asyncIterator] () {
+            let i = 0
+            const chunks = ['chunk1', 'chunk2', 'chunk3']
+            return {
+              async next () {
+                if (i < chunks.length) {
+                  return { value: chunks[i++], done: false }
+                }
+                return { done: true }
+              }
+            }
+          }
+        }
+        ctx.body = iterable
+      })
+
+      const res = await request(app.callback())
+        .get('/')
+        .expect(200)
+
+      assert.strictEqual(res.text, 'chunk1chunk2chunk3')
+    })
+
+    it('should respond with async generator yielding buffers', async () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        async function * generate () {
+          yield Buffer.from('Hello ')
+          yield Buffer.from('World')
+        }
+        ctx.body = generate()
+      })
+
+      const res = await request(app.callback())
+        .get('/')
+        .expect(200)
+
+      assert.deepStrictEqual(res.body, Buffer.from('Hello World'))
+    })
+
+    it('should default to octet-stream content type', async () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        async function * generate () {
+          yield 'data'
+        }
+        ctx.body = generate()
+      })
+
+      return request(app.callback())
+        .get('/')
+        .expect(200)
+        .expect('content-type', 'application/octet-stream')
+    })
+
+    it('should respect custom content type', async () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        ctx.type = 'text/plain'
+        async function * generate () {
+          yield 'plain text content'
+        }
+        ctx.body = generate()
+      })
+
+      return request(app.callback())
+        .get('/')
+        .expect(200)
+        .expect('content-type', 'text/plain; charset=utf-8')
+    })
+
+    it('should strip content-length when overwriting body with async iterable', async () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        ctx.body = 'hello'
+        async function * generate () {
+          yield 'async content'
+        }
+        ctx.body = generate()
+      })
+
+      const res = await request(app.callback())
+        .get('/')
+        .expect(200)
+
+      assert.strictEqual(Object.prototype.hasOwnProperty.call(res.headers, 'content-length'), false)
+      assert.strictEqual(res.text, 'async content')
+    })
+
+    it('should handle async generator errors', async () => {
+      const app = new Koa()
+
+      let errorCaught = false
+      app.once('error', err => {
+        assert.strictEqual(err.message, 'generator error')
+        errorCaught = true
+      })
+
+      app.use(ctx => {
+        async function * generate () {
+          yield 'start'
+          throw new Error('generator error')
+        }
+        ctx.body = generate()
+      })
+
+      await request(app.callback())
+        .get('/')
+        .catch(() => {})
+
+      await new Promise(resolve => setTimeout(resolve, 50))
+      assert(errorCaught, 'Error should have been caught')
+    })
+
+    it('should handle empty async generator', async () => {
+      const app = new Koa()
+
+      app.use(ctx => {
+        ctx.type = 'text/plain'
+        async function * generate () {
+          // empty
+        }
+        ctx.body = generate()
+      })
+
+      const res = await request(app.callback())
+        .get('/')
+        .expect(200)
+
+      assert.strictEqual(res.text, '')
+    })
   })
 
   describe('when .body is an Object', () => {
