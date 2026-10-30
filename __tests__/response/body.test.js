@@ -117,14 +117,14 @@ describe('res.body=', () => {
       assert.strictEqual('application/octet-stream', res.header['content-type'])
     })
 
-    it('should not add error handler to stream (handled by pipeline)', () => {
+    it('should add error handler to the stream, but only once', () => {
       const res = response()
       const body = new Stream.PassThrough()
       assert.strictEqual(body.listenerCount('error'), 0)
       res.body = body
-      assert.strictEqual(body.listenerCount('error'), 0)
+      assert.strictEqual(body.listenerCount('error'), 1)
       res.body = body
-      assert.strictEqual(body.listenerCount('error'), 0)
+      assert.strictEqual(body.listenerCount('error'), 1)
     })
 
     it('should NOT cleanup original stream when replaced by new stream (to support wrapping middleware)', () => {
