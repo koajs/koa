@@ -106,7 +106,12 @@ ctx.request.href;
 
 ### request.URL
 
-  Get WHATWG parsed URL object.
+  Get WHATWG parsed URL object based on `request.originalUrl`.
+
+  Absolute-form HTTP(S) request targets are parsed directly, so `request.URL.host`
+  can differ from `request.host`, which follows the header rules described above.
+  For other targets, the URL is constructed from `request.protocol`, `request.host`,
+  and `request.originalUrl`.
 
 ### request.type
 
