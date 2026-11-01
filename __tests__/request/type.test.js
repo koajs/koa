@@ -11,6 +11,18 @@ describe('req.type', () => {
     assert.strictEqual(req.type, 'text/html')
   })
 
+  it('should ignore whitespace before parameters', () => {
+    const req = request()
+    req.header['content-type'] = 'application/json ; charset=utf-8'
+    assert.strictEqual(req.type, 'application/json')
+  })
+
+  it('should return the type in lower case', () => {
+    const req = request()
+    req.header['content-type'] = 'Application/JSON; charset=utf-8'
+    assert.strictEqual(req.type, 'application/json')
+  })
+
   it('should return empty string with no host present', () => {
     const req = request()
     assert.strictEqual(req.type, '')
