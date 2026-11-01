@@ -97,6 +97,15 @@ describe('ctx.assert(value, status)', () => {
 })
 
 describe('Koa.HttpError instanceof', () => {
+  it('should use prototype checks for HttpError subclasses', () => {
+    class AppError extends Koa.HttpError {}
+    const unrelated = new Koa.createHttpError.NotFound()
+    const related = Object.create(AppError.prototype)
+
+    assert.strictEqual(unrelated instanceof AppError, false)
+    assert.strictEqual(related instanceof AppError, true)
+  })
+
   it('should still match an HttpError whose status was reassigned', () => {
     const err = new Koa.createHttpError.NotFound()
     err.status = 418
