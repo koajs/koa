@@ -59,6 +59,28 @@ describe('res.length', () => {
       })
     })
 
+    describe('and a .body is a falsy value other than null', () => {
+      it('should return the length of the serialized body', () => {
+        const res = response()
+
+        res.body = false
+        res.remove('Content-Length')
+        assert.strictEqual(res.length, 5)
+
+        res.body = 0
+        res.remove('Content-Length')
+        assert.strictEqual(res.length, 1)
+
+        res.body = NaN
+        res.remove('Content-Length')
+        assert.strictEqual(res.length, 4)
+
+        res.body = ''
+        res.remove('Content-Length')
+        assert.strictEqual(res.length, 0)
+      })
+    })
+
     describe('and .body is not', () => {
       it('should return undefined', () => {
         const res = response()
