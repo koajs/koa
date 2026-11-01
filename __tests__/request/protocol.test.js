@@ -31,6 +31,26 @@ describe('req.protocol', () => {
         assert.strictEqual(req.protocol, 'https')
       })
 
+      describe('and X-Forwarded-Proto is not lowercase', () => {
+        it('should be normalized to lowercase', () => {
+          const req = request()
+          req.app.proxy = true
+          req.req.socket = {}
+          req.header['x-forwarded-proto'] = 'HTTPS'
+          assert.strictEqual(req.protocol, 'https')
+          assert.strictEqual(req.secure, true)
+        })
+
+        it('should be normalized when it carries several values', () => {
+          const req = request()
+          req.app.proxy = true
+          req.req.socket = {}
+          req.header['x-forwarded-proto'] = 'Https, http'
+          assert.strictEqual(req.protocol, 'https')
+          assert.strictEqual(req.secure, true)
+        })
+      })
+
       describe('and X-Forwarded-Proto is empty', () => {
         it('should return "http"', () => {
           const req = request()
