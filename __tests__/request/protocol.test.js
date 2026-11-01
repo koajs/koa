@@ -31,6 +31,18 @@ describe('req.protocol', () => {
         assert.strictEqual(req.protocol, 'https')
       })
 
+      const protocols = ['HTTPS, http', 'Https, http']
+      protocols.forEach(proto => {
+        it(`should lowercase "${proto}"`, () => {
+          const req = request()
+          req.app.proxy = true
+          req.req.socket = {}
+          req.header['x-forwarded-proto'] = proto
+          assert.strictEqual(req.protocol, 'https')
+          assert.strictEqual(req.secure, true)
+        })
+      })
+
       describe('and X-Forwarded-Proto is empty', () => {
         it('should return "http"', () => {
           const req = request()
