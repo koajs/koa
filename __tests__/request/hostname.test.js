@@ -43,10 +43,49 @@ describe('req.hostname', () => {
       assert.strictEqual(req.hostname, '[2001:cdba::3257:9652]')
     })
 
+    it('should parse IPv6 hosts independently of absolute-form targets', () => {
+      const req = request({ url: 'http://example.com/foo' })
+      req.header.host = '[::1]:3000'
+      req.header['x-forwarded-host'] = '[2001:db8:0:0:0:0:0:1]:3000, [::2]'
+      assert.strictEqual(req.URL.hostname, 'example.com')
+      assert.strictEqual(req.hostname, '[::1]')
+
+      req.app.proxy = true
+      assert.strictEqual(req.hostname, '[2001:db8::1]')
+
+      req.app.proxy = false
+      req.header.host = '[invalidIPv6]'
+      assert.strictEqual(req.hostname, '')
+    })
+
     it('should return empty string when invalid', () => {
       const req = request()
       req.header.host = '[invalidIPv6]'
       assert.strictEqual(req.hostname, '')
+    })
+  })
+
+  describe('with non-authority IPv6 hosts', () => {
+    const invalidHosts = [
+      '[::1]/foo',
+      '[::1]:3000/',
+      '[::1]?query=value',
+      '[::1]?',
+      '[::1]#fragment',
+      '[::1]#',
+      '[::1]\\foo',
+      '[::1]\t:3000'
+    ]
+    invalidHosts.forEach(host => {
+      it(`should reject non-authority IPv6 host ${JSON.stringify(host)}`, () => {
+        const req = request({ url: 'http://example.com/foo' })
+        req.header.host = host
+        assert.strictEqual(req.hostname, '')
+
+        req.app.proxy = true
+        req.header['x-forwarded-host'] = `${host}, [::2]`
+        assert.strictEqual(req.hostname, '')
+      })
     })
   })
 
