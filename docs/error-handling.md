@@ -59,3 +59,18 @@ app.use(async (ctx, next) => {
   `app.onerror` will be used, which simply log the error unless
   `error.expose`is true or `app.silent` is true or `error.status`
   is 404.
+
+
+![A downstream error caught without rethrowing is handled by custom middleware. Otherwise Koa saves whether headers are sent or the response is not writable, emits an error event, and uses the saved state to decide whether to send its default response.](diagrams/middleware-error-flow.png)
+
+[Edit diagram](https://svgdiagram.ai/diagram-sources/koa-middleware-error-flow?version=1).
+
+For an error thrown by downstream middleware, catching it without rethrowing keeps
+it out of Koa's default handler and its automatic `error` event. An uncaught or
+rethrown error reaches `ctx.onerror`, which saves whether headers are already sent
+or the response is not writable, then emits the event. It uses that saved state
+for the fallback gate: an already-sent or non-writable response is not rewritten.
+Changes made by error listeners do not change the saved decision. Custom middleware
+can explicitly emit an event even when it handles the error.
+
+[Download SVG](diagrams/middleware-error-flow.svg).
