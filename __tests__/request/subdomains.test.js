@@ -15,6 +15,23 @@ describe('req.subdomains', () => {
     assert.deepStrictEqual(req.subdomains, ['tobi'])
   })
 
+  it('should ignore a single trailing root dot in the host', () => {
+    const req = request()
+    req.app.subdomainOffset = 2
+
+    req.header.host = 'api.example.com.'
+    assert.deepStrictEqual(req.subdomains, ['api'])
+
+    req.header.host = 'example.com.'
+    assert.deepStrictEqual(req.subdomains, [])
+
+    req.header.host = 'tobi.ferrets.example.com.'
+    assert.deepStrictEqual(req.subdomains, ['ferrets', 'tobi'])
+
+    req.header.host = '127.0.0.1.'
+    assert.deepStrictEqual(req.subdomains, [])
+  })
+
   it('should work with no host present', () => {
     const req = request()
     assert.deepStrictEqual(req.subdomains, [])
