@@ -44,6 +44,7 @@
     "destroy": "^1.2.0",
     "encodeurl": "^2.0.0",
     "escape-html": "^1.0.3",
+    "forwarded": "^0.2.0",
     "fresh": "~0.5.2",
     "http-assert": "^1.5.0",
     "http-errors": "^2.0.0",
