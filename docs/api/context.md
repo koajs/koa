@@ -158,16 +158,20 @@ Koa uses [http-assert](https://github.com/jshttp/http-assert) for assertions.
   - `ctx.originalUrl`
   - `ctx.origin`
   - `ctx.href`
+  - `ctx.URL`
   - `ctx.path`
   - `ctx.path=`
   - `ctx.query`
   - `ctx.query=`
   - `ctx.querystring`
   - `ctx.querystring=`
+  - `ctx.search`
+  - `ctx.search=`
   - `ctx.host`
   - `ctx.hostname`
   - `ctx.fresh`
   - `ctx.stale`
+  - `ctx.idempotent`
   - `ctx.socket`
   - `ctx.protocol`
   - `ctx.secure`
@@ -199,10 +203,12 @@ Koa uses [http-assert](https://github.com/jshttp/http-assert) for assertions.
   - `ctx.vary()`
   - `ctx.headerSent`
   - `ctx.redirect()`
+  - `ctx.back()`
   - `ctx.attachment()`
   - `ctx.set()`
   - `ctx.append()`
   - `ctx.remove()`
+  - `ctx.flushHeaders()`
   - `ctx.lastModified=`
   - `ctx.etag=`
   - `ctx.writable`
