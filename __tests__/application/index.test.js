@@ -67,6 +67,24 @@ describe('app', () => {
     assert.strictEqual(app.subdomainOffset, subdomainOffset)
   })
 
+  it('should preserve a zero subdomainOffset from the constructor', () => {
+    const app = new Koa({ subdomainOffset: 0 })
+    const ctx = app.createContext({
+      headers: { host: 'tobi.ferrets.example.com' }
+    }, {})
+
+    assert.strictEqual(app.subdomainOffset, 0)
+    assert.deepStrictEqual(ctx.subdomains, ['com', 'example', 'ferrets', 'tobi'])
+  })
+
+  it('should default subdomainOffset to two when no value is provided', () => {
+    const options = [undefined, {}, { subdomainOffset: undefined }, { subdomainOffset: null }]
+    for (const option of options) {
+      const app = new Koa(option)
+      assert.strictEqual(app.subdomainOffset, 2)
+    }
+  })
+
   it('should set compose from the constructor', () => {
     const compose = () => (ctx) => {}
     const app = new Koa.default({ compose }) // eslint-disable-line new-cap
