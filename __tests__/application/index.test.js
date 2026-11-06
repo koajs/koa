@@ -77,6 +77,22 @@ describe('app', () => {
     assert.deepStrictEqual(ctx.subdomains, ['com', 'example', 'ferrets', 'tobi'])
   })
 
+  for (const subdomainOffset of [0, 3]) {
+    it(`should read the subdomainOffset option once when it is ${subdomainOffset}`, () => {
+      let reads = 0
+      const app = new Koa({
+        get subdomainOffset () {
+          reads++
+          if (reads > 1) throw new Error('subdomainOffset was read twice')
+          return subdomainOffset
+        }
+      })
+
+      assert.strictEqual(app.subdomainOffset, subdomainOffset)
+      assert.strictEqual(reads, 1)
+    })
+  }
+
   it('should default subdomainOffset to two when no value is provided', () => {
     const options = [undefined, {}, { subdomainOffset: undefined }, { subdomainOffset: null }]
     for (const option of options) {
