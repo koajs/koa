@@ -2,6 +2,7 @@
 
 const { describe, it } = require('node:test')
 const assert = require('node:assert/strict')
+const { inspect } = require('node:util')
 const request = require('supertest')
 const Koa = require('../..')
 const context = require('../../test-helpers/context')
@@ -210,8 +211,17 @@ describe('ctx.onerror(err)', () => {
   })
 
   describe('when non-error thrown', () => {
-    for (const value of [1n, { value: 1n }]) {
-      it(`should respond when the thrown value contains a BigInt (${typeof value})`, async () => {
+    for (const [name, value] of [
+      ['a BigInt', 1n],
+      ['an object containing a BigInt', { value: 1n }],
+      ['an object with a throwing inspection hook', {
+        value: 1n,
+        [inspect.custom] () {
+          throw new Error('custom inspection invoked')
+        }
+      }]
+    ]) {
+      it(`should respond when rejecting ${name}`, async () => {
         const app = new Koa()
         const errors = []
         app.on('error', err => errors.push(err))
