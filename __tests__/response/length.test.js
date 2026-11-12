@@ -54,6 +54,20 @@ describe('res.length', () => {
         res.body = fs.createReadStream('package.json')
         assert.strictEqual(res.length, undefined)
 
+        res.body = new ReadableStream({
+          start (controller) {
+            controller.enqueue(new TextEncoder().encode('hello'))
+            controller.close()
+          }
+        })
+        assert.strictEqual(res.length, undefined)
+
+        res.body = new Response('hello')
+        assert.strictEqual(res.length, undefined)
+
+        res.body = new Response('hello', { headers: { 'Content-Length': '5' } })
+        assert.strictEqual(res.length, 5)
+
         res.body = null
         assert.strictEqual(res.length, undefined)
       })
