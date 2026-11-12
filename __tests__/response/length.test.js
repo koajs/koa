@@ -81,6 +81,26 @@ describe('res.length', () => {
     })
   })
 
+  describe('when a known-length body is replaced', () => {
+    for (const [kind, makeBody] of [['ReadableStream', () => new ReadableStream()], ['Response', () => new Response('longer body')]]) {
+      it(`clears the inferred length for a ${kind}`, () => {
+        const res = response()
+        res.body = 'short'
+        res.body = makeBody()
+        assert.strictEqual(res.length, undefined)
+        assert.strictEqual(res.has('Content-Length'), false)
+      })
+
+      it(`preserves a manually set length for a ${kind}`, () => {
+        const res = response()
+        res.body = 'short'
+        res.set('Content-Length', '11')
+        res.body = makeBody()
+        assert.strictEqual(res.length, 11)
+      })
+    }
+  })
+
   describe('and a .type is set to json', () => {
     describe('and a .body is set to null', () => {
       it('should return a number', () => {
