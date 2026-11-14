@@ -175,6 +175,19 @@ describe('app.respond', () => {
       assert(!res.text)
     })
 
+    for (const [name, body] of [
+      ['ReadableStream', () => new Blob(['hello']).stream()],
+      ['Response', () => new Response('hello')]
+    ]) {
+      it(`should not invent a length for a ${name} body`, async () => {
+        const app = new Koa()
+        app.use(ctx => { ctx.body = body() })
+
+        const res = await request(app.callback()).head('/').expect(200)
+        assert.strictEqual(res.headers['content-length'], undefined)
+      })
+    }
+
     it('should respond with a 404 if no body was set', () => {
       const app = new Koa()
 
@@ -627,7 +640,7 @@ describe('app.respond', () => {
         .head('/')
         .expect(201)
         .expect('content-type', 'text/plain')
-        .expect('content-length', '2')
+        .expect(res => assert.strictEqual(res.headers['content-length'], undefined))
     })
 
     it('should default to octet-stream', () => {

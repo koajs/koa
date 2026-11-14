@@ -54,6 +54,20 @@ describe('res.length', () => {
         res.body = fs.createReadStream('package.json')
         assert.strictEqual(res.length, undefined)
 
+        res.body = new ReadableStream({
+          start (controller) {
+            controller.enqueue(new TextEncoder().encode('hello'))
+            controller.close()
+          }
+        })
+        assert.strictEqual(res.length, undefined)
+
+        res.body = new Response('hello')
+        assert.strictEqual(res.length, undefined)
+
+        res.body = new Response('hello', { headers: { 'Content-Length': '5' } })
+        assert.strictEqual(res.length, 5)
+
         res.body = null
         assert.strictEqual(res.length, undefined)
       })
@@ -65,6 +79,26 @@ describe('res.length', () => {
         assert.strictEqual(res.length, undefined)
       })
     })
+  })
+
+  describe('when a known-length body is replaced', () => {
+    for (const [kind, makeBody] of [['ReadableStream', () => new ReadableStream()], ['Response', () => new Response('longer body')]]) {
+      it(`clears the inferred length for a ${kind}`, () => {
+        const res = response()
+        res.body = 'short'
+        res.body = makeBody()
+        assert.strictEqual(res.length, undefined)
+        assert.strictEqual(res.has('Content-Length'), false)
+      })
+
+      it(`preserves a manually set length for a ${kind}`, () => {
+        const res = response()
+        res.body = 'short'
+        res.set('Content-Length', '11')
+        res.body = makeBody()
+        assert.strictEqual(res.length, 11)
+      })
+    }
   })
 
   describe('and a .type is set to json', () => {
