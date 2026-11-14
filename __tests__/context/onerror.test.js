@@ -2,6 +2,7 @@
 
 const { describe, it } = require('node:test')
 const assert = require('node:assert/strict')
+const { inspect } = require('node:util')
 const request = require('supertest')
 const Koa = require('../..')
 const context = require('../../test-helpers/context')
@@ -210,6 +211,35 @@ describe('ctx.onerror(err)', () => {
   })
 
   describe('when non-error thrown', () => {
+    for (const [name, value] of [
+      ['a BigInt', 1n],
+      ['an object containing a BigInt', { value: 1n }],
+      ['an object with a throwing inspection hook', {
+        value: 1n,
+        [inspect.custom] () {
+          throw new Error('custom inspection invoked')
+        }
+      }]
+    ]) {
+      it(`should respond when rejecting ${name}`, async () => {
+        const app = new Koa()
+        const errors = []
+        app.on('error', err => errors.push(err))
+        app.use(() => Promise.reject(value))
+
+        await request(app.callback())
+          .get('/')
+          .timeout({ deadline: 1000 })
+          .expect(500, 'Internal Server Error')
+          .expect('Content-Type', 'text/plain; charset=utf-8')
+
+        assert.strictEqual(errors.length, 1)
+        assert(errors[0] instanceof Error)
+        assert.match(errors[0].message, /^non-error thrown: /)
+        assert.match(errors[0].message, /1n/)
+      })
+    }
+
     it('should respond with non-error thrown message', () => {
       const app = new Koa()
 
