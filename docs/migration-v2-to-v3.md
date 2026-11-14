@@ -32,14 +32,15 @@ app.use(async (ctx, next) => {
 
 ### HTTP Errors Update
 
-Koa v3 updates `http-errors` to v2.0.0, which changes the signature of `ctx.throw()`:
+Koa v3 updates `http-errors` to v2.0.0, which no longer accepts the status code after the message in `ctx.throw()`. The status must now be the first argument:
 
 ```js
-// Old format in Koa v2.x
-ctx.throw(status, message, properties)
+// Deprecated in Koa v2.x, throws a TypeError in Koa v3.x
+ctx.throw('User not found', 404)
 
-// New format in Koa v3.x
-ctx.throw(status, error, properties)
+// Works in both Koa v2.x and v3.x
+ctx.throw(404, 'User not found')
+ctx.throw(404, 'User not found', { user: 'john' })
 ```
 
 See the [http-errors documentation](https://www.npmjs.com/package/http-errors) for more details.
@@ -73,8 +74,8 @@ app.use(async (ctx, next) => {
 // New way (Koa v3.x using URLSearchParams)
 app.use(async (ctx, next) => {
   const query = new URLSearchParams(ctx.querystring);
-  // query.getAll('user') => ['john', 'jane']
-  // query.get('items') => 'book'
+  // query.getAll('user[]') => ['john', 'jane']
+  // query.get('items[0]') => 'book'
   await next();
 });
 ```
@@ -170,15 +171,14 @@ app.use(async ctx => {
      console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
    })
    ```
-3. Update any calls to `ctx.throw()` to use the new signature:
+3. Update any calls to `ctx.throw()` that pass the status after the message:
 
    ```js
    // Old way (Koa v2.x)
-   ctx.throw(404, 'User not found', { user: 'john' });
+   ctx.throw('User not found', 404);
 
    // New way (Koa v3.x)
-   const error = new Error('User not found');
-   ctx.throw(404, error, { user: 'john' });
+   ctx.throw(404, 'User not found');
 
    // You can also throw HTTP errors directly
    const createError = require('http-errors');
