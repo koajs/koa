@@ -2,6 +2,7 @@
 
 const { describe, it } = require('node:test')
 const assert = require('node:assert/strict')
+const { inspect } = require('node:util')
 const request = require('supertest')
 const Koa = require('../..')
 const context = require('../../test-helpers/context')
@@ -77,28 +78,39 @@ describe('ctx.onerror(err)', () => {
     assert.deepStrictEqual(res.headers['set-cookie'], ['first=1', 'second=2'])
   })
 
-  it('should ignore error after headerSent', async () => {
-    const app = new Koa()
+  for (const [name, value, message] of [
+    ['an Error', new Error('mock error'), 'mock error'],
+    ['a BigInt', 1n, 'non-error thrown: 1n']
+  ]) {
+    it(`should ignore ${name} after headerSent`, async () => {
+      const app = new Koa()
+      const errors = []
 
-    app.on('error', (err, { res }) => {
-      assert.strictEqual(err.message, 'mock error')
-      assert.strictEqual(err.headerSent, true)
-      res.end()
+      app.on('error', (err, { res }) => {
+        errors.push(err)
+        res.end()
+      })
+
+      app.use(async ctx => {
+        ctx.status = 200
+        ctx.set('X-Foo', 'Bar')
+        ctx.flushHeaders()
+        await Promise.reject(value)
+        ctx.body = 'response'
+      })
+
+      await request(app.callback())
+        .get('/')
+        .timeout({ deadline: 1000 })
+        .expect('X-Foo', 'Bar')
+        .expect(200)
+
+      assert.strictEqual(errors.length, 1)
+      assert(errors[0] instanceof Error)
+      assert.strictEqual(errors[0].message, message)
+      assert.strictEqual(errors[0].headerSent, true)
     })
-
-    app.use(async ctx => {
-      ctx.status = 200
-      ctx.set('X-Foo', 'Bar')
-      ctx.flushHeaders()
-      await Promise.reject(new Error('mock error'))
-      ctx.body = 'response'
-    })
-
-    await request(app.callback())
-      .get('/')
-      .expect('X-Foo', 'Bar')
-      .expect(200)
-  })
+  }
 
   it('should set status specified in the error using statusCode', () => {
     const app = new Koa()
@@ -210,6 +222,89 @@ describe('ctx.onerror(err)', () => {
   })
 
   describe('when non-error thrown', () => {
+    const circular = { value: 1n }
+    circular.self = circular
+
+    for (const [name, value] of [
+      ['a BigInt', 1n],
+      ['an object containing a BigInt', { value: 1n }],
+      ['a circular object containing a BigInt', circular],
+      ['an object with a throwing inspection hook', {
+        value: 1n,
+        [inspect.custom] () {
+          throw new Error('custom inspection invoked')
+        }
+      }]
+    ]) {
+      it(`should respond when rejecting ${name}`, async () => {
+        const app = new Koa()
+        const errors = []
+        app.on('error', err => errors.push(err))
+        app.use(() => Promise.reject(value))
+
+        await request(app.callback())
+          .get('/')
+          .timeout({ deadline: 1000 })
+          .expect(500, 'Internal Server Error')
+          .expect('Content-Type', 'text/plain; charset=utf-8')
+
+        assert.strictEqual(errors.length, 1)
+        assert(errors[0] instanceof Error)
+        assert.match(errors[0].message, /^non-error thrown: /)
+        assert.match(errors[0].message, /1n/)
+      })
+    }
+
+    it('should respond when toJSON throws without calling it again', async () => {
+      const app = new Koa()
+      const errors = []
+      let calls = 0
+      const value = {
+        toJSON () {
+          calls++
+          throw new Error('toJSON invoked')
+        }
+      }
+      app.on('error', err => errors.push(err))
+      app.use(() => Promise.reject(value))
+
+      await request(app.callback())
+        .get('/')
+        .timeout({ deadline: 1000 })
+        .expect(500, 'Internal Server Error')
+        .expect('Content-Type', 'text/plain; charset=utf-8')
+
+      assert.strictEqual(calls, 1)
+      assert.strictEqual(errors.length, 1)
+      assert(errors[0] instanceof Error)
+      assert.match(errors[0].message, /^non-error thrown: /)
+    })
+
+    it('should respond when a getter throws without calling it again', async () => {
+      const app = new Koa()
+      const errors = []
+      let calls = 0
+      const value = {
+        get value () {
+          calls++
+          throw new Error('getter invoked')
+        }
+      }
+      app.on('error', err => errors.push(err))
+      app.use(() => Promise.reject(value))
+
+      await request(app.callback())
+        .get('/')
+        .timeout({ deadline: 1000 })
+        .expect(500, 'Internal Server Error')
+        .expect('Content-Type', 'text/plain; charset=utf-8')
+
+      assert.strictEqual(calls, 1)
+      assert.strictEqual(errors.length, 1)
+      assert(errors[0] instanceof Error)
+      assert.match(errors[0].message, /^non-error thrown: /)
+    })
+
     it('should respond with non-error thrown message', () => {
       const app = new Koa()
 
