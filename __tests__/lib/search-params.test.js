@@ -36,6 +36,23 @@ describe('search-params', () => {
       assert.deepEqual(sp.parse('a=1&a=2'), { a: ['1', '2'] })
     })
 
+    it('Should preserve interleaved values after decoding their keys', () => {
+      const query = sp.parse('tag=&other=one&ta%67=two+words&tag=%E4%B8%89&=first&flag&=last')
+      assert.deepStrictEqual(query, {
+        tag: ['', 'two words', '三'],
+        other: 'one',
+        '': ['first', 'last'],
+        flag: ''
+      })
+      assert.deepStrictEqual(Object.keys(query), ['tag', 'other', '', 'flag'])
+    })
+
+    it('Should retain every value in a long repeated query', () => {
+      const values = Array.from({ length: 1024 }, (_, i) => String(i))
+      const query = sp.parse(values.map(value => `tag=${value}`).join('&'))
+      assert.deepStrictEqual(query, { tag: values })
+    })
+
     it('Should parse a query string with an array with a single empty value', () => {
       assert.deepStrictEqual(sp.parse('a='), { a: '' })
     })
@@ -43,15 +60,15 @@ describe('search-params', () => {
 })
 
 describe('parse prototype keys', () => {
-  const prototypeKeys = ['__proto__', '%5F%5Fproto%5F%5F', 'constructor', 'prototype']
+  const prototypeKeys = ['__proto__', '%5F%5Fproto%5F%5F', 'constructor', 'prototype', 'toString', 'hasOwnProperty']
 
   prototypeKeys.forEach(key => {
     it(`Should preserve repeated ${key} as an own property`, () => {
-      const query = sp.parse(`${key}=a&${key}=b&x=1`)
+      const query = sp.parse(`${key}=a&${key}=b&x=1&${key}=c`)
       const name = decodeURIComponent(key)
       assert.strictEqual(Object.getPrototypeOf(query), Object.prototype)
       assert.strictEqual(Object.hasOwn(query, name), true)
-      assert.deepStrictEqual(query[name], ['a', 'b'])
+      assert.deepStrictEqual(query[name], ['a', 'b', 'c'])
       assert.deepStrictEqual(Object.keys(query), [name, 'x'])
       for (const field in query) {
         assert.strictEqual(Object.hasOwn(query, field), true)
