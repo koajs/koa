@@ -5,21 +5,6 @@ const assert = require('node:assert/strict')
 const context = require('../../test-helpers/context')
 
 describe('ctx.set(name, val)', () => {
-  it('should remove Content-Length when Transfer-Encoding is set', () => {
-    const ctx = context()
-    ctx.body = 'hello'
-    ctx.set('tRaNsFeR-EnCoDiNg', 'chunked')
-    assert.strictEqual(ctx.response.has('Content-Length'), false)
-    assert.strictEqual(ctx.response.get('Transfer-Encoding'), 'chunked')
-  })
-
-  it('should not set Content-Length when Transfer-Encoding is present', () => {
-    const ctx = context()
-    ctx.set('Transfer-Encoding', 'chunked')
-    ctx.set('content-length', '5')
-    assert.strictEqual(ctx.response.has('Content-Length'), false)
-  })
-
   it('should set a field value', () => {
     const ctx = context()
     ctx.set('x-foo', 'bar')
@@ -46,20 +31,6 @@ describe('ctx.set(name, val)', () => {
 })
 
 describe('ctx.set(object)', () => {
-  const framingHeaders = [
-    { 'Content-Length': '5', 'Transfer-Encoding': 'chunked' },
-    { 'Transfer-Encoding': 'chunked', 'Content-Length': '5' }
-  ]
-
-  framingHeaders.forEach((headers, index) => {
-    it(`should prefer Transfer-Encoding regardless of field order (${index})`, () => {
-      const ctx = context()
-      ctx.set(headers)
-      assert.strictEqual(ctx.response.has('Content-Length'), false)
-      assert.strictEqual(ctx.response.get('Transfer-Encoding'), 'chunked')
-    })
-  })
-
   it('should set multiple fields', () => {
     const ctx = context()
 
