@@ -130,6 +130,8 @@ ctx.response.status = 204;
   - `Buffer` written
   - `Blob` streamed
   - `Stream` piped
+  - `ReadableStream` streamed
+  - `Response` headers copied and body streamed
   - `Object` || `Array` json-stringified
   - `null` || `undefined` no content response
 
@@ -173,6 +175,11 @@ app.use(async (ctx, next) => {
 #### Stream
 
   The Content-Type is defaulted to application/octet-stream.
+
+  Replacing an existing body with a different `Stream` or `ReadableStream` clears the previous Content-Length.
+  Set an explicit `ctx.length` after assigning the final body.
+  Replacing an existing body with a `Response`, including reassigning the same instance, clears the previous Content-Length before copying its headers.
+  Content-Length is removed whenever Transfer-Encoding is set through Koa's header setters.
 
   Whenever a stream is set as the response body, `.onerror` is automatically added as a listener to the `error` event to catch any errors.
   In addition, whenever the request is closed (even prematurely), the stream is destroyed.
