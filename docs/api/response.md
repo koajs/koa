@@ -117,6 +117,7 @@ ctx.response.status = 204;
 
   Return response Content-Length as a number when present, or deduce
   from `ctx.body` when possible, or `undefined`.
+  For a `ReadableStream` or `Response` body without a Content-Length header, this returns `undefined`.
 
 ### response.body
 
@@ -134,6 +135,10 @@ ctx.response.status = 204;
   - `Response` headers copied and body streamed
   - `Object` || `Array` json-stringified
   - `null` || `undefined` no content response
+
+When assigning the same `Response` again, Koa preserves a Content-Length you set
+after the first assignment through `ctx.length`, `ctx.set()`, or
+`ctx.res.setHeader()`. Transfer-Encoding takes precedence over Content-Length.
 
 If `response.status` has not been set, Koa will automatically set the status to `200` or `204` depending on `response.body`. Specifically, if `response.body` has not been set or has been set as `null` or `undefined`, Koa will automatically set `response.status` to `204`. If you really want to send no content response with other status, you should override the `204` status as the following way:
 
@@ -175,11 +180,6 @@ app.use(async (ctx, next) => {
 #### Stream
 
   The Content-Type is defaulted to application/octet-stream.
-
-  Replacing an existing body with a different `Stream` or `ReadableStream` clears the previous Content-Length.
-  Set an explicit `ctx.length` after assigning the final body.
-  Replacing an existing body with a `Response`, including reassigning the same instance, clears the previous Content-Length before copying its headers.
-  Content-Length is removed whenever Transfer-Encoding is set through Koa's header setters.
 
   Whenever a stream is set as the response body, `.onerror` is automatically added as a listener to the `error` event to catch any errors.
   In addition, whenever the request is closed (even prematurely), the stream is destroyed.
@@ -230,6 +230,7 @@ ctx.set('Cache-Control', 'no-cache');
   Header names are case-insensitive. `Content-Type` and `Content-Length` arrays
   are unwrapped if they contain exactly one value; other lengths throw an assertion
   error. After headers are sent, calls are ignored without validation.
+  To switch to a fixed length, remove `Transfer-Encoding` before setting `Content-Length`.
 
 ### response.append(field, value)
   Append additional header `field` with value `val`.
