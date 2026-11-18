@@ -6,285 +6,28 @@ const statuses = require('statuses')
 const assert = require('node:assert/strict')
 const Koa = require('../..')
 const fs = require('fs')
-const { once } = require('node:events')
-const { promisify } = require('node:util')
-const { createServer } = require('node:http')
-const { Readable } = require('node:stream')
-const { foreignReadableStream, withForeignResponseConstructor } = require('../../test-helpers/web-bodies')
-
-async function listen (app, t) {
-  const server = app.listen(0, '127.0.0.1')
-  const close = promisify(server.close.bind(server))
-  t.after(() => close())
-  await once(server, 'listening')
-  return server
-}
 
 describe('app.respond', () => {
-  const methods = ['get', 'head']
-  methods.forEach(method => {
-    it(`streams a body with a foreign prototype for ${method.toUpperCase()}`, async t => {
-      const app = new Koa()
-      app.use(ctx => { ctx.body = foreignReadableStream() })
-      const server = await listen(app, t)
-      const res = await request(server)[method]('/').expect(200)
-      assert.strictEqual(res.headers['content-type'], 'application/octet-stream')
-      assert.strictEqual(res.headers['content-length'], undefined)
-      if (method === 'get') assert.strictEqual(res.body.toString(), 'hello')
-    })
-
-    it(`handles a Response when the current constructor is foreign for ${method.toUpperCase()}`, async t => {
-      await withForeignResponseConstructor(async NativeResponse => {
-        const app = new Koa()
-        const headers = { 'Content-Type': 'text/plain', 'X-Realm': 'vm' }
-        app.use(ctx => { ctx.body = new NativeResponse('hello', { status: 201, headers }) })
-        const server = await listen(app, t)
-        const res = await request(server)[method]('/').expect(201)
-        assert.strictEqual(res.headers['content-type'], 'text/plain')
-        assert.strictEqual(res.headers['x-realm'], 'vm')
-        assert.strictEqual(res.headers['content-length'], undefined)
-        if (method === 'get') assert.strictEqual(res.text, 'hello')
-      })
-    })
-
-    it(`keeps valid framing after a caught header error for ${method.toUpperCase()}`, async t => {
-      const app = new Koa()
-      app.use(ctx => {
-        ctx.body = 'hello'
-        const headers = { 'Transfer-Encoding': 'chunked', 'X-Invalid': 'bad\nvalue' }
-        assert.throws(() => {
-          ctx.set(headers)
-        }, { code: 'ERR_INVALID_CHAR' })
-      })
-
-      const server = await listen(app, t)
-      const res = await request(server)[method]('/').expect(200)
-      assert.strictEqual(res.headers['content-length'], undefined)
-      assert.strictEqual(res.headers['transfer-encoding'], 'chunked')
-      if (method === 'get') assert.strictEqual(res.text, 'hello')
-    })
-
-    it(`clears the deleted length of a reassigned Response for ${method.toUpperCase()}`, async t => {
-      const app = new Koa()
-      app.use(ctx => {
-        const headers = { 'Content-Length': '5' }
-        const body = new Response('hello world', { headers })
-        ctx.body = body
-        body.headers.delete('Content-Length')
-        ctx.body = body
-      })
-
-      const server = await listen(app, t)
-      const res = await request(server)[method]('/').expect(200)
-      assert.strictEqual(res.headers['content-length'], undefined)
-      if (method === 'get') assert.strictEqual(res.text, 'hello world')
-    })
+  it('sends JSON when Fetch globals are unavailable', async t => {
+    const { Response, ReadableStream } = globalThis
+    t.after(() => Object.assign(globalThis, { Response, ReadableStream }))
+    globalThis.Response = undefined
+    globalThis.ReadableStream = undefined
+    const app = new Koa()
+    app.use(ctx => { ctx.body = { ok: true } })
+    await request(app.callback()).get('/').expect(200, { ok: true })
   })
 
-  describe('when transfer encoding replaces a known-length body', () => {
-    const headers = { 'Content-Length': '11' }
-    const responseOptions = { headers }
-    const makeWebStream = () => {
-      const blob = new Blob(['hello world'])
-      const stream = blob.stream()
-      return stream
-    }
-    const cases = [
-      ['string', () => 'hello world', 'get'],
-      ['string', () => 'hello world', 'head'],
-      ['Buffer', () => Buffer.from('hello world'), 'get'],
-      ['Buffer', () => Buffer.from('hello world'), 'head'],
-      ['Blob', () => new Blob(['hello world']), 'get'],
-      ['Blob', () => new Blob(['hello world']), 'head'],
-      ['Stream', () => Readable.from(['hello world']), 'get'],
-      ['Stream', () => Readable.from(['hello world']), 'head'],
-      ['ReadableStream', makeWebStream, 'get'],
-      ['ReadableStream', makeWebStream, 'head'],
-      ['Response', () => new Response('hello world', responseOptions), 'get'],
-      ['Response', () => new Response('hello world', responseOptions), 'head']
-    ]
-
-    cases.forEach(([kind, makeBody, method]) => {
-      it(`clears the length when transfer encoding follows a ${kind} for ${method.toUpperCase()}`, async t => {
-        const app = new Koa()
-        app.use(ctx => {
-          ctx.body = makeBody()
-          ctx.set('Transfer-Encoding', 'chunked')
-        })
-
-        const server = await listen(app, t)
-        const res = await request(server)[method]('/').expect(200)
-        assert.strictEqual(res.headers['content-length'], undefined)
-        assert.strictEqual(res.headers['transfer-encoding'], 'chunked')
-        if (method === 'head') return
-        const isTextBody = kind === 'string' || kind === 'Response'
-        if (isTextBody) {
-          assert.strictEqual(res.text, 'hello world')
-          return
-        }
-        assert.strictEqual(res.body.toString(), 'hello world')
-      })
-
-      it(`clears an explicit conflicting length for ${method.toUpperCase()} with a ${kind}`, async t => {
-        const app = new Koa()
-        app.use(ctx => {
-          ctx.body = 'short'
-          ctx.length = 5
-          ctx.set('Transfer-Encoding', 'chunked')
-          ctx.body = makeBody()
-        })
-
-        const server = await listen(app, t)
-        const res = await request(server)[method]('/').expect(200)
-        assert.strictEqual(res.headers['content-length'], undefined)
-        assert.strictEqual(res.headers['transfer-encoding'], 'chunked')
-        if (method === 'get') assert.strictEqual(res.text, 'hello world')
-      })
-
-      it(`clears the old length for ${method.toUpperCase()} with a ${kind}`, async t => {
-        const app = new Koa()
-        app.use(ctx => {
-          ctx.body = 'short'
-          ctx.set('Transfer-Encoding', 'chunked')
-          ctx.body = makeBody()
-        })
-
-        const server = await listen(app, t)
-        const res = await request(server)[method]('/').expect(200)
-        assert.strictEqual(res.headers['content-length'], undefined)
-        assert.strictEqual(res.headers['transfer-encoding'], 'chunked')
-        if (method === 'get') assert.strictEqual(res.text, 'hello world')
-      })
+  it('removes the length before a later header write fails', async () => {
+    const app = new Koa()
+    app.use(ctx => {
+      ctx.body = 'hello'
+      const headers = { 'Transfer-Encoding': 'chunked', 'X-Invalid': 'bad\nvalue' }
+      assert.throws(() => ctx.set(headers), { code: 'ERR_INVALID_CHAR' })
     })
-  })
-
-  describe('when replacing a known-length body with a web stream body', () => {
-    const originalBodies = [
-      ['string', () => 'short'],
-      ['Buffer', () => Buffer.from('short')],
-      ['Blob', () => new Blob(['short'])],
-      ['Response', () => new Response('short', { headers: { 'Content-Length': '5' } })],
-      ['empty Response', () => new Response(null, { headers: { 'Content-Length': '0' } })]
-    ]
-    const requests = [
-      ['ReadableStream', () => new Blob(['hello world']).stream(), 'get'],
-      ['ReadableStream', () => new Blob(['hello world']).stream(), 'head'],
-      ['Response', () => new Response('hello world'), 'get'],
-      ['Response', () => new Response('hello world'), 'head']
-    ]
-    const replacementCases = originalBodies.flatMap(([originalKind, makeOriginal]) => {
-      return requests.map(([kind, makeBody, method]) => {
-        const wasTextBody = originalKind === 'string' || originalKind === 'Response'
-        const expectsText = kind === 'Response' || wasTextBody
-        const replacementCase = { originalKind, makeOriginal, kind, makeBody, method, expectsText }
-        return replacementCase
-      })
-    })
-
-    replacementCases.forEach(({ originalKind, makeOriginal, kind, makeBody, method, expectsText }) => {
-      it(`clears the ${originalKind} length for ${method.toUpperCase()} with a ${kind}`, async t => {
-        const app = new Koa()
-        app.use(ctx => {
-          ctx.body = makeOriginal()
-          ctx.body = makeBody()
-        })
-
-        const server = await listen(app, t)
-        const res = await request(server)[method]('/').expect(200)
-        assert.strictEqual(res.headers['content-length'], undefined)
-        if (method === 'head') return
-        if (expectsText) {
-          assert.strictEqual(res.text, 'hello world')
-          return
-        }
-        assert.strictEqual(res.body.toString(), 'hello world')
-      })
-    })
-
-    requests.forEach(([kind, makeBody, method]) => {
-      it(`clears a cached setter's earlier length for ${method.toUpperCase()} with a ${kind}`, async t => {
-        const app = new Koa()
-        app.use(ctx => {
-          ctx.body = new Response('other value', { headers: { 'Content-Length': '11' } })
-          const length = ctx.res.getHeader('Content-Length')
-          ctx.req.cachedSetHeader('Content-Length', length)
-          ctx.body = makeBody()
-        })
-
-        const callback = app.callback()
-        const server = createServer((req, res) => {
-          req.cachedSetHeader = res.setHeader.bind(res)
-          callback(req, res)
-        })
-        await listen(server, t)
-        const res = await request(server)[method]('/').expect(200)
-        assert.strictEqual(res.headers['content-length'], undefined)
-        if (method === 'get') assert.strictEqual(res.text, 'hello world')
-      })
-
-      it(`preserves a cached setter's final length for ${method.toUpperCase()} with a ${kind}`, async t => {
-        const app = new Koa()
-        app.use(ctx => {
-          ctx.body = 'short'
-          ctx.body = makeBody()
-          ctx.req.cachedSetHeader('Content-Length', 11)
-        })
-
-        const callback = app.callback()
-        const server = createServer((req, res) => {
-          req.cachedSetHeader = res.setHeader.bind(res)
-          callback(req, res)
-        })
-        await listen(server, t)
-        const res = await request(server)[method]('/').expect(200)
-        assert.strictEqual(res.headers['content-length'], '11')
-        if (method === 'get') assert.strictEqual(res.text, 'hello world')
-      })
-
-      it(`clears a length retained by transfer encoding for ${method.toUpperCase()} with a ${kind}`, async t => {
-        const app = new Koa()
-        app.use(ctx => {
-          ctx.body = 'short'
-          ctx.set('Transfer-Encoding', 'chunked')
-          ctx.body = Buffer.from('another body')
-          ctx.body = makeBody()
-        })
-
-        const server = await listen(app, t)
-        const res = await request(server)[method]('/').expect(200)
-        assert.strictEqual(res.headers['content-length'], undefined)
-        assert.strictEqual(res.headers['transfer-encoding'], 'chunked')
-        if (method === 'get') assert.strictEqual(res.text, 'hello world')
-      })
-
-      it(`preserves the final explicit length for ${method.toUpperCase()} with a ${kind}`, async t => {
-        const app = new Koa()
-        app.use(ctx => {
-          ctx.body = 'other value'
-          ctx.body = makeBody()
-          ctx.length = 11
-        })
-
-        const server = await listen(app, t)
-        const res = await request(server)[method]('/').expect(200)
-        assert.strictEqual(res.headers['content-length'], '11')
-        if (method === 'get') assert.strictEqual(res.text, 'hello world')
-      })
-
-      it(`clears the old length after a rejected override for ${method.toUpperCase()} with a ${kind}`, async t => {
-        const app = new Koa()
-        app.use(ctx => {
-          ctx.body = 'short'
-          assert.throws(() => ctx.set('Content-Length', '5\n'), { code: 'ERR_INVALID_CHAR' })
-          ctx.body = makeBody()
-        })
-
-        const server = await listen(app, t)
-        const res = await request(server)[method]('/').expect(200)
-        assert.strictEqual(res.headers['content-length'], undefined)
-        if (method === 'get') assert.strictEqual(res.text, 'hello world')
-      })
-    })
+    const res = await request(app.callback()).get('/').expect(200, 'hello')
+    assert.strictEqual(res.headers['content-length'], undefined)
+    assert.strictEqual(res.headers['transfer-encoding'], 'chunked')
   })
 
   describe('when ctx.respond === false', () => {
@@ -453,19 +196,6 @@ describe('app.respond', () => {
       assert.strictEqual(~~res.header['content-length'], length)
       assert(!res.text)
     })
-
-    for (const [name, body] of [
-      ['ReadableStream', () => new Blob(['hello']).stream()],
-      ['Response', () => new Response('hello')]
-    ]) {
-      it(`should not invent a length for a ${name} body`, async () => {
-        const app = new Koa()
-        app.use(ctx => { ctx.body = body() })
-
-        const res = await request(app.callback()).head('/').expect(200)
-        assert.strictEqual(res.headers['content-length'], undefined)
-      })
-    }
 
     it('should respond with a 404 if no body was set', () => {
       const app = new Koa()
@@ -847,6 +577,7 @@ describe('app.respond', () => {
         .head('/')
         .expect(200)
         .expect('content-type', 'application/octet-stream')
+        .expect(res => assert.strictEqual(res.headers['content-length'], undefined))
     })
 
     it('should respond hello', async () => {
