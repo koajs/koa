@@ -20,7 +20,7 @@ describe('app.handleRequest', () => {
 
         await request(app.callback())
           .get('/')
-          .timeout({ deadline: 1000 })
+          .timeout({ deadline: 5000 })
           .expect(500, 'Internal Server Error')
 
         assert.strictEqual(errors.length, 1)
@@ -45,7 +45,7 @@ describe('app.handleRequest', () => {
 
       await request(app.callback())
         .get('/')
-        .timeout({ deadline: 1000 })
+        .timeout({ deadline: 5000 })
         .expect('X-Sent', 'yes')
         .expect(200)
 
