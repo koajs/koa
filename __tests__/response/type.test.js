@@ -65,6 +65,22 @@ describe('ctx.type', () => {
       ctx.type = 'json'
       assert.strictEqual(ctx.type, 'application/json')
     })
+
+    it('should lowercase the mime without changing the header', () => {
+      const ctx = context()
+      const type = 'Application/JSON; charset=UTF-8; profile="Example"'
+      ctx.set('Content-Type', type)
+      assert.strictEqual(ctx.type, 'application/json')
+      assert.strictEqual(ctx.response.get('Content-Type'), type)
+    })
+
+    it('should trim optional whitespace before parameters', () => {
+      const ctx = context()
+      const type = 'application/json \t; charset=utf-8'
+      ctx.set('Content-Type', type)
+      assert.strictEqual(ctx.type, 'application/json')
+      assert.strictEqual(ctx.response.get('Content-Type'), type)
+    })
   })
 
   describe('when setting to +json content type', () => {
