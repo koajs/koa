@@ -203,7 +203,7 @@ app.use(async function (ctx, next) {
 const fs = require('fs').promises;
 
 app.use(async function (ctx, next) {
-  const paths = await fs.readdir('docs');
+  const paths = (await fs.readdir('docs')).filter(path => path.endsWith('.md'));
   const files = await Promise.all(paths.map(path => fs.readFile(`docs/${path}`, 'utf8')));
 
   ctx.type = 'markdown';
@@ -220,12 +220,12 @@ app.use(async function (ctx, next) {
 
 ```
 $ NODE_DEBUG=koa* node --harmony examples/simple
-  koa:application use responseTime +0ms
-  koa:application use logger +4ms
-  koa:application use contentLength +0ms
-  koa:application use notfound +0ms
-  koa:application use response +0ms
-  koa:application listen +0ms
+KOA:APPLICATION 12345: use responseTime
+KOA:APPLICATION 12345: use logger
+KOA:APPLICATION 12345: use contentLength
+KOA:APPLICATION 12345: use notfound
+KOA:APPLICATION 12345: use response
+KOA:APPLICATION 12345: listen
 ```
 
   Since JavaScript does not allow defining function names at
@@ -246,7 +246,7 @@ app.use(publicFiles);
   Now, instead of just seeing "serve" when debugging, you will see:
 
 ```
-  koa:application use static /public +0ms
+KOA:APPLICATION 12345: use static /public
 ```
 
 This lets you use Koa’s internal debug logs without any third-party dependencies by relying on node:util's built-in debuglog.
