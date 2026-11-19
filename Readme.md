@@ -1,6 +1,6 @@
 <img src="/docs/logo.png" alt="Koa middleware framework for nodejs"/>
 
-  [![gitter][gitter-image]][gitter-url]
+  [![discussions][discussions-image]][discussions-url]
   [![NPM version][npm-image]][npm-url]
   [![build status][github-action-image]][github-action-url]
   [![Test coverage][coveralls-image]][coveralls-url]
@@ -187,7 +187,7 @@ See [AUTHORS](AUTHORS).
  - [Mailing list](https://groups.google.com/forum/#!forum/koajs)
  - [中文文档 v1.x](https://github.com/guo-yu/koa-guide)
  - [中文文档 v2.x](https://github.com/demopark/koa-docs-Zh-CN)
- - __[#koajs]__ on freenode
+ - [GitHub Discussions](https://github.com/koajs/koa/discussions)
 
 ## Backers
 
@@ -272,8 +272,7 @@ Become a sponsor and get your logo on our README on Github with a link to your s
 [coveralls-url]: https://codecov.io/github/koajs/koa?branch=master
 [backers-image]: https://opencollective.com/koajs/backers/badge.svg?style=flat-square
 [sponsors-image]: https://opencollective.com/koajs/sponsors/badge.svg?style=flat-square
-[gitter-image]: https://img.shields.io/gitter/room/koajs/koa.svg?style=flat-square
-[gitter-url]: https://gitter.im/koajs/koa?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
-[#koajs]: https://webchat.freenode.net/?channels=#koajs
+[discussions-image]: https://img.shields.io/github/discussions/koajs/koa?style=flat-square
+[discussions-url]: https://github.com/koajs/koa/discussions
 [pr-welcoming-image]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
 [pr-welcoming-url]: https://github.com/koajs/koa/pull/new
