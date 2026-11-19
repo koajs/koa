@@ -115,6 +115,74 @@ describe('app.respond', () => {
   })
 
   describe('when HEAD is used', () => {
+    for (const type of ['ReadableStream', 'Response']) {
+      it(`should cancel an unused ${type} body on HEAD`, async () => {
+        const app = new Koa()
+        let cancellations = 0
+        let chunksRead = 0
+        const body = new ReadableStream({
+          pull (controller) {
+            chunksRead++
+            controller.enqueue(new Uint8Array([1]))
+          },
+          cancel () { cancellations++ }
+        }, { highWaterMark: 0 })
+        app.use(ctx => {
+          ctx.body = type === 'Response' ? new Response(body) : body
+          ctx.set('X-Test', 'preserved')
+        })
+        const res = await request(app.callback()).head('/').expect(200)
+        await new Promise(resolve => setImmediate(resolve))
+        assert.strictEqual(cancellations, 1)
+        assert.strictEqual(chunksRead, 0)
+        assert.strictEqual(res.headers['x-test'], 'preserved')
+        assert.strictEqual(res.headers['content-length'], undefined)
+      })
+    }
+
+    it('should report a HEAD body cancellation failure without rejecting the request', async () => {
+      const app = new Koa()
+      const failure = new Error('cancel failed')
+      const errors = []
+      app.on('error', err => errors.push(err))
+      app.use(ctx => {
+        ctx.body = new ReadableStream({ cancel () { throw failure } })
+      })
+      await request(app.callback()).head('/').expect(200)
+      await new Promise(resolve => setImmediate(resolve))
+      assert.deepStrictEqual(errors, [failure])
+    })
+
+    it('should not cancel a locked HEAD body owned by another reader', async () => {
+      const app = new Koa()
+      let cancellations = 0
+      const body = new ReadableStream({ cancel () { cancellations++ } })
+      const reader = body.getReader()
+      app.use(ctx => { ctx.body = body })
+      await request(app.callback()).head('/').expect(200)
+      assert.strictEqual(cancellations, 0)
+      reader.releaseLock()
+      await body.cancel()
+    })
+
+    it('should handle HEAD Response bodies that are null', async () => {
+      const app = new Koa()
+      app.use(ctx => { ctx.body = new Response(null) })
+      await request(app.callback()).head('/').expect(200)
+    })
+
+    it('should preserve an explicit HEAD length when cancelling its web body', async () => {
+      const app = new Koa()
+      let cancellations = 0
+      app.use(ctx => {
+        ctx.body = new ReadableStream({ cancel () { cancellations++ } })
+        ctx.length = 123
+      })
+      const res = await request(app.callback()).head('/').expect(200)
+      assert.strictEqual(res.headers['content-length'], '123')
+      assert.strictEqual(cancellations, 1)
+    })
+
     it('should not respond with the body', async () => {
       const app = new Koa()
 
