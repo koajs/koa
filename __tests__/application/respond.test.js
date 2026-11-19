@@ -408,6 +408,27 @@ describe('app.respond', () => {
   })
 
   describe('when .body is a null', () => {
+    methods.forEach(method => {
+      it(`should preserve a JSON null response with mixed case and whitespace for ${method.toUpperCase()}`, async () => {
+        const app = new Koa()
+        const type = 'Application/JSON \t; charset=UTF-8'
+
+        app.use(ctx => {
+          ctx.status = 200
+          ctx.set('Content-Type', type)
+          ctx.body = null
+        })
+
+        const res = await request(app.callback())[method]('/')
+          .expect(200)
+          .expect('Content-Type', type)
+          .expect('Content-Length', '4')
+
+        if (method === 'get') assert.strictEqual(res.text, 'null')
+        else assert.strictEqual(res.text, undefined)
+      })
+    })
+
     it('should respond 204 by default', async () => {
       const app = new Koa()
 
