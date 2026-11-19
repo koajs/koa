@@ -38,6 +38,13 @@ describe('res.length', () => {
     })
 
     describe('and a .body is set', () => {
+      it('should use the Blob size when the header is removed', () => {
+        const res = response()
+        res.body = new Blob(['hello'])
+        res.remove('Content-Length')
+        assert.strictEqual(res.length, 5)
+      })
+
       it('should return a number', () => {
         const res = response()
 
