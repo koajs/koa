@@ -41,6 +41,30 @@ describe('ctx.back([alt])', () => {
     assert.equal(ctx.response.header.location, 'https://example.com/login')
   })
 
+  it('should redirect to the same origin referrer when the Host header is uppercase', () => {
+    const ctx = context({ url: '/', headers: { host: 'EXAMPLE.COM', referer: 'http://example.com/return' } })
+    ctx.back('/fallback')
+    assert.equal(ctx.response.header.location, 'http://example.com/return')
+  })
+
+  it('should redirect to the same origin referrer when the Host header carries the default port', () => {
+    const ctx = context({ url: '/', headers: { host: 'example.com:80', referer: 'http://example.com/return' } })
+    ctx.back('/fallback')
+    assert.equal(ctx.response.header.location, 'http://example.com/return')
+  })
+
+  it('should redirect to a relative referer when the Host header is uppercase', () => {
+    const ctx = context({ url: '/', headers: { host: 'EXAMPLE.COM', referer: '/return' } })
+    ctx.back('/fallback')
+    assert.equal(ctx.response.header.location, '/return')
+  })
+
+  it('should default to alt when the referrer port differs from the Host port', () => {
+    const ctx = context({ url: '/', headers: { host: 'example.com:8080', referer: 'http://example.com/return' } })
+    ctx.back('/fallback')
+    assert.equal(ctx.response.header.location, '/fallback')
+  })
+
   it('should default to alt', () => {
     const ctx = context()
     ctx.back('/index.html')
