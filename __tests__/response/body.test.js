@@ -117,14 +117,60 @@ describe('res.body=', () => {
       assert.strictEqual('application/octet-stream', res.header['content-type'])
     })
 
-    it('should not add error handler to stream (handled by pipeline)', () => {
+    it('should add error handler to the stream, but only once', () => {
       const res = response()
       const body = new Stream.PassThrough()
       assert.strictEqual(body.listenerCount('error'), 0)
       res.body = body
-      assert.strictEqual(body.listenerCount('error'), 0)
+      assert.strictEqual(body.listenerCount('error'), 1)
       res.body = body
-      assert.strictEqual(body.listenerCount('error'), 0)
+      assert.strictEqual(body.listenerCount('error'), 1)
+    })
+
+    it('should report a stream error only once when the stream is assigned again (A -> B -> A)', () => {
+      const res = response()
+      const errors = []
+      res.ctx.onerror = err => errors.push(err)
+      const a = new Stream.PassThrough()
+      const b = new Stream.PassThrough()
+      res.body = a
+      res.body = b
+      res.body = a
+      a.emit('error', new Error('upstream failed'))
+      assert.strictEqual(errors.length, 1)
+      assert.strictEqual(errors[0].message, 'upstream failed')
+    })
+
+    it('should report a stream error only once when the stream is assigned again (A -> B -> A -> B -> A)', () => {
+      const res = response()
+      const errors = []
+      res.ctx.onerror = err => errors.push(err)
+      const a = new Stream.PassThrough()
+      const b = new Stream.PassThrough()
+      res.body = a
+      res.body = b
+      res.body = a
+      res.body = b
+      res.body = a
+      a.emit('error', new Error('upstream failed'))
+      assert.strictEqual(errors.length, 1)
+      assert.strictEqual(errors[0].message, 'upstream failed')
+    })
+
+    it('should report an error of a stream that failed while replaced and became the body again', () => {
+      const res = response()
+      const errors = []
+      res.ctx.onerror = err => errors.push(err)
+      const a = new Stream.PassThrough()
+      const b = new Stream.PassThrough()
+      res.body = a
+      res.body = b
+      a.emit('error', new Error('while replaced'))
+      assert.strictEqual(errors.length, 0)
+      res.body = a
+      a.emit('error', new Error('upstream failed'))
+      assert.strictEqual(errors.length, 1)
+      assert.strictEqual(errors[0].message, 'upstream failed')
     })
 
     it('should NOT cleanup original stream when replaced by new stream (to support wrapping middleware)', () => {
