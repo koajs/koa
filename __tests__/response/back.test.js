@@ -62,4 +62,25 @@ describe('ctx.back([alt])', () => {
     ctx.back('/home')
     assert.equal(ctx.response.header.location, '/home')
   })
+
+  it('should fall back when the referrer is not a parseable URL', () => {
+    const ctx = context({ url: '/', headers: { host: 'example.com' } })
+    ctx.req.headers.referrer = 'http://[::1'
+    ctx.back()
+    assert.equal(ctx.response.header.location, '/')
+  })
+
+  it('should fall back to alt when the referrer host is malformed', () => {
+    const ctx = context({ url: '/', headers: { host: 'example.com' } })
+    ctx.req.headers.referrer = 'http://exa mple.com/login'
+    ctx.back('/index.html')
+    assert.equal(ctx.response.header.location, '/index.html')
+  })
+
+  it('should fall back when the Host header makes ctx.href unparseable', () => {
+    const ctx = context({ url: '/', headers: { host: 'exa mple.com' } })
+    ctx.req.headers.referrer = '/login'
+    ctx.back()
+    assert.equal(ctx.response.header.location, '/')
+  })
 })
