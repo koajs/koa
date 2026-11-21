@@ -41,6 +41,20 @@ describe('ctx.back([alt])', () => {
     assert.equal(ctx.response.header.location, '/fallback')
   })
 
+  it('should not redirect to referrer when schemes differ and host specifies referrer default port', () => {
+    const ctx = context({ url: '/', headers: { host: 'example.com:443' } })
+    ctx.req.headers.referrer = 'https://example.com/login'
+    ctx.back('/fallback')
+    assert.equal(ctx.response.header.location, '/fallback')
+  })
+
+  it('should not redirect to opaque or unsafe referrer schemes', () => {
+    const ctx = context({ url: '/', headers: { host: 'example.com' } })
+    ctx.req.headers.referrer = 'javascript:alert(1)'
+    ctx.back('/fallback')
+    assert.equal(ctx.response.header.location, '/fallback')
+  })
+
   it('should redirect to root if the same origin referrer is not present', () => {
     const ctx = context()
     ctx.req.headers.host = 'example.com'
