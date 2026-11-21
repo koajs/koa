@@ -65,6 +65,9 @@ describe('res.length', () => {
         res.body = { hello: 'world' }
         assert.strictEqual(res.length, 17)
 
+        res.body = { toJSON: () => undefined }
+        assert.strictEqual(res.length, undefined)
+
         res.body = fs.createReadStream('package.json')
         assert.strictEqual(res.length, undefined)
 

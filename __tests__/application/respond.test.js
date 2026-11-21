@@ -1001,6 +1001,26 @@ describe('app.respond', () => {
           .expect('{"hello":"world"}')
       })
     })
+
+    describe('and toJSON returns undefined', () => {
+      it('should respond with empty body', () => {
+        const app = new Koa()
+
+        app.use(ctx => {
+          ctx.body = {
+            toJSON () {
+              return undefined
+            }
+          }
+        })
+
+        return request(app.callback())
+          .get('/')
+          .expect(200)
+          .expect('Content-Length', '0')
+          .expect('')
+      })
+    })
   })
 
   describe('when an error occurs', () => {
