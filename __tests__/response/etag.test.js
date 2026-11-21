@@ -22,6 +22,22 @@ describe('res.etag=', () => {
     res.etag = 'asdf'
     assert.strictEqual(res.header.etag, '"asdf"')
   })
+
+  it('should add quotes around an unquoted weak etag', () => {
+    const res = response()
+    res.etag = 'W/asdf'
+    assert.strictEqual(res.header.etag, 'W/"asdf"')
+  })
+
+  it('should normalize quotes when missing closing quote', () => {
+    const res = response()
+    res.etag = 'W/"asdf'
+    assert.strictEqual(res.header.etag, 'W/"asdf"')
+
+    const res2 = response()
+    res2.etag = '"asdf'
+    assert.strictEqual(res2.header.etag, '"asdf"')
+  })
 })
 
 describe('res.etag', () => {
