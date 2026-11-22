@@ -1018,6 +1018,9 @@ describe('app.respond', () => {
           .get('/')
           .expect(200)
           .expect('Content-Length', '0')
+          .expect(res => {
+            assert.strictEqual(res.headers['content-type'], undefined)
+          })
           .expect('')
       })
     })
