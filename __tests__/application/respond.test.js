@@ -1023,6 +1023,25 @@ describe('app.respond', () => {
           })
           .expect('')
       })
+
+      it('should clear Content-Type on HEAD request', () => {
+        const app = new Koa()
+
+        app.use(ctx => {
+          ctx.body = {
+            toJSON () {
+              return undefined
+            }
+          }
+        })
+
+        return request(app.callback())
+          .head('/')
+          .expect(200)
+          .expect(res => {
+            assert.strictEqual(res.headers['content-type'], undefined)
+          })
+      })
     })
   })
 
