@@ -55,6 +55,13 @@ describe('ctx.back([alt])', () => {
     assert.equal(ctx.response.header.location, '/fallback')
   })
 
+  it('should fallback when request host or referrer is unparseable', () => {
+    const ctx = context({ url: '/', headers: { host: '[invalid]' } })
+    ctx.req.headers.referrer = 'http://example.com/login'
+    ctx.back('/fallback')
+    assert.equal(ctx.response.header.location, '/fallback')
+  })
+
   it('should redirect to root if the same origin referrer is not present', () => {
     const ctx = context()
     ctx.req.headers.host = 'example.com'
