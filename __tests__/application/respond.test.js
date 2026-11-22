@@ -1042,6 +1042,28 @@ describe('app.respond', () => {
             assert.strictEqual(res.headers['content-type'], undefined)
           })
       })
+
+      it('should serialize JSON body only once on HEAD request', () => {
+        const app = new Koa()
+        let calls = 0
+
+        app.use(ctx => {
+          ctx.body = {
+            toJSON () {
+              calls++
+              return { foo: 'bar' }
+            }
+          }
+        })
+
+        return request(app.callback())
+          .head('/')
+          .expect(200)
+          .expect('Content-Length', '13')
+          .expect(res => {
+            assert.strictEqual(calls, 1)
+          })
+      })
     })
   })
 
