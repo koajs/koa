@@ -1001,6 +1001,70 @@ describe('app.respond', () => {
           .expect('{"hello":"world"}')
       })
     })
+
+    describe('and toJSON returns undefined', () => {
+      it('should respond with empty body', () => {
+        const app = new Koa()
+
+        app.use(ctx => {
+          ctx.body = {
+            toJSON () {
+              return undefined
+            }
+          }
+        })
+
+        return request(app.callback())
+          .get('/')
+          .expect(200)
+          .expect('Content-Length', '0')
+          .expect(res => {
+            assert.strictEqual(res.headers['content-type'], undefined)
+          })
+          .expect('')
+      })
+
+      it('should clear Content-Type on HEAD request', () => {
+        const app = new Koa()
+
+        app.use(ctx => {
+          ctx.body = {
+            toJSON () {
+              return undefined
+            }
+          }
+        })
+
+        return request(app.callback())
+          .head('/')
+          .expect(200)
+          .expect(res => {
+            assert.strictEqual(res.headers['content-type'], undefined)
+          })
+      })
+
+      it('should serialize JSON body only once on HEAD request', () => {
+        const app = new Koa()
+        let calls = 0
+
+        app.use(ctx => {
+          ctx.body = {
+            toJSON () {
+              calls++
+              return { foo: 'bar' }
+            }
+          }
+        })
+
+        return request(app.callback())
+          .head('/')
+          .expect(200)
+          .expect('Content-Length', '13')
+          .expect(res => {
+            assert.strictEqual(calls, 1)
+          })
+      })
+    })
   })
 
   describe('when an error occurs', () => {
