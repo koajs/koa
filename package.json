@@ -16,7 +16,7 @@
   },
   "scripts": {
     "test": "node --test",
-    "test:coverage": "c8 --reporter=lcov --reporter=text-summary node --test",
+    "test:coverage": "c8 --reporter=lcov --reporter=text-summary npm test --",
     "lint": "standard",
     "lint:fix": "standard --fix",
     "lint:pretty": "standard | snazzy",
