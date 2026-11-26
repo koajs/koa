@@ -15,6 +15,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
+    "bench": "node tests/bench",
     "test": "node --test",
     "test:coverage": "c8 --reporter=lcov --reporter=text-summary npm test --",
     "lint": "standard",
@@ -56,11 +57,13 @@
     "vary": "^1.1.2"
   },
   "devDependencies": {
+    "ajv": "^6.15.0",
     "c8": "^12.0.0",
     "gen-esm-wrapper": "^1.1.3",
     "snazzy": "^9.0.0",
     "standard": "^17.1.2",
-    "supertest": "^7.1.1"
+    "supertest": "^7.1.1",
+    "tinybench": "6.2.5"
   },
   "engines": {
     "node": ">= 18"

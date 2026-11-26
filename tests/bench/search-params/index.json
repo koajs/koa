@@ -1,0 +1,7 @@
+[
+  { "size": 8, "kind": "distinct" },
+  { "size": 8, "kind": "repeated" },
+  { "size": 128, "kind": "distinct" },
+  { "size": 128, "kind": "repeated" },
+  { "size": 1024, "kind": "repeated" }
+]

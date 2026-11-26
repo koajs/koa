@@ -1,0 +1,4 @@
+[
+  { "size": 8, "kind": "repeated" },
+  { "size": 1024, "kind": "repeated", "maxRequestsPerPhase": 1024 }
+]
