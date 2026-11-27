@@ -10,6 +10,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     strategy:
       matrix:
@@ -17,11 +19,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v6
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
+    - name: Smoke-test proposed benchmark fixtures
+      if: matrix.node-version == '26.x'
+      run: npm run bench -- --smoke
     - if: matrix.node-version != '26.x'
       run: npm test
     - if: matrix.node-version == '26.x'
@@ -34,3 +41,63 @@ jobs:
       uses: codecov/codecov-action@v7
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
+
+  benchmark:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
+    - uses: actions/setup-node@v6
+      with:
+        node-version: 26.x
+    - name: Check out the benchmark baseline
+      uses: actions/checkout@v6
+      with:
+        ref: ${{ github.event.pull_request.base.sha || (github.event.before != '0000000000000000000000000000000000000000' && github.event.before) || github.sha }}
+        path: .bench-base
+        persist-credentials: false
+    - name: Install the baseline harness and candidate
+      run: |
+        harness=.bench-base
+        runtime_only=.
+        if ! git -C .bench-base cat-file -e HEAD:tests/bench/index.js; then
+          git -C .bench-base cat-file -e HEAD:tests/bench/README.md
+          harness=.
+          runtime_only=.bench-base
+        fi
+        npm ci --prefix "$harness" --ignore-scripts
+        npm ci --prefix "$runtime_only" --omit=dev --ignore-scripts
+        echo "BENCH_HARNESS=$harness" >> "$GITHUB_ENV"
+    - name: Install the latest published Koa release
+      id: release
+      if: github.event_name == 'pull_request'
+      continue-on-error: true
+      run: |
+        npm install --prefix .bench-release --save-exact --ignore-scripts --no-audit --no-fund koa@latest
+        mkdir -p coverage/bench
+        cp .bench-release/package-lock.json coverage/bench/release-lock.json
+        echo "BENCH_RELEASE=$GITHUB_WORKSPACE/.bench-release/node_modules/koa" >> "$GITHUB_ENV"
+    - name: Report unavailable release comparison
+      if: steps.release.outcome == 'failure'
+      run: echo 'The koa@latest setup failed. Only base and head are being compared.' >> "$GITHUB_STEP_SUMMARY"
+    - name: Run benchmarks
+      id: bench
+      run: node "$BENCH_HARNESS/tests/bench" .bench-base .
+    - name: Upload measurements and CPU profiles
+      id: profiles
+      if: always() && steps.bench.outputs.report != ''
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+      with:
+        name: benchmarks-${{ github.run_attempt }}
+        path: coverage/bench
+    - name: Summarize benchmarks
+      if: "!cancelled() && steps.bench.outputs.report != ''"
+      env:
+        REPORT: ${{ steps.bench.outputs.report }}
+        RESULT: ${{ steps.bench.outcome }}
+        ARTIFACT_ID: ${{ steps.profiles.outputs.artifact-id }}
+        PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      run: node -e "require('./' + process.env.BENCH_HARNESS + '/tests/bench').summary()"
