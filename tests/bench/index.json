@@ -1,16 +1,7 @@
 {
-  "full": {
-    "requestsPerSecond": 1000,
-    "connections": 16,
-    "warmupRequests": 1000,
-    "latencyRequests": 5000,
-    "capacityRequests": 50000
+  "changedSince": {
+    "ignore": ["tests/unit/", "docs/", "Readme.md", "History.md", "CODE_OF_CONDUCT.md"]
   },
-  "pullRequest": {
-    "requestsPerSecond": 1000,
-    "connections": 16,
-    "warmupRequests": 100,
-    "latencyRequests": 1000,
-    "capacityRequests": 2000
-  }
+  "full": { "warmupMs": 400, "sampleMs": 500 },
+  "pullRequest": { "warmupMs": 300, "sampleMs": 350 }
 }

@@ -5,10 +5,14 @@ on:
     branches: [master]
   pull_request:
     branches: [master]
+  workflow_dispatch:
+
+env:
+  BENCH_BASE: ${{ github.event.pull_request.base.sha || (github.event.before != '0000000000000000000000000000000000000000' && github.event.before) || github.sha }}
 
 jobs:
   build:
-
+    if: github.event_name != 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -28,7 +32,7 @@ jobs:
     - run: npm ci
     - name: Smoke-test proposed benchmark fixtures
       if: matrix.node-version == '26.x'
-      run: npm run bench -- --smoke
+      run: node tests/bench --smoke
     - if: matrix.node-version != '26.x'
       run: npm test
     - if: matrix.node-version == '26.x'
@@ -42,10 +46,59 @@ jobs:
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
 
-  benchmark:
+  benchmark-plan:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    outputs:
+      components: ${{ steps.plan.outputs.components }}
+      measurements: ${{ steps.plan.outputs.measurements }}
+      check-harness: ${{ steps.plan.outputs.check-harness }}
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
+        fetch-depth: 2
+    - uses: actions/setup-node@v6
+      with:
+        node-version: 26.x
+    - name: Install the workload selector
+      run: npm ci --ignore-scripts
+    - uses: actions/checkout@v6
+      if: github.event_name != 'workflow_dispatch'
+      with:
+        ref: ${{ env.BENCH_BASE }}
+        path: .bench-base
+        persist-credentials: false
+    - id: plan
+      run: |
+        node -e "
+          const path = require('node:path')
+          const { benchmarkPlan, changedFiles } = require('./tests/bench')
+          const root = process.cwd()
+          const rootOnly = process.env.GITHUB_EVENT_NAME === 'workflow_dispatch' || process.env.BENCH_BASE === process.env.GITHUB_SHA
+          const files = rootOnly ? null : changedFiles(root, process.env.BENCH_BASE, true)
+          const roots = rootOnly ? [root] : [path.resolve('.bench-base'), root]
+          const plan = benchmarkPlan(files, roots)
+          console.log('components=' + JSON.stringify(plan.components))
+          console.log('measurements=' + JSON.stringify(plan.measurements))
+          console.log('check-harness=' + plan.controls)
+          if (plan.components.length && !plan.measurements.length) {
+            console.error('Runtime source and locked production dependencies are unchanged; running affected harness controls.')
+          }
+        " >> "$GITHUB_OUTPUT"
+
+  benchmark-control:
+    needs: benchmark-plan
+    if: needs.benchmark-plan.outputs.check-harness == 'true' && needs.benchmark-plan.outputs.components != '[]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        trial: [1, 2, 3]
+        component: ${{ fromJSON(needs.benchmark-plan.outputs.components) }}
     steps:
     - uses: actions/checkout@v6
       with:
@@ -53,45 +106,131 @@ jobs:
     - uses: actions/setup-node@v6
       with:
         node-version: 26.x
+    - run: npm ci --ignore-scripts
+    - name: Compare identical code
+      env:
+        COMPONENT: ${{ matrix.component }}
+      run: node tests/bench . . "$COMPONENT"
+    - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+      if: always()
+      with:
+        name: benchmark-control-${{ matrix.component }}-${{ matrix.trial }}-${{ github.run_attempt }}
+        path: coverage/bench
+
+  benchmark:
+    needs: [benchmark-plan, benchmark-measure, benchmark-control]
+    if: always() && github.event_name != 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+    - name: Check benchmark results
+      env:
+        PLAN: ${{ needs.benchmark-plan.result }}
+        MEASURE: ${{ needs.benchmark-measure.result }}
+        CONTROL: ${{ needs.benchmark-control.result }}
+        CHECK_HARNESS: ${{ needs.benchmark-plan.outputs.check-harness }}
+        COMPONENTS: ${{ needs.benchmark-plan.outputs.measurements }}
+      run: |
+        test "$PLAN" = success
+        if [ "$CHECK_HARNESS" = true ]; then
+          test "$CONTROL" = success
+        fi
+        if [ "$COMPONENTS" = '[]' ]; then
+          test "$MEASURE" = skipped
+          exit 0
+        fi
+        test "$MEASURE" = success
+
+  benchmark-measure:
+    needs: benchmark-plan
+    if: github.event_name != 'workflow_dispatch' && needs.benchmark-plan.outputs.measurements != '[]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        component: ${{ fromJSON(needs.benchmark-plan.outputs.measurements) }}
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
+        fetch-depth: 2
+    - uses: actions/setup-node@v6
+      id: benchmark-node
+      with:
+        node-version: 26.x
     - name: Check out the benchmark baseline
       uses: actions/checkout@v6
       with:
-        ref: ${{ github.event.pull_request.base.sha || (github.event.before != '0000000000000000000000000000000000000000' && github.event.before) || github.sha }}
+        ref: ${{ env.BENCH_BASE }}
         path: .bench-base
         persist-credentials: false
-    - name: Install the baseline harness and candidate
+    - name: Install the benchmark harness and comparison runtime
       run: |
-        harness=.bench-base
-        runtime_only=.
-        if ! git -C .bench-base cat-file -e HEAD:tests/bench/index.js; then
-          git -C .bench-base cat-file -e HEAD:tests/bench/README.md
-          harness=.
-          runtime_only=.bench-base
-        fi
-        npm ci --prefix "$harness" --ignore-scripts
-        npm ci --prefix "$runtime_only" --omit=dev --ignore-scripts
-        echo "BENCH_HARNESS=$harness" >> "$GITHUB_ENV"
-    - name: Install the latest published Koa release
-      id: release
-      if: github.event_name == 'pull_request'
+        npm ci --ignore-scripts
+        npm ci --prefix .bench-base --omit=dev --ignore-scripts
+        echo "BENCH_HARNESS=." >> "$GITHUB_ENV"
+        node -p "'KOA_RELEASE_VERSION=' + require('./.bench-base/package.json').version" >> "$GITHUB_ENV"
+    - name: Restore the benchmark release
+      id: release-cache
       continue-on-error: true
+      uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: ${{ runner.temp }}/bench-release
+        key: koa-bench-locked-${{ runner.os }}-${{ runner.arch }}-${{ steps.benchmark-node.outputs.node-version }}-${{ env.KOA_RELEASE_VERSION }}
+    - name: Check out the published release lockfile
+      id: release-source
+      if: steps.release-cache.outputs.cache-hit != 'true'
+      continue-on-error: true
+      uses: actions/checkout@v6
+      with:
+        ref: refs/tags/v${{ env.KOA_RELEASE_VERSION }}
+        path: .bench-release-source
+        sparse-checkout: package-lock.json
+        sparse-checkout-cone-mode: false
+        persist-credentials: false
+    - name: Prepare the benchmark release
+      id: release
+      if: steps.release-cache.outputs.cache-hit == 'true' || steps.release-source.outcome == 'success'
+      continue-on-error: true
+      env:
+        CACHE_HIT: ${{ steps.release-cache.outputs.cache-hit }}
       run: |
-        npm install --prefix .bench-release --save-exact --ignore-scripts --no-audit --no-fund koa@latest
+        release="$RUNNER_TEMP/bench-release"
+        if [ "$CACHE_HIT" != 'true' ]; then
+          mkdir -p "$release"
+          npm pack --ignore-scripts --pack-destination "$RUNNER_TEMP" "koa@$KOA_RELEASE_VERSION"
+          tar -xzf "$RUNNER_TEMP/koa-$KOA_RELEASE_VERSION.tgz" --strip-components=1 -C "$release"
+          cp .bench-release-source/package-lock.json "$release/package-lock.json"
+          npm ci --prefix "$release" --omit=dev --ignore-scripts --no-audit --no-fund
+        fi
         mkdir -p coverage/bench
-        cp .bench-release/package-lock.json coverage/bench/release-lock.json
-        echo "BENCH_RELEASE=$GITHUB_WORKSPACE/.bench-release/node_modules/koa" >> "$GITHUB_ENV"
+        cp "$release/package-lock.json" coverage/bench/release-lock.json
+        echo "BENCH_RELEASE=$release" >> "$GITHUB_ENV"
+    - name: Cache the installed benchmark release
+      if: steps.release.outcome == 'success' && steps.release-cache.outcome == 'success' && steps.release-cache.outputs.cache-hit != 'true'
+      continue-on-error: true
+      uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: ${{ runner.temp }}/bench-release
+        key: ${{ steps.release-cache.outputs.cache-primary-key }}
     - name: Report unavailable release comparison
-      if: steps.release.outcome == 'failure'
-      run: echo 'The koa@latest setup failed. Only base and head are being compared.' >> "$GITHUB_STEP_SUMMARY"
+      if: steps.release.outcome == 'failure' || steps.release-source.outcome == 'failure'
+      run: echo "The koa@$KOA_RELEASE_VERSION comparison is unavailable for this run." >> "$GITHUB_STEP_SUMMARY"
     - name: Run benchmarks
       id: bench
-      run: node "$BENCH_HARNESS/tests/bench" .bench-base .
+      env:
+        BENCH_CHANGED_SINCE: ${{ env.BENCH_BASE }}
+        COMPONENT: ${{ matrix.component }}
+      run: node "$BENCH_HARNESS/tests/bench" .bench-base . "$COMPONENT"
     - name: Upload measurements and CPU profiles
       id: profiles
       if: always() && steps.bench.outputs.report != ''
       uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
       with:
-        name: benchmarks-${{ github.run_attempt }}
+        name: benchmarks-${{ matrix.component }}-${{ github.run_attempt }}
         path: coverage/bench
     - name: Summarize benchmarks
       if: "!cancelled() && steps.bench.outputs.report != ''"

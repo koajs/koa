@@ -1,5 +1,6 @@
 [
   { "depth": 0 },
   { "depth": 1 },
-  { "depth": 10 }
+  { "depth": 10 },
+  { "scenario": "error" }
 ]

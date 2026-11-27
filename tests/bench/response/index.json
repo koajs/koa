@@ -1,5 +1,9 @@
 [
   { "payload": { "message": "Hello World" } },
   { "headItems": 1000 },
-  { "headItems": 10000 }
+  { "headItems": 10000 },
+  { "scenario": "redirect" },
+  { "scenario": "attachment" },
+  { "scenario": "back" },
+  { "scenario": "stream" }
 ]

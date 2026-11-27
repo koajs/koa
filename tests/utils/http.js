@@ -1,147 +1,185 @@
 'use strict'
 
 const assert = require('node:assert/strict')
-const path = require('node:path')
 const { once } = require('node:events')
-const { execFile } = require('node:child_process')
-const { Agent, createServer, get } = require('node:http')
-const { promisify } = require('node:util')
-const { json, text } = require('node:stream/consumers')
-const { pipeline } = require('node:stream/promises')
-const { setTimeout: delay } = require('node:timers/promises')
+const { Agent, createServer, IncomingMessage, request, ServerResponse } = require('node:http')
+const { Duplex } = require('node:stream')
+const { text } = require('node:stream/consumers')
+const { setImmediate } = require('node:timers/promises')
 const profiles = require('../bench/index.json')
-const { errors } = require('../bench/constants')
-const settings = process.env.GITHUB_EVENT_NAME === 'pull_request' ? profiles.pullRequest : profiles.full
-const run = promisify(execFile)
+const { FixtureMismatch } = require('../bench/constants')
+const prProfile = ['pull_request', 'workflow_dispatch'].includes(process.env.GITHUB_EVENT_NAME)
+const settings = prProfile ? profiles.pullRequest : profiles.full
 
-async function measure (Bench, count, rate, send) {
-  const { connections: threshold } = settings
-  const bench = new Bench({
-    concurrency: 'task', threshold, time: 0, iterations: count, warmup: false, throws: true
-  })
-  let scheduled = 0
-  let start
-  let end
-  bench.add('request', async () => {
-    const due = rate ? start + scheduled * 1000 / rate : performance.now()
-    if (rate) scheduled++
-    const wait = Math.ceil(due - performance.now())
-    if (wait > 0) await delay(wait)
-    await send()
-    end = performance.now()
-    const overriddenDuration = Math.max(0, end - due)
-    const timing = { overriddenDuration }
-    return timing
-  }, { async: true, beforeAll () { start = performance.now() } })
-  await bench.run()
-  const { latency } = bench.tasks[0].result
-  assert.equal(latency.samplesCount, count)
-  const elapsedMs = end - start
-  const measurement = { latency, count, elapsedMs }
-  return measurement
-}
-
-async function phases (send, maxRequestsPerPhase = Infinity) {
-  const { Bench } = await import('tinybench')
-  const warmupRequests = Math.min(settings.warmupRequests, maxRequestsPerPhase)
-  const latencyRequests = Math.min(settings.latencyRequests, maxRequestsPerPhase)
-  const capacityRequests = Math.min(settings.capacityRequests, maxRequestsPerPhase)
-  await measure(Bench, warmupRequests, settings.requestsPerSecond, send)
-  const paced = await measure(Bench, latencyRequests, settings.requestsPerSecond, send)
-  await measure(Bench, warmupRequests, 0, send)
-  const capacity = await measure(Bench, capacityRequests, 0, send)
-  const { p99: p99Ms } = paced.latency
-  const requestsPerSec = capacity.count * 1000 / capacity.elapsedMs
-  const metrics = { p99Ms, requestsPerSec }
-  const result = { metrics, paced, capacity }
-  return result
-}
-
-async function headClient (url, { length, maxRequestsPerPhase }) {
-  const { connections: maxSockets } = settings
-  const agent = new Agent({ keepAlive: true, maxSockets })
-  const send = async () => {
-    const request = get(url, { method: 'HEAD', agent })
-    const [response] = await once(request, 'response')
-    assert.equal(await text(response), '')
-    assert.equal(response.statusCode, 200)
-    assert.equal(response.headers['content-length'], String(length))
-    const { reusedSocket } = request
-    return reusedSocket
-  }
+function check (fixture, status, body, headers) {
   try {
-    await send()
-    assert.ok(await send(), errors.headSocket)
-    const result = await phases(send, maxRequestsPerPhase)
-    return result
-  } finally {
-    agent.destroy()
+    assert.equal(status, fixture.status ?? 200)
+    assert.equal(body, fixture.body)
+    if (fixture.length !== undefined) assert.equal(String(headers['content-length']), String(fixture.length))
+    for (const [key, value] of Object.entries(fixture.headers ?? {})) assert.deepEqual(headers[key], value)
+  } catch (error) {
+    if (!(error instanceof assert.AssertionError)) throw error
+    throw new FixtureMismatch(error.message, { cause: error })
   }
 }
 
-function client (url, request) {
-  const { init, body, maxRequestsPerPhase } = request
-  if (init?.method === 'HEAD') {
-    const result = headClient(url, request)
-    return result
-  }
-  const send = async () => {
-    const response = await fetch(url, init)
-    assert.equal(response.status, 200)
-    assert.equal(await response.text(), body)
-  }
-  const result = phases(send, maxRequestsPerPhase)
-  return result
+async function smokeRequest (url, fixture, agent) {
+  const signal = AbortSignal.timeout(5000)
+  const options = Object.assign(requestOptions(fixture), { agent, signal })
+  const req = request(url, options)
+  req.end(fixture.init?.body)
+  const [res] = await once(req, 'response')
+  check(fixture, res.statusCode, await text(res), res.headers)
+  return req.reusedSocket
 }
 
-async function runLoadGenerator (origin, input) {
-  const execution = run(process.execPath, [__filename, origin], { timeout: 120000 })
-  const writeInput = pipeline([input], execution.child.stdin)
-  const [child, stdin] = await Promise.allSettled([execution, writeInput])
-  if (child.status === 'rejected') throw child.reason
-  if (stdin.status === 'rejected') throw stdin.reason
-  const result = JSON.parse(child.value.stdout)
-  return result
-}
-
-async function http (root, endpoint, parameters, maxRequestsPerPhase = parameters.maxRequestsPerPhase) {
-  const Koa = require(path.join(root, 'lib/application.js'))
-  const app = new Koa()
-  const request = endpoint(app, parameters)
-  const server = createServer({ rejectNonStandardBodyWrites: true }, app.callback())
-  app.on('error', (error, ctx) => {
-    if (error.code === 'ERR_HTTP_BODY_NOT_ALLOWED') ctx.res.destroy(error)
-  })
+async function smoke (callback, fixture) {
+  const server = createServer({ rejectNonStandardBodyWrites: true }, callback)
+  const agent = new Agent({ keepAlive: true, maxSockets: 1, timeout: 5000 })
   server.listen(0, '127.0.0.1')
   await once(server, 'listening')
   try {
-    const origin = 'http://127.0.0.1:' + server.address().port
-    const input = JSON.stringify(Object.assign({}, request, { maxRequestsPerPhase }))
-    const result = await runLoadGenerator(origin, input)
-    const peakRssMiB = process.resourceUsage().maxRSS / 1024
-    const measurement = Object.assign(result, { peakRssMiB })
-    return measurement
+    const url = 'http://127.0.0.1:' + server.address().port + fixture.route
+    await smokeRequest(url, fixture, agent)
+    if (fixture.init?.method === 'HEAD') assert.ok(await smokeRequest(url, fixture, agent))
   } finally {
-    await promisify(server.close).call(server)
+    agent.destroy()
+    await new Promise(resolve => server.close(resolve))
   }
 }
 
-async function runClient () {
-  const [, , url, specification] = process.argv
-  const fromStdin = specification === undefined
-  const request = fromStdin ? await json(process.stdin) : JSON.parse(specification)
-  const target = fromStdin ? url + request.route : url
-  const measurement = client(target, request)
-  return measurement
+function requestOptions ({ init = {} }) {
+  const method = init.method ?? 'GET'
+  const headers = { host: 'localhost', connection: 'keep-alive' }
+  for (const [key, value] of Object.entries(init.headers ?? {})) headers[key.toLowerCase()] = value
+  const hasBody = init.body !== undefined || ['POST', 'PUT', 'PATCH'].includes(method)
+  if (hasBody && headers['content-length'] === undefined && headers['transfer-encoding'] === undefined) {
+    headers['content-length'] = String(Buffer.byteLength(init.body ?? ''))
+  }
+  return { method, headers }
 }
 
-if (require.main === module) {
-  runClient().then(result => {
-    process.stdout.write(JSON.stringify(result))
-  }).catch(error => {
-    console.error(error)
-    process.exitCode = 1
+class Response extends ServerResponse {
+  chunks = []
+
+  write (chunk, encoding, callback) {
+    this.capture(chunk, encoding)
+    return super.write(chunk, encoding, callback)
+  }
+
+  end (chunk, encoding, callback) {
+    if (chunk != null && typeof chunk !== 'function') this.capture(chunk, encoding)
+    return super.end(chunk, encoding, callback)
+  }
+
+  capture (chunk, encoding) {
+    const bytes = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk, typeof encoding === 'string' ? encoding : undefined)
+    this.chunks.push(bytes)
+  }
+}
+
+function exchange ({ route, init = {} }, options) {
+  const socket = new Duplex({ read () {}, write (chunk, encoding, done) { done() } })
+  socket.remoteAddress = '127.0.0.1'
+  const req = new IncomingMessage(socket)
+  req.httpVersion = '1.1'
+  req.httpVersionMajor = 1
+  req.httpVersionMinor = 1
+  req.method = options.method
+  req.url = route
+  req.headers = Object.assign({}, options.headers)
+  req.rawHeaders = Object.entries(req.headers).flat()
+  if (init.body) req.push(Buffer.from(init.body))
+  req.push(null)
+  req.complete = true
+  const res = new Response(req, { rejectNonStandardBodyWrites: true })
+  res.assignSocket(socket)
+  return { req, res }
+}
+
+const singleValueHeaders = new Set([
+  'age', 'authorization', 'content-length', 'content-type', 'etag', 'expires', 'from',
+  'host', 'if-modified-since', 'if-unmodified-since', 'last-modified', 'location',
+  'max-forwards', 'proxy-authorization', 'referer', 'retry-after', 'server', 'user-agent'
+])
+
+function wireHeaders (headers) {
+  const normalized = {}
+  for (const [name, value] of Object.entries(headers)) {
+    const values = Array.isArray(value) ? value : [value]
+    if (!values.length) continue
+    const strings = values.map(value => String(value).replace(/^[ \t]+|[ \t]+$/g, ''))
+    if (name === 'set-cookie') normalized[name] = strings
+    else if (singleValueHeaders.has(name)) normalized[name] = strings[0]
+    else normalized[name] = strings.join(name === 'cookie' ? '; ' : ', ')
+  }
+  return normalized
+}
+
+async function batch (callback, fixture, count) {
+  const options = requestOptions(fixture)
+  const exchanges = Array.from({ length: count }, () => exchange(fixture, options))
+  const elapsed = await timeRequests(callback, exchanges)
+  for (const { res } of exchanges) {
+    assert.ok(res.finished)
+    const body = Buffer.concat(res.chunks).toString()
+    check(fixture, res.statusCode, body, wireHeaders(res.getHeaders()))
+  }
+  await setImmediate()
+  const requestUs = 1000 * elapsed / count
+  return requestUs
+}
+
+async function timeRequests (callback, exchanges) {
+  let timer
+  const timeout = new Promise((resolve, reject) => {
+    const error = Object.assign(new Error('Benchmark response did not finish'), { code: 'ERR_BENCH_TIMEOUT' })
+    timer = setTimeout(() => reject(error), 5000)
   })
+  const send = async () => {
+    const start = performance.now()
+    for (const { req, res } of exchanges) {
+      timer.refresh()
+      const finish = once(res, 'finish')
+      await Promise.all([finish, callback(req, res)])
+    }
+    return performance.now() - start
+  }
+  try {
+    return await Promise.race([send(), timeout])
+  } finally {
+    clearTimeout(timer)
+  }
+}
+
+async function batches (callback, fixture, duration) {
+  const samples = []
+  const until = performance.now() + duration
+  do {
+    samples.push(await batch(callback, fixture, 64))
+  } while (performance.now() < until)
+  return samples
+}
+
+async function http (Koa, endpoint, parameters, smokeOnly) {
+  const app = new Koa()
+  const fixture = endpoint(app, parameters)
+  const callback = app.callback()
+  if (smokeOnly) {
+    await smoke(callback, fixture)
+    const requestUs = await batch(callback, fixture, 1)
+    const metrics = { requestUs }
+    return { metrics }
+  }
+  await batches(callback, fixture, settings.warmupMs)
+  const samples = await batches(callback, fixture, settings.sampleMs)
+  const sorted = samples.sort((a, b) => a - b)
+  const lower = sorted[Math.floor((sorted.length - 1) / 2)]
+  const upper = sorted[Math.floor(sorted.length / 2)]
+  const requestUs = (lower + upper) / 2
+  const metrics = { requestUs }
+  const peakRssMiB = process.resourceUsage().maxRSS / 1024
+  return { metrics, batches: samples.length, peakRssMiB }
 }
 
 module.exports = http

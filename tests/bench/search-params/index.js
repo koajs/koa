@@ -1,8 +1,8 @@
 'use strict'
 
 const assert = require('node:assert/strict')
-const path = require('node:path')
-const { errors } = require('../constants')
+const { isDeepStrictEqual } = require('node:util')
+const { FixtureMismatch, errors } = require('../constants')
 
 function queryInput (size, kind) {
   assert.ok(Number.isSafeInteger(size) && size > 0, errors.querySize)
@@ -17,12 +17,12 @@ function queryInput (size, kind) {
   return input
 }
 
-async function measure (root, { size, kind }) {
+async function measure ({ parse }, { size, kind }, smokeOnly) {
   const { Bench } = await import('tinybench')
-  const { parse } = require(path.join(root, 'lib/search-params.js'))
   const { query, expected } = queryInput(size, kind)
-  assert.deepEqual(parse(query), expected)
-  const bench = new Bench({ time: 500, warmupTime: 200 })
+  if (!isDeepStrictEqual(parse(query), expected)) throw new FixtureMismatch('Parsed query differs from the expected result')
+  const options = smokeOnly ? { time: 0, iterations: 1, warmup: false } : { time: 500, warmupTime: 200 }
+  const bench = new Bench(options)
   const batchSize = Math.ceil(1024 / size)
   bench.add('parse', () => {
     const start = bench.now()
