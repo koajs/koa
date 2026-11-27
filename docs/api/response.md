@@ -128,6 +128,7 @@ ctx.response.status = 204;
 
   - `string` written
   - `Buffer` written
+  - `Blob` streamed
   - `Stream` piped
   - `Object` || `Array` json-stringified
   - `null` || `undefined` no content response
@@ -162,6 +163,12 @@ app.use(async (ctx, next) => {
 
   The Content-Type is defaulted to application/octet-stream, and Content-Length
   is also set.
+
+#### Blob
+
+  Content-Type defaults to the Blob's `type`, or application/octet-stream if empty;
+  an existing Content-Type is preserved. Content-Length is set to the Blob's `size`
+  unless Transfer-Encoding is set.
 
 #### Stream
 
@@ -213,12 +220,19 @@ const rateLimited = ctx.response.has('X-RateLimit-Limit');
 ctx.set('Cache-Control', 'no-cache');
 ```
 
+  Header names are case-insensitive. `Content-Type` and `Content-Length` arrays
+  are unwrapped if they contain exactly one value; other lengths throw an assertion
+  error. After headers are sent, calls are ignored without validation.
+
 ### response.append(field, value)
   Append additional header `field` with value `val`.
 
 ```js
 ctx.append('Link', '<http://127.0.0.1/>');
 ```
+
+  An existing empty string is treated as absent. The `response.set()` validation
+  and headers-sent rules apply.
 
 ### response.set(fields)
 
@@ -232,6 +246,8 @@ ctx.set({
 ```
 
 This delegates to [setHeader](https://nodejs.org/dist/latest/docs/api/http.html#http_request_setheader_name_value) which sets or updates headers by specified keys and doesn't reset the entire header.
+
+The validation and headers-sent rules of `response.set(field, value)` also apply.
 
 ### response.remove(field)
 

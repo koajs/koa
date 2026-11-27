@@ -22,9 +22,15 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
-    - run: npm run lint
-    - run: npm run test:coverage
+    - if: matrix.node-version != '26.x'
+      run: npm test
+    - if: matrix.node-version == '26.x'
+      run: npm run lint
+    - name: Run discovered tests with coverage
+      if: matrix.node-version == '26.x'
+      run: npm run test:coverage
     - name: Upload coverage to Codecov
+      if: matrix.node-version == '26.x'
       uses: codecov/codecov-action@v7
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
