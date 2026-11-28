@@ -26,9 +26,9 @@ const notes = {
   memory: 'Each revision reports its highest worker RSS across HTTP comparison samples. This includes Node, Koa, the benchmark harness, and fixture setup. The load generator runs in a separate process. Memory is informational.',
   parse: 'Parse time is the median of per-parse batch averages.',
   calibration: 'Inconclusive metrics failed calibration: fewer than three of six base pairs met the noise limit (1.20× for p99, 1.10× for throughput and parsing).',
-  coverage: 'Each metric type in the run requires at least one conclusive result. Any confirmed regression fails the run.',
+  coverage: 'Each metric type in the complete suite requires at least one conclusive result. Any confirmed regression fails the run.',
   release: 'Lower times and higher requests/s are faster. Release timings and throughput average two warmed samples. The pass/fail decision compares the proposed merge with master.',
-  bootstrap: 'Initial benchmark run uses the proposed harness because the base revision has none.',
+  bootstrap: 'Both revisions were timed with the proposed harness and workload settings.',
   baseHarness: 'Both revisions were timed with the base revision’s fixtures and workload settings.',
   truncated: 'The download contains the full table data.',
   empty: 'No completed measurements were available.'

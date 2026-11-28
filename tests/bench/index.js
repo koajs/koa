@@ -40,6 +40,10 @@ async function smoke () {
 
 async function run () {
   const [, , mode, root, specification] = process.argv
+  if (mode === '--check') {
+    checkReports(root)
+    return
+  }
   if (mode === '--smoke') {
     await smoke()
     return
@@ -148,18 +152,45 @@ function metricCounts (report) {
   return counts
 }
 
-function evidence (counts) {
+function evidence (counts, requireConclusive = true) {
   const results = Object.entries(counts).map(([key, totals]) => {
     const { pass, fail, inconclusive } = totals
     const conclusive = pass + fail
     const total = conclusive + inconclusive
     const status = conclusive ? metrics[key] : messages.insufficient(metrics[key])
     const message = messages.evidence(status, conclusive, total, totals)
-    const failed = fail > 0 || conclusive === 0
+    const missingEvidence = requireConclusive && conclusive === 0
+    const failed = fail > 0 || missingEvidence
     const result = { message, failed }
     return result
   })
   return results
+}
+
+function checkReports (directory) {
+  const directories = fs.readdirSync(directory).filter(name => name.startsWith('run-'))
+  const report = directories.flatMap(name => {
+    const filename = path.join(directory, name, 'report.json')
+    const entries = JSON.parse(fs.readFileSync(filename, 'utf8'))
+    return entries
+  })
+  const expected = workloads().map(workload => JSON.stringify(workload)).sort()
+  const actual = report.map(entry => JSON.stringify(entry.workload)).sort()
+  assert.deepEqual(actual, expected, 'Missing or duplicate benchmark workloads')
+  for (const entry of report) {
+    assert.deepEqual(Object.keys(entry.verdict).sort(), metricNames(entry.workload.name), 'Missing benchmark verdicts')
+    const statuses = Object.values(entry.verdict)
+    assert.ok(statuses.every(status => ['pass', 'fail', 'inconclusive'].includes(status)), 'Invalid benchmark verdict')
+  }
+  checkResults(report)
+}
+
+function checkResults (report, requireConclusive = true) {
+  const results = evidence(metricCounts(report), requireConclusive)
+  for (const { message, failed } of results) {
+    console.log(message)
+    if (failed) process.exitCode = 1
+  }
 }
 
 function reportHeader (run, completed, artifact) {
@@ -466,10 +497,8 @@ function main () {
     const collectProfile = failed || process.env.BENCH_PROFILES === 'true'
     if (collectProfile) profiles(roots, workload, directory, index)
   }
-  for (const { message, failed } of evidence(metricCounts(report))) {
-    console.log(message)
-    if (failed) process.exitCode = 1
-  }
+  const requireConclusive = process.env.BENCH_DEFER_EVIDENCE !== 'true'
+  checkResults(report, requireConclusive)
 }
 
 if (require.main === module) {
@@ -479,4 +508,4 @@ if (require.main === module) {
   })
 }
 
-module.exports = { summary, calibrate, compareAttempts, render }
+module.exports = { summary, calibrate, compareAttempts, render, evidence, profiles }
