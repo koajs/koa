@@ -11,7 +11,8 @@ const { pipeline } = require('node:stream/promises')
 const { setTimeout: delay } = require('node:timers/promises')
 const profiles = require('../bench/index.json')
 const { errors } = require('../bench/constants')
-const settings = process.env.GITHUB_EVENT_NAME === 'pull_request' ? profiles.pullRequest : profiles.full
+const inCI = process.env.GITHUB_ACTIONS === 'true' || process.env.GITHUB_EVENT_NAME === 'pull_request'
+const settings = inCI ? profiles.pullRequest : profiles.full
 const run = promisify(execFile)
 
 async function measure (Bench, count, rate, send) {
@@ -108,7 +109,7 @@ async function http (root, endpoint, parameters, maxRequestsPerPhase = parameter
   const Koa = require(path.join(root, 'lib/application.js'))
   const app = new Koa()
   const request = endpoint(app, parameters)
-  const server = createServer({ rejectNonStandardBodyWrites: true }, app.callback())
+  const server = createServer({ rejectNonStandardBodyWrites: true, keepAliveTimeout: 0 }, app.callback())
   app.on('error', (error, ctx) => {
     if (error.code === 'ERR_HTTP_BODY_NOT_ALLOWED') ctx.res.destroy(error)
   })

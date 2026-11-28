@@ -18,11 +18,11 @@ jobs:
         node-version: [22.x, 24.x, 26.x]
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
       with:
         persist-credentials: false
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
@@ -42,35 +42,32 @@ jobs:
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
 
-  benchmark:
+  benchmark-components:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        component: [application, request, response, search-params]
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
       with:
         persist-credentials: false
-    - uses: actions/setup-node@v6
+    - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
       with:
         node-version: 26.x
     - name: Check out the benchmark baseline
-      uses: actions/checkout@v6
+      uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
       with:
         ref: ${{ github.event.pull_request.base.sha || (github.event.before != '0000000000000000000000000000000000000000' && github.event.before) || github.sha }}
         path: .bench-base
         persist-credentials: false
-    - name: Install the baseline harness and candidate
+    - name: Install the benchmark harness and baseline
       run: |
-        harness=.bench-base
-        runtime_only=.
-        if ! git -C .bench-base cat-file -e HEAD:tests/bench/index.js; then
-          git -C .bench-base cat-file -e HEAD:tests/bench/README.md
-          harness=.
-          runtime_only=.bench-base
-        fi
-        npm ci --prefix "$harness" --ignore-scripts
-        npm ci --prefix "$runtime_only" --omit=dev --ignore-scripts
-        echo "BENCH_HARNESS=$harness" >> "$GITHUB_ENV"
+        npm ci --ignore-scripts
+        npm ci --prefix .bench-base --omit=dev --ignore-scripts
+        echo 'BENCH_HARNESS=.' >> "$GITHUB_ENV"
     - name: Install the latest published Koa release
       id: release
       if: github.event_name == 'pull_request'
@@ -85,14 +82,18 @@ jobs:
       run: echo 'The koa@latest setup failed. Only base and head are being compared.' >> "$GITHUB_STEP_SUMMARY"
     - name: Run benchmarks
       id: bench
-      run: node "$BENCH_HARNESS/tests/bench" .bench-base .
+      env:
+        COMPONENT: ${{ matrix.component }}
+        BENCH_DEFER_EVIDENCE: 'true'
+      run: node "$BENCH_HARNESS/tests/bench" .bench-base . "$COMPONENT"
     - name: Upload measurements and CPU profiles
       id: profiles
       if: always() && steps.bench.outputs.report != ''
       uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
       with:
-        name: benchmarks-${{ github.run_attempt }}
+        name: benchmarks-${{ matrix.component }}
         path: coverage/bench
+        overwrite: true
     - name: Summarize benchmarks
       if: "!cancelled() && steps.bench.outputs.report != ''"
       env:
@@ -101,3 +102,29 @@ jobs:
         ARTIFACT_ID: ${{ steps.profiles.outputs.artifact-id }}
         PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
       run: node -e "require('./' + process.env.BENCH_HARNESS + '/tests/bench').summary()"
+
+  benchmark:
+    needs: benchmark-components
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+    - name: Check component jobs
+      env:
+        RESULT: ${{ needs.benchmark-components.result }}
+      run: test "$RESULT" = success
+    - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+      with:
+        persist-credentials: false
+    - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+      with:
+        node-version: 26.x
+    - run: npm ci --ignore-scripts
+    - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+      with:
+        pattern: benchmarks-*
+        path: coverage/bench
+        merge-multiple: true
+    - name: Check evidence across the complete suite
+      run: node tests/bench --check coverage/bench

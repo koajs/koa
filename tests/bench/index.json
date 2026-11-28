@@ -11,6 +11,6 @@
     "connections": 16,
     "warmupRequests": 100,
     "latencyRequests": 1000,
-    "capacityRequests": 2000
+    "capacityRequests": 10000
   }
 }
